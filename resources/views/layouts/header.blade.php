@@ -1,0 +1,29 @@
+<header class="sticky top-0 z-50 w-full border-b border-[#e7edf3] bg-white/95 backdrop-blur-sm px-6 md:px-20 py-4">
+    <div class="max-w-[1200px] mx-auto flex items-center justify-between gap-8">
+        <div class="flex items-center gap-8">
+            <div class="flex items-center gap-2 text-[#002b5c]">
+                <div class="bg-[#002b5c] text-white p-1 rounded">
+                    <svg class="size-4" fill="currentColor" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M24 4C25.7818 14.2173 33.7827 22.2182 44 24C33.7827 25.7818 25.7818 33.7827 24 44C22.2182 33.7827 14.2173 25.7818 4 24C14.2173 22.2182 22.2182 14.2173 24 4Z">
+                        </path>
+                    </svg>
+                </div>
+                <h2 class="text-[#002b5c] text-xl font-black uppercase tracking-tighter">DI-TOOL</h2>
+            </div>
+            @include('layouts.menu')
+        </div>
+        <div class="flex items-center gap-6 flex-1 justify-end">
+            <div class="hidden lg:flex items-center text-[#4c739a] border-r border-[#e7edf3] pr-6 gap-2">
+                <span class="material-symbols-outlined text-lg">search</span>
+                <input class="bg-transparent border-none text-sm focus:ring-0 placeholder:text-[#4c739a]"
+                    placeholder="Search enterprise tools..." type="text" />
+            </div>
+            <button
+                class="bg-[#002b5c] hover:bg-[#001d3d] text-white px-6 py-2 rounded-lg text-sm font-bold transition-all flex items-center gap-2">
+                <span class="material-symbols-outlined text-lg">shopping_bag</span>
+                Shop Portal
+            </button>
+        </div>
+    </div>
+</header>
