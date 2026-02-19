@@ -1,87 +1,138 @@
 @extends('layouts.main')
-@section('title', 'Modeling Suite 2.0 - Professional CAD Tools')
+
+@section('title', 'Drawing & Export - Di-tool')
+
 @section('content')
-    <div class="max-w-7xl mx-auto px-10 lg:px-16">
-        <!-- Product Overview / Hero -->
-        <section class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-20">
-            <div class="order-2 lg:order-1 space-y-8">
-                <div>
-                    <div class="flex items-center gap-2 mb-4">
-                        <span
-                            class="bg-[var(--enterprise-blue)]/10 text-[var(--enterprise-blue)] text-xs font-bold px-2.5 py-1 rounded uppercase tracking-wider">New
-                            Version 2.0</span>
-                        <span class="flex items-center text-amber-500 gap-1 text-sm font-bold">
-                            <span class="material-symbols-outlined !text-sm">star</span> 4.9 (1,240 reviews)
-                        </span>
-                    </div>
-                    <h1 class="text-5xl lg:text-6xl font-black tracking-tight text-slate-900 dark:text-white leading-[1.1]">
-                        Modeling Suite 2.0
-                    </h1>
-                    <p class="text-[var(--enterprise-blue)] font-semibold text-lg mt-2">Professional add-on for Autodesk
-                        Inventor</p>
-                </div>
-                <div class="space-y-4">
-                    <p class="text-lg text-slate-600 dark:text-slate-400 leading-relaxed">
-                        Revolutionize your CAD workflow with 40% faster rendering and industrial-grade surfacing tools.
-                        Designed for engineers who demand precision and speed.
-                    </p>
-                    <div class="flex items-center gap-4">
-                        <div class="flex -space-x-2">
-                            <img class="w-8 h-8 rounded-full border-2 border-white dark:border-background-dark"
-                                data-alt="User avatar small thumbnail"
-                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBGAMNHIoUCZE50nfE_5_wa3kER1RIexe4ocHYeC-tfIWVz3pyZzGDdpMUER2UvJ2N3H0cTdA1Jx1ytgme9rPZKgIsarPwaaMigAESfiAEvK1ZO2nYpgcREkjNnzOfcDYoeZ26Il5pIPqDq_xXwjIyv6nyfIQuhdFahnXv5YGftUME8NJbPZTNdlVqcPlx0AX8EFKmNDaDyDb-_C3Tn8ykpH8RCx0u5WDkMybL5g4WO3RY4vykNiUNPs2gC5J7gTGjJfHLWDuwbNDw" />
-                            <img class="w-8 h-8 rounded-full border-2 border-white dark:border-background-dark"
-                                data-alt="User avatar small thumbnail"
-                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDIG9oAPtLGJedxfnb17N7lMOC9aoAxMgbljOHhpvfMCXe3WOTUeuDQwbEN7IjrubvoXgt_7RXzPZJiyTzBwqo9V0IL8zaEU-vtcgx_mr2QArvpRddCZNRFGLNp4qyXE7-5dWXBpXn2kyUpI2fbSS4lXMkMc3c9_7Svk1UtW5k3KTCS_FUpQlzLH0rNaEkylaarGMeROVoklJgz9zqUOuyRtQGkddevY1KUR-0CiCOAioo3kReNTMYyo3-9z-VSo0ciDVl7S-ipYZM" />
-                            <img class="w-8 h-8 rounded-full border-2 border-white dark:border-background-dark"
-                                data-alt="User avatar small thumbnail"
-                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBq4wLcbbas5n0q9tNkeXpR-892CG0cGrVXVd-2tBeKFOg0avKY6q97-FelrGwKPz9uEMaxaZA2_SdDTE8MqoSNhMjThZ4oVxt2beYLOzNvcFXxwX3NOSbK39b6M_zvlz411iwsUOETBspDdix_lzElqRb1C4f3cX9i6SICi2BqJ9yzr3MquogFp68IVzaynBPeE3XdaaSQqWB9AD-DKkzDJc8wQSg-tIYhp7hnsJhbY7dH6ktSwMkjwfI6I37d2jckSB9e4MTX4D8" />
-                        </div>
-                        <span class="text-sm font-medium text-slate-500">Joined by 10,000+ Engineers</span>
-                    </div>
-                </div>
+    <div class="mx-auto w-full max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
+        <nav class="flex items-center gap-2 text-sm font-medium text-slate-500 dark:text-slate-400">
+            <a class="hover:text-primary transition-colors" href="#">Home</a>
+            <span class="material-symbols-outlined text-sm">chevron_right</span>
+            <a class="hover:text-primary transition-colors" href="#">Autodesk Inventor</a>
+            <span class="material-symbols-outlined text-sm">chevron_right</span>
+            <span class="text-slate-900 dark:text-white">Drawing &amp; Export</span>
+        </nav>
+    </div>
+
+    <main class="mx-auto w-full max-w-7xl grow px-4 py-6 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 gap-12 lg:grid-cols-12">
+            <div class="lg:col-span-7 flex flex-col gap-4">
                 <div
-                    class="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm inline-block min-w-[320px]">
-                    <div class="flex items-baseline gap-3 mb-4">
-                        <span class="text-4xl font-black text-slate-900 dark:text-white">$199.00</span>
-                        <span class="text-xl text-slate-400 line-through">$299.00</span>
-                        <span class="bg-green-100 text-green-700 text-xs font-bold px-2 py-1 rounded">SAVE 33%</span>
+                    class="relative aspect-video w-full overflow-hidden rounded-xl bg-white dark:bg-slate-800 shadow-lg border border-slate-200 dark:border-slate-800">
+                    <img alt="Product Main View" class="h-full w-full object-cover"
+                        data-alt="Main product interface screenshot for Drawing and Export tool"
+                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuDFiyfW16BqlTlp5m2Ic-34IvbXp4xo83UR5S6FBGhs_myfMUKK0zOD6-D5soN1dZ7I9ufcUPBqKA26S3YoFLE-PgwIOhbecYeIge6Cg5pEqBgWT0_SLslgpPzlfJn3gerNqxvgMfpPMkf96vf2ksZMWLHcGOyAoh2EzMbKeGQo5-IgD76WYpw3RytOSh4mLaxLP7A6CEnSy8eRUumlB3oTOOKmSkJiXmHjnezLGBeK3ZXh_TlM_KSElNndF0uwUb5_Gz_qJxG8DhM" />
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+                </div>
+                <div class="grid grid-cols-4 gap-3 sm:gap-4">
+                    <div
+                        class="aspect-video cursor-pointer overflow-hidden rounded-lg border-2 border-primary ring-2 ring-primary ring-offset-2 dark:ring-offset-background-dark shadow-md transition-all">
+                        <img alt="Thumbnail 1" class="h-full w-full object-cover opacity-100 hover:opacity-90"
+                            data-alt="Thumbnail of Drawing and Export main interface"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuDBJ90uMEnpfLm_dX01qeppmRyQxEJA94Va9ZQywMDpp6zGvZHalWRisXad6tr2eNB7YHmQVZVJNMi-el5xlo8btN9LIYGgW9jbjKmmpwJASqn5ATM1_k7702HCqArV6z7CTRbYsVj9ai3aRxHtumFs1u6yIR4EIDZ3j-x2wpEZx60NntCGvUXr84syPUeTmU8s9m17frWJJRPsXILPMX0vWa4DoVnFS7XuZa_wmKlKwNkjYE05Fep9q4ZlcoBr2Kc_Ek8fKFXOXbc" />
                     </div>
-                    <div class="flex flex-col gap-3">
-                        <button
-                            class="w-full bg-[var(--enterprise-blue)] hover:bg-[var(--enterprise-blue)]/90 text-white py-4 rounded-lg font-bold text-lg transition-all shadow-xl shadow-blue-900/20 flex items-center justify-center gap-2">
-                            <span class="material-symbols-outlined">shopping_cart</span>
-                            Quick Buy
-                        </button>
-                        <p class="text-xs text-center text-slate-400 font-medium uppercase tracking-widest">Instant digital
-                            delivery</p>
+                    <div
+                        class="aspect-video cursor-pointer overflow-hidden rounded-lg border border-slate-200 dark:border-slate-800 hover:border-primary transition-all grayscale hover:grayscale-0">
+                        <img alt="Thumbnail 2" class="h-full w-full object-cover"
+                            data-alt="Thumbnail showing batch export workflow"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuCYgc7n2_UKZxJBDW3w3pVLY8l9qfBzqkQKFVIQyJZa-pZ4D_qAvSV9wutf67CAjkHAcuAOFQUTzyYrf7InUTzIO2G_2YmNFWL2sqQHE7g1jUcDyjdyJfWjy2NikVKd1E3NzaJ165z0APzbopNwG94_QRPG-YzeV7-6rKxsszQImrvU-CkB0wsDKPf2thGV5Jy5bdhhNGCKGaqVbXERiLozDF_JxDGBGNrkj0t8xlBACLtzY291Q06hJs-jrzKi1sKgzgd31mt8VvM" />
                     </div>
+                    <div
+                        class="aspect-video cursor-pointer overflow-hidden rounded-lg border border-slate-200 dark:border-slate-800 hover:border-primary transition-all grayscale hover:grayscale-0">
+                        <img alt="Thumbnail 3" class="h-full w-full object-cover"
+                            data-alt="Thumbnail of automated drawing generation"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuD1_xLlaqTqihSWIHr28GO0JOwtHwPR6T6hMa0Xxt7VZKgkaYw8ly353WWSVArAC1h2PLvX7PitS6qs5JXVf8ZJ3_ubUf339hlOFpREYAL6kMs6LahccxgT1qBeKdXgHku0ZuYCKCLQLw_gmZtZcjEb4mI15P3Wjbge89noKycIIe5uXt0GARdpI5wQgDz0rjQZMuyIyqpQsGaWirKmgiH_w18PFP34msTyzUYmsCZbnwoWDuKcXtCS6HuM2tO-90GypVEFPDxdDSA" />
+                    </div>
+                    <div
+                        class="aspect-video cursor-pointer overflow-hidden rounded-lg border border-slate-200 dark:border-slate-800 hover:border-primary transition-all grayscale hover:grayscale-0">
+                        <img alt="Thumbnail 4" class="h-full w-full object-cover"
+                            data-alt="Thumbnail showing layer management settings"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuA1_W5F3p4pJ4XSHGAjlCCBwcI0NiP0XCbGXrblKv8Z9vILcIlKZ7zXsth-B0ArYyNKzHiydgBKBWU2pXnL6OQ4zhh0eeiDHAfBRcAWUXRblzTB59j4YrqKT8FGksaFwQR1T4QxgNON2bctoGuMwueKKtemIMu7fy7LQxhIV3AmjejuR3Dulpl1PHkRzLxcJl66Mxkwu8-RJDo4zEMbvKsbtr0hF74AKlPInoCTZWl30yr0jW9ob78TqowxrYK-Jfcx1mwwQdk5P7U" />
+                    </div>
+                </div>
+                <div class="mt-8 space-y-4">
+                    <h3 class="text-xl font-bold text-slate-900 dark:text-white">Professional Drawing Automation
+                    </h3>
+                    <p class="text-slate-600 dark:text-slate-400 leading-relaxed">
+                        Optimize your engineering workflow with powerful automated drawing tools. 'Drawing &amp;
+                        Export' significantly reduces the time spent on repetitive detailing tasks, allowing your
+                        team to focus on core design challenges. Fully integrated with Autodesk Inventor for
+                        seamless operation.
+                    </p>
                 </div>
             </div>
-            <div class="order-1 lg:order-2">
-                <div class="relative group">
-                    <div
-                        class="absolute -inset-4 bg-[var(--enterprise-blue)]/20 rounded-3xl blur-2xl group-hover:bg-[var(--enterprise-blue)]/30 transition-all">
+
+            <div class="lg:col-span-5">
+                <div
+                    class="sticky top-24 rounded-2xl bg-white dark:bg-slate-900 p-6 sm:p-8 shadow-xl shadow-slate-200/50 dark:shadow-none border border-slate-200 dark:border-slate-800">
+                    <div class="mb-6 flex flex-col gap-1">
+                        <span class="text-xs font-bold uppercase tracking-widest text-primary">Standalone
+                            Package</span>
+                        <h1 class="text-3xl font-black leading-none tracking-tight text-slate-900 dark:text-white">
+                            DRAWING &amp; EXPORT</h1>
                     </div>
-                    <div
-                        class="relative aspect-video bg-slate-800 rounded-2xl overflow-hidden border-4 border-white dark:border-slate-800 shadow-2xl">
-                        <img class="w-full h-full object-cover"
-                            data-alt="Technical engineering 3D CAD modeling software interface"
-                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuA1eMal_BVIJy3SPJP5owxAoOU2do2VLkrnGLkZz3NV2UXYe_suTfgDap_U5aZqifwE6k3JXMKSkbnchnTQYtXE6fc8snix_fyVG6Upoh60GQVqnZlQ2A7Cq6zXe1f1DRtRsNsNsAdQ7qpEVMVP-g6BsCTqDTl9jEsXWyz_BvB4GUY6DevBz3gc1STpcaCrq5fsbC0J85ygSurElN7LooLYTwliuScWV80lL0uWBIOMg_8lx1Tq_NHoXzoQlA5jYeT7tJZ6-yja-kI" />
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-8">
-                            <div class="flex items-center gap-4 text-white">
-                                <span class="material-symbols-outlined text-4xl">play_circle</span>
-                                <div>
-                                    <p class="font-bold">Watch Feature Demo</p>
-                                    <p class="text-sm text-slate-200">2:45 • High Precision Workflow</p>
-                                </div>
+                    <div class="mb-8 space-y-4 border-y border-slate-100 dark:border-slate-800 py-6">
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm font-medium text-slate-500 dark:text-slate-400">Platform</span>
+                            <span class="text-sm font-semibold text-slate-900 dark:text-white">Autodesk
+                                Inventor</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm font-medium text-slate-500 dark:text-slate-400">Usage</span>
+                            <span class="text-sm font-semibold text-slate-900 dark:text-white">Daily engineering
+                                work</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm font-medium text-slate-500 dark:text-slate-400">Installation</span>
+                            <span class="text-sm font-semibold text-slate-900 dark:text-white">Per user / per
+                                machine</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm font-medium text-slate-500 dark:text-slate-400">Team Size</span>
+                            <span class="text-sm font-semibold text-slate-900 dark:text-white">From 1 to 50+
+                                users</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm font-medium text-slate-500 dark:text-slate-400">Language</span>
+                            <span class="text-sm font-semibold text-slate-900 dark:text-white">English /
+                                Netherlands</span>
+                        </div>
+                    </div>
+                    <div class="mb-8 space-y-6">
+                        <div class="flex items-baseline gap-2">
+                            <span class="text-4xl font-black text-slate-900 dark:text-white">€239</span>
+                            <span class="text-lg font-medium text-slate-500 dark:text-slate-400">/ 12 months</span>
+                        </div>
+                        <div class="space-y-3">
+                            <label class="text-xs font-bold uppercase tracking-wider text-slate-500">Subscription
+                                Period</label>
+                            <div class="grid grid-cols-3 gap-2">
+                                <button
+                                    class="rounded-lg border-2 border-slate-100 bg-white py-3 text-sm font-bold text-slate-600 hover:border-primary/50 transition-all dark:border-slate-800 dark:bg-slate-800 dark:text-slate-300">3
+                                    months</button>
+                                <button
+                                    class="rounded-lg border-2 border-slate-100 bg-white py-3 text-sm font-bold text-slate-600 hover:border-primary/50 transition-all dark:border-slate-800 dark:bg-slate-800 dark:text-slate-300">6
+                                    months</button>
+                                <button
+                                    class="rounded-lg border-2 border-primary bg-primary/5 py-3 text-sm font-bold text-primary transition-all dark:bg-primary/10">12
+                                    months</button>
                             </div>
                         </div>
                     </div>
+                    <div class="space-y-4">
+                        <button
+                            class="group relative flex w-full items-center justify-center gap-2 overflow-hidden rounded-xl bg-[var(--enterprise-blue)] py-4 text-lg font-bold text-white transition-all hover:bg-blue-600 active:scale-[0.98] shadow-lg shadow-blue-900/20">
+                            <span>Buy Now</span>
+                            <span
+                                class="material-symbols-outlined text-xl transition-transform group-hover:translate-x-1">shopping_cart</span>
+                        </button>
+                        <p class="text-center text-xs text-slate-400 dark:text-slate-500">
+                            30-day money-back guarantee. No credit card required for trial.
+                        </p>
+                    </div>
                 </div>
             </div>
-        </section>
-        <!-- Trust Badges -->
+        </div>
+
         <div
             class="flex flex-wrap justify-center items-center gap-8 md:gap-16 py-8 border-y border-slate-200 dark:border-slate-800 mb-20 opacity-60">
             <div class="flex items-center gap-2 grayscale hover:grayscale-0 transition-all">
@@ -101,7 +152,7 @@
                 <span class="font-bold text-lg tracking-tight">USED BY 500+ FIRMS</span>
             </div>
         </div>
-        <!-- Key Features Section -->
+
         <section class="mb-24">
             <div class="text-center max-w-3xl mx-auto mb-16">
                 <h2 class="text-3xl font-black mb-4">Technical Excellence Redefined</h2>
@@ -143,19 +194,19 @@
                 </div>
             </div>
         </section>
-        <!-- Save More with Bundles -->
+
         <section class="mb-24">
             <div class="flex items-end justify-between mb-10">
                 <div>
                     <h2 class="text-3xl font-black mb-2">Save More with Bundles</h2>
                     <p class="text-slate-600 dark:text-slate-400">Maximize your toolset while minimizing your costs.</p>
                 </div>
-                <a class="text-[var(--enterprise-blue)] font-bold text-sm flex items-center gap-1 hover:underline" href="#">
+                <a class="text-[var(--enterprise-blue)] font-bold text-sm flex items-center gap-1 hover:underline"
+                    href="#">
                     View All Bundles <span class="material-symbols-outlined">chevron_right</span>
                 </a>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <!-- Bundle Card 1 -->
                 <div
                     class="group relative overflow-hidden rounded-2xl border-2 border-[var(--enterprise-blue)] bg-[var(--enterprise-blue)]/5 p-1 transition-all hover:shadow-2xl hover:shadow-blue-900/10">
                     <div class="absolute top-4 right-4 z-10">
@@ -198,7 +249,6 @@
                         </button>
                     </div>
                 </div>
-                <!-- Bundle Card 2 -->
                 <div
                     class="group relative overflow-hidden rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-100/50 dark:bg-slate-800/50 p-8 transition-all hover:shadow-xl">
                     <div class="flex justify-between items-start mb-6">
@@ -232,11 +282,10 @@
                 </div>
             </div>
         </section>
-        <!-- Frequently Bought Together / Related Products -->
+
         <section class="mb-20">
             <h2 class="text-2xl font-black mb-8">Frequently Bought Together</h2>
             <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-                <!-- Related Item 1 -->
                 <div
                     class="group bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden hover:shadow-lg transition-all">
                     <div class="aspect-square bg-slate-100 dark:bg-slate-800 p-4">
@@ -247,15 +296,14 @@
                     <div class="p-4">
                         <h4 class="font-bold text-sm mb-1 truncate">RenderPro Engine</h4>
                         <div class="flex items-center justify-between">
-                            <span class="text-primary font-bold">$79</span>
+                            <span class="text-[var(--enterprise-blue)] font-bold">$79</span>
                             <button
-                                class="w-8 h-8 rounded-full border border-slate-200 dark:border-slate-700 flex items-center justify-center hover:bg-primary hover:text-white hover:border-primary transition-all">
+                                class="w-8 h-8 rounded-full border border-slate-200 dark:border-slate-700 flex items-center justify-center hover:bg-[var(--enterprise-blue)] hover:text-white hover:border-[var(--enterprise-blue)] transition-all">
                                 <span class="material-symbols-outlined !text-sm">add</span>
                             </button>
                         </div>
                     </div>
                 </div>
-                <!-- Related Item 2 -->
                 <div
                     class="group bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden hover:shadow-lg transition-all">
                     <div class="aspect-square bg-slate-100 dark:bg-slate-800 p-4">
@@ -266,15 +314,14 @@
                     <div class="p-4">
                         <h4 class="font-bold text-sm mb-1 truncate">Material Library XL</h4>
                         <div class="flex items-center justify-between">
-                            <span class="text-primary font-bold">$49</span>
+                            <span class="text-[var(--enterprise-blue)] font-bold">$49</span>
                             <button
-                                class="w-8 h-8 rounded-full border border-slate-200 dark:border-slate-700 flex items-center justify-center hover:bg-primary hover:text-white hover:border-primary transition-all">
+                                class="w-8 h-8 rounded-full border border-slate-200 dark:border-slate-700 flex items-center justify-center hover:bg-[var(--enterprise-blue)] hover:text-white hover:border-[var(--enterprise-blue)] transition-all">
                                 <span class="material-symbols-outlined !text-sm">add</span>
                             </button>
                         </div>
                     </div>
                 </div>
-                <!-- Related Item 3 -->
                 <div
                     class="group bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden hover:shadow-lg transition-all">
                     <div class="aspect-square bg-slate-100 dark:bg-slate-800 p-4">
@@ -285,15 +332,14 @@
                     <div class="p-4">
                         <h4 class="font-bold text-sm mb-1 truncate">Constraint Solver Pro</h4>
                         <div class="flex items-center justify-between">
-                            <span class="text-primary font-bold">$129</span>
+                            <span class="text-[var(--enterprise-blue)] font-bold">$129</span>
                             <button
-                                class="w-8 h-8 rounded-full border border-slate-200 dark:border-slate-700 flex items-center justify-center hover:bg-primary hover:text-white hover:border-primary transition-all">
+                                class="w-8 h-8 rounded-full border border-slate-200 dark:border-slate-700 flex items-center justify-center hover:bg-[var(--enterprise-blue)] hover:text-white hover:border-[var(--enterprise-blue)] transition-all">
                                 <span class="material-symbols-outlined !text-sm">add</span>
                             </button>
                         </div>
                     </div>
                 </div>
-                <!-- Related Item 4 -->
                 <div
                     class="group bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden hover:shadow-lg transition-all">
                     <div class="aspect-square bg-slate-100 dark:bg-slate-800 p-4">
@@ -304,9 +350,9 @@
                     <div class="p-4">
                         <h4 class="font-bold text-sm mb-1 truncate">Cloud Sync Utility</h4>
                         <div class="flex items-center justify-between">
-                            <span class="text-primary font-bold">$29</span>
+                            <span class="text-[var(--enterprise-blue)] font-bold">$29</span>
                             <button
-                                class="w-8 h-8 rounded-full border border-slate-200 dark:border-slate-700 flex items-center justify-center hover:bg-primary hover:text-white hover:border-primary transition-all">
+                                class="w-8 h-8 rounded-full border border-slate-200 dark:border-slate-700 flex items-center justify-center hover:bg-[var(--enterprise-blue)] hover:text-white hover:border-[var(--enterprise-blue)] transition-all">
                                 <span class="material-symbols-outlined !text-sm">add</span>
                             </button>
                         </div>
@@ -314,5 +360,5 @@
                 </div>
             </div>
         </section>
-    </div>
+    </main>
 @endsection

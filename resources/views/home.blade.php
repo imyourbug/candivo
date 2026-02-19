@@ -161,7 +161,6 @@
                 data-slide="3"></button>
         </div>
     </section>
-
     <script>
         $(document).ready(function() {
             let currentSlide = 0;
@@ -328,316 +327,122 @@
             </div>
         </div>
     </section>
-    <section class="max-w-7xl mx-auto px-10 lg:px-16 py-32">
-        <div class="flex flex-col lg:flex-row lg:items-end justify-between mb-20 gap-8">
-            <div class="max-w-2xl">
-                <h2 class="text-4xl lg:text-5xl font-black text-[var(--enterprise-blue)] tracking-tight">The Software Suite
-                </h2>
-                <p class="text-slate-500 text-lg mt-6 leading-relaxed">Precision-engineered packages tailored to specific
-                    engineering roles, from rapid prototyping to enterprise data management.</p>
+    @foreach ($allTypes as $type)
+        @if (!$loop->first)
+            <div class="max-w-7xl mx-auto px-10 lg:px-16">
+                <div class="my-10 h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent"></div>
             </div>
-            <div class="flex items-center gap-4 bg-slate-50 p-2 rounded-2xl">
-                <button class="px-6 py-2 bg-white shadow-sm rounded-xl text-sm font-bold text-[var(--enterprise-blue)]">All
-                    Packages</button>
-                <button
-                    class="px-6 py-2 hover:bg-white/50 rounded-xl text-sm font-bold text-slate-400 transition-all">Automation</button>
-                <button
-                    class="px-6 py-2 hover:bg-white/50 rounded-xl text-sm font-bold text-slate-400 transition-all">Analysis</button>
-            </div>
-        </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10">
-            <div
-                class="group flex flex-col glass-card rounded-[32px] overflow-hidden shadow-xl shadow-slate-200/40 hover:shadow-2xl hover:shadow-blue-900/10 transition-all duration-500">
-                <div class="relative aspect-[5/4] overflow-hidden m-3 rounded-[24px]">
-                    <img alt="Modeling Suite"
-                        class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuD0xn8klFRg-K-wRgdq9BzT8p7YQbk6CjpWvfNLtc2vdCkRslFovVEeXhTTPi8n6Wg4kQk6g5XGMAA9Eje2zDvPqgmIT-5DGhYHSfGg8_3ikow9PiqSqnjhbl4vKZrJGIdPvdSeyLeVSba8OMJLs1VMbFXsof6nhoC7sGi9QImZ1nT5NHC9Go5RlZWKq_GowsX26ajNPYPCPWaol77sCdSPRs-kfLoBSSMaOb37ctMPwcUx8bTWWT9eDcj23XJ1ltEnAAZOQQvyBjI" />
-                    <div class="absolute top-4 left-4">
-                        <span
-                            class="bg-white/95 backdrop-blur-sm text-[var(--enterprise-blue)] px-4 py-1.5 rounded-full text-[10px] font-extrabold uppercase tracking-widest shadow-lg">
-                            High Demand
-                        </span>
-                    </div>
+        @endif
+        <section class="max-w-7xl mx-auto px-10 lg:px-16">
+            @php
+                $packages = $type->packages;
+            @endphp
+            <div class="flex flex-col lg:flex-row lg:items-end justify-between mb-10 gap-8">
+                <div class="max-w-2xl">
+                    {{-- <span
+                        class="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-slate-400 bg-slate-50 border border-slate-100 px-3 py-1 rounded-full mb-4">
+                        Category
+                    </span> --}}
+                    <h2 class="text-4xl lg:text-5xl font-black text-[var(--enterprise-blue)] tracking-tight">
+                        {{ $type->name }}
+                    </h2>
+                    <p class="text-slate-500 text-lg mt-6 leading-relaxed">Precision-engineered packages tailored to
+                        specific
+                        engineering roles, from rapid prototyping to enterprise data management.</p>
                 </div>
-                <div class="p-8 pt-4 flex flex-col flex-1">
-                    <h3 class="text-xl font-bold text-[var(--enterprise-blue)]">Modeling Suite</h3>
-                    <p class="text-slate-500 text-sm mt-3 leading-relaxed">Parametric efficiency for high-complexity 3D
-                        models.</p>
-                    <div class="mt-auto pt-8 flex flex-col items-center">
-                        <div class="flex flex-col items-center mb-6">
-                            <span class="text-slate-300 text-sm line-through font-medium mb-1">$599.00</span>
-                            <span class="text-3xl font-black text-[var(--enterprise-blue)] tracking-tight">$449.00</span>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10 mb-10">
+                @forelse ($packages as $package)
+                    @php
+                        $pricing = $package->pricing->sortBy('price')->first();
+                        $price = $pricing ? (float) $pricing->price : 0;
+                        $currency = $pricing?->currency ?? 'EUR';
+                        $currencySymbol = $currency === 'EUR' ? '€' : $currency . ' ';
+                        $badge = 'Package';
+                        $fallbackImage =
+                            $package->avatar ?:
+                            'https://lh3.googleusercontent.com/aida-public/AB6AXuD0xn8klFRg-K-wRgdq9BzT8p7YQbk6CjpWvfNLtc2vdCkRslFovVEeXhTTPi8n6Wg4kQk6g5XGMAA9Eje2zDvPqgmIT-5DGhYHSfGg8_3ikow9PiqSqnjhbl4vKZrJGIdPvdSeyLeVSba8OMJLs1VMbFXsof6nhoC7sGi9QImZ1nT5NHC9Go5RlZWKq_GowsX26ajNPYPCPWaol77sCdSPRs-kfLoBSSMaOb37ctMPwcUx8bTWWT9eDcj23XJ1ltEnAAZOQQvyBjI';
+                        $desc = $package->description ?: 'Curated tools for rapid deployment and consistent results.';
+                    @endphp
+                    <div
+                        class="group flex flex-col glass-card rounded-[32px] overflow-hidden shadow-xl shadow-slate-200/40 hover:shadow-2xl hover:shadow-blue-1900/10 transition-all duration-500">
+                        <div class="relative aspect-[5/4] overflow-hidden m-3 rounded-[24px]">
+                            <img alt="{{ $package->name }}"
+                                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                                src="{{ $fallbackImage }}" />
+                            <div class="absolute top-4 left-4">
+                                <span
+                                    class="bg-white/95 backdrop-blur-sm text-[var(--enterprise-blue)] px-4 py-1.5 rounded-full text-[10px] font-extrabold uppercase tracking-widest shadow-lg">
+                                    {{ $badge }}
+                                </span>
+                            </div>
                         </div>
-                        <button
-                            class="quickBuyBtn w-full py-4 bg-[var(--enterprise-blue)] text-white text-sm font-bold rounded-2xl hover:bg-blue-600 transition-all active:scale-[0.98] shadow-lg shadow-blue-900/10"
-                            data-product-name="Modeling Suite" data-product-price="449" data-product-old-price="599"
-                            data-product-image="https://lh3.googleusercontent.com/aida-public/AB6AXuD0xn8klFRg-K-wRgdq9BzT8p7YQbk6CjpWvfNLtc2vdCkRslFovVEeXhTTPi8n6Wg4kQk6g5XGMAA9Eje2zDvPqgmIT-5DGhYHSfGg8_3ikow9PiqSqnjhbl4vKZrJGIdPvdSeyLeVSba8OMJLs1VMbFXsof6nhoC7sGi9QImZ1nT5NHC9Go5RlZWKq_GowsX26ajNPYPCPWaol77sCdSPRs-kfLoBSSMaOb37ctMPwcUx8bTWWT9eDcj23XJ1ltEnAAZOQQvyBjI">
-                            Quick Buy
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <div
-                class="group flex flex-col glass-card rounded-[32px] overflow-hidden shadow-xl shadow-slate-200/40 hover:shadow-2xl hover:shadow-blue-900/10 transition-all duration-500">
-                <div class="relative aspect-[5/4] overflow-hidden m-3 rounded-[24px]">
-                    <img alt="Automation Pro"
-                        class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuABiuR3EtpFe7mIKUqtUleN7jxNUwJHyaX4f444l0nXna-mbpS_TTTQFVYxdzPcL7zZ5KLSiZ0JQxUE-0-AQlofogRoRXJq6v8YtmeS9ZqI3AHDN1fVnkMQLLFMfOfeG2vQIwR6dtsbCTCWYvl6gfnmu9Iv9wjXbFKH-Z5hXsifmpNlzii0TKZOUs-sDUXiUCvQVzX-RosgPdyc8Am5nR8-JnDje3cBRFe2-eoFa2Ruv9AeD8XaIuLfCnL6EU69DDsNvgybAgrNsFs" />
-                    <div class="absolute top-4 left-4">
-                        <span
-                            class="bg-blue-600 text-white px-4 py-1.5 rounded-full text-[10px] font-extrabold uppercase tracking-widest shadow-lg">
-                            Best Value
-                        </span>
-                    </div>
-                </div>
-                <div class="p-8 pt-4 flex flex-col flex-1">
-                    <h3 class="text-xl font-bold text-[var(--enterprise-blue)]">Automation Pro</h3>
-                    <p class="text-slate-500 text-sm mt-3 leading-relaxed">iLogic-driven logic for rapid design iteration
-                        workflows.</p>
-                    <div class="mt-auto pt-8 flex flex-col items-center">
-                        <div class="flex flex-col items-center mb-6">
-                            <span class="text-slate-300 text-sm line-through font-medium mb-1">$899.00</span>
-                            <span class="text-3xl font-black text-[var(--enterprise-blue)] tracking-tight">$699.00</span>
+                        <div class="p-8 pt-4 flex flex-col flex-1">
+                            <h3 class="text-xl font-bold text-[var(--enterprise-blue)]">{{ $package->name }}</h3>
+                            <p class="text-slate-500 text-sm mt-3 leading-relaxed">
+                                {{ $desc }}
+                            </p>
+                            <div class="mt-auto pt-8 flex flex-col items-center">
+                                <div class="flex flex-col items-center mb-6">
+                                    <span class="text-3xl font-black text-[var(--enterprise-blue)] tracking-tight">
+                                        {{ $currencySymbol }}{{ number_format($price, 2) }}
+                                    </span>
+                                </div>
+                                <button onclick="window.location.href='{{ route('package-detail', $package) }}'"
+                                    class="w-full py-4 bg-white text-[var(--enterprise-blue)] text-sm font-bold rounded-2xl hover:bg-gray-200 transition-all active:scale-[0.98] shadow-lg shadow-blue-900/10 mb-4 border-slate-200 border inline-flex items-center justify-center gap-2 whitespace-nowrap leading-none"
+                                    data-bundle-name="{{ $package->name }}" data-bundle-price="{{ $price }}"
+                                    data-bundle-image="{{ $fallbackImage }}"
+                                    data-bundle-items="{{ $package->products->pluck('name')->implode(',') }}">
+                                    <span class="inline-flex items-center gap-2">
+                                        <span>View Package</span>
+                                        <span class="material-symbols-outlined text-lg">visibility</span>
+                                    </span>
+                                </button>
+                                @if ($type->name !== App\Constants\GlobalConstant::TYPE_CORE_FREE)
+                                    <button
+                                        class="buyPackageNowBtn w-full py-4 bg-[var(--enterprise-blue)] text-white text-sm font-bold rounded-2xl hover:bg-blue-600 transition-all active:scale-[0.98] shadow-lg shadow-blue-900/10"
+                                        data-package-id="{{ $package->id }}" data-bundle-name="{{ $package->name }}"
+                                        data-bundle-price="{{ $price }}" data-bundle-image="{{ $fallbackImage }}"
+                                        data-bundle-period="{{ $pricing?->duration_months ?? '' }}"
+                                        data-bundle-items="{{ $package->products->pluck('name')->implode(',') }}">
+                                        <span class="inline-flex items-center gap-2">
+                                            <span>Buy Now</span>
+                                            <span class="material-symbols-outlined text-lg">shopping_cart</span>
+                                        </span>
+                                    </button>
+                                @endif
+                            </div>
                         </div>
-                        <button
-                            class="quickBuyBtn w-full py-4 bg-[var(--enterprise-blue)] text-white text-sm font-bold rounded-2xl hover:bg-blue-600 transition-all active:scale-[0.98] shadow-lg shadow-blue-900/10"
-                            data-product-name="Automation Pro" data-product-price="699" data-product-old-price="899"
-                            data-product-image="https://lh3.googleusercontent.com/aida-public/AB6AXuABiuR3EtpFe7mIKUqtUleN7jxNUwJHyaX4f444l0nXna-mbpS_TTTQFVYxdzPcL7zZ5KLSiZ0JQxUE-0-AQlofogRoRXJq6v8YtmeS9ZqI3AHDN1fVnkMQLLFMfOfeG2vQIwR6dtsbCTCWYvl6gfnmu9Iv9wjXbFKH-Z5hXsifmpNlzii0TKZOUs-sDUXiUCvQVzX-RosgPdyc8Am5nR8-JnDje3cBRFe2-eoFa2Ruv9AeD8XaIuLfCnL6EU69DDsNvgybAgrNsFs">
-                            Quick Buy
-                        </button>
                     </div>
-                </div>
+                @empty
+                    <div class="col-span-full text-center text-slate-500">No packages found for this category.</div>
+                @endforelse
             </div>
-            <div
-                class="group flex flex-col glass-card rounded-[32px] overflow-hidden shadow-xl shadow-slate-200/40 hover:shadow-2xl hover:shadow-blue-900/10 transition-all duration-500">
-                <div class="relative aspect-[5/4] overflow-hidden m-3 rounded-[24px]">
-                    <img alt="Simulation Toolkit"
-                        class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuA5ypRmi7k6qRIULbfebvTvm4YLkotQAsl0fuvoVN3_ey3_lN1103cSN3sDrhqQaZl2-_QjOBauKYx99stjEOciMbxxQaf456cwpxJa0ZflS6ToVT08SkHN0Fj6Ce0BayX--RufQQ8SZ06e_XUA8zjBxJeiJq_M72LEfFsst-ZZEjy4ROAvrLG4dcE6G6vU3oI7DqstMnFZH6jpQA3ogsb9OyyZ46SOxmk1_Jnc-o35PvEHeXvk1SGDdLlj-uvLiLJg-c-8D4buEHA" />
-                    <div class="absolute top-4 left-4">
-                        <span
-                            class="bg-white/95 text-[var(--enterprise-blue)] px-4 py-1.5 rounded-full text-[10px] font-extrabold uppercase tracking-widest shadow-lg">
-                            New Arrival
-                        </span>
-                    </div>
-                </div>
-                <div class="p-8 pt-4 flex flex-col flex-1">
-                    <h3 class="text-xl font-bold text-[var(--enterprise-blue)]">Simulation Kit</h3>
-                    <p class="text-slate-500 text-sm mt-3 leading-relaxed">Advanced FEA modules for stress testing
-                        validation.</p>
-                    <div class="mt-auto pt-8 flex flex-col items-center">
-                        <div class="flex flex-col items-center mb-6">
-                            <span class="text-slate-300 text-sm line-through font-medium mb-1">$1,299.00</span>
-                            <span class="text-3xl font-black text-[var(--enterprise-blue)] tracking-tight">$999.00</span>
-                        </div>
-                        <button
-                            class="quickBuyBtn w-full py-4 bg-[var(--enterprise-blue)] text-white text-sm font-bold rounded-2xl hover:bg-blue-600 transition-all active:scale-[0.98] shadow-lg shadow-blue-900/10"
-                            data-product-name="Simulation Kit" data-product-price="999" data-product-old-price="1299"
-                            data-product-image="https://lh3.googleusercontent.com/aida-public/AB6AXuA5ypRmi7k6qRIULbfebvTvm4YLkotQAsl0fuvoVN3_ey3_lN1103cSN3sDrhqQaZl2-_QjOBauKYx99stjEOciMbxxQaf456cwpxJa0ZflS6ToVT08SkHN0Fj6Ce0BayX--RufQQ8SZ06e_XUA8zjBxJeiJq_M72LEfFsst-ZZEjy4ROAvrLG4dcE6G6vU3oI7DqstMnFZH6jpQA3ogsb9OyyZ46SOxmk1_Jnc-o35PvEHeXvk1SGDdLlj-uvLiLJg-c-8D4buEHA">
-                            Quick Buy
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <div
-                class="group flex flex-col glass-card rounded-[32px] overflow-hidden shadow-xl shadow-slate-200/40 hover:shadow-2xl hover:shadow-blue-900/10 transition-all duration-500">
-                <div class="relative aspect-[5/4] overflow-hidden m-3 rounded-[24px]">
-                    <img alt="Data Management"
-                        class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuAfGGGqCcjGOwLyeLuLmIRlJq9Zn1MxNLSqJKqPA6x97tONidMOdo5r6MGwyaCxQpWAcU9VyfCurG_26Wi1yalEuauitJr9fgE2904hioT2Z9ojg_nfhQwacSPiX3nkCURAxSrtdkp8HJFz7UhgfMloaDB5whaFAjCzX6Hjnh4NVkd3PBp37Pvr0s5jDKRbplLCMynvBnxUYgzhjpFCUSM81QaRI-8z6BXkATRcNOgvaDgX_v_l_Hg3X1iFWzpcNkJJRNVbgUXQ5cw" />
-                    <div class="absolute top-4 left-4">
-                        <span
-                            class="bg-white/95 text-[var(--enterprise-blue)] px-4 py-1.5 rounded-full text-[10px] font-extrabold uppercase tracking-widest shadow-lg">
-                            Enterprise
-                        </span>
-                    </div>
-                </div>
-                <div class="p-8 pt-4 flex flex-col flex-1">
-                    <h3 class="text-xl font-bold text-[var(--enterprise-blue)]">Data Manager</h3>
-                    <p class="text-slate-500 text-sm mt-3 leading-relaxed">PDM solutions for assembly synchronization.</p>
-                    <div class="mt-auto pt-8 flex flex-col items-center">
-                        <div class="flex flex-col items-center mb-6">
-                            <span class="text-slate-300 text-sm line-through font-medium mb-1">$750.00</span>
-                            <span class="text-3xl font-black text-[var(--enterprise-blue)] tracking-tight">$550.00</span>
-                        </div>
-                        <button
-                            class="quickBuyBtn w-full py-4 bg-[var(--enterprise-blue)] text-white text-sm font-bold rounded-2xl hover:bg-blue-600 transition-all active:scale-[0.98] shadow-lg shadow-blue-900/10"
-                            data-product-name="Data Manager" data-product-price="550" data-product-old-price="750"
-                            data-product-image="https://lh3.googleusercontent.com/aida-public/AB6AXuAfGGGqCcjGOwLyeLuLmIRlJq9Zn1MxNLSqJKqPA6x97tONidMOdo5r6MGwyaCxQpWAcU9VyfCurG_26Wi1yalEuauitJr9fgE2904hioT2Z9ojg_nfhQwacSPiX3nkCURAxSrtdkp8HJFz7UhgfMloaDB5whaFAjCzX6Hjnh4NVkd3PBp37Pvr0s5jDKRbplLCMynvBnxUYgzhjpFCUSM81QaRI-8z6BXkATRcNOgvaDgX_v_l_Hg3X1iFWzpcNkJJRNVbgUXQ5cw">
-                            Quick Buy
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="flex justify-center mt-16">
+            {{-- <div class="flex justify-center mt-16">
             <button id="loadMoreBtn"
                 class="px-12 py-4 bg-[var(--enterprise-blue)] text-white font-bold text-lg rounded-2xl shadow-lg shadow-blue-900/10 hover:bg-blue-600 transition-all active:scale-[0.98] flex items-center gap-2">
                 <span class="material-symbols-outlined">add_circle</span>
                 Load More Products
             </button>
+        </div> --}}
+        </section>
+    @endforeach
+    <section class="bg-[#002d5b] py-2">
+        <div class="max-w-7xl mx-auto px-10 lg:px-16">
+            <div
+                class="bg-[#002d5b] rounded-md px-6 py-3 flex flex-col md:flex-row items-center justify-center gap-4 md:gap-6">
+                <p class="text-white text-xl font-bold">Take the next step</p>
+                <a href="#"
+                    class="inline-flex items-center justify-center rounded-full bg-[#137fec] px-8 py-2.5 text-white text-2xl font-black tracking-tight hover:bg-blue-700 transition-colors">
+                    DI-TOOLS Free Trial
+                </a>
+                <a href="#"
+                    class="inline-flex items-center justify-center rounded-full bg-white px-8 py-2.5 text-[#137fec] text-2xl font-black tracking-tight hover:bg-slate-100 transition-colors">
+                    Buy DI-TOOLS
+                </a>
+            </div>
         </div>
     </section>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const fakeProducts = [{
-                    name: 'Advanced Rendering',
-                    description: 'Photorealistic visualization for design presentations.',
-                    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuD0xn8klFRg-K-wRgdq9BzT8p7YQbk6CjpWvfNLtc2vdCkRslFovVEeXhTTPi8n6Wg4kQk6g5XGMAA9Eje2zDvPqgmIT-5DGhYHSfGg8_3ikow9PiqSqnjhbl4vKZrJGIdPvdSeyLeVSba8OMJLs1VMbFXsof6nhoC7sGi9QImZ1nT5NHC9Go5RlZWKq_GowsX26ajNPYPCPWaol77sCdSPRs-kfLoBSSMaOb37ctMPwcUx8bTWWT9eDcj23XJ1ltEnAAZOQQvyBjI',
-                    oldPrice: '$449.00',
-                    newPrice: '$349.00',
-                    badge: 'Premium',
-                    badgeBg: 'bg-purple-600'
-                },
-                {
-                    name: 'Assembly Optimizer',
-                    description: 'Streamline complex assemblies with intelligent automation.',
-                    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuABiuR3EtpFe7mIKUqtUleN7jxNUwJHyaX4f444l0nXna-mbpS_TTTQFVYxdzPcL7zZ5KLSiZ0JQxUE-0-AQlofogRoRXJq6v8YtmeS9ZqI3AHDN1fVnkMQLLFMfOfeG2vQIwR6dtsbCTCWYvl6gfnmu9Iv9wjXbFKH-Z5hXsifmpNlzii0TKZOUs-sDUXiUCvQVzX-RosgPdyc8Am5nR8-JnDje3cBRFe2-eoFa2Ruv9AeD8XaIuLfCnL6EU69DDsNvgybAgrNsFs',
-                    oldPrice: '$599.00',
-                    newPrice: '$449.00',
-                    badge: 'Popular',
-                    badgeBg: 'bg-green-600'
-                },
-                {
-                    name: 'Blueprint Manager',
-                    description: 'Centralized documentation and design versioning.',
-                    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuA5ypRmi7k6qRIULbfebvTvm4YLkotQAsl0fuvoVN3_ey3_lN1103cSN3sDrhqQaZl2-_QjOBauKYx99stjEOciMbxxQaf456cwpxJa0ZflS6ToVT08SkHN0Fj6Ce0BayX--RufQQ8SZ06e_XUA8zjBxJeiJq_M72LEfFsst-ZZEjy4ROAvrLG4dcE6G6vU3oI7DqstMnFZH6jpQA3ogsb9OyyZ46SOxmk1_Jnc-o35PvEHeXvk1SGDdLlj-uvLiLJg-c-8D4buEHA',
-                    oldPrice: '$699.00',
-                    newPrice: '$549.00',
-                    badge: 'Sale',
-                    badgeBg: 'bg-red-600'
-                },
-                {
-                    name: 'Material Database',
-                    description: 'Extensive material properties and specifications library.',
-                    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAfGGGqCcjGOwLyeLuLmIRlJq9Zn1MxNLSqJKqPA6x97tONidMOdo5r6MGwyaCxQpWAcU9VyfCurG_26Wi1yalEuauitJr9fgE2904hioT2Z9ojg_nfhQwacSPiX3nkCURAxSrtdkp8HJFz7UhgfMloaDB5whaFAjCzX6Hjnh4NVkd3PBp37Pvr0s5jDKRbplLCMynvBnxUYgzhjpFCUSM81QaRI-8z6BXkATRcNOgvaDgX_v_l_Hg3X1iFWzpcNkJJRNVbgUXQ5cw',
-                    oldPrice: '$399.00',
-                    newPrice: '$299.00',
-                    badge: 'Featured',
-                    badgeBg: 'bg-indigo-600'
-                }
-            ];
-
-            function createProductCard(product) {
-                return `
-                            <div class="group flex flex-col glass-card rounded-[32px] overflow-hidden shadow-xl shadow-slate-200/40 hover:shadow-2xl hover:shadow-blue-900/10 transition-all duration-500">
-                                <div class="relative aspect-[5/4] overflow-hidden m-3 rounded-[24px]">
-                                    <img alt="${product.name}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" src="${product.image}" />
-                                    <div class="absolute top-4 left-4">
-                                        <span class="bg-white/95 backdrop-blur-sm text-[var(--enterprise-blue)] px-4 py-1.5 rounded-full text-[10px] font-extrabold uppercase tracking-widest shadow-lg">
-                                            ${product.badge}
-                                        </span>
-                                    </div>
-                                </div>
-                                <div class="p-8 pt-4 flex flex-col flex-1">
-                                    <h3 class="text-xl font-bold text-[var(--enterprise-blue)]">${product.name}</h3>
-                                    <p class="text-slate-500 text-sm mt-3 leading-relaxed">${product.description}</p>
-                                    <div class="mt-auto pt-8 flex flex-col items-center">
-                                        <div class="flex flex-col items-center mb-6">
-                                            <span class="text-slate-300 text-sm line-through font-medium mb-1">${product.oldPrice}</span>
-                                            <span class="text-3xl font-black text-[var(--enterprise-blue)] tracking-tight">${product.newPrice}</span>
-                                        </div>
-                                        <button class="quickBuyBtn w-full py-4 bg-[var(--enterprise-blue)] text-white text-sm font-bold rounded-2xl hover:bg-blue-600 transition-all active:scale-[0.98] shadow-lg shadow-blue-900/10" data-product-name="${product.name}" data-product-price="${product.newPrice.replace('$', '').replace(/,/g, '')}" data-product-old-price="${product.oldPrice.replace('$', '').replace(/,/g, '')}" data-product-image="${product.image}">
-                                            Quick Buy
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        `;
-            }
-
-            document.getElementById('loadMoreBtn').addEventListener('click', function() {
-                const button = this;
-                const section = button.closest('section');
-                const grid = section.querySelector('.grid');
-
-                // Disable button during loading
-                button.disabled = true;
-                button.style.opacity = '0.5';
-
-                // Simulate loading delay
-                setTimeout(() => {
-                    fakeProducts.forEach(product => {
-                        grid.insertAdjacentHTML('beforeend', createProductCard(product));
-                    });
-
-                    // Re-enable button
-                    button.disabled = false;
-                    button.style.opacity = '1';
-                }, 500);
-            });
-
-            // Unified event delegation for product clicks — save product and go to product detail
-            document.addEventListener('click', function(e) {
-                // Direct button targets
-                const quickBtn = e.target.closest('.quickBuyBtn');
-                const bundleBtn = e.target.closest('.buyBundleBtn');
-
-                // If user clicked somewhere on the card (not necessarily the button), find the nearest product card
-                const card = e.target.closest('.group');
-
-                let productData = null;
-
-                if (quickBtn) {
-                    productData = {
-                        name: quickBtn.dataset.productName,
-                        price: quickBtn.dataset.productPrice ? parseFloat(quickBtn.dataset
-                            .productPrice) : null,
-                        oldPrice: quickBtn.dataset.productOldPrice ? parseFloat(quickBtn.dataset
-                            .productOldPrice) : null,
-                        image: quickBtn.dataset.productImage || null
-                    };
-                } else if (bundleBtn) {
-                    productData = {
-                        name: bundleBtn.dataset.bundleName || null,
-                        price: bundleBtn.dataset.bundlePrice ? parseFloat(bundleBtn.dataset
-                            .bundlePrice) : null,
-                        oldPrice: bundleBtn.dataset.bundleOldPrice ? parseFloat(bundleBtn.dataset
-                            .bundleOldPrice) : null,
-                        image: bundleBtn.dataset.bundleImage || null,
-                        items: bundleBtn.dataset.bundleItems ? bundleBtn.dataset.bundleItems.split(
-                            ',') : []
-                    };
-                } else if (card) {
-                    // look for a quick/bundle button inside the card to extract product info
-                    const innerQuick = card.querySelector('.quickBuyBtn');
-                    const innerBundle = card.querySelector('.buyBundleBtn');
-                    if (innerQuick) {
-                        productData = {
-                            name: innerQuick.dataset.productName,
-                            price: innerQuick.dataset.productPrice ? parseFloat(innerQuick.dataset
-                                .productPrice) : null,
-                            oldPrice: innerQuick.dataset.productOldPrice ? parseFloat(innerQuick.dataset
-                                .productOldPrice) : null,
-                            image: innerQuick.dataset.productImage || null
-                        };
-                    } else if (innerBundle) {
-                        productData = {
-                            name: innerBundle.dataset.bundleName || null,
-                            price: innerBundle.dataset.bundlePrice ? parseFloat(innerBundle.dataset
-                                .bundlePrice) : null,
-                            oldPrice: innerBundle.dataset.bundleOldPrice ? parseFloat(innerBundle
-                                .dataset.bundleOldPrice) : null,
-                            image: innerBundle.dataset.bundleImage || null,
-                            items: innerBundle.dataset.bundleItems ? innerBundle.dataset.bundleItems
-                                .split(',') : []
-                        };
-                    }
-                }
-
-                if (productData) {
-                    try {
-                        localStorage.setItem('selectedProduct', JSON.stringify(productData));
-                    } catch (err) {
-                        // ignore storage errors
-                    }
-                    // Redirect to product detail page
-                    window.location.href = '/product-detail';
-                }
-            });
-        });
-    </script>
     <section class="bg-slate-50 py-32 px-10 lg:px-16">
         <div class="max-w-7xl mx-auto">
             <div class="text-center mb-20">
@@ -714,6 +519,153 @@
             </div>
         </div>
     </section>
+    <section class="bg-[#002d5b] py-10">
+        <div class="max-w-7xl mx-auto px-10 lg:px-16">
+            <div class="flex flex-wrap items-center justify-center gap-x-10 gap-y-4 text-white text-2xl font-black mb-10">
+                <span>CAMELBAK</span>
+                <span>Vermeer</span>
+                <span>KNAPHEIDE</span>
+                <span>RESEMIN</span>
+                <span>KONICA MINOLTA</span>
+                <span>ColdSnap</span>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <article class="bg-white rounded-lg p-5 flex gap-4 shadow-lg">
+                    <img alt="Customer Story Metalworks" class="w-36 h-28 rounded object-cover flex-shrink-0"
+                        src="https://www.3ds.com/assets/invest/styles/card/public/2025-08/metalworks-banner.png.webp?itok=Pa3I3qDD">
+                    <div>
+                        <p class="text-slate-500 uppercase tracking-wider text-xs font-bold">Customer Story</p>
+                        <h3 class="text-4xl leading-tight font-black text-slate-900">How Metalworks ...</h3>
+                        <p class="text-slate-600 mt-2">Metalworks, Inc. slashes ...</p>
+                    </div>
+                </article>
+                <article class="bg-white rounded-lg p-5 flex gap-4 shadow-lg">
+                    <img alt="Customer Story Resemin" class="w-36 h-28 rounded object-cover flex-shrink-0"
+                        src="https://www.3ds.com/assets/invest/styles/card/public/2023-01/resemin-customer-story-banner.jpg.webp?itok=wG1lKOqS">
+                    <div>
+                        <p class="text-slate-500 uppercase tracking-wider text-xs font-bold">Customer Story</p>
+                        <h3 class="text-4xl leading-tight font-black text-slate-900">Resemin ...</h3>
+                        <p class="text-slate-600 mt-2">DI-TOOLS and 3DEXPERIENCE ...</p>
+                    </div>
+                </article>
+                <article class="bg-white rounded-lg p-5 flex gap-4 shadow-lg">
+                    <img alt="Customer Story BestTugs" class="w-36 h-28 rounded object-cover flex-shrink-0"
+                        src="https://www.3ds.com/assets/invest/styles/card/public/2025-08/best-tug-top-banner.jpg.webp?itok=cwyJ69xX">
+                    <div>
+                        <p class="text-slate-500 uppercase tracking-wider text-xs font-bold">Customer Story</p>
+                        <h3 class="text-4xl leading-tight font-black text-slate-900">Best Tugs Takes the ...</h3>
+                        <p class="text-slate-600 mt-2">BestTugs brings hybrid vehicle ...</p>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+    <section class="relative py-24 overflow-hidden">
+        <div class="absolute inset-0 z-0">
+            <img alt="Customer Story Background" class="w-full h-full object-cover opacity-10"
+                src="https://www.solidworks.com/sites/default/filesd10/styles/webp/public/2025-10/solidworks-customer-one-wheel-banner-2_0.jpg.webp?itok=_-nEDcQW">
+        </div>
+        <div class="max-w-7xl mx-auto px-10 lg:px-16 relative z-10">
+            <h2 class="text-5xl font-black text-[var(--enterprise-blue)] mb-16">Customer Stories</h2>
+            <div class="flex flex-col lg:flex-row gap-12 items-center">
+                <div class="lg:w-1/2 p-12 border-l-4 border-blue-600 bg-white shadow-2xl rounded-r-2xl">
+                    <h3 class="text-3xl font-bold text-slate-900 mb-6">How Future Motion Created Onewheel</h3>
+                    <p class="text-slate-600 text-lg mb-8 leading-relaxed">From a rough prototype to a radical ride, Future
+                        Motion relied on DI-TOOL for every phase of design, simulation, and production.</p>
+                    <div class="space-y-4">
+                        <a class="flex items-center gap-2 text-[#137fec] font-bold hover:underline" href="#">
+                            <span class="material-symbols-outlined">arrow_circle_right</span> Read Future Motion customer
+                            story
+                        </a>
+                        <a class="flex items-center gap-2 text-[#137fec] font-bold hover:underline" href="#">
+                            <span class="material-symbols-outlined">arrow_circle_right</span> All customer stories
+                        </a>
+                    </div>
+                </div>
+                <div class="lg:w-1/2 relative rounded-3xl overflow-hidden shadow-2xl">
+                    <iframe class="w-full aspect-video" src="https://www.youtube.com/watch?v=hnTQoO-VQrU&t"
+                        title="YouTube video player" frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowfullscreen>
+                    </iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="bg-[#002d5b] py-2">
+        <div class="max-w-7xl mx-auto px-10 lg:px-16">
+            <div
+                class="bg-[#002d5b] rounded-md px-6 py-3 flex flex-col md:flex-row items-center justify-center gap-4 md:gap-6">
+                <p class="text-white text-xl font-bold">Stay up to date with the latest SOLIDWORKS news on SOLIDWORKS Live
+                </p>
+                <a href="#"
+                    class="inline-flex items-center justify-center rounded-full bg-white px-8 py-2.5 text-[#137fec] text-2xl font-black tracking-tight hover:bg-slate-100 transition-colors">
+                    Watch Now
+                </a>
+            </div>
+        </div>
+    </section>
+    <section class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-10 lg:px-16">
+            <h2 class="text-5xl font-black text-[var(--enterprise-blue)] mb-12">Community</h2>
+            <div class="flex flex-col lg:flex-row gap-12 mb-20">
+                <div class="lg:w-1/3 p-10 border-l-4 border-blue-600">
+                    <h3 class="text-2xl font-bold mb-4">Community is at our core.</h3>
+                    <p class="text-slate-600 leading-relaxed mb-6">DI-TOOL has a passionate, engaged community of more than
+                        8 million users from every corner of the world. Discover the DI-TOOL community and the variety of
+                        programs available for all of our users.</p>
+                    <div class="flex flex-wrap gap-6 font-bold text-[#137fec]">
+                        <a class="flex items-center gap-2 hover:underline" href="#"><span
+                                class="material-symbols-outlined">arrow_circle_right</span> Find out more</a>
+                        <a class="flex items-center gap-2 hover:underline" href="#"><span
+                                class="material-symbols-outlined">arrow_circle_right</span> DI-TOOL User Group Network</a>
+                    </div>
+                </div>
+                <div class="lg:w-2/3">
+                    <img alt="Community Events" class="rounded-3xl shadow-xl w-full"
+                        src="https://d1yei2z3i6k35z.cloudfront.net/11186306/67d438b1af9b6_2025-03-14_21h09_01.png">
+                </div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div
+                    class="bg-white rounded-2xl shadow-lg border border-slate-100 overflow-hidden hover:shadow-xl transition-shadow">
+                    <div class="h-48 bg-slate-100 overflow-hidden">
+                        <img alt="Students" class="w-full h-full object-cover"
+                            src="https://www.solidworks.com/sites/default/filesd10/styles/og_image/public/migration/2022-11/solidworks-students-hero-3.jpg?itok=QOWmm9P9">
+                    </div>
+                    <div class="p-6">
+                        <h4 class="font-bold text-xl mb-3">DI-TOOL for Students</h4>
+                        <p class="text-slate-500 text-sm">As the industry standard for design and engineering, DI-TOOL is
+                            the perfect software platform...</p>
+                    </div>
+                </div>
+                <div
+                    class="bg-white rounded-2xl shadow-lg border border-slate-100 overflow-hidden hover:shadow-xl transition-shadow">
+                    <div class="h-48 bg-slate-100 overflow-hidden">
+                        <img alt="Makers" class="w-full h-full object-cover"
+                            src="https://www.solidworks.com/sites/default/filesd10/styles/og_image/public/2025-01/solidworks-makers-card-thumb.jpg?itok=HM7Y7HF_">
+                    </div>
+                    <div class="p-6">
+                        <h4 class="font-bold text-xl mb-3">DI-TOOL for Makers</h4>
+                        <p class="text-slate-500 text-sm">DI-TOOL for Makers provides full-functionality 3D CAD tools for
+                            personal use. Just $48 USD a ...</p>
+                    </div>
+                </div>
+                <div
+                    class="bg-white rounded-2xl shadow-lg border border-slate-100 overflow-hidden hover:shadow-xl transition-shadow">
+                    <div class="h-48 bg-slate-100 overflow-hidden">
+                        <img alt="Startups" class="w-full h-full object-cover"
+                            src="https://www.solidworks.com/sites/default/filesd10/styles/og_image/public/migration/opengraph_startup_drone_example1.jpg?itok=U6fjCCos">
+                    </div>
+                    <div class="p-6">
+                        <h4 class="font-bold text-xl mb-3">DI-TOOL for Startups Program</h4>
+                        <p class="text-slate-500 text-sm">Industry-leading 3D design tools for hardware startups at nominal
+                            cost</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
     <section class="max-w-7xl mx-auto px-10 py-32">
         <div class="relative p-16 lg:p-24 bg-[var(--enterprise-blue)] rounded-[60px] overflow-hidden text-center">
             <div class="absolute inset-0 opacity-10 pointer-events-none">
@@ -722,7 +674,8 @@
             </div>
             <div class="relative z-10">
                 <h2 class="text-4xl lg:text-6xl font-black text-white mb-8 tracking-tight">Scale Your Engineering
-                    <br />Infrastructure Today</h2>
+                    <br />Infrastructure Today
+                </h2>
                 <p class="text-blue-100 text-xl max-w-2xl mx-auto mb-12 font-medium">Connect with our solution architects
                     to build a bespoke automation strategy for your manufacturing pipeline.</p>
                 <div class="flex flex-wrap justify-center gap-6">
@@ -741,4 +694,59 @@
 @endsection
 
 @push('scripts')
+    <script>
+        $(document).ready(function() {
+            const $buyPackageNowBtn = $('.buyPackageNowBtn');
+            if ($buyPackageNowBtn.length === 0) return;
+
+            const getCart = () => {
+                try {
+                    const raw = localStorage.getItem('cart');
+                    return raw ? JSON.parse(raw) : [];
+                } catch (e) {
+                    return [];
+                }
+            };
+
+            const setCart = (items) => {
+                try {
+                    localStorage.setItem('cart', JSON.stringify(items));
+                } catch (e) {}
+            };
+
+            $buyPackageNowBtn.on('click', function() {
+                const rawId = $(this).data('package-id');
+                const id = String(rawId ?? '');
+                const name = $(this).data('bundle-name') || 'Package';
+                const price = Number($(this).data('bundle-price')) || 0;
+                const image = $(this).data('bundle-image') || '';
+                const period = ($(this).data('bundle-period') || '').toString();
+
+                const item = {
+                    id,
+                    name,
+                    price,
+                    period,
+                    qty: 1,
+                    type: 'package',
+                    image
+                };
+
+                const items = getCart();
+                const existingIdx = items.findIndex(it =>
+                    String(it.type || 'package') === 'package' &&
+                    String(it.id ?? '') === item.id &&
+                    String(it.period ?? '') === item.period
+                );
+                if (existingIdx >= 0) {
+                    items[existingIdx].qty = (items[existingIdx].qty || 1) + 1;
+                } else {
+                    items.push(item);
+                }
+                setCart(items);
+                window.dispatchEvent(new Event('cart:updated'));
+                window.location.href = '/checkout';
+            });
+        });
+    </script>
 @endpush

@@ -9,14 +9,16 @@
             <a href="#" class="block px-4 py-3 text-[#4c739a] hover:bg-blue-50 hover:text-[#002b5c] text-sm font-medium transition-colors">Solution 3</a>
         </div>
     </div> -->
-    <a class="text-[#4c739a] hover:text-[#002b5c] text-sm font-semibold transition-colors"
-        href="{{ route('home') }}">Home</a>
-    <a class="text-[#4c739a] hover:text-[#002b5c] text-sm font-semibold transition-colors"
-        href="{{ route('combo') }}">Combo</a>
+    {{-- <a class="text-[#4c739a] hover:text-[#002b5c] text-sm font-semibold transition-colors"
+        href="{{ route('home') }}">Home</a> --}}
+    {{-- <a class="text-[#4c739a] hover:text-[#002b5c] text-sm font-semibold transition-colors"
+        href="{{ route('combo') }}">Combo</a> --}}
     <!-- <a class="text-[#4c739a] hover:text-[#002b5c] text-sm font-semibold transition-colors" href="{{ route('checkout') }}">Payment</a> -->
     <a class="text-[#4c739a] hover:text-[#002b5c] text-sm font-semibold transition-colors"
         href="{{ route('help-center') }}">Help Center</a>
     <a class="text-[#4c739a] hover:text-[#002b5c] text-sm font-semibold transition-colors"
         href="{{ route('about') }}">About Us</a>
-    <!-- <a class="text-[#4c739a] hover:text-[#002b5c] text-sm font-semibold transition-colors" href="{{ route('product-detail') }}">Product Detail</a> -->
+    <a class="text-[#4c739a] hover:text-[#002b5c] text-sm font-semibold transition-colors cursor-pointer"
+        onclick="document.getElementById('downloadModal').classList.remove('hidden')">Download</a>
+    <!-- cart moved to header for right alignment -->
 </nav>

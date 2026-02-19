@@ -1,4 +1,4 @@
-@extends('layouts.main')
+﻿@extends('layouts.main')
 @section('title', 'Di-tool Premium Checkout')
 @push('styles')
 @endpush
@@ -76,9 +76,9 @@
                                 <div
                                     class="flex flex-col items-center justify-center p-4 rounded-xl border-2 border-transparent bg-white/40 glass-input peer-checked:border-blue-600 peer-checked:bg-blue-50/50 transition-all">
                                     <span
-                                        class="material-symbols-outlined text-slate-600 group-hover:text-blue-600 mb-1">credit_card</span>
+                                        class="material-symbols-outlined text-slate-600 group-hover:text-blue-600 mb-1">account_balance_wallet</span>
                                     <span
-                                        class="text-[10px] font-bold uppercase tracking-tighter text-slate-500">Card</span>
+                                        class="text-[10px] font-bold uppercase tracking-tighter text-slate-500">Paypal</span>
                                 </div>
                             </label>
                             <label class="relative flex-1 cursor-pointer group">
@@ -86,9 +86,9 @@
                                 <div
                                     class="flex flex-col items-center justify-center p-4 rounded-xl border-2 border-transparent bg-white/40 glass-input peer-checked:border-blue-600 peer-checked:bg-blue-50/50 transition-all">
                                     <span
-                                        class="material-symbols-outlined text-slate-600 group-hover:text-blue-600 mb-1">account_balance_wallet</span>
+                                        class="material-symbols-outlined text-slate-600 group-hover:text-blue-600 mb-1">credit_card</span>
                                     <span
-                                        class="text-[10px] font-bold uppercase tracking-tighter text-slate-500">Paypal</span>
+                                        class="text-[10px] font-bold uppercase tracking-tighter text-slate-500">Card</span>
                                 </div>
                             </label>
                             <label class="relative flex-1 cursor-pointer group">
@@ -139,7 +139,7 @@
                         </div>
                         <div class="flex flex-col justify-center">
                             <h4 class="font-bold text-slate-800 text-lg leading-tight">Essential Di-tool Package</h4>
-                            <p class="text-sm text-slate-500 font-medium">Digital License • 1 Item</p>
+                            <p class="text-sm text-slate-500 font-medium">Digital License â€¢ 1 Item</p>
                             <div class="mt-1 flex items-center gap-2">
                                 <span class="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full font-bold">Lifetime
                                     Access</span>
@@ -200,14 +200,95 @@
 @push('scripts')
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Retrieve selected product from localStorage
-            const selectedProduct = JSON.parse(localStorage.getItem('selectedProduct'));
+            const summaryHeading = Array.from(document.querySelectorAll('h2')).find((el) => el.textContent
+                .trim() ===
+                'Order Summary');
+            if (!summaryHeading) return;
 
-            if (selectedProduct) {
-                // Display product information in the checkout form
-                console.log('Product loaded:', selectedProduct);
-                // You can update the checkout form with product information here
+            const summaryRoot = summaryHeading.closest('.mb-10');
+            if (!summaryRoot) return;
+
+            const escapeHtml = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#39;'
+            } [c]));
+            const formatPrice = (value) => `€ ${(Number(value) || 0).toFixed(2)}`;
+
+            let items = [];
+            try {
+                const raw = localStorage.getItem('cart');
+                items = raw ? JSON.parse(raw) : [];
+            } catch (e) {
+                items = [];
             }
+
+            const staticCard = summaryRoot.querySelector('.glass-card');
+            const priceBlock = summaryRoot.querySelector('.space-y-4.px-2');
+            if (!staticCard || !priceBlock) return;
+
+            const orderItemsEl = document.createElement('div');
+            orderItemsEl.className = 'space-y-4 mb-8';
+
+            let subtotal = 0;
+            if (!items.length) {
+                orderItemsEl.innerHTML = `
+                    <div class="glass-card !bg-white/80 p-5 rounded-2xl">
+                        <p class="text-sm text-slate-500 font-medium">Your cart is empty.</p>
+                    </div>
+                `;
+            } else {
+                orderItemsEl.innerHTML = items.map((item) => {
+                    const qty = Number(item.qty) || 1;
+                    const price = Number(item.price) || 0;
+                    const lineTotal = qty * price;
+                    subtotal += lineTotal;
+                    const label = item.type === 'package' ? 'Package' : 'Tool';
+                    const image = item.image || 'https://placehold.co/80x80/e2e8f0/475569?text=Tool';
+
+                    return `
+                        <div class="glass-card !bg-white/80 p-5 rounded-2xl flex items-start justify-between gap-4">
+                            <div class="flex items-start gap-3">
+                                <div class="w-14 h-14 rounded-lg overflow-hidden bg-slate-100 border border-slate-200 flex-shrink-0">
+                                    <img src="${escapeHtml(image)}" alt="${escapeHtml(item.name || 'Item')}" class="w-full h-full object-cover" />
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-slate-800 text-lg leading-tight">${escapeHtml(item.name || 'Item')}</h4>
+                                    <p class="text-sm text-slate-500 font-medium">${qty}x${formatPrice(item.price)}</p>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <p class="font-bold text-slate-900">${formatPrice(lineTotal)}</p>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }
+
+            staticCard.replaceWith(orderItemsEl);
+
+            const rows = Array.from(priceBlock.querySelectorAll('.flex.justify-between.items-center'));
+            const originalPriceValue = rows[0]?.lastElementChild;
+            const discountValue = rows[1]?.lastElementChild;
+            const processingFeeValue = rows[2]?.lastElementChild;
+            const totalAmountValue = priceBlock.querySelector('.text-4xl.font-black.text-slate-900.tracking-tight');
+            const savingsValue = priceBlock.querySelector('.text-emerald-500.font-black.text-lg');
+
+            const discount = 0;
+            const processingFee = 0;
+            const total = subtotal - discount + processingFee;
+
+            if (originalPriceValue) {
+                originalPriceValue.classList.remove('line-through', 'text-slate-400');
+                originalPriceValue.classList.add('text-slate-800');
+                originalPriceValue.textContent = formatPrice(subtotal);
+            }
+            if (discountValue) discountValue.textContent = formatPrice(discount);
+            if (processingFeeValue) processingFeeValue.textContent = formatPrice(processingFee);
+            if (totalAmountValue) totalAmountValue.textContent = formatPrice(total);
+            if (savingsValue) savingsValue.textContent = formatPrice(discount);
         });
     </script>
 @endpush
