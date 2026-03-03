@@ -13,7 +13,11 @@ class HomeController extends Controller
     {
         // $tools = Product::whereNotNull('category_id')->get();
         $allTypes = Type::with(['packages.products.pricing', 'categories.products.pricing'])
-            ->get();
+            ->get()
+            ->sortBy(function ($type) {
+                return $type->name === GlobalConstant::TYPE_CORE_FREE ? 1 : 0;
+            })
+            ->values();
 
         return view('home', compact('allTypes'));
     }

@@ -17,10 +17,9 @@
         $currencySymbol = $packageCurrency === 'EUR' ? '€' : $packageCurrency . ' ';
         $fakeSpecs = [
             ['label' => 'Platform', 'value' => 'Autodesk Inventor'],
-            ['label' => 'Usage', 'value' => 'Daily engineering work'],
-            ['label' => 'Installation', 'value' => 'Per user / per machine'],
-            ['label' => 'Team Size', 'value' => 'From 1 to 50+ users'],
-            ['label' => 'Language', 'value' => 'English / Netherlands'],
+            ['label' => 'License Type', 'value' => 'Single / Floating'],
+            ['label' => 'Industry', 'value' => 'Mechanical Eng.'],
+            ['label' => 'Updates', 'value' => 'Included', 'highlight' => true],
         ];
         $fallbackTools = [
             [
@@ -111,112 +110,139 @@
                     <div class="mt-8 space-y-4">
                         <h3 class="text-xl font-bold text-slate-900 dark:text-slate-900">{{ $packageName }}</h3>
                         <p class="text-slate-600 dark:text-slate-400 leading-relaxed">
-                            {{ $packageDesc }}
+                            {!! $packageDesc !!}
                         </p>
                     </div>
                 </div>
 
                 <div class="lg:col-span-5">
+                    @php
+                        $pricingOptions = $package->pricing->sortBy('duration_months')->values();
+                        $activePricing =
+                            $pricingOptions->first() ??
+                            (object) [
+                                'price' => $packagePrice,
+                                'duration_months' => $packageDuration,
+                                'currency' => $packageCurrency,
+                            ];
+                        $activeCurrencySymbol =
+                            $activePricing->currency === 'EUR' ? '€' : $activePricing->currency . ' ';
+                        $isCoreFreeType = $package->type?->name !== App\Constants\GlobalConstant::TYPE_CORE_FREE;
+                        $currentPrice = (float) $activePricing->price;
+                        $originalPrice =
+                            $pricingOptions->count() > 0
+                                ? (float) $pricingOptions->sortByDesc('price')->first()->price
+                                : $currentPrice * 1.44;
+                        $savingsPercent =
+                            $originalPrice > 0 ? (int) round((1 - $currentPrice / $originalPrice) * 100) : 0;
+                    @endphp
                     <div
-                        class="sticky top-24 rounded-2xl bg-white  p-6 sm:p-8 shadow-xl shadow-slate-200/50 dark:shadow-none border border-slate-200 ">
-                        <div class="mb-6 flex flex-col gap-1">
-                            <span class="text-xs font-bold uppercase tracking-widest text-primary">Standalone
-                                Package</span>
-                            <h1 class="text-3xl font-black leading-none tracking-tight text-slate-900 ">
-                                {{ strtoupper($packageName) }}</h1>
+                        class="sticky top-24 rounded-2xl bg-slate-50 dark:bg-slate-800/30 p-6 sm:p-8 shadow-lg border border-slate-200 dark:border-slate-600">
+                        {{-- Badge + Title --}}
+                        <div class="mb-6">
+                            <span
+                                class="inline-block px-3 py-1 rounded-md bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300 text-[10px] font-bold uppercase tracking-widest mb-3">{{ $package->type?->name ?? 'Professional Grade' }}</span>
+                            <h1
+                                class="text-2xl sm:text-3xl font-black leading-tight tracking-tight text-slate-900 dark:text-white uppercase">
+                                {{ strtoupper($packageName) }}
+                            </h1>
                         </div>
-                        <div class="mb-8 space-y-4 border-y border-slate-100  py-6">
-                            @foreach ($fakeSpecs as $spec)
-                                <div class="flex items-center justify-between">
-                                    <span
-                                        class="text-sm font-medium text-slate-500 dark:text-slate-400">{{ $spec['label'] }}</span>
-                                    <span class="text-sm font-semibold text-slate-900 ">{{ $spec['value'] }}</span>
-                                </div>
-                            @endforeach
+
+                        {{-- Product details: 2-column layout, label above value --}}
+                        <div class="border-t border-slate-200 dark:border-slate-600 pt-6 pb-6">
+                            <div class="grid grid-cols-2 gap-x-8 gap-y-6">
+                                @foreach ($fakeSpecs as $spec)
+                                    <div>
+                                        <p
+                                            class="text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-1">
+                                            {{ $spec['label'] }}</p>
+                                        <p
+                                            class="text-sm font-bold text-slate-900 dark:text-slate-100 {{ !empty($spec['highlight']) ? 'text-emerald-600 dark:text-emerald-400' : '' }}">
+                                            {{ $spec['value'] }}</p>
+                                    </div>
+                                @endforeach
+                            </div>
                         </div>
-                        @php
-                            $pricingOptions = $package->pricing->sortBy('duration_months')->values();
-                            $activePricing =
-                                $pricingOptions->first() ??
-                                (object) [
-                                    'price' => $packagePrice,
-                                    'duration_months' => $packageDuration,
-                                    'currency' => $packageCurrency,
-                                ];
-                            $activeCurrencySymbol =
-                                $activePricing->currency === 'EUR' ? '€' : $activePricing->currency . ' ';
-                            $isCoreFreeType = $package->type?->name !== App\Constants\GlobalConstant::TYPE_CORE_FREE;
-                        @endphp
-                        <div class="mb-8 space-y-6">
-                            @if ($isCoreFreeType)
-                                <div class="flex items-baseline gap-2">
-                                    <span id="packagePrice" class="text-4xl font-black text-slate-900 ">
-                                        {{ $activeCurrencySymbol }}{{ number_format((float) $activePricing->price, 2) }}
-                                    </span>
-                                    <span id="packageDuration"
-                                        class="text-lg font-medium text-slate-500 dark:text-slate-400">/
-                                        {{ (int) $activePricing->duration_months }} months</span>
-                                </div>
-                                <div class="space-y-3">
-                                    <label class="text-xs font-bold uppercase tracking-wider text-slate-500">Subscription
-                                        Period</label>
-                                    <div class="grid grid-cols-3 gap-2">
-                                        @forelse ($pricingOptions as $option)
+
+                        @if ($isCoreFreeType)
+                            @if ($pricingOptions->count() > 0)
+                                {{-- Subscription plan (only when multiple options to choose from) --}}
+                                <div class="border-t border-slate-200 dark:border-slate-600 pt-6 pb-6">
+                                    <p
+                                        class="text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-4">
+                                        Select subscription plan</p>
+                                    <div class="grid grid-cols-3 gap-3">
+                                        @foreach ($pricingOptions as $option)
                                             @php
                                                 $isActive = $loop->first;
                                                 $optionCurrencySymbol =
                                                     $option->currency === 'EUR' ? '€' : $option->currency . ' ';
                                             @endphp
-                                            <button
-                                                class="periodBtn rounded-lg border-2 {{ $isActive ? 'border-primary bg-primary/5 text-primary dark:bg-primary/10' : 'border-slate-100 bg-white text-slate-600 hover:border-primary/50 dark:text-slate-300' }} py-3 text-sm font-bold transition-all"
+                                            <button type="button" aria-selected="{{ $isActive ? 'true' : 'false' }}"
+                                                class="periodBtn rounded-lg border-2 py-3.5 text-sm font-bold transition-all {{ $isActive ? 'bg-[var(--enterprise-blue)] border-[var(--enterprise-blue)] text-white' : 'bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-600 text-slate-700 dark:text-slate-300 hover:border-[var(--enterprise-blue)]/50' }}"
                                                 data-price="{{ number_format((float) $option->price, 2, '.', '') }}"
                                                 data-duration="{{ (int) $option->duration_months }}"
                                                 data-currency="{{ $optionCurrencySymbol }}">
-                                                {{ (int) $option->duration_months }} months
+                                                {{ (int) $option->duration_months }} MO
                                             </button>
-                                        @empty
-                                            <button
-                                                class="periodBtn rounded-lg border-2 border-primary bg-primary/5 py-3 text-sm font-bold text-primary transition-all dark:bg-primary/10"
-                                                data-price="{{ number_format((float) $packagePrice, 2, '.', '') }}"
-                                                data-duration="{{ (int) $packageDuration }}"
-                                                data-currency="{{ $activeCurrencySymbol }}">
-                                                {{ (int) $packageDuration }} months
-                                            </button>
-                                        @endforelse
+                                        @endforeach
                                     </div>
                                 </div>
                             @endif
-                        </div>
-                        <div class="mb-4 grid gap-3">
-                            {{-- <button
-                            class="addToCartBtn group relative flex w-full items-center justify-center gap-2 overflow-hidden rounded-xl bg-white border-2 py-4 text-base font-bold text-[var(--enterprise-blue)] transition-all hover:bg-blue-50 active:scale-[0.98] shadow-sm"
-                            data-package-id="{{ $package->id }}"
-                            data-package-name="{{ $packageName }}">
-                            <span>Add To Cart</span>
-                            <span
-                                class="material-symbols-outlined text-lg transition-transform group-hover:translate-x-1">shopping_cart</span>
-                        </button> --}}
-                            @if ($isCoreFreeType)
-                                <button
-                                    class="buyNowPackageBtn group relative flex w-full items-center justify-center gap-2 overflow-hidden rounded-xl bg-[var(--enterprise-blue)] py-4 text-base font-bold text-white transition-all hover:bg-blue-600 active:scale-[0.98] shadow-lg shadow-blue-900/20"
-                                    data-package-id="{{ $package->id }}" data-package-name="{{ $packageName }}">
-                                    <span>Buy Now</span>
+
+                            {{-- Price: original struck, current prominent, savings badge --}}
+                            <div class="border-t border-slate-200 dark:border-slate-600 pt-6 pb-6 text-center">
+                                @if ($savingsPercent > 0)
+                                    <p class="text-sm text-slate-400 dark:text-slate-500 line-through mb-1">
+                                        {{ $activeCurrencySymbol }}{{ number_format($originalPrice, 2) }}</p>
+                                @endif
+                                <p class="flex items-baseline justify-center gap-0.5">
                                     <span
-                                        class="material-symbols-outlined text-lg transition-transform group-hover:translate-x-1">shopping_cart</span>
+                                        class="text-2xl font-black text-slate-900 dark:text-white align-baseline">{{ $activeCurrencySymbol }}</span>
+                                    <span id="packagePrice"
+                                        class="text-4xl font-black text-slate-900 dark:text-white tracking-tight">{{ number_format($currentPrice, 2) }}</span>
+                                </p>
+                                <span id="packageDuration" class="sr-only"
+                                    aria-hidden="true">{{ (int) $activePricing->duration_months }} months</span>
+                                @if ($savingsPercent > 0)
+                                    <span
+                                        class="inline-block mt-2 px-2.5 py-1 rounded-md bg-emerald-500 text-white text-[10px] font-bold uppercase tracking-wider">Save
+                                        {{ $savingsPercent }}% annually</span>
+                                @endif
+                            </div>
+
+                            {{-- Buy Now + Guarantee --}}
+                            <div class="space-y-4">
+                                <button type="button"
+                                    class="buyNowPackageBtn w-full flex items-center justify-center gap-2 rounded-xl bg-[var(--enterprise-blue)] py-4 text-base font-bold text-white transition-all hover:bg-blue-700 active:scale-[0.98] shadow-lg"
+                                    data-package-id="{{ $package->id }}" data-package-name="{{ $packageName }}"
+                                    data-package-detail-url="{{ route('package-detail', $package) }}"
+                                    data-package-price="{{ number_format($currentPrice, 2, '.', '') }}"
+                                    data-package-period="{{ (int) $activePricing->duration_months }}">
+                                    <span class="material-symbols-outlined text-xl">shopping_cart</span>
+                                    <span>Buy Now</span>
                                 </button>
-                            @else
-                                <button
-                                    class="getCoreFreeBtn group relative flex w-full items-center justify-center gap-2 overflow-hidden rounded-xl bg-[var(--enterprise-blue)] py-4 text-base font-bold text-white transition-all hover:bg-blue-600 active:scale-[0.98] shadow-lg shadow-blue-900/20"
+                                <p
+                                    class="flex items-center justify-center gap-2 text-xs text-slate-500 dark:text-slate-400">
+                                    <span class="material-symbols-outlined text-base">verified_user</span>
+                                    30-Day Money Back Guarantee
+                                </p>
+                            </div>
+                        @else
+                            {{-- Core-free: no subscription/price block, just CTA --}}
+                            <div class="border-t border-slate-200 dark:border-slate-600 pt-6 space-y-4">
+                                <button type="button"
+                                    class="getCoreFreeBtn w-full flex items-center justify-center gap-2 rounded-xl bg-[var(--enterprise-blue)] py-4 text-base font-bold text-white transition-all hover:bg-blue-700 active:scale-[0.98] shadow-lg"
                                     data-package-id="{{ $package->id }}" data-package-name="{{ $packageName }}">
                                     <span>Get {{ $packageName }}</span>
                                 </button>
-                            @endif
-                        </div>
-                        <div class="space-y-4">
-                            <p class="text-center text-xs text-slate-400 dark:text-slate-500">
-                                30-day money-back guarantee. No credit card required for trial.
-                            </p>
-                        </div>
+                                <p
+                                    class="flex items-center justify-center gap-2 text-xs text-slate-500 dark:text-slate-400">
+                                    <span class="material-symbols-outlined text-base">verified_user</span>
+                                    30-Day Money Back Guarantee
+                                </p>
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -257,7 +283,6 @@
                                 @php
                                     $isModel = is_object($item);
                                     $toolName = $isModel ? $item->name : $item['name'];
-                                    $toolImage = $toolImageSources[$idx % count($toolImageSources)];
                                     $toolPrice = 0;
                                     $toolCurrencySymbol = '€';
                                     if ($isModel) {
@@ -265,10 +290,16 @@
                                         $toolPrice = $toolPricing ? (float) $toolPricing->price : 0;
                                         $toolCurrency = $toolPricing?->currency ?? 'EUR';
                                         $toolCurrencySymbol = $toolCurrency === 'EUR' ? '€' : $toolCurrency . ' ';
+                                        // $toolImage = $toolImageSources[$idx % count($toolImageSources)];
+                                        $toolImage =
+                                            env('APP_URL') . '/' . trim($item?->avatar) ??
+                                            $toolImageSources[$idx % count($toolImageSources)];
                                     }
                                 @endphp
-                                <div
-                                    class="group bg-white  border-2 border-slate-200  rounded-xl overflow-hidden hover:shadow-lg transition-all">
+                                <div class="group bg-white  border-2 border-slate-200  rounded-xl overflow-hidden hover:shadow-lg transition-all {{ $isModel ? 'cursor-pointer' : '' }}"
+                                    @if ($isModel) onclick="window.location.href='{{ route('product-detail', $item) }}'"
+                                        role="link" tabindex="0"
+                                        onkeydown="if(event.key === 'Enter'){ window.location.href='{{ route('product-detail', $item) }}'; }" @endif>
                                     <div class="aspect-square bg-slate-100  p-4">
                                         <img class="w-full h-full object-contain mix-blend-multiply dark:mix-blend-normal opacity-80 group-hover:scale-110 transition-transform"
                                             alt="{{ $toolName }}" src="{{ $toolImage }}" />
@@ -281,11 +312,13 @@
                                             </span>
                                             <button
                                                 class="addProductToCartBtn w-8 h-8 rounded-full border border-slate-200  flex items-center justify-center hover:bg-[var(--enterprise-blue)] hover:text-white hover:border-[var(--enterprise-blue)] transition-all"
+                                                onclick="event.stopPropagation();"
                                                 data-product-id="{{ $isModel ? $item->id : $idx }}"
                                                 data-product-name="{{ $toolName }}"
                                                 data-product-price="{{ number_format((float) $toolPrice, 2, '.', '') }}"
                                                 data-product-currency="{{ $toolCurrencySymbol }}"
-                                                data-product-image="{{ $toolImage }}">
+                                                data-product-image="{{ $toolImage }}"
+                                                data-product-detail-url="{{ $isModel ? route('product-detail', $item) : '' }}">
                                                 <span class="material-symbols-outlined !text-sm">add</span>
                                             </button>
                                         </div>
@@ -531,21 +564,15 @@
             const $buttons = $('.periodBtn');
             if ($priceEl.length === 0 || $durationEl.length === 0 || $buttons.length === 0) return;
 
+            var selectedClass = 'bg-[var(--enterprise-blue)] border-[var(--enterprise-blue)] text-white';
+            var unselectedClass =
+                'bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-600 text-slate-700 dark:text-slate-300 hover:border-[var(--enterprise-blue)]/50';
+
             $buttons.on('click', function() {
                 const $btn = $(this);
-                $buttons.removeClass(
-                        'border-primary bg-primary/5 text-primary dark:bg-primary/10 shadow-md ring-2 ring-primary/40'
-                    )
-                    .addClass(
-                        'border-slate-100 bg-white text-slate-600 hover:border-primary/50 dark:text-slate-300'
-                    );
-
-                $btn.removeClass(
-                        'border-slate-100 bg-white text-slate-600 hover:border-primary/50 dark:text-slate-300'
-                    )
-                    .addClass(
-                        'border-primary bg-primary/10 text-primary dark:bg-primary/20 shadow-md ring-2 ring-primary/40'
-                    );
+                $buttons.removeClass(selectedClass).addClass(unselectedClass).attr('aria-selected',
+                'false');
+                $btn.removeClass(unselectedClass).addClass(selectedClass).attr('aria-selected', 'true');
 
                 const price = $btn.data('price') ?? '0.00';
                 const duration = $btn.data('duration') ?? '0';
@@ -554,8 +581,9 @@
                     minimumFractionDigits: 2,
                     maximumFractionDigits: 2
                 });
-                $priceEl.text(`${currency}${formatted}`);
-                $durationEl.text(`/ ${duration} months`);
+                $priceEl.text(formatted);
+                if (typeof $durationEl.text === 'function') $durationEl.text(duration > 0 ?
+                    `/ ${duration} months` : 'one-time');
             });
 
             // Default to first period option on load
@@ -674,6 +702,7 @@
                 const price = Number($(this).data('product-price')) || 0;
                 const period = ($(this).data('product-currency') || '').trim();
                 const image = $(this).data('product-image') || '';
+                const detailUrl = $(this).data('product-detail-url') || '';
 
                 const item = {
                     id: `product-${id}`,
@@ -682,7 +711,8 @@
                     period,
                     qty: 1,
                     type: 'product',
-                    image
+                    image,
+                    detailUrl
                 };
 
                 const items = getCart();
@@ -725,13 +755,18 @@
             };
 
             $buyNowBtn.on('click', function() {
-                const $selected = $('.periodBtn.border-primary');
-                const price = $selected.data('price') ?? 0;
-                const duration = ($selected.data('duration') ?? '').toString();
+                const $selected = $('.periodBtn[aria-selected="true"]').length ? $(
+                    '.periodBtn[aria-selected="true"]') : $('.periodBtn').first();
+                const hasPeriodButtons = $('.periodBtn').length > 0;
+                const price = hasPeriodButtons ? ($selected.data('price') ?? 0) : ($(this).data(
+                    'package-price') ?? $('#packagePrice').text() || 0);
+                const duration = hasPeriodButtons ? ($selected.data('duration') ?? '').toString() : ($(this)
+                    .data('package-period') ?? '').toString();
                 const name = $(this).data('package-name') || 'Package';
                 const rawId = $(this).data('package-id') || null;
                 const id = String(rawId ?? '');
                 const image = $('#packageMainImage').attr('src') || '';
+                const detailUrl = $(this).data('package-detail-url') || '';
 
                 const item = {
                     id,
@@ -740,7 +775,8 @@
                     period: duration,
                     qty: 1,
                     type: 'package',
-                    image
+                    image,
+                    detailUrl
                 };
 
                 const items = getCart();

@@ -23,8 +23,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-        User::factory()->create([
+        User::create([
             'name' => 'admin',
             'email' => 'admin@gmail.com',
             'password' => bcrypt('12345678'),
@@ -103,19 +102,60 @@ class DatabaseSeeder extends Seeder
             $isProfessional = $toBool($row[$columns['Professional']] ?? '');
             $isPremium = $toBool($row[$columns['Premium']] ?? '');
 
+            $productIdCode = 'PRD-' . strtoupper($productSlug);
+            $isFreeRaw = trim((string) ($row[$columns['IsFree']] ?? ''));
+            $isFree = $isFreeRaw === '1' ? 1 : 0;
+
+            $parseDuration = function (?string $v): ?int {
+                $v = trim((string) $v);
+                return $v === '' ? null : (int) $v;
+            };
+            $parsePriceDuration = function (?string $v) use ($toPrice): ?float {
+                $v = trim((string) $v);
+                if ($v === '') {
+                    return null;
+                }
+                return $toPrice($v) ?: null;
+            };
+
+            $duration1 = isset($columns['Duration 1']) ? $parseDuration($row[$columns['Duration 1']] ?? '') : null;
+            $priceDuration1 = isset($columns['Price duration 1']) ? $parsePriceDuration($row[$columns['Price duration 1']] ?? '') : null;
+            $duration2 = isset($columns['Duration 2']) ? $parseDuration($row[$columns['Duration 2']] ?? '') : null;
+            $priceDuration2 = isset($columns['Price duration 2']) ? $parsePriceDuration($row[$columns['Price duration 2']] ?? '') : null;
+            $duration3 = isset($columns['Duration 3']) ? $parseDuration($row[$columns['Duration 3']] ?? '') : null;
+            $priceDuration3 = isset($columns['Price duration 3']) ? $parsePriceDuration($row[$columns['Price duration 3']] ?? '') : null;
+            // For free products, use 0 when price is empty
+            if ($isFree && $priceDuration1 === null && $duration1 !== null) {
+                $priceDuration1 = 0.0;
+            }
+            if ($isFree && $priceDuration2 === null && $duration2 !== null) {
+                $priceDuration2 = 0.0;
+            }
+            if ($isFree && $priceDuration3 === null && $duration3 !== null) {
+                $priceDuration3 = 0.0;
+            }
+
             $product = Product::create([
+                'product_id' => $productIdCode,
                 'category_id' => $category?->id,
                 'name' => $name,
                 'slug' => $productSlug,
-                'description' => null,
+                'description' => trim($row[$columns['Description']] ?? '') ?: null,
                 'status' => 'active',
                 'value_status' => trim($row[$columns['Value status']] ?? ''),
                 'is_basic' => $isBasic ? GlobalConstant::IS_BASIC : GlobalConstant::IS_NOT_BASIC,
                 'is_professional' => $isProfessional ? GlobalConstant::IS_PROFESSIONAL : GlobalConstant::IS_NOT_PROFESSIONAL,
                 'is_premium' => $isPremium ? GlobalConstant::IS_PREMIUM : GlobalConstant::IS_NOT_PREMIUM,
+                'is_free' => $isFree,
+                'duration_1' => $duration1,
+                'price_duration_1' => $priceDuration1,
+                'duration_2' => $duration2,
+                'price_duration_2' => $priceDuration2,
+                'duration_3' => $duration3,
+                'price_duration_3' => $priceDuration3,
                 'cat_set' => trim($row[$columns['CAT set']] ?? '') ?: null,
                 'stand_set' => trim($row[$columns['Stand Set']] ?? '') ?: null,
-                'avatar' => 'https://res.cloudinary.com/dkjfmxxom/image/upload/v1765015546/main_m50fl1.png',
+                'avatar' => trim($row[$columns['Avatar']] ?? '') ?: 'https://res.cloudinary.com/dkjfmxxom/image/upload/v1765015546/main_m50fl1.png',
                 'video' => 'https://www.youtube.com/embed/4SOkxF6oeKI',
                 'images' => implode(',', [
                     'https://res.cloudinary.com/dkjfmxxom/image/upload/v1765015546/main_m50fl1.png',
@@ -130,20 +170,36 @@ class DatabaseSeeder extends Seeder
                 'is_professional' => $isProfessional,
                 'is_premium' => $isPremium,
                 'is_core_free' => ($row[$columns['Value status']] ?? '') === 'Core-Free',
+                'duration_1' => $duration1,
+                'price_duration_1' => $priceDuration1,
+                'duration_2' => $duration2,
+                'price_duration_2' => $priceDuration2,
+                'duration_3' => $duration3,
+                'price_duration_3' => $priceDuration3,
             ];
         }
 
-        // add pricing for all products (using EUR currency)
+        // Add pricing for all products from price modeling (Duration 1–3 / Price duration 1–3)
         foreach ($productRecords as $record) {
-            Pricing::create([
-                'entity_id' => $record['model']->id,
-                'entity_type' => 'product',
-                'duration_months' => 0,
-                'price' => $record['price'],
-                'currency' => 'EUR',
-            ]);
+            $product = $record['model'];
+            $durations = [
+                ['duration' => $record['duration_1'] ?? null, 'price' => $record['price_duration_1'] ?? null],
+                ['duration' => $record['duration_2'] ?? null, 'price' => $record['price_duration_2'] ?? null],
+                ['duration' => $record['duration_3'] ?? null, 'price' => $record['price_duration_3'] ?? null],
+            ];
+            foreach ($durations as $d) {
+                if ($d['duration'] !== null && $d['price'] !== null) {
+                    Pricing::create([
+                        'entity_id' => $product->id,
+                        'entity_type' => 'product',
+                        'duration_months' => $d['duration'],
+                        'price' => (float) $d['price'],
+                        'currency' => 'EUR',
+                    ]);
+                }
+            }
         }
-        // 
+        //
         $advancedToolsCategory = Category::where('name', 'Advanced Tools')->first();
         $fileManagementCategory = Category::where('name', 'File Management')->first();
         $drawingExportCategory = Category::where('name', 'Drawing & Export')->first();
@@ -152,6 +208,7 @@ class DatabaseSeeder extends Seeder
 
         // create packages from CSV (Basic, Professional, Premium bundles)
         $coreFreePkg = Package::create([
+            'package_id' => 'PKG-' . strtoupper('core-free'),
             'name' => 'Core Free',
             'slug' => 'core-free',
             'description' => 'Essential tools for Core Free Inventor operations.',
@@ -164,6 +221,7 @@ class DatabaseSeeder extends Seeder
             'type_id' => $coreFreeType->id,
         ]);
         $basicPkg = Package::create([
+            'package_id' => 'PKG-' . strtoupper('basic'),
             'name' => 'Basic',
             'slug' => 'basic',
             'description' => 'Essential tools for basic Inventor operations.',
@@ -177,6 +235,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $professionalPkg = Package::create([
+            'package_id' => 'PKG-' . strtoupper('professional'),
             'name' => 'Professional',
             'slug' => 'professional',
             'description' => 'Comprehensive toolset for professional Inventor users.',
@@ -190,6 +249,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $premiumPkg = Package::create([
+            'package_id' => 'PKG-' . strtoupper('premium'),
             'name' => 'Premium',
             'slug' => 'premium',
             'description' => 'Complete premium service layer with all advanced tools.',
@@ -206,6 +266,7 @@ class DatabaseSeeder extends Seeder
         $basicProducts = [];
         $professionalProducts = [];
         $premiumProducts = [];
+        $coreFreeProducts = [];
 
         foreach ($productRecords as $record) {
             if ($record['is_basic']) {

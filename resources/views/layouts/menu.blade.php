@@ -14,11 +14,11 @@
     {{-- <a class="text-[#4c739a] hover:text-[#002b5c] text-sm font-semibold transition-colors"
         href="{{ route('combo') }}">Combo</a> --}}
     <!-- <a class="text-[#4c739a] hover:text-[#002b5c] text-sm font-semibold transition-colors" href="{{ route('checkout') }}">Payment</a> -->
-    <a class="text-[#4c739a] hover:text-[#002b5c] text-sm font-semibold transition-colors"
+    <a class="text-[#4c739a] hover:text-[#002b5c] text-base md:text-lg font-semibold transition-colors"
         href="{{ route('help-center') }}">Help Center</a>
-    <a class="text-[#4c739a] hover:text-[#002b5c] text-sm font-semibold transition-colors"
+    <a class="text-[#4c739a] hover:text-[#002b5c] text-base md:text-lg font-semibold transition-colors"
         href="{{ route('about') }}">About Us</a>
-    <a class="text-[#4c739a] hover:text-[#002b5c] text-sm font-semibold transition-colors cursor-pointer"
+    <a class="text-[#4c739a] hover:text-[#002b5c] text-base md:text-lg font-semibold transition-colors cursor-pointer"
         onclick="document.getElementById('downloadModal').classList.remove('hidden')">Download</a>
     <!-- cart moved to header for right alignment -->
 </nav>

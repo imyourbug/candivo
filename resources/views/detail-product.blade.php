@@ -1,15 +1,84 @@
 @extends('layouts.main')
 
-@section('title', 'Drawing & Export - Di-tool')
+@section('title', ($product->name ?? 'Product Detail') . ' - Di-tool')
+
+@push('styles')
+    <style type="text/tailwindcss">
+        .pro-card {
+            background: linear-gradient(165deg, #0a2540 0%, #0d2d4a 35%, #061a2e 100%);
+            border: 1px solid rgba(59, 130, 246, 0.25);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2), 0 10px 30px -8px rgba(15, 23, 42, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.05) inset;
+        }
+
+        .pro-card:hover {
+            border-color: rgba(59, 130, 246, 0.45);
+            box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(255, 255, 255, 0.08) inset;
+            transform: translateY(-4px);
+        }
+
+        .core-free-card {
+            border: 1px solid rgba(30, 121, 220, 0.4);
+            background: #eff6ff;
+        }
+
+        .core-free-card:hover {
+            border-color: rgba(30, 121, 220, 0.6);
+        }
+
+        .glow-check {
+            color: #7dd3fc;
+        }
+    </style>
+@endpush
 
 @section('content')
+    @php
+        $productName = $product->name ?? 'Product';
+        $productDesc = $product->description ?: 'Professional CAD productivity add-on for Autodesk Inventor workflows.';
+        $mainImage =
+            '/' . $product->avatar ?: 'https://res.cloudinary.com/dkjfmxxom/image/upload/v1765015546/main_m50fl1.png';
+
+        $imageItems = collect(explode(',', (string) $product->images))
+            ->map(fn($item) => trim($item))
+            ->filter()
+            ->values();
+
+        if ($imageItems->isEmpty()) {
+            $imageItems = collect([$mainImage]);
+        }
+
+        $pricingOptions = $product->pricing->sortBy('duration_months')->values();
+        $activePricing =
+            $pricingOptions->first() ?? (object) ['price' => 0, 'duration_months' => 0, 'currency' => 'EUR'];
+        $currencyPrefix =
+            ($activePricing->currency ?? 'EUR') === 'EUR' ? '€' : ($activePricing->currency ?? 'USD') . ' ';
+
+        $isBasic = (int) $product->is_basic === 1;
+        $isProfessional = (int) $product->is_professional === 1;
+        $isPremium = (int) $product->is_premium === 1;
+
+        $featureFlags = [
+            ['label' => 'Basic', 'active' => $isBasic],
+            ['label' => 'Professional', 'active' => $isProfessional],
+            ['label' => 'Premium', 'active' => $isPremium],
+        ];
+
+        $specs = [
+            ['label' => 'Category', 'value' => $product->category?->name ?: 'N/A'],
+            ['label' => 'Value Status', 'value' => $product->value_status ?: 'N/A'],
+            ['label' => 'CAT Set', 'value' => $product->cat_set ?: 'N/A'],
+            ['label' => 'Stand Set', 'value' => $product->stand_set ?: 'N/A'],
+            ['label' => 'Included In', 'value' => $product->packages->count() . ' package(s)'],
+        ];
+    @endphp
+
     <div class="mx-auto w-full max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
-        <nav class="flex items-center gap-2 text-sm font-medium text-slate-500 dark:text-slate-400">
-            <a class="hover:text-primary transition-colors" href="#">Home</a>
+        <nav class="flex items-center gap-2 text-sm font-medium text-slate-500">
+            <a class="hover:text-primary transition-colors" href="{{ route('home') }}">Home</a>
             <span class="material-symbols-outlined text-sm">chevron_right</span>
-            <a class="hover:text-primary transition-colors" href="#">Autodesk Inventor</a>
+            <span class="text-slate-900">{{ $product->category?->name ?: 'Products' }}</span>
             <span class="material-symbols-outlined text-sm">chevron_right</span>
-            <span class="text-slate-900 dark:text-white">Drawing &amp; Export</span>
+            <span class="text-slate-900">{{ $productName }}</span>
         </nav>
     </div>
 
@@ -17,348 +86,529 @@
         <div class="grid grid-cols-1 gap-12 lg:grid-cols-12">
             <div class="lg:col-span-7 flex flex-col gap-4">
                 <div
-                    class="relative aspect-video w-full overflow-hidden rounded-xl bg-white dark:bg-slate-800 shadow-lg border border-slate-200 dark:border-slate-800">
-                    <img alt="Product Main View" class="h-full w-full object-cover"
-                        data-alt="Main product interface screenshot for Drawing and Export tool"
-                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuDFiyfW16BqlTlp5m2Ic-34IvbXp4xo83UR5S6FBGhs_myfMUKK0zOD6-D5soN1dZ7I9ufcUPBqKA26S3YoFLE-PgwIOhbecYeIge6Cg5pEqBgWT0_SLslgpPzlfJn3gerNqxvgMfpPMkf96vf2ksZMWLHcGOyAoh2EzMbKeGQo5-IgD76WYpw3RytOSh4mLaxLP7A6CEnSy8eRUumlB3oTOOKmSkJiXmHjnezLGBeK3ZXh_TlM_KSElNndF0uwUb5_Gz_qJxG8DhM" />
+                    class="relative aspect-video w-full overflow-hidden rounded-xl bg-white shadow-lg border border-slate-200">
+                    <img id="productMainImage" alt="{{ $productName }}" class="h-full w-full object-cover"
+                        src="{{ $mainImage }}" />
                     <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
                 </div>
+
                 <div class="grid grid-cols-4 gap-3 sm:gap-4">
-                    <div
-                        class="aspect-video cursor-pointer overflow-hidden rounded-lg border-2 border-primary ring-2 ring-primary ring-offset-2 dark:ring-offset-background-dark shadow-md transition-all">
-                        <img alt="Thumbnail 1" class="h-full w-full object-cover opacity-100 hover:opacity-90"
-                            data-alt="Thumbnail of Drawing and Export main interface"
-                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuDBJ90uMEnpfLm_dX01qeppmRyQxEJA94Va9ZQywMDpp6zGvZHalWRisXad6tr2eNB7YHmQVZVJNMi-el5xlo8btN9LIYGgW9jbjKmmpwJASqn5ATM1_k7702HCqArV6z7CTRbYsVj9ai3aRxHtumFs1u6yIR4EIDZ3j-x2wpEZx60NntCGvUXr84syPUeTmU8s9m17frWJJRPsXILPMX0vWa4DoVnFS7XuZa_wmKlKwNkjYE05Fep9q4ZlcoBr2Kc_Ek8fKFXOXbc" />
-                    </div>
-                    <div
-                        class="aspect-video cursor-pointer overflow-hidden rounded-lg border border-slate-200 dark:border-slate-800 hover:border-primary transition-all grayscale hover:grayscale-0">
-                        <img alt="Thumbnail 2" class="h-full w-full object-cover"
-                            data-alt="Thumbnail showing batch export workflow"
-                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuCYgc7n2_UKZxJBDW3w3pVLY8l9qfBzqkQKFVIQyJZa-pZ4D_qAvSV9wutf67CAjkHAcuAOFQUTzyYrf7InUTzIO2G_2YmNFWL2sqQHE7g1jUcDyjdyJfWjy2NikVKd1E3NzaJ165z0APzbopNwG94_QRPG-YzeV7-6rKxsszQImrvU-CkB0wsDKPf2thGV5Jy5bdhhNGCKGaqVbXERiLozDF_JxDGBGNrkj0t8xlBACLtzY291Q06hJs-jrzKi1sKgzgd31mt8VvM" />
-                    </div>
-                    <div
-                        class="aspect-video cursor-pointer overflow-hidden rounded-lg border border-slate-200 dark:border-slate-800 hover:border-primary transition-all grayscale hover:grayscale-0">
-                        <img alt="Thumbnail 3" class="h-full w-full object-cover"
-                            data-alt="Thumbnail of automated drawing generation"
-                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuD1_xLlaqTqihSWIHr28GO0JOwtHwPR6T6hMa0Xxt7VZKgkaYw8ly353WWSVArAC1h2PLvX7PitS6qs5JXVf8ZJ3_ubUf339hlOFpREYAL6kMs6LahccxgT1qBeKdXgHku0ZuYCKCLQLw_gmZtZcjEb4mI15P3Wjbge89noKycIIe5uXt0GARdpI5wQgDz0rjQZMuyIyqpQsGaWirKmgiH_w18PFP34msTyzUYmsCZbnwoWDuKcXtCS6HuM2tO-90GypVEFPDxdDSA" />
-                    </div>
-                    <div
-                        class="aspect-video cursor-pointer overflow-hidden rounded-lg border border-slate-200 dark:border-slate-800 hover:border-primary transition-all grayscale hover:grayscale-0">
-                        <img alt="Thumbnail 4" class="h-full w-full object-cover"
-                            data-alt="Thumbnail showing layer management settings"
-                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuA1_W5F3p4pJ4XSHGAjlCCBwcI0NiP0XCbGXrblKv8Z9vILcIlKZ7zXsth-B0ArYyNKzHiydgBKBWU2pXnL6OQ4zhh0eeiDHAfBRcAWUXRblzTB59j4YrqKT8FGksaFwQR1T4QxgNON2bctoGuMwueKKtemIMu7fy7LQxhIV3AmjejuR3Dulpl1PHkRzLxcJl66Mxkwu8-RJDo4zEMbvKsbtr0hF74AKlPInoCTZWl30yr0jW9ob78TqowxrYK-Jfcx1mwwQdk5P7U" />
-                    </div>
+                    @foreach ($imageItems as $img)
+                        <button type="button"
+                            class="productThumb aspect-video cursor-pointer overflow-hidden rounded-lg border-2 border-slate-200 ring-0 shadow-md transition-all hover:border-primary/70 focus:outline-none"
+                            data-src="{{ $img }}">
+                            <img alt="Thumbnail" class="h-full w-full object-cover opacity-100 hover:opacity-90"
+                                src="{{ $img }}" />
+                        </button>
+                    @endforeach
                 </div>
+
                 <div class="mt-8 space-y-4">
-                    <h3 class="text-xl font-bold text-slate-900 dark:text-white">Professional Drawing Automation
-                    </h3>
-                    <p class="text-slate-600 dark:text-slate-400 leading-relaxed">
-                        Optimize your engineering workflow with powerful automated drawing tools. 'Drawing &amp;
-                        Export' significantly reduces the time spent on repetitive detailing tasks, allowing your
-                        team to focus on core design challenges. Fully integrated with Autodesk Inventor for
-                        seamless operation.
-                    </p>
+                    <h3 class="text-xl font-bold text-slate-900">{{ $productName }}</h3>
+                    <p class="text-slate-600 leading-relaxed">{!! $productDesc !!}</p>
+                </div>
+
+                <div class="flex flex-wrap gap-2">
+                    @foreach ($featureFlags as $flag)
+                        <span
+                            class="px-3 py-1 rounded-full text-xs font-bold {{ $flag['active'] ? 'bg-[var(--enterprise-blue)] text-white' : 'bg-slate-100 text-slate-500' }}">
+                            {{ $flag['label'] }}
+                        </span>
+                    @endforeach
                 </div>
             </div>
 
             <div class="lg:col-span-5">
-                <div
-                    class="sticky top-24 rounded-2xl bg-white dark:bg-slate-900 p-6 sm:p-8 shadow-xl shadow-slate-200/50 dark:shadow-none border border-slate-200 dark:border-slate-800">
-                    <div class="mb-6 flex flex-col gap-1">
-                        <span class="text-xs font-bold uppercase tracking-widest text-primary">Standalone
-                            Package</span>
-                        <h1 class="text-3xl font-black leading-none tracking-tight text-slate-900 dark:text-white">
-                            DRAWING &amp; EXPORT</h1>
+                @php
+                    $currentPrice = (float) $activePricing->price;
+                    $originalPriceProduct =
+                        $pricingOptions->count() > 0
+                            ? (float) $pricingOptions->sortByDesc('price')->first()->price
+                            : $currentPrice * 1.44;
+                    $savingsPercentProduct =
+                        $originalPriceProduct > 0 && $originalPriceProduct > $currentPrice
+                            ? (int) round((1 - $currentPrice / $originalPriceProduct) * 100)
+                            : 0;
+                @endphp
+                <div class="sticky top-24 rounded-2xl bg-slate-50 p-6 sm:p-8 shadow-lg border border-slate-200">
+                    {{-- Badge + Title --}}
+                    <div class="mb-6">
+                        <span
+                            class="inline-block px-3 py-1 rounded-md bg-blue-100 text-blue-700 text-[10px] font-bold uppercase tracking-widest mb-3">Professional
+                            Grade</span>
+                        <h1 class="text-2xl sm:text-3xl font-black leading-tight tracking-tight text-slate-900 uppercase">
+                            {{ strtoupper($productName) }}
+                        </h1>
                     </div>
-                    <div class="mb-8 space-y-4 border-y border-slate-100 dark:border-slate-800 py-6">
-                        <div class="flex items-center justify-between">
-                            <span class="text-sm font-medium text-slate-500 dark:text-slate-400">Platform</span>
-                            <span class="text-sm font-semibold text-slate-900 dark:text-white">Autodesk
-                                Inventor</span>
-                        </div>
-                        <div class="flex items-center justify-between">
-                            <span class="text-sm font-medium text-slate-500 dark:text-slate-400">Usage</span>
-                            <span class="text-sm font-semibold text-slate-900 dark:text-white">Daily engineering
-                                work</span>
-                        </div>
-                        <div class="flex items-center justify-between">
-                            <span class="text-sm font-medium text-slate-500 dark:text-slate-400">Installation</span>
-                            <span class="text-sm font-semibold text-slate-900 dark:text-white">Per user / per
-                                machine</span>
-                        </div>
-                        <div class="flex items-center justify-between">
-                            <span class="text-sm font-medium text-slate-500 dark:text-slate-400">Team Size</span>
-                            <span class="text-sm font-semibold text-slate-900 dark:text-white">From 1 to 50+
-                                users</span>
-                        </div>
-                        <div class="flex items-center justify-between">
-                            <span class="text-sm font-medium text-slate-500 dark:text-slate-400">Language</span>
-                            <span class="text-sm font-semibold text-slate-900 dark:text-white">English /
-                                Netherlands</span>
+
+                    {{-- Product details: 2-column, label above value --}}
+                    <div class="border-t border-slate-200 pt-6 pb-6">
+                        <div class="grid grid-cols-2 gap-x-8 gap-y-6">
+                            @foreach ($specs as $spec)
+                                @php
+                                    $highlight =
+                                        str_starts_with(strtolower($spec['label'] ?? ''), 'included') &&
+                                        $spec['value'] !== '0 package(s)';
+                                @endphp
+                                <div>
+                                    <p class="text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">
+                                        {{ $spec['label'] }}</p>
+                                    <p class="text-sm font-bold text-slate-900 {{ $highlight ? 'text-emerald-600' : '' }}">
+                                        {{ $spec['value'] }}</p>
+                                </div>
+                            @endforeach
                         </div>
                     </div>
-                    <div class="mb-8 space-y-6">
-                        <div class="flex items-baseline gap-2">
-                            <span class="text-4xl font-black text-slate-900 dark:text-white">€239</span>
-                            <span class="text-lg font-medium text-slate-500 dark:text-slate-400">/ 12 months</span>
-                        </div>
-                        <div class="space-y-3">
-                            <label class="text-xs font-bold uppercase tracking-wider text-slate-500">Subscription
-                                Period</label>
-                            <div class="grid grid-cols-3 gap-2">
-                                <button
-                                    class="rounded-lg border-2 border-slate-100 bg-white py-3 text-sm font-bold text-slate-600 hover:border-primary/50 transition-all dark:border-slate-800 dark:bg-slate-800 dark:text-slate-300">3
-                                    months</button>
-                                <button
-                                    class="rounded-lg border-2 border-slate-100 bg-white py-3 text-sm font-bold text-slate-600 hover:border-primary/50 transition-all dark:border-slate-800 dark:bg-slate-800 dark:text-slate-300">6
-                                    months</button>
-                                <button
-                                    class="rounded-lg border-2 border-primary bg-primary/5 py-3 text-sm font-bold text-primary transition-all dark:bg-primary/10">12
-                                    months</button>
+
+                    @if ($pricingOptions->count() > 1)
+                        {{-- Subscription plan (only when multiple options to choose from) --}}
+                        <div class="border-t border-slate-200 pt-6 pb-6">
+                            <p class="text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-4">Select
+                                subscription plan</p>
+                            <div class="grid grid-cols-3 gap-3">
+                                @foreach ($pricingOptions as $option)
+                                    @php
+                                        $optionPrefix = $option->currency === 'EUR' ? '€' : $option->currency . ' ';
+                                    @endphp
+                                    <button type="button" aria-selected="{{ $loop->first ? 'true' : 'false' }}"
+                                        class="productPeriodBtn rounded-lg border-2 py-3.5 text-sm font-bold transition-all {{ $loop->first ? 'bg-[var(--enterprise-blue)] border-[var(--enterprise-blue)] text-white' : 'bg-white border-slate-200 text-slate-700 hover:border-[var(--enterprise-blue)]/50' }}"
+                                        data-price="{{ number_format((float) $option->price, 2, '.', '') }}"
+                                        data-duration="{{ (int) $option->duration_months }}"
+                                        data-currency="{{ $optionPrefix }}">
+                                        {{ (int) $option->duration_months > 0 ? (int) $option->duration_months . ' MO' : 'One-time' }}
+                                    </button>
+                                @endforeach
                             </div>
                         </div>
-                    </div>
-                    <div class="space-y-4">
-                        <button
-                            class="group relative flex w-full items-center justify-center gap-2 overflow-hidden rounded-xl bg-[var(--enterprise-blue)] py-4 text-lg font-bold text-white transition-all hover:bg-blue-600 active:scale-[0.98] shadow-lg shadow-blue-900/20">
-                            <span>Buy Now</span>
+                    @endif
+
+                    {{-- Price --}}
+                    <div class="border-t border-slate-200 pt-6 pb-6 text-center">
+                        @if ($savingsPercentProduct > 0)
+                            <p class="text-sm text-slate-400 line-through mb-1">
+                                {{ $currencyPrefix }}{{ number_format($originalPriceProduct, 2) }}</p>
+                        @endif
+                        <p class="flex items-baseline justify-center gap-0.5">
                             <span
-                                class="material-symbols-outlined text-xl transition-transform group-hover:translate-x-1">shopping_cart</span>
+                                class="text-2xl font-black text-slate-900 align-baseline">{{ trim($currencyPrefix) }}</span>
+                            <span id="productPrice"
+                                class="text-4xl font-black text-slate-900 tracking-tight">{{ number_format($currentPrice, 2) }}</span>
+                        </p>
+                        @if ($savingsPercentProduct > 0)
+                            <span
+                                class="inline-block mt-2 px-2.5 py-1 rounded-md bg-emerald-500 text-white text-[10px] font-bold uppercase tracking-wider">Save
+                                {{ $savingsPercentProduct }}% annually</span>
+                        @endif
+                        <span id="productDuration" class="sr-only"
+                            aria-hidden="true">{{ (int) $activePricing->duration_months > 0 ? (int) $activePricing->duration_months . ' months' : 'one-time' }}</span>
+                    </div>
+
+                    {{-- CTAs + Guarantee --}}
+                    <div class="space-y-3">
+                        <button type="button"
+                            class="addProductToCartBtn w-full flex items-center justify-center gap-2 rounded-xl border-2 bg-white py-4 text-base font-bold text-[var(--enterprise-blue)] transition-all hover:bg-blue-50 active:scale-[0.98]"
+                            data-product-id="{{ $product->id }}" data-product-name="{{ $productName }}"
+                            data-product-detail-url="{{ route('product-detail', $product) }}">
+                            <span class="material-symbols-outlined text-xl">add_shopping_cart</span>
+                            <span>Add To Cart</span>
                         </button>
-                        <p class="text-center text-xs text-slate-400 dark:text-slate-500">
-                            30-day money-back guarantee. No credit card required for trial.
+                        <button type="button"
+                            class="buyNowProductBtn w-full flex items-center justify-center gap-2 rounded-xl bg-[var(--enterprise-blue)] py-4 text-base font-bold text-white transition-all hover:bg-blue-700 active:scale-[0.98] shadow-lg"
+                            data-product-id="{{ $product->id }}" data-product-name="{{ $productName }}"
+                            data-product-detail-url="{{ route('product-detail', $product) }}">
+                            <span class="material-symbols-outlined text-xl">shopping_cart</span>
+                            <span>Buy Now</span>
+                        </button>
+                        <p class="flex items-center justify-center gap-2 text-xs text-slate-500">
+                            <span class="material-symbols-outlined text-base">verified_user</span>
+                            30-Day Money Back Guarantee
                         </p>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div
-            class="flex flex-wrap justify-center items-center gap-8 md:gap-16 py-8 border-y border-slate-200 dark:border-slate-800 mb-20 opacity-60">
-            <div class="flex items-center gap-2 grayscale hover:grayscale-0 transition-all">
-                <span class="material-symbols-outlined">verified</span>
-                <span class="font-bold text-lg tracking-tight">AUTODESK CERTIFIED</span>
-            </div>
-            <div class="flex items-center gap-2 grayscale hover:grayscale-0 transition-all">
-                <span class="material-symbols-outlined">security</span>
-                <span class="font-bold text-lg tracking-tight">ISO 27001 SECURE</span>
-            </div>
-            <div class="flex items-center gap-2 grayscale hover:grayscale-0 transition-all">
-                <span class="material-symbols-outlined">engineering</span>
-                <span class="font-bold text-lg tracking-tight">PRO-ENGINEER GRADE</span>
-            </div>
-            <div class="flex items-center gap-2 grayscale hover:grayscale-0 transition-all">
-                <span class="material-symbols-outlined">public</span>
-                <span class="font-bold text-lg tracking-tight">USED BY 500+ FIRMS</span>
-            </div>
-        </div>
-
-        <section class="mb-24">
-            <div class="text-center max-w-3xl mx-auto mb-16">
-                <h2 class="text-3xl font-black mb-4">Technical Excellence Redefined</h2>
-                <p class="text-slate-600 dark:text-slate-400">Specifically engineered for professional CAD designers who
-                    demand extreme performance without compromising on detail.</p>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div
-                    class="p-8 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl hover:border-[var(--enterprise-blue)] transition-all">
-                    <div
-                        class="w-12 h-12 bg-[var(--enterprise-blue)]/10 text-[var(--enterprise-blue)] rounded-lg flex items-center justify-center mb-6">
-                        <span class="material-symbols-outlined">bolt</span>
+        @if ($product->packages->count())
+            <section class="mt-20">
+                <div class="flex items-end justify-between mb-8">
+                    <div>
+                        <h2 class="text-3xl font-black mb-2">Included In Packages</h2>
+                        <p class="text-slate-600">Upgrade by bundle to unlock more tools.</p>
                     </div>
-                    <h3 class="text-xl font-bold mb-3">40% Faster Rendering</h3>
-                    <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">Proprietary GXL-Acceleration
-                        engine reduces compute overhead, allowing real-time viewport feedback even on complex assemblies.
-                    </p>
                 </div>
-                <div
-                    class="p-8 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl hover:border-[var(--enterprise-blue)] transition-all">
-                    <div
-                        class="w-12 h-12 bg-[var(--enterprise-blue)]/10 text-[var(--enterprise-blue)] rounded-lg flex items-center justify-center mb-6">
-                        <span class="material-symbols-outlined">architecture</span>
-                    </div>
-                    <h3 class="text-xl font-bold mb-3">Precision Surfacing</h3>
-                    <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">Advanced G2 and G3 continuity
-                        algorithms for automotive-grade surfaces and perfect curvature analysis directly within Inventor.
-                    </p>
-                </div>
-                <div
-                    class="p-8 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl hover:border-[var(--enterprise-blue)] transition-all">
-                    <div
-                        class="w-12 h-12 bg-[var(--enterprise-blue)]/10 text-[var(--enterprise-blue)] rounded-lg flex items-center justify-center mb-6">
-                        <span class="material-symbols-outlined">history</span>
-                    </div>
-                    <h3 class="text-xl font-bold mb-3">Parametric History</h3>
-                    <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">Fully non-destructive editing
-                        workflow. Modify upstream features and watch your surfacing adapt instantly without errors.</p>
-                </div>
-            </div>
-        </section>
-
-        <section class="mb-24">
-            <div class="flex items-end justify-between mb-10">
-                <div>
-                    <h2 class="text-3xl font-black mb-2">Save More with Bundles</h2>
-                    <p class="text-slate-600 dark:text-slate-400">Maximize your toolset while minimizing your costs.</p>
-                </div>
-                <a class="text-[var(--enterprise-blue)] font-bold text-sm flex items-center gap-1 hover:underline"
-                    href="#">
-                    View All Bundles <span class="material-symbols-outlined">chevron_right</span>
-                </a>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div
-                    class="group relative overflow-hidden rounded-2xl border-2 border-[var(--enterprise-blue)] bg-[var(--enterprise-blue)]/5 p-1 transition-all hover:shadow-2xl hover:shadow-blue-900/10">
-                    <div class="absolute top-4 right-4 z-10">
-                        <span
-                            class="bg-[var(--enterprise-blue)] text-white text-[10px] font-black px-2 py-1 rounded uppercase tracking-tighter">Most
-                            Popular</span>
-                    </div>
-                    <div class="bg-white dark:bg-slate-900 p-8 rounded-xl h-full flex flex-col">
-                        <div class="flex justify-between items-start mb-6">
-                            <div>
-                                <h3 class="text-2xl font-black text-slate-900 dark:text-white">Automation Master Pack</h3>
-                                <p class="text-slate-500 text-sm mt-1 italic">Includes Modeling Suite 2.0 + 4 others</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10">
+                    @foreach ($product->packages as $pkg)
+                        @php
+                            $pricing = $pkg->pricing->sortBy('price')->first();
+                            $price = $pricing ? (float) $pricing->price : 0;
+                            $currency = $pricing?->currency ?? 'EUR';
+                            $currencySymbol = $currency === 'EUR' ? '€' : $currency . ' ';
+                            $badge = 'Package';
+                            $fallbackImage =
+                                $pkg->avatar ?:
+                                'https://lh3.googleusercontent.com/aida-public/AB6AXuD0xn8klFRg-K-wRgdq9BzT8p7YQbk6CjpWvfNLtc2vdCkRslFovVEeXhTTPi8n6Wg4kQk6g5XGMAA9Eje2zDvPqgmIT-5DGhYHSfGg8_3ikow9PiqSqnjhbl4vKZrJGIdPvdSeyLeVSba8OMJLs1VMbFXsof6nhoC7sGi9QImZ1nT5NHC9Go5RlZWKq_GowsX26ajNPYPCPWaol77sCdSPRs-kfLoBSSMaOb37ctMPwcUx8bTWWT9eDcj23XJ1ltEnAAZOQQvyBjI';
+                            $desc = $pkg->description ?: 'Curated tools for rapid deployment and consistent results.';
+                            $isCoreFreeType = $pkg->type?->name !== App\Constants\GlobalConstant::TYPE_CORE_FREE;
+                            $isCoreFree = $pkg->type?->name === App\Constants\GlobalConstant::TYPE_CORE_FREE;
+                            $badgeLabel = $isCoreFree ? 'Free' : $badge;
+                        @endphp
+                        <div class="group flex flex-col rounded-[32px] overflow-hidden transition-all duration-500 cursor-pointer {{ $isCoreFree ? 'core-free-card shadow-lg' : ($isCoreFreeType ? 'pro-card shadow-2xl hover:scale-[1.02] ring-1 ring-blue-500/30' : 'glass-card shadow-xl shadow-slate-200/40 hover:shadow-2xl hover:shadow-blue-900/10') }}"
+                            onclick="window.location.href='{{ route('package-detail', $pkg) }}'" role="button"
+                            tabindex="0"
+                            onkeydown="if(event.key==='Enter') window.location.href='{{ route('package-detail', $pkg) }}'">
+                            <div
+                                class="relative aspect-[5/4] overflow-hidden m-3 rounded-[24px] {{ $isCoreFreeType ? '' : 'bg-slate-50' }}">
+                                <img alt="{{ $pkg->name }}"
+                                    class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                                    src="{{ $fallbackImage }}" />
+                                <div class="absolute top-4 left-4">
+                                    <span
+                                        class="{{ $isCoreFree ? 'bg-blue-600 text-white' : ($isCoreFreeType ? 'bg-gradient-to-r from-blue-400 to-blue-600 text-white' : 'bg-white/95 backdrop-blur-sm text-[var(--enterprise-blue)]') }} px-4 py-1.5 rounded-full text-[10px] font-extrabold uppercase tracking-widest shadow-lg">
+                                        {{ $badgeLabel }}
+                                    </span>
+                                </div>
                             </div>
-                            <div class="text-right">
-                                <p class="text-slate-400 line-through text-sm">$899</p>
-                                <p class="text-3xl font-black text-[var(--enterprise-blue)]">$549</p>
+                            <div
+                                class="p-8 pt-4 flex flex-col flex-1 {{ $isCoreFreeType || $isCoreFree ? 'text-center' : '' }}">
+                                <h3
+                                    class="text-xl {{ $isCoreFree ? 'font-black text-[var(--enterprise-blue)]' : ($isCoreFreeType ? 'font-black text-white' : 'font-bold text-[var(--enterprise-blue)]') }}">
+                                    {{ $pkg->name }}
+                                </h3>
+                                @if ($isCoreFree)
+                                    <p class="text-slate-600 text-sm mt-3 leading-relaxed">
+                                        {{ $desc }}
+                                    </p>
+                                @elseif ($isCoreFreeType)
+                                    <div class="mt-4 flex justify-center">
+                                        <ul class="space-y-2 text-xs text-blue-100/70 font-medium text-left inline-block">
+                                            @forelse ($pkg->products->take(4) as $prod)
+                                                <li class="flex items-center gap-2">
+                                                    <span class="material-symbols-outlined glow-check text-base">check_circle</span>
+                                                    <span class="text-xs text-blue-50 font-semibold tracking-wide uppercase leading-snug">
+                                                        {{ $prod->name }}
+                                                    </span>
+                                                </li>
+                                            @empty
+                                                <li class="text-blue-100/70">{{ $desc }}</li>
+                                            @endforelse
+                                        </ul>
+                                    </div>
+                                @else
+                                    <p class="text-slate-500 text-sm mt-3 leading-relaxed">
+                                        {{ $desc }}
+                                    </p>
+                                @endif
+                                <div class="mt-auto pt-8 flex flex-col items-center">
+                                    <div class="flex flex-col items-center mb-6">
+                                        <span
+                                            class="{{ $isCoreFree ? 'text-3xl text-[var(--enterprise-blue)]' : ($isCoreFreeType ? 'text-4xl text-white' : 'text-3xl text-[var(--enterprise-blue)]') }} font-black tracking-tight">
+                                            {{ $currencySymbol }}{{ number_format($price, 2) }}
+                                        </span>
+                                    </div>
+                                    @if ($isCoreFreeType)
+                                        <button type="button" onclick="event.stopPropagation();"
+                                            class="buyPackageNowBtn w-full py-4 text-sm font-black rounded-2xl transition-all shadow-lg hover:bg-blue-700 bg-[#137fec] text-white"
+                                            data-package-id="{{ $pkg->id }}" data-bundle-name="{{ $pkg->name }}"
+                                            data-bundle-price="{{ $price }}"
+                                            data-bundle-image="{{ $fallbackImage }}"
+                                            data-bundle-period="{{ $pricing?->duration_months ?? '' }}"
+                                            data-bundle-detail-url="{{ route('package-detail', $pkg) }}"
+                                            data-bundle-items="{{ $pkg->products->pluck('name')->implode(',') }}">
+                                            <span class="inline-flex items-center gap-2">
+                                                <span>BUY NOW</span>
+                                                <span class="material-symbols-outlined text-lg">shopping_cart</span>
+                                            </span>
+                                        </button>
+                                    @endif
+                                </div>
                             </div>
                         </div>
-                        <ul class="space-y-3 mb-8 flex-grow">
-                            <li class="flex items-center gap-2 text-sm">
-                                <span class="material-symbols-outlined text-green-500 !text-lg">check_circle</span>
-                                <span>Modeling Suite 2.0 (Full Version)</span>
-                            </li>
-                            <li class="flex items-center gap-2 text-sm">
-                                <span class="material-symbols-outlined text-green-500 !text-lg">check_circle</span>
-                                <span>Scripting Engine Pro</span>
-                            </li>
-                            <li class="flex items-center gap-2 text-sm">
-                                <span class="material-symbols-outlined text-green-500 !text-lg">check_circle</span>
-                                <span>Batch Export Toolkit</span>
-                            </li>
-                            <li class="flex items-center gap-2 text-sm text-slate-400">
-                                <span class="material-symbols-outlined !text-lg">add</span>
-                                <span>2 additional automation tools</span>
-                            </li>
-                        </ul>
-                        <button
-                            class="w-full bg-[var(--enterprise-blue)] text-white py-3 rounded-lg font-bold hover:brightness-110 transition-all">
-                            Upgrade to Bundle
-                        </button>
-                    </div>
+                    @endforeach
                 </div>
-                <div
-                    class="group relative overflow-hidden rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-100/50 dark:bg-slate-800/50 p-8 transition-all hover:shadow-xl">
-                    <div class="flex justify-between items-start mb-6">
-                        <div>
-                            <h3 class="text-2xl font-black text-slate-900 dark:text-white">Ultimate Inventor Suite</h3>
-                            <p class="text-slate-500 text-sm mt-1 italic">Complete tool catalog access</p>
-                        </div>
-                        <div class="text-right">
-                            <p class="text-slate-400 line-through text-sm">$1,499</p>
-                            <p class="text-3xl font-black text-slate-900 dark:text-white">$999</p>
-                        </div>
-                    </div>
-                    <ul class="space-y-3 mb-8">
-                        <li class="flex items-center gap-2 text-sm">
-                            <span class="material-symbols-outlined text-[var(--enterprise-blue)] !text-lg">token</span>
-                            <span>Every DI-TOOL ever released</span>
-                        </li>
-                        <li class="flex items-center gap-2 text-sm">
-                            <span class="material-symbols-outlined text-[var(--enterprise-blue)] !text-lg">token</span>
-                            <span>Priority 24/7 Technical Support</span>
-                        </li>
-                        <li class="flex items-center gap-2 text-sm">
-                            <span class="material-symbols-outlined text-[var(--enterprise-blue)] !text-lg">token</span>
-                            <span>Enterprise Multi-seat Licensing</span>
-                        </li>
-                    </ul>
-                    <button
-                        class="w-full bg-slate-900 dark:bg-white dark:text-slate-900 text-white py-3 rounded-lg font-bold hover:opacity-90 transition-all">
-                        Buy Ultimate Suite
-                    </button>
-                </div>
-            </div>
-        </section>
+            </section>
+        @endif
 
-        <section class="mb-20">
-            <h2 class="text-2xl font-black mb-8">Frequently Bought Together</h2>
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-                <div
-                    class="group bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden hover:shadow-lg transition-all">
-                    <div class="aspect-square bg-slate-100 dark:bg-slate-800 p-4">
-                        <img class="w-full h-full object-contain mix-blend-multiply dark:mix-blend-normal opacity-80 group-hover:scale-110 transition-transform"
-                            data-alt="Technical icon for a rendering engine plugin"
-                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuADz2fKqgxIvjaTj5-lGjwoNT8MCRI9OeB4VkBT9SfnOC-ejIGeSk2nZSzNi2tc9JY93KvGyMOmiKy8tcO0x3xjIw5jGCzLUci29fvhdZu98X_1JxqPLpbXHZ3Ym4g-7Cl4fUuzlgFhK4dZ2l2swKfmJbPbHDofoao3kqPWr2q94KpXn6N5Qv4CxRwEuB5YLgYmO9Pc1wu_Vi97_Egr6ITV3YeNLW5timi7sAh0xCzyu4iTEQKofUhBqDK_sasUb1I0nsMoYPf8AvQ" />
-                    </div>
-                    <div class="p-4">
-                        <h4 class="font-bold text-sm mb-1 truncate">RenderPro Engine</h4>
-                        <div class="flex items-center justify-between">
-                            <span class="text-[var(--enterprise-blue)] font-bold">$79</span>
-                            <button
-                                class="w-8 h-8 rounded-full border border-slate-200 dark:border-slate-700 flex items-center justify-center hover:bg-[var(--enterprise-blue)] hover:text-white hover:border-[var(--enterprise-blue)] transition-all">
-                                <span class="material-symbols-outlined !text-sm">add</span>
-                            </button>
+        {{-- @if (!empty($includedTools) && $includedTools->count())
+            <section class="mt-20">
+                <h2 class="text-2xl font-black mb-8">Included Tools</h2>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                    @foreach ($includedTools as $tool)
+                        @php
+                            $toolPricing = $tool->pricing->sortBy('price')->first();
+                            $toolCurrency = $toolPricing?->currency === 'EUR' ? 'EUR ' : (($toolPricing?->currency ?? 'USD') . ' ');
+                            $toolImage = $tool->avatar ?: 'https://res.cloudinary.com/dkjfmxxom/image/upload/v1765015546/main_m50fl1.png';
+                            $toolPrice = $toolPricing ? (float) $toolPricing->price : 0;
+                        @endphp
+                        <div
+                            class="group bg-white border-2 border-slate-200 rounded-xl overflow-hidden hover:shadow-lg transition-all">
+                            <a href="{{ route('product-detail', $tool) }}" class="block">
+                                <div class="aspect-square bg-slate-100 p-4">
+                                    <img class="w-full h-full object-contain opacity-80 group-hover:scale-110 transition-transform"
+                                        alt="{{ $tool->name }}" src="{{ $toolImage }}" />
+                                </div>
+                            </a>
+                            <div class="p-4">
+                                <h4 class="font-bold text-sm mb-1 truncate">{{ $tool->name }}</h4>
+                                <div class="flex items-center justify-between gap-2">
+                                    <span class="text-[var(--enterprise-blue)] font-bold text-sm">
+                                        {{ $toolPricing ? $toolCurrency . number_format($toolPrice, 2) : 'Contact us' }}
+                                    </span>
+                                    <button
+                                        class="addProductToCartBtn w-8 h-8 rounded-full border border-slate-200 flex items-center justify-center hover:bg-[var(--enterprise-blue)] hover:text-white hover:border-[var(--enterprise-blue)] transition-all"
+                                        data-product-id="{{ $tool->id }}" data-product-name="{{ $tool->name }}"
+                                        data-product-price="{{ number_format($toolPrice, 2, '.', '') }}"
+                                        data-product-currency="{{ $toolCurrency }}" data-product-image="{{ $toolImage }}">
+                                        <span class="material-symbols-outlined !text-sm">add</span>
+                                    </button>
+                                </div>
+                            </div>
                         </div>
-                    </div>
+                    @endforeach
                 </div>
-                <div
-                    class="group bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden hover:shadow-lg transition-all">
-                    <div class="aspect-square bg-slate-100 dark:bg-slate-800 p-4">
-                        <img class="w-full h-full object-contain mix-blend-multiply dark:mix-blend-normal opacity-80 group-hover:scale-110 transition-transform"
-                            data-alt="Technical dashboard UI representing data analysis tool"
-                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuA9u23NQRZqmg3IXYfIWNTXAFL7WsUsGqHdoGVLnNdK7IR6NMfqnxmfJ2129c5BEcdDq4ks2W9JKqUKWOmDOKk5cxuBmZlxgqmMvXxJTuq6SPcmruZIWUuDvt3lrP7KkmdtHLj_bzhmC2C66RWM2kgjbnQh-APZToYvnUXF6zKJ46TRkyzrfckVOzzj6S3m5HVpJEgHJUa9ud3-WaHYg-za064cNSOi6VpxM4OaDjBv1VTf8HX2g8VUf_vzzExLjwXkItLbAcjksQQ" />
-                    </div>
-                    <div class="p-4">
-                        <h4 class="font-bold text-sm mb-1 truncate">Material Library XL</h4>
-                        <div class="flex items-center justify-between">
-                            <span class="text-[var(--enterprise-blue)] font-bold">$49</span>
-                            <button
-                                class="w-8 h-8 rounded-full border border-slate-200 dark:border-slate-700 flex items-center justify-center hover:bg-[var(--enterprise-blue)] hover:text-white hover:border-[var(--enterprise-blue)] transition-all">
-                                <span class="material-symbols-outlined !text-sm">add</span>
-                            </button>
+            </section>
+        @endif --}}
+
+        @if (!empty($relatedProducts) && $relatedProducts->count())
+            <section class="mt-20 mb-20">
+                <h2 class="text-2xl font-black mb-8">Related Products</h2>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                    @foreach ($relatedProducts as $item)
+                        @php
+                            $itemPricing = $item->pricing->sortBy('price')->first();
+                            $itemCurrency =
+                                $itemPricing?->currency === 'EUR' ? 'EUR ' : ($itemPricing?->currency ?? 'USD') . ' ';
+                            $itemImage =
+                                '/' . $item->avatar ?:
+                                'https://res.cloudinary.com/dkjfmxxom/image/upload/v1765015546/main_m50fl1.png';
+                            $itemPrice = $itemPricing ? (float) $itemPricing->price : 0;
+                            $itemPeriod =
+                                $itemPricing && $itemPricing->duration_months
+                                    ? $itemPricing->duration_months . ' months'
+                                    : '';
+                        @endphp
+                        <div class="group bg-white border-2 border-slate-200 rounded-xl overflow-hidden hover:shadow-lg transition-all cursor-pointer"
+                            onclick="window.location.href='{{ route('product-detail', $item) }}'" role="button"
+                            tabindex="0"
+                            onkeydown="if(event.key==='Enter') window.location.href='{{ route('product-detail', $item) }}';">
+                            <div class="aspect-square bg-slate-100 p-4">
+                                <img class="w-full h-full object-contain opacity-80 group-hover:scale-110 transition-transform"
+                                    alt="{{ $item->name }}" src="{{ $itemImage }}" />
+                            </div>
+                            <div class="p-4">
+                                <h4 class="font-bold text-sm mb-1 truncate">{{ $item->name }}</h4>
+                                <div class="flex items-center justify-between gap-2">
+                                    <span class="text-[var(--enterprise-blue)] font-bold text-sm">
+                                        {{ $itemPricing ? $itemCurrency . number_format($itemPrice, 2) : 'Contact us' }}
+                                    </span>
+                                    @if ($itemPricing)
+                                        <button type="button"
+                                            class="addProductToCartBtn w-8 h-8 rounded-full border border-slate-200 flex items-center justify-center hover:bg-[var(--enterprise-blue)] hover:text-white hover:border-[var(--enterprise-blue)] transition-all flex-shrink-0"
+                                            onclick="event.stopPropagation();" data-product-id="{{ $item->id }}"
+                                            data-product-name="{{ $item->name }}"
+                                            data-product-price="{{ number_format($itemPrice, 2, '.', '') }}"
+                                            data-product-currency="{{ $itemPeriod }}"
+                                            data-product-image="{{ $itemImage }}"
+                                            data-product-detail-url="{{ route('product-detail', $item) }}">
+                                            <span class="material-symbols-outlined !text-sm">add</span>
+                                        </button>
+                                    @endif
+                                </div>
+                            </div>
                         </div>
-                    </div>
+                    @endforeach
                 </div>
-                <div
-                    class="group bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden hover:shadow-lg transition-all">
-                    <div class="aspect-square bg-slate-100 dark:bg-slate-800 p-4">
-                        <img class="w-full h-full object-contain mix-blend-multiply dark:mix-blend-normal opacity-80 group-hover:scale-110 transition-transform"
-                            data-alt="Abstract hardware chip representing optimization plugin"
-                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuA9I9gE16lI_z4bFCY2M0qEe9EU-Dv3T8j4_cpEc1n3ronut_jQ_LX-_hwf47yXpe2xuYOTtR5FbQiuoYbMJiRSppBvJOQVPfDMuMvm-sSYIoFX37p4o7NrO56SddRIC3-kKN_sR9NQbsW3jpodY1phzOfvHpzuqqRm3mYZ06rvtNB3To6dH7Qn2QdtXtQtK5MMeHk4DDn-USfNovMi9Df3n5CXRcQVHvRl1wfaoZC4dhaP3oEZdZvs-7oRXwBmsdFDfUKifMcqI70" />
-                    </div>
-                    <div class="p-4">
-                        <h4 class="font-bold text-sm mb-1 truncate">Constraint Solver Pro</h4>
-                        <div class="flex items-center justify-between">
-                            <span class="text-[var(--enterprise-blue)] font-bold">$129</span>
-                            <button
-                                class="w-8 h-8 rounded-full border border-slate-200 dark:border-slate-700 flex items-center justify-center hover:bg-[var(--enterprise-blue)] hover:text-white hover:border-[var(--enterprise-blue)] transition-all">
-                                <span class="material-symbols-outlined !text-sm">add</span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                <div
-                    class="group bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden hover:shadow-lg transition-all">
-                    <div class="aspect-square bg-slate-100 dark:bg-slate-800 p-4">
-                        <img class="w-full h-full object-contain mix-blend-multiply dark:mix-blend-normal opacity-80 group-hover:scale-110 transition-transform"
-                            data-alt="Network server representing cloud integration tool"
-                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuD8lbZUTGd1GLg5HcHiZ1PADrs7-7Pw0CU5rwiAISq3Khpqu_ufOto0OrYiTpHuhdopfYOXwa98et43_8But4Xsrogiqw8AZeDDmZj9BXMePNe7aHPEBGkLfOdICIXHYu7FNHq8hmOM12r-TqQWmGl5HUX8i8GzNaGyUFsn2R2skZAu_N0-HqMkEQFLoSM9D4yeKMNkVoX9dzUHRM1nxM1DrycLtmy5QsL51Zzk7Iqf0RktXPVlV99_bGeM4zeIrTVLTt6N6ubZQos" />
-                    </div>
-                    <div class="p-4">
-                        <h4 class="font-bold text-sm mb-1 truncate">Cloud Sync Utility</h4>
-                        <div class="flex items-center justify-between">
-                            <span class="text-[var(--enterprise-blue)] font-bold">$29</span>
-                            <button
-                                class="w-8 h-8 rounded-full border border-slate-200 dark:border-slate-700 flex items-center justify-center hover:bg-[var(--enterprise-blue)] hover:text-white hover:border-[var(--enterprise-blue)] transition-all">
-                                <span class="material-symbols-outlined !text-sm">add</span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+            </section>
+        @endif
     </main>
 @endsection
+
+@push('scripts')
+    <script>
+        window.showAddToCartToast = window.showAddToCartToast || function(message) {
+            let container = document.getElementById('cartToastContainer');
+            if (!container) {
+                container = document.createElement('div');
+                container.id = 'cartToastContainer';
+                container.className = 'fixed top-4 right-4 z-[9999] flex flex-col gap-2 pointer-events-none';
+                document.body.appendChild(container);
+            }
+
+            const toast = document.createElement('div');
+            toast.className =
+                'pointer-events-auto min-w-[220px] max-w-[320px] rounded-lg border border-green-700 bg-green-600 px-4 py-3 text-sm font-medium text-white shadow-lg opacity-0 translate-y-[-8px] transition-all duration-300';
+            toast.textContent = message;
+            container.appendChild(toast);
+
+            requestAnimationFrame(() => toast.classList.remove('opacity-0', 'translate-y-[-8px]'));
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'translate-y-[-8px]');
+                setTimeout(() => toast.remove(), 300);
+            }, 1800);
+        };
+
+        $(document).ready(function() {
+            const $mainImg = $('#productMainImage');
+            const $thumbs = $('.productThumb');
+
+            if ($thumbs.length) {
+                $thumbs.first().addClass('border-primary ring-2 ring-primary ring-offset-2').removeClass(
+                    'border-slate-200 ring-0');
+            }
+
+            $thumbs.on('click', function() {
+                const $btn = $(this);
+                const src = $btn.data('src');
+                if (!src) return;
+
+                $thumbs.removeClass('border-primary ring-2 ring-primary ring-offset-2').addClass(
+                    'border-slate-200 ring-0');
+                $btn.addClass('border-primary ring-2 ring-primary ring-offset-2').removeClass(
+                    'border-slate-200 ring-0');
+                $mainImg.attr('src', src);
+            });
+
+            const $periodBtns = $('.productPeriodBtn');
+            const $priceEl = $('#productPrice');
+            const $durationEl = $('#productDuration');
+
+            var selectedClass = 'bg-[var(--enterprise-blue)] border-[var(--enterprise-blue)] text-white';
+            var unselectedClass =
+                'bg-white border-slate-200 text-slate-700 hover:border-[var(--enterprise-blue)]/50';
+
+            $periodBtns.on('click', function() {
+                const $btn = $(this);
+                $periodBtns.removeClass(selectedClass).addClass(unselectedClass).attr('aria-selected',
+                    'false');
+                $btn.removeClass(unselectedClass).addClass(selectedClass).attr('aria-selected', 'true');
+
+                const price = Number($btn.data('price') || 0).toLocaleString(undefined, {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2
+                });
+                const duration = Number($btn.data('duration') || 0);
+                $priceEl.text(price);
+                if ($durationEl.length) $durationEl.text(duration > 0 ? `${duration} months` : 'one-time');
+            });
+
+            const getSelectedPricing = () => {
+                const $selected = $('.productPeriodBtn[aria-selected="true"]').length ? $(
+                    '.productPeriodBtn[aria-selected="true"]').first() : $('.productPeriodBtn').first();
+                if ($selected.length) {
+                    const duration = Number($selected.data('duration') || 0);
+                    return {
+                        price: Number($selected.data('price') || 0),
+                        period: duration > 0 ? `${duration} months` : 'one-time'
+                    };
+                }
+
+                const rawPrice = '{{ number_format((float) $activePricing->price, 2, '.', '') }}';
+                const rawDuration = {{ (int) $activePricing->duration_months }};
+                return {
+                    price: Number(rawPrice || 0),
+                    period: rawDuration > 0 ? `${rawDuration} months` : 'one-time'
+                };
+            };
+
+            const getCart = () => {
+                try {
+                    const raw = localStorage.getItem('cart');
+                    return raw ? JSON.parse(raw) : [];
+                } catch (e) {
+                    return [];
+                }
+            };
+
+            const setCart = (items) => {
+                try {
+                    localStorage.setItem('cart', JSON.stringify(items));
+                } catch (e) {}
+            };
+
+            const upsertProductToCart = ($btn) => {
+                const id = String($btn.data('product-id') || '');
+                const name = $btn.data('product-name') || 'Product';
+                const detailUrl = $btn.data('product-detail-url') || '';
+                const fromButton = $btn.data('product-price') !== undefined && $btn.data('product-price') !==
+                '';
+                const price = fromButton ? Number($btn.data('product-price')) || 0 : getSelectedPricing().price;
+                const period = fromButton ? ($btn.data('product-currency') || '').trim() : getSelectedPricing()
+                    .period;
+                const image = fromButton ? ($btn.data('product-image') || '') : ($('#productMainImage').attr(
+                    'src') || '');
+
+                const item = {
+                    id: `product-${id}`,
+                    name,
+                    price,
+                    period,
+                    qty: 1,
+                    type: 'product',
+                    image,
+                    detailUrl
+                };
+
+                const items = getCart();
+                const existingIdx = items.findIndex(it =>
+                    String(it.type || 'product') === 'product' &&
+                    String(it.id || '') === String(item.id)
+                );
+
+                if (existingIdx >= 0) {
+                    items[existingIdx].qty = (items[existingIdx].qty || 1) + 1;
+                    items[existingIdx].price = item.price;
+                    items[existingIdx].period = item.period;
+                } else {
+                    items.push(item);
+                }
+
+                setCart(items);
+                window.dispatchEvent(new Event('cart:updated'));
+                return name;
+            };
+
+            $('.addProductToCartBtn').on('click', function() {
+                const name = upsertProductToCart($(this));
+                window.showAddToCartToast(`${name} added to cart`);
+            });
+
+            $('.buyNowProductBtn').on('click', function() {
+                upsertProductToCart($(this));
+                window.location.href = '/checkout';
+            });
+
+            $('.buyPackageNowBtn').on('click', function() {
+                const rawId = $(this).data('package-id');
+                const id = String(rawId ?? '');
+                const name = $(this).data('bundle-name') || 'Package';
+                const price = Number($(this).data('bundle-price')) || 0;
+                const image = $(this).data('bundle-image') || '';
+                const period = ($(this).data('bundle-period') || '').toString();
+                const detailUrl = $(this).data('bundle-detail-url') || '';
+                const item = {
+                    id,
+                    name,
+                    price,
+                    period,
+                    qty: 1,
+                    type: 'package',
+                    image,
+                    detailUrl
+                };
+                const items = getCart();
+                const existingIdx = items.findIndex(it =>
+                    String(it.type || 'package') === 'package' &&
+                    String(it.id ?? '') === item.id &&
+                    String(it.period ?? '') === item.period
+                );
+                if (existingIdx >= 0) {
+                    items[existingIdx].qty = (items[existingIdx].qty || 1) + 1;
+                } else {
+                    items.push(item);
+                }
+                setCart(items);
+                window.dispatchEvent(new Event('cart:updated'));
+                window.location.href = '/checkout';
+            });
+        });
+    </script>
+@endpush

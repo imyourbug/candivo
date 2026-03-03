@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Package extends Model
 {
     protected $fillable = [
+        'package_id',
         'category_id',
         'type_id',
         'name',

@@ -184,10 +184,15 @@
                 }
             }
 
+            function updateCheckoutState(items) {
+                if (!checkoutBtn) return;
+                checkoutBtn.disabled = !Array.isArray(items) || items.length === 0;
+            }
+
             function formatPrice(p) {
-                if (!p && p !== 0) return '€0.00';
+                if (!p && p !== 0) return '\u20AC0.00';
                 const n = Number(p) || 0;
-                return '€' + n.toFixed(2);
+                return '\u20AC' + n.toFixed(2);
             }
 
             function renderCart() {
@@ -196,8 +201,9 @@
                 cartItems.innerHTML = '';
                 if (!items.length) {
                     cartItems.innerHTML = '<div class="text-sm text-slate-500">Your cart is empty.</div>';
-                    cartTotal.textContent = '€0.00';
+                    cartTotal.textContent = '\u20AC0.00';
                     updateCartBadge();
+                    updateCheckoutState(items);
                     return;
                 }
 
@@ -213,7 +219,7 @@
                             <div class="flex justify-between items-start">
                                 <div class="max-w-[65%]">
                                     <h4 class="font-bold text-slate-900 dark:text-[var(--enterprise-blue)]">${escapeHtml(it.name || 'Item')}</h4>
-                                    <div class="text-slate-500 text-sm mt-1">${formatPrice(price)} • ${it.period || ''}</div>
+                                    <div class="text-slate-500 text-sm mt-1">${formatPrice(price)}${it.period ? ' \u2022 ' + it.period : ''}</div>
                                 </div>
                                 <div class="text-right">
                                     <div class="flex items-center gap-2">
@@ -230,6 +236,7 @@
 
                 cartTotal.textContent = formatPrice(total);
                 updateCartBadge();
+                updateCheckoutState(items);
 
                 // attach listeners
                 cartItems.querySelectorAll('.incr').forEach(btn => btn.addEventListener('click', function() {
@@ -273,17 +280,26 @@
             if (cartClose) cartClose.addEventListener('click', closeCart);
             if (cartOverlay) cartOverlay.addEventListener('click', closeCart);
             if (checkoutBtn) checkoutBtn.addEventListener('click', function() {
+                const items = getCart();
+                if (!Array.isArray(items) || items.length === 0) return;
                 window.location.href = '/checkout';
             });
-            window.addEventListener('cart:updated', updateCartBadge);
+            window.addEventListener('cart:updated', function() {
+                updateCartBadge();
+                updateCheckoutState(getCart());
+            });
             window.addEventListener('storage', function(e) {
-                if (e.key === 'cart') updateCartBadge();
+                if (e.key === 'cart') {
+                    updateCartBadge();
+                    updateCheckoutState(getCart());
+                }
             });
 
             // initial render (if cart present)
             document.addEventListener('DOMContentLoaded', function() {
                 renderCart();
                 updateCartBadge();
+                updateCheckoutState(getCart());
             });
 
             // Account dropdown: toggle behaviour
@@ -320,3 +336,4 @@
 </body>
 
 </html>
+

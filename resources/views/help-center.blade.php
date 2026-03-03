@@ -49,70 +49,99 @@
                         class="px-4 py-1.5 rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 text-sm font-medium hover:border-primary">API/iLogic</button>
                 </div>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Video Card 1 -->
-                <div class="group cursor-pointer">
-                    <div class="relative aspect-video rounded-xl overflow-hidden mb-4 shadow-md bg-slate-200">
-                        <img alt=""
-                            class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                            data-alt="3D mechanical assembly in CAD software"
-                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuBLqLTx0MHzpfC1ReXg6fImXeksiBW6VrpCR6iENn-hLUp6V7jtxnyVYsQfn8nSDo4NUDxC1tuWmBwCL0UHFP-gmcAzVjhL3DMtH6vlb6BYN-bEV7_MR_veuXkHDqZbe-JMvYRyHcto9YgqH5Okzjsad4vyjC1_GjMJkK3pTpwPoq-Sx_Y1B849OgPRMfL5DHJ_Hh-b0CWKiZnzBbmqbkcFeD6WIOHDpGL_66oJyO0VQfr0gWrqBKgyfFmzUAAmNyfzXwROml_TcwU" />
-                        <div
-                            class="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors flex items-center justify-center">
-                            <span
-                                class="material-symbols-outlined text-white text-5xl opacity-0 group-hover:opacity-100 transition-opacity">play_circle</span>
+            <div class="relative" id="videoTutorialsSliderWrap">
+                <div class="overflow-hidden rounded-xl" id="videoTutorialsSlider">
+                    <div class="flex gap-4 md:gap-6 transition-transform duration-300 ease-out" id="videoTutorialsTrack" style="transform: translateX(0);">
+                        <!-- Card 1 -->
+                        <div class="video-slide flex-shrink-0 w-1/2 md:w-1/3 lg:w-1/4 px-1 md:px-2">
+                            <div class="group cursor-pointer">
+                                <div class="relative aspect-video rounded-xl overflow-hidden mb-4 shadow-md bg-slate-200">
+                                    <img alt="3D mechanical assembly in CAD software"
+                                        class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuBLqLTx0MHzpfC1ReXg6fImXeksiBW6VrpCR6iENn-hLUp6V7jtxnyVYsQfn8nSDo4NUDxC1tuWmBwCL0UHFP-gmcAzVjhL3DMtH6vlb6BYN-bEV7_MR_veuXkHDqZbe-JMvYRyHcto9YgqH5Okzjsad4vyjC1_GjMJkK3pTpwPoq-Sx_Y1B849OgPRMfL5DHJ_Hh-b0CWKiZnzBbmqbkcFeD6WIOHDpGL_66oJyO0VQfr0gWrqBKgyfFmzUAAmNyfzXwROml_TcwU" />
+                                    <div class="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors flex items-center justify-center">
+                                        <span class="material-symbols-outlined text-white text-5xl opacity-0 group-hover:opacity-100 transition-opacity">play_circle</span>
+                                    </div>
+                                    <div class="absolute bottom-2 right-2 bg-black/70 text-white text-xs px-2 py-1 rounded font-bold">12:45</div>
+                                </div>
+                                <h3 class="font-bold text-slate-900 dark:text-white group-hover:text-primary transition-colors text-lg mb-1">Optimizing Assembly Performance</h3>
+                                <p class="text-sm text-slate-500 dark:text-slate-400 line-clamp-2">Learn advanced techniques for handling large assemblies in Inventor without performance drops.</p>
+                            </div>
                         </div>
-                        <div class="absolute bottom-2 right-2 bg-black/70 text-white text-xs px-2 py-1 rounded font-bold">
-                            12:45</div>
-                    </div>
-                    <h3
-                        class="font-bold text-slate-900 dark:text-white group-hover:text-primary transition-colors text-lg mb-1">
-                        Optimizing Assembly Performance</h3>
-                    <p class="text-sm text-slate-500 dark:text-slate-400 line-clamp-2">Learn advanced techniques for
-                        handling large assemblies in Inventor without performance drops.</p>
-                </div>
-                <!-- Video Card 2 -->
-                <div class="group cursor-pointer">
-                    <div class="relative aspect-video rounded-xl overflow-hidden mb-4 shadow-md bg-slate-200">
-                        <img alt=""
-                            class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                            data-alt="Technical blueprint with digital overlays"
-                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuCIzwLHyDG-bom9lS_AdOCJz7x23yItyG1UBgff3xmr9ylPtwgnMbw05wDEwMdqMwBCI4QSk989vO0I9On9zCBfDIYEAHeHNB0ylbQ0bA8mRhLeBjUiEDryASybE9zU__58Q6QL0EfISKdW7h3Uv2uniuDZjRGI07YLLwPTRZDO9p4hR53OabgBxecaHvNMKDBLOublv13oOKiJetMBHut8D9yPPqyQNMLUxIFcVp0PppaWH5Xh0GFMPHNLi3SmAoJyMuhOJTr6rgc" />
-                        <div
-                            class="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors flex items-center justify-center">
-                            <span
-                                class="material-symbols-outlined text-white text-5xl opacity-0 group-hover:opacity-100 transition-opacity">play_circle</span>
+                        <!-- Card 2 -->
+                        <div class="video-slide flex-shrink-0 w-1/2 md:w-1/3 lg:w-1/4 px-1 md:px-2">
+                            <div class="group cursor-pointer">
+                                <div class="relative aspect-video rounded-xl overflow-hidden mb-4 shadow-md bg-slate-200">
+                                    <img alt="Technical blueprint with digital overlays"
+                                        class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuCIzwLHyDG-bom9lS_AdOCJz7x23yItyG1UBgff3xmr9ylPtwgnMbw05wDEwMdqMwBCI4QSk989vO0I9On9zCBfDIYEAHeHNB0ylbQ0bA8mRhLeBjUiEDryASybE9zU__58Q6QL0EfISKdW7h3Uv2uniuDZjRGI07YLLwPTRZDO9p4hR53OabgBxecaHvNMKDBLOublv13oOKiJetMBHut8D9yPPqyQNMLUxIFcVp0PppaWH5Xh0GFMPHNLi3SmAoJyMuhOJTr6rgc" />
+                                    <div class="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors flex items-center justify-center">
+                                        <span class="material-symbols-outlined text-white text-5xl opacity-0 group-hover:opacity-100 transition-opacity">play_circle</span>
+                                    </div>
+                                    <div class="absolute bottom-2 right-2 bg-black/70 text-white text-xs px-2 py-1 rounded font-bold">08:20</div>
+                                </div>
+                                <h3 class="font-bold text-slate-900 dark:text-white group-hover:text-primary transition-colors text-lg mb-1">Automating Drawing Exports</h3>
+                                <p class="text-sm text-slate-500 dark:text-slate-400 line-clamp-2">Streamline your documentation workflow with one-click multi-format exports (PDF, DXF, DWG).</p>
+                            </div>
                         </div>
-                        <div class="absolute bottom-2 right-2 bg-black/70 text-white text-xs px-2 py-1 rounded font-bold">
-                            08:20</div>
-                    </div>
-                    <h3
-                        class="font-bold text-slate-900 dark:text-white group-hover:text-primary transition-colors text-lg mb-1">
-                        Automating Drawing Exports</h3>
-                    <p class="text-sm text-slate-500 dark:text-slate-400 line-clamp-2">Streamline your documentation
-                        workflow with one-click multi-format exports (PDF, DXF, DWG).</p>
-                </div>
-                <!-- Video Card 3 -->
-                <div class="group cursor-pointer">
-                    <div class="relative aspect-video rounded-xl overflow-hidden mb-4 shadow-md bg-slate-200">
-                        <img alt=""
-                            class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                            data-alt="Code on a screen representing iLogic scripts"
-                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuCVKgS9jlegl8Mr0_Yes8z7MddMF296IMRwaEektZescWruv0Dhoq11YHB2QC65WV_LHlzn_QXxjiL4fYlp_r-WhRlnyZi1-bDEhkkb8EsVE-CFY9y1zE-GkDw7x8BDa2AseXWjBfWq_cctZJLq6R2zu7F1oTuCbKBqHdd2EL8EM9LXSRkLoXvWkmEiAQvA_P3c7Frf7zC00OE_sFkjSp2m9FjVbdQrSYI_CF6pkCR2sSb3JJmSDvQpYevoeZHcbHG383BRXfPM5V4" />
-                        <div
-                            class="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors flex items-center justify-center">
-                            <span
-                                class="material-symbols-outlined text-white text-5xl opacity-0 group-hover:opacity-100 transition-opacity">play_circle</span>
+                        <!-- Card 3 -->
+                        <div class="video-slide flex-shrink-0 w-1/2 md:w-1/3 lg:w-1/4 px-1 md:px-2">
+                            <div class="group cursor-pointer">
+                                <div class="relative aspect-video rounded-xl overflow-hidden mb-4 shadow-md bg-slate-200">
+                                    <img alt="Code on a screen representing iLogic scripts"
+                                        class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuCVKgS9jlegl8Mr0_Yes8z7MddMF296IMRwaEektZescWruv0Dhoq11YHB2QC65WV_LHlzn_QXxjiL4fYlp_r-WhRlnyZi1-bDEhkkb8EsVE-CFY9y1zE-GkDw7x8BDa2AseXWjBfWq_cctZJLq6R2zu7F1oTuCbKBqHdd2EL8EM9LXSRkLoXvWkmEiAQvA_P3c7Frf7zC00OE_sFkjSp2m9FjVbdQrSYI_CF6pkCR2sSb3JJmSDvQpYevoeZHcbHG383BRXfPM5V4" />
+                                    <div class="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors flex items-center justify-center">
+                                        <span class="material-symbols-outlined text-white text-5xl opacity-0 group-hover:opacity-100 transition-opacity">play_circle</span>
+                                    </div>
+                                    <div class="absolute bottom-2 right-2 bg-black/70 text-white text-xs px-2 py-1 rounded font-bold">15:10</div>
+                                </div>
+                                <h3 class="font-bold text-slate-900 dark:text-white group-hover:text-primary transition-colors text-lg mb-1">Getting Started with iLogic</h3>
+                                <p class="text-sm text-slate-500 dark:text-slate-400 line-clamp-2">An introduction to the Di-tool API and how to write your first iLogic automation script.</p>
+                            </div>
                         </div>
-                        <div class="absolute bottom-2 right-2 bg-black/70 text-white text-xs px-2 py-1 rounded font-bold">
-                            15:10</div>
+                        <!-- Card 4 -->
+                        <div class="video-slide flex-shrink-0 w-1/2 md:w-1/3 lg:w-1/4 px-1 md:px-2">
+                            <div class="group cursor-pointer">
+                                <div class="relative aspect-video rounded-xl overflow-hidden mb-4 shadow-md bg-slate-200">
+                                    <img alt="BOM and drawing standards"
+                                        class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuBLqLTx0MHzpfC1ReXg6fImXeksiBW6VrpCR6iENn-hLUp6V7jtxnyVYsQfn8nSDo4NUDxC1tuWmBwCL0UHFP-gmcAzVjhL3DMtH6vlb6BYN-bEV7_MR_veuXkHDqZbe-JMvYRyHcto9YgqH5Okzjsad4vyjC1_GjMJkK3pTpwPoq-Sx_Y1B849OgPRMfL5DHJ_Hh-b0CWKiZnzBbmqbkcFeD6WIOHDpGL_66oJyO0VQfr0gWrqBKgyfFmzUAAmNyfzXwROml_TcwU" />
+                                    <div class="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors flex items-center justify-center">
+                                        <span class="material-symbols-outlined text-white text-5xl opacity-0 group-hover:opacity-100 transition-opacity">play_circle</span>
+                                    </div>
+                                    <div class="absolute bottom-2 right-2 bg-black/70 text-white text-xs px-2 py-1 rounded font-bold">10:30</div>
+                                </div>
+                                <h3 class="font-bold text-slate-900 dark:text-white group-hover:text-primary transition-colors text-lg mb-1">BOM and Drawing Standards</h3>
+                                <p class="text-sm text-slate-500 dark:text-slate-400 line-clamp-2">Best practices for bill of materials and consistent drawing output across your team.</p>
+                            </div>
+                        </div>
+                        <div class="video-slide flex-shrink-0 w-1/2 md:w-1/3 lg:w-1/4 px-1 md:px-2">
+                            <div class="group cursor-pointer">
+                                <div class="relative aspect-video rounded-xl overflow-hidden mb-4 shadow-md bg-slate-200">
+                                    <img alt="Technical blueprint with digital overlays"
+                                        class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuCIzwLHyDG-bom9lS_AdOCJz7x23yItyG1UBgff3xmr9ylPtwgnMbw05wDEwMdqMwBCI4QSk989vO0I9On9zCBfDIYEAHeHNB0ylbQ0bA8mRhLeBjUiEDryASybE9zU__58Q6QL0EfISKdW7h3Uv2uniuDZjRGI07YLLwPTRZDO9p4hR53OabgBxecaHvNMKDBLOublv13oOKiJetMBHut8D9yPPqyQNMLUxIFcVp0PppaWH5Xh0GFMPHNLi3SmAoJyMuhOJTr6rgc" />
+                                    <div class="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors flex items-center justify-center">
+                                        <span class="material-symbols-outlined text-white text-5xl opacity-0 group-hover:opacity-100 transition-opacity">play_circle</span>
+                                    </div>
+                                    <div class="absolute bottom-2 right-2 bg-black/70 text-white text-xs px-2 py-1 rounded font-bold">08:20</div>
+                                </div>
+                                <h3 class="font-bold text-slate-900 dark:text-white group-hover:text-primary transition-colors text-lg mb-1">Automating Drawing Exports</h3>
+                                <p class="text-sm text-slate-500 dark:text-slate-400 line-clamp-2">Streamline your documentation workflow with one-click multi-format exports (PDF, DXF, DWG).</p>
+                            </div>
+                        </div>
                     </div>
-                    <h3
-                        class="font-bold text-slate-900 dark:text-white group-hover:text-primary transition-colors text-lg mb-1">
-                        Getting Started with iLogic</h3>
-                    <p class="text-sm text-slate-500 dark:text-slate-400 line-clamp-2">An introduction to the Di-tool API
-                        and how to write your first iLogic automation script.</p>
                 </div>
+                <!-- Prev / Next buttons -->
+                <button type="button" id="videoSliderPrev" class="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-2 md:-translate-x-4 z-10 w-10 h-10 md:w-12 md:h-12 rounded-full bg-white dark:bg-slate-800 shadow-lg border border-slate-200 dark:border-slate-600 flex items-center justify-center text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors" aria-label="Previous">
+                    <span class="material-symbols-outlined text-2xl">chevron_left</span>
+                </button>
+                <button type="button" id="videoSliderNext" class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-2 md:translate-x-4 z-10 w-10 h-10 md:w-12 md:h-12 rounded-full bg-white dark:bg-slate-800 shadow-lg border border-slate-200 dark:border-slate-600 flex items-center justify-center text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors" aria-label="Next">
+                    <span class="material-symbols-outlined text-2xl">chevron_right</span>
+                </button>
+                <!-- Dots (filled by JS) -->
+                <div class="flex justify-center gap-2 mt-6" id="videoSliderDots"></div>
             </div>
         </section>
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
@@ -252,4 +281,99 @@
 @endsection
 
 @push('scripts')
+<script>
+$(function() {
+    var $wrap = $('#videoTutorialsSliderWrap');
+    var $track = $('#videoTutorialsTrack');
+    var $prevBtn = $('#videoSliderPrev');
+    var $nextBtn = $('#videoSliderNext');
+    var $dotsContainer = $('#videoSliderDots');
+
+    if (!$track.length || !$wrap.length) return;
+
+    var $slides = $track.children('.video-slide');
+    var totalSlides = $slides.length;
+    if (totalSlides === 0) return;
+
+    var currentStep = 0;
+
+    function getVisibleCount() {
+        var w = $(window).width();
+        if (w >= 1024) return 4;
+        if (w >= 768) return 3;
+        return 2;
+    }
+
+    function getStepSize() {
+        var $first = $slides.eq(0);
+        return $first.length ? $first.outerWidth(true) : 0;
+    }
+
+    function getMaxStep() {
+        var visible = getVisibleCount();
+        return Math.max(0, totalSlides - visible);
+    }
+
+    function getTotalSteps() {
+        return getMaxStep() + 1;
+    }
+
+    function getOffset() {
+        return -currentStep * getStepSize();
+    }
+
+    function buildDots() {
+        var totalSteps = getTotalSteps();
+        $dotsContainer.empty();
+        if (totalSteps <= 1) {
+            $prevBtn.addClass('opacity-50 pointer-events-none');
+            $nextBtn.addClass('opacity-50 pointer-events-none');
+            return;
+        }
+        $prevBtn.removeClass('opacity-50 pointer-events-none');
+        $nextBtn.removeClass('opacity-50 pointer-events-none');
+        for (var i = 0; i < totalSteps; i++) {
+            var $dot = $('<button type="button" class="video-slider-dot w-2.5 h-2.5 rounded-full transition-all" data-index="' + i + '" aria-label="Go to step ' + (i + 1) + '"></button>');
+            $dotsContainer.append($dot);
+        }
+        $dotsContainer.find('.video-slider-dot').on('click', function() {
+            goTo(parseInt($(this).data('index'), 10));
+        });
+        updateDots();
+    }
+
+    function updateDots() {
+        $dotsContainer.find('.video-slider-dot').each(function(i) {
+            var $dot = $(this);
+            $dot.toggleClass('bg-primary', i === currentStep);
+            $dot.toggleClass('bg-slate-300 dark:bg-slate-600', i !== currentStep);
+            $dot.toggleClass('w-8', i === currentStep);
+            $dot.toggleClass('w-2.5', i !== currentStep);
+        });
+        $prevBtn.toggleClass('opacity-50 pointer-events-none', currentStep <= 0);
+        $nextBtn.toggleClass('opacity-50 pointer-events-none', currentStep >= getMaxStep());
+    }
+
+    function goTo(step) {
+        var maxStep = getMaxStep();
+        currentStep = Math.max(0, Math.min(step, maxStep));
+        $track.css('transform', 'translateX(' + getOffset() + 'px)');
+        updateDots();
+    }
+
+    $prevBtn.on('click', function() { goTo(currentStep - 1); });
+    $nextBtn.on('click', function() { goTo(currentStep + 1); });
+
+    buildDots();
+    goTo(0);
+
+    $(window).on('resize', function() {
+        var maxStep = getMaxStep();
+        currentStep = Math.min(currentStep, maxStep);
+        currentStep = Math.max(0, currentStep);
+        $track.css('transform', 'translateX(' + getOffset() + 'px)');
+        buildDots();
+    });
+});
+</script>
 @endpush

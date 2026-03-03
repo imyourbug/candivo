@@ -9,6 +9,7 @@ class CreatePackagesTable extends Migration
     {
         Schema::create('packages', function (Blueprint $table) {
             $table->id();
+            $table->string('package_id', 100)->nullable()->comment('PKG + UPPERCASE_SLUG');
             $table->foreignId('category_id')->nullable()->constrained('categories');
             $table->foreignId('type_id')->nullable()->constrained('types');
             $table->string('name');

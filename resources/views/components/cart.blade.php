@@ -18,10 +18,10 @@
         <div class="p-6 border-t border-slate-100 dark:border-slate-250">
             <div class="flex items-center justify-between mb-4">
                 <span class="text-lg font-bold">Total</span>
-                <span id="cartTotal" class="text-lg font-bold">€0.00</span>
+                <span id="cartTotal" class="text-lg font-bold">&#8364;0.00</span>
             </div>
-            <button id="checkoutBtn"
-                class="w-full bg-[var(--enterprise-blue)] text-white py-3 rounded-lg font-bold hover:bg-blue-600 transition-colors">Checkout</button>
+            <button id="checkoutBtn" disabled
+                class="w-full bg-[var(--enterprise-blue)] text-white py-3 rounded-lg font-bold hover:bg-blue-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-[var(--enterprise-blue)]">Checkout</button>
         </div>
     </div>
 </aside>

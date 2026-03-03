@@ -1,37 +1,51 @@
-,,,"€3,572.50",,0,0,0,,
-ID,Column1,Value status,Value,Category,Basic,Professional,Premium,CAT set,Stand Set
-1,COPY DRAWING OBJECTS,Core-Free,€17.50,File Management,TRUE,TRUE,TRUE,TRUE,FALSE
-2,MOVE FILE,Low,€9.00,File Management,TRUE,TRUE,TRUE,TRUE,FALSE
-8,EXPORT TO STP,Low,€29.00,Drawing & Export,TRUE,TRUE,TRUE,TRUE,FALSE
-9,EXPORT TO BIM,Mid,€79.00,Drawing & Export,FALSE,TRUE,TRUE,TRUE,FALSE
-10,COMPONENT SIZE,Mid,€59.00,iProperty & Quantity,TRUE,TRUE,TRUE,TRUE,FALSE
-12,CUSTOM QUANTITY,Core-Free,€30.00,iProperty & Quantity,TRUE,TRUE,TRUE,TRUE,FALSE
-14,DRAWING STATUS,Core-Free,€27.50,iProperty & Quantity,TRUE,TRUE,TRUE,TRUE,FALSE
-15,UPDATE PROPERTY,Core-Free,€12.00,iProperty & Quantity,TRUE,TRUE,TRUE,TRUE,FALSE
-16,GET SURFACE AREA,Core-Free,€20.00,iProperty & Quantity,TRUE,FALSE,TRUE,TRUE,FALSE
-18,PLACE COMPONENTS,Low,€39.00,Assembly & Modeling,FALSE,TRUE,TRUE,TRUE,FALSE
-19,PATTERN QTY FROM EXCEL,Low,€29.00,Assembly & Modeling,FALSE,FALSE,TRUE,TRUE,FALSE
-22,BOM STRUCTURE,Core-Free,€15.00,Assembly & Modeling,TRUE,TRUE,TRUE,TRUE,FALSE
-23,SHEET METAL TO NORMAL,Core-Free,€8.00,Assembly & Modeling,FALSE,TRUE,TRUE,TRUE,FALSE
-24,EXPORT STEP BY CATEGORY,Low,€29.00,Drawing & Export,FALSE,TRUE,TRUE,TRUE,FALSE
-28,COPY DESIGN,High,€79.00,Assembly & Modeling,FALSE,TRUE,TRUE,TRUE,FALSE
-29,CHECK MISSING FILES,Core-Free,€20.00,File Management,TRUE,TRUE,TRUE,TRUE,FALSE
-30,DELETE NON-SOLID,Core-Free,€10.00,File Management,FALSE,TRUE,TRUE,TRUE,FALSE
-31,DELETE HIDDEN COMPONETS,Core-Free,€12.50,File Management,TRUE,TRUE,TRUE,TRUE,FALSE
-33,MODEL PLANES,Core-Free,€11.00,Advanced Tools,FALSE,TRUE,TRUE,FALSE,FALSE
-34,GET BODY NAME IN BALLOON,Low,€11.00,Advanced Tools,FALSE,TRUE,TRUE,FALSE,FALSE
-36,iProperties (Advanced),High,(Coming Soon),Advanced Tools,FALSE,FALSE,FALSE,FALSE,FALSE
-37,7.Revision & Replace Set,set,€69.00,,FALSE,FALSE,FALSE,FALSE,FALSE
-38,8.PDF Publishing Set,set,€169.00,,FALSE,FALSE,FALSE,FALSE,FALSE
-39,9.Property & Quantity Mini Set,set,€69.00,,FALSE,FALSE,FALSE,FALSE,FALSE
-40,10.Drawing & Production Set,set,€319.00,,FALSE,FALSE,FALSE,FALSE,FALSE
-41,1.Basic,set,€179.00,,FALSE,FALSE,FALSE,FALSE,FALSE
-42,2.Professional,set,€449.00,,FALSE,FALSE,FALSE,FALSE,FALSE
-43,Premium Service Layer,set,(Coming Soon),,FALSE,FALSE,FALSE,FALSE,FALSE
-44,3.Assembly & Modeling,set,€199.00,,FALSE,FALSE,FALSE,FALSE,FALSE
-45,4.Drawing & Export,set,€239.00,,FALSE,FALSE,FALSE,FALSE,FALSE
-46,5.File Management,set,€99.00,,FALSE,FALSE,FALSE,FALSE,FALSE
-47,6.iProperty & Quantity,set,€129.00,,FALSE,FALSE,FALSE,FALSE,FALSE
-48,COPY DESIGN Advanced,High,(Coming Soon),,FALSE,FALSE,FALSE,FALSE,FALSE
-,,,,,,,,,
-,Package,,,,,,,,
+ID,Column1,IsFree,Duration 1,Price duration 1,Duration 2,Price duration 2,Duration 3,Price duration 3,Value status,Value,Category,Basic,Professional,Premium,CAT set,Stand Set,Avatar,Description
+1,COPY DRAWING OBJECTS,1,3,0,6,0,12,0,Core-Free,€17.50,File Management,TRUE,TRUE,TRUE,TRUE,FALSE,images/tool/btncopydrawingobjects32x32_iih0qt.png,"<h2>What is included in the COPY DRAWING OBJECTS?</h2>
+<p>
+What it does Copies selected drawing objects between drawings or
+sheets.
+</p>
+<h2>Key benefits</h2>
+<ul>
+<li>Saves time recreating annotations.</li>
+<li>Improves drawing consistency.</li>
+</ul>
+<h2>Typical use cases</h2>
+<ul>
+<li>Standardizing drawing layouts.</li>
+<li>Reusing title blocks or notes.</li>
+</ul>
+"
+2,MOVE FILE,0,3,3,6,6,12,12,Low,€9.00,File Management,TRUE,TRUE,TRUE,TRUE,FALSE,images/tool/BtnMoveFile32x32_b7tuy8.png,
+8,EXPORT TO STP,0,3,6,6,12,12,24,Low,€29.00,Drawing & Export,TRUE,TRUE,TRUE,TRUE,FALSE,images/tool/btnexporttostp32x32_nnlh1x.png,
+9,EXPORT TO BIM,0,3,21,6,42,12,84,Mid,€79.00,Drawing & Export,FALSE,TRUE,TRUE,TRUE,FALSE,images/tool/btnexporttobim32x32_l4oywz.png,
+10,COMPONENT SIZE,0,3,15,6,30,12,59,Mid,€59.00,iProperty & Quantity,TRUE,TRUE,TRUE,TRUE,FALSE,images/tool/btncomponentsize32x32_lo5xtg.png,
+12,CUSTOM QUANTITY,1,3,,6,,12,,Core-Free,€30.00,iProperty & Quantity,TRUE,TRUE,TRUE,TRUE,FALSE,images/tool/btncustomquantity32x321_rp4lqo.png,
+14,DRAWING STATUS,1,3,,6,,12,,Core-Free,€27.50,iProperty & Quantity,TRUE,TRUE,TRUE,TRUE,FALSE,images/tool/btndrawingstatus32x32_mgkd6d.png,
+15,UPDATE PROPERTY,1,3,,6,,12,,Core-Free,€12.00,iProperty & Quantity,TRUE,TRUE,TRUE,TRUE,FALSE,images/tool/btnupdateproperty32x32_jijowi.png,
+16,GET SURFACE AREA,0,3,6,6,12,12,24,Core-Free,€20.00,iProperty & Quantity,TRUE,FALSE,TRUE,TRUE,FALSE,images/tool/btngetsurfacearea32x32_jugl1v.png,
+18,PLACE COMPONENTS,0,3,6,6,12,12,24,Low,€39.00,Assembly & Modeling,FALSE,TRUE,TRUE,TRUE,FALSE,images/tool/btnplacecomponent32x32_z7l2kr.png,
+19,PATTERN QTY FROM EXCEL,0,3,6,6,12,12,24,Low,€29.00,Assembly & Modeling,FALSE,FALSE,TRUE,TRUE,FALSE,images/tool/btnpatternqtyfromexcel32x32_ggoxzl.png,
+22,BOM STRUCTURE,1,3,,6,,12,,Core-Free,€15.00,Assembly & Modeling,TRUE,TRUE,TRUE,TRUE,FALSE,images/tool/btnupdatebomstructure32x32_ouopxf.png,
+23,SHEET METAL TO NORMAL,1,3,,6,,12,,Core-Free,€8.00,Assembly & Modeling,FALSE,TRUE,TRUE,TRUE,FALSE,images/tool/btnsheetmetaltonormal32x32_bjfolr.png,
+24,EXPORT STEP BY CATEGORY,0,3,6,6,12,12,24,Low,€29.00,Drawing & Export,FALSE,TRUE,TRUE,TRUE,FALSE,images/tool/btnexporttostepbycategory32x32_urvn5l.png,
+28,COPY DESIGN,0,3,18,6,36,12,72,High,€79.00,Assembly & Modeling,FALSE,TRUE,TRUE,TRUE,FALSE,images/tool/BtnCopyDesign32x32_xukyvo.png,
+29,CHECK MISSING FILES,1,3,,6,,12,,Core-Free,€20.00,File Management,TRUE,TRUE,TRUE,TRUE,FALSE,images/tool/btncheckmissingfile32x32_jtjaxa.png,
+30,DELETE NON-SOLID,1,3,,6,,12,,Core-Free,€10.00,File Management,FALSE,TRUE,TRUE,TRUE,FALSE,images/tool/btndeletenonesolid32x32_v4qf2t.png,
+31,DELETE HIDDEN COMPONETS,1,3,,6,,12,,Core-Free,€12.50,File Management,TRUE,TRUE,TRUE,TRUE,FALSE,images/tool/btndeletehiddencomponent32x32_kpphfw.png,
+33,MODEL PLANES,1,3,,6,,12,,Core-Free,€11.00,Advanced Tools,FALSE,TRUE,TRUE,FALSE,FALSE,images/tool/Model_Planes_snnnh8.jpg,
+34,GET BODY NAME IN BALLOON,0,3,3,6,6,12,12,Low,€11.00,Advanced Tools,FALSE,TRUE,TRUE,FALSE,FALSE,images/tool/btngetbodynameinballoon32x32_smvfua.jpg,
+36,iProperties (Advanced),,3,,6,,12,,High,(Coming Soon),Advanced Tools,FALSE,FALSE,FALSE,FALSE,FALSE,,
+37,7.Revision & Replace Set,,3,,6,,12,,set,€69.00,,FALSE,FALSE,FALSE,FALSE,FALSE,,
+38,8.PDF Publishing Set,,3,,6,,12,,set,€169.00,,FALSE,FALSE,FALSE,FALSE,FALSE,,
+39,9.Property & Quantity Mini Set,,3,,6,,12,,set,€69.00,,FALSE,FALSE,FALSE,FALSE,FALSE,,
+40,10.Drawing & Production Set,,3,,6,,12,,set,€319.00,,FALSE,FALSE,FALSE,FALSE,FALSE,,
+41,1.Basic,,3,,6,,12,,set,€179.00,,FALSE,FALSE,FALSE,FALSE,FALSE,,
+42,2.Professional,,3,,6,,12,,set,€449.00,,FALSE,FALSE,FALSE,FALSE,FALSE,,
+43,Premium Service Layer,,3,,6,,12,,set,(Coming Soon),,FALSE,FALSE,FALSE,FALSE,FALSE,,
+44,3.Assembly & Modeling,,3,,6,,12,,set,€199.00,,FALSE,FALSE,FALSE,FALSE,FALSE,,
+45,4.Drawing & Export,,3,,6,,12,,set,€239.00,,FALSE,FALSE,FALSE,FALSE,FALSE,,
+46,5.File Management,,3,,6,,12,,set,€99.00,,FALSE,FALSE,FALSE,FALSE,FALSE,,
+47,6.iProperty & Quantity,,3,,6,,12,,set,€129.00,,FALSE,FALSE,FALSE,FALSE,FALSE,,
+48,COPY DESIGN Advanced,,3,,6,,12,,High,(Coming Soon),,FALSE,FALSE,FALSE,FALSE,FALSE,,
+,,,,,,,,,,,,,,,,,,
+,Package,,,,,,,,,,,,,,,,,

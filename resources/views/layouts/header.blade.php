@@ -2,14 +2,7 @@
     <div class="max-w-[1200px] mx-auto flex items-center justify-between gap-8">
         <div class="flex items-center gap-8">
             <div class="flex items-center gap-2 text-[#002b5c] hover:cursor-pointer" onclick="window.location.href='{{ route('home') }}'">
-                <div class="bg-[#002b5c] text-white p-1 rounded">
-                    <svg class="size-4" fill="currentColor" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="M24 4C25.7818 14.2173 33.7827 22.2182 44 24C33.7827 25.7818 25.7818 33.7827 24 44C22.2182 33.7827 14.2173 25.7818 4 24C14.2173 22.2182 22.2182 14.2173 24 4Z">
-                        </path>
-                    </svg>
-                </div>
-                <h2 class="text-[#002b5c] text-xl font-black uppercase tracking-tighter">DI-TOOL</h2>
+                <img src="{{ asset('logo.jpeg') }}" alt="DI-TOOLS Logo" class="h-12 w-auto rounded object-cover" />
             </div>
             @include('layouts.menu')
         </div>

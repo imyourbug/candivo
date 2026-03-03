@@ -1,4 +1,4 @@
-﻿@extends('layouts.main')
+@extends('layouts.main')
 @section('title', 'Di-tool Premium Checkout')
 @push('styles')
 @endpush
@@ -178,7 +178,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="mt-auto pt-8">
+                <div class="">
                     <div class="flex items-center gap-2 text-slate-500 text-xs font-medium justify-center mb-6">
                         <span class="material-symbols-outlined text-sm">verified_user</span>
                         <span>Encrypted Secure Checkout</span>
@@ -232,42 +232,19 @@
             const orderItemsEl = document.createElement('div');
             orderItemsEl.className = 'space-y-4 mb-8';
 
-            let subtotal = 0;
-            if (!items.length) {
-                orderItemsEl.innerHTML = `
-                    <div class="glass-card !bg-white/80 p-5 rounded-2xl">
-                        <p class="text-sm text-slate-500 font-medium">Your cart is empty.</p>
-                    </div>
-                `;
-            } else {
-                orderItemsEl.innerHTML = items.map((item) => {
-                    const qty = Number(item.qty) || 1;
-                    const price = Number(item.price) || 0;
-                    const lineTotal = qty * price;
-                    subtotal += lineTotal;
-                    const label = item.type === 'package' ? 'Package' : 'Tool';
-                    const image = item.image || 'https://placehold.co/80x80/e2e8f0/475569?text=Tool';
-
-                    return `
-                        <div class="glass-card !bg-white/80 p-5 rounded-2xl flex items-start justify-between gap-4">
-                            <div class="flex items-start gap-3">
-                                <div class="w-14 h-14 rounded-lg overflow-hidden bg-slate-100 border border-slate-200 flex-shrink-0">
-                                    <img src="${escapeHtml(image)}" alt="${escapeHtml(item.name || 'Item')}" class="w-full h-full object-cover" />
-                                </div>
-                                <div>
-                                    <h4 class="font-bold text-slate-800 text-lg leading-tight">${escapeHtml(item.name || 'Item')}</h4>
-                                    <p class="text-sm text-slate-500 font-medium">${qty}x${formatPrice(item.price)}</p>
-                                </div>
-                            </div>
-                            <div class="text-right">
-                                <p class="font-bold text-slate-900">${formatPrice(lineTotal)}</p>
-                            </div>
-                        </div>
-                    `;
-                }).join('');
-            }
-
-            staticCard.replaceWith(orderItemsEl);
+            const getCart = () => {
+                try {
+                    const raw = localStorage.getItem('cart');
+                    return raw ? JSON.parse(raw) : [];
+                } catch (e) {
+                    return [];
+                }
+            };
+            const setCart = (items) => {
+                try {
+                    localStorage.setItem('cart', JSON.stringify(items));
+                } catch (e) {}
+            };
 
             const rows = Array.from(priceBlock.querySelectorAll('.flex.justify-between.items-center'));
             const originalPriceValue = rows[0]?.lastElementChild;
@@ -275,20 +252,104 @@
             const processingFeeValue = rows[2]?.lastElementChild;
             const totalAmountValue = priceBlock.querySelector('.text-4xl.font-black.text-slate-900.tracking-tight');
             const savingsValue = priceBlock.querySelector('.text-emerald-500.font-black.text-lg');
-
             const discount = 0;
             const processingFee = 0;
-            const total = subtotal - discount + processingFee;
 
-            if (originalPriceValue) {
-                originalPriceValue.classList.remove('line-through', 'text-slate-400');
-                originalPriceValue.classList.add('text-slate-800');
-                originalPriceValue.textContent = formatPrice(subtotal);
+            function updateTotals(subtotal) {
+                const total = subtotal - discount + processingFee;
+                if (originalPriceValue) {
+                    originalPriceValue.classList.remove('line-through', 'text-slate-400');
+                    originalPriceValue.classList.add('text-slate-800');
+                    originalPriceValue.textContent = formatPrice(subtotal);
+                }
+                if (discountValue) discountValue.textContent = formatPrice(discount);
+                if (processingFeeValue) processingFeeValue.textContent = formatPrice(processingFee);
+                if (totalAmountValue) totalAmountValue.textContent = formatPrice(total);
+                if (savingsValue) savingsValue.textContent = formatPrice(discount);
             }
-            if (discountValue) discountValue.textContent = formatPrice(discount);
-            if (processingFeeValue) processingFeeValue.textContent = formatPrice(processingFee);
-            if (totalAmountValue) totalAmountValue.textContent = formatPrice(total);
-            if (savingsValue) savingsValue.textContent = formatPrice(discount);
+
+            function renderOrderSummary() {
+                const items = getCart();
+                let subtotal = 0;
+
+                if (!items.length) {
+                    orderItemsEl.innerHTML = `
+                        <div class="glass-card !bg-white/80 p-5 rounded-2xl">
+                            <p class="text-sm text-slate-500 font-medium">Your cart is empty.</p>
+                        </div>
+                    `;
+                } else {
+                    orderItemsEl.innerHTML = items.map((item, idx) => {
+                        const qty = Number(item.qty) || 1;
+                        const price = Number(item.price) || 0;
+                        const lineTotal = qty * price;
+                        subtotal += lineTotal;
+                        const image = item.image || 'https://placehold.co/80x80/e2e8f0/475569?text=Tool';
+                        const detailUrl = (item.detailUrl || '').trim();
+                        const leftContent = `
+                            <div class="w-14 h-14 rounded-lg overflow-hidden bg-slate-100 border border-slate-200 flex-shrink-0">
+                                <img src="${escapeHtml(image)}" alt="${escapeHtml(item.name || 'Item')}" class="w-full h-full object-cover" />
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-slate-800 text-lg leading-tight">${escapeHtml(item.name || 'Item')}</h4>
+                                <p class="text-sm text-slate-500 font-medium">${formatPrice(price)} ${item.period ? '• ' + escapeHtml(item.period) : ''}</p>
+                            </div>
+                        `;
+                        const leftWrap = detailUrl
+                            ? `<a href="${escapeHtml(detailUrl)}" class="flex items-start gap-3 flex-1 min-w-0" title="View details">${leftContent}</a>`
+                            : `<div class="flex items-start gap-3 flex-1 min-w-0">${leftContent}</div>`;
+                        return `
+                            <div class="glass-card !bg-white/80 p-5 rounded-2xl flex items-start justify-between gap-4 flex-wrap">
+                                ${leftWrap}
+                                <div class="flex flex-col items-end gap-2">
+                                    <div class="flex items-center gap-2">
+                                        <button type="button" data-idx="${idx}" class="checkout-decr inline-flex items-center justify-center w-8 h-8 bg-slate-100 hover:bg-slate-200 rounded-md text-slate-700 font-bold">−</button>
+                                        <span class="min-w-[1.5rem] text-center font-medium text-slate-800">${qty}</span>
+                                        <button type="button" data-idx="${idx}" class="checkout-incr inline-flex items-center justify-center w-8 h-8 bg-slate-100 hover:bg-slate-200 rounded-md text-slate-700 font-bold">+</button>
+                                    </div>
+                                    <p class="font-bold text-slate-900">${formatPrice(lineTotal)}</p>
+                                    <button type="button" data-idx="${idx}" class="checkout-remove text-sm text-red-500 hover:text-red-600 font-medium">Remove</button>
+                                </div>
+                            </div>
+                        `;
+                    }).join('');
+                }
+
+                updateTotals(subtotal);
+
+                orderItemsEl.querySelectorAll('.checkout-incr').forEach(btn => btn.addEventListener('click', function() {
+                    const idx = Number(this.dataset.idx);
+                    const items = getCart();
+                    items[idx].qty = (items[idx].qty || 1) + 1;
+                    setCart(items);
+                    window.dispatchEvent(new Event('cart:updated'));
+                    renderOrderSummary();
+                }));
+                orderItemsEl.querySelectorAll('.checkout-decr').forEach(btn => btn.addEventListener('click', function() {
+                    const idx = Number(this.dataset.idx);
+                    const items = getCart();
+                    const currentQty = items[idx].qty || 1;
+                    if (currentQty <= 1) {
+                        items.splice(idx, 1);
+                    } else {
+                        items[idx].qty = currentQty - 1;
+                    }
+                    setCart(items);
+                    window.dispatchEvent(new Event('cart:updated'));
+                    renderOrderSummary();
+                }));
+                orderItemsEl.querySelectorAll('.checkout-remove').forEach(btn => btn.addEventListener('click', function() {
+                    const idx = Number(this.dataset.idx);
+                    const items = getCart();
+                    items.splice(idx, 1);
+                    setCart(items);
+                    window.dispatchEvent(new Event('cart:updated'));
+                    renderOrderSummary();
+                }));
+            }
+
+            staticCard.replaceWith(orderItemsEl);
+            renderOrderSummary();
         });
     </script>
 @endpush

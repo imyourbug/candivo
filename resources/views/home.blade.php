@@ -3,14 +3,63 @@
 @section('title', 'Premium Di-tool Experience | Enterprise CAD Solutions')
 
 @push('styles')
-@endpush
+    <style type="text/tailwindcss">
+        .pro-card {
+            background: linear-gradient(145deg, #001a33 100%, #000d1a 100%);
+            border: 1px solid rgba(0, 102, 255, 0.3);
+            box-shadow: 0 0 40px rgba(0, 102, 255, 0.15);
+        }
 
+        .pro-card:hover {
+            box-shadow: 0 0 60px rgba(0, 102, 255, 0.25);
+        }
+
+        .glow-check {
+            color: #00d4ff;
+            text-shadow: 0 0 8px rgba(0, 212, 255, 0.8);
+        }
+
+        .premium-gold-btn {
+            background: linear-gradient(135deg, #137fec 0%, #137fec 100%);
+            color: #001a33 !important;
+            box-shadow: 0 10px 20px rgba(255, 165, 0, 0.2);
+        }
+
+        .premium-gold-btn:hover {
+            background: linear-gradient(135deg, #878ddb 0%, #878ddb 100%);
+            transform: translateY(-2px);
+        }
+
+        .type-tab-btn {
+            background: transparent;
+            color: #4f6786;
+            border: 1px solid transparent;
+            min-width: 130px;
+        }
+
+        .type-tab-btn.is-active {
+            background: #1e79dc;
+            color: #ffffff;
+            border-color: #1e79dc;
+            box-shadow: 0 8px 16px rgba(30, 121, 220, 0.28);
+        }
+
+        .core-free-card {
+            border: 1px solid rgba(30, 121, 220, 0.4);
+            background: #eff6ff;
+        }
+
+        .core-free-card:hover {
+            border-color: rgba(30, 121, 220, 0.6);
+        }
+    </style>
+@endpush
 @section('content')
     <section class="relative h-[850px] w-full overflow-hidden bg-slate-900 group" id="heroCarousel">
         <!-- Slide 1 -->
         <div class="carousel-slide absolute inset-0 transition-opacity duration-1000 opacity-100" data-slide="0">
             <img alt="Industrial Engineering" class="absolute inset-0 w-full h-full object-cover"
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDaaOCAJfB_wQimtec2AgHNqZ7hLUljB046ysVnbgyvG3BsckvZW2X71gbSJDiQ7aBsXAJHMlY1eQ31iqEsardnfjSExfkOaoGffufIKKKoUjf0CNLTae1BjkX-dY7AS6h5Mdel2N4slAaeWbnOBt4COwMznqCfxUezTwKhZjqPpIqNNIEsvFMk8hrNgIMM68Gvf8Gsm9y3o7442M9wKvejJKI_8OsfFiPd9h3aNq0KehFce4kUx9Xvmcrl-Hrvn84ofKyx9q5fTA4" />
+                src="/images/slides/1.png" />
             <div
                 class="absolute inset-0 bg-gradient-to-r from-[var(--enterprise-blue)]/90 via-[var(--enterprise-blue)]/40 to-transparent">
             </div>
@@ -43,7 +92,7 @@
         </div>
         <div class="carousel-slide absolute inset-0 transition-opacity duration-1000 opacity-0" data-slide="1">
             <img alt="Precision Engineering" class="absolute inset-0 w-full h-full object-cover"
-                src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=2070" />
+                src="/images/slides/2.png" />
             <div
                 class="absolute inset-0 bg-gradient-to-r from-[var(--enterprise-blue)]/90 via-[var(--enterprise-blue)]/40 to-transparent">
             </div>
@@ -76,7 +125,7 @@
         </div>
         <div class="carousel-slide absolute inset-0 transition-opacity duration-1000 opacity-0" data-slide="2">
             <img alt="Digital Twin Automation" class="absolute inset-0 w-full h-full object-cover"
-                src="https://images.unsplash.com/photo-1537462715879-360eeb61a0ad?auto=format&fit=crop&q=80&w=2070" />
+                src="/images/slides/3.jpg" />
             <div
                 class="absolute inset-0 bg-gradient-to-r from-[var(--enterprise-blue)]/90 via-[var(--enterprise-blue)]/40 to-transparent">
             </div>
@@ -109,7 +158,7 @@
         </div>
         <div class="carousel-slide absolute inset-0 transition-opacity duration-1000 opacity-0" data-slide="3">
             <img alt="Industrial Scalability" class="absolute inset-0 w-full h-full object-cover"
-                src="https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&q=80&w=2070" />
+                src="/images/slides/4.jpg" />
             <div
                 class="absolute inset-0 bg-gradient-to-r from-[var(--enterprise-blue)]/90 via-[var(--enterprise-blue)]/40 to-transparent">
             </div>
@@ -161,64 +210,7 @@
                 data-slide="3"></button>
         </div>
     </section>
-    <script>
-        $(document).ready(function() {
-            let currentSlide = 0;
-            const $slides = $('.carousel-slide');
-            const totalSlides = $slides.length;
-            const $dots = $('.carousel-dot');
-            let autoSlideTimer;
-
-            function showSlide(n) {
-                $slides.each(function(index) {
-                    $(this).toggleClass('opacity-100', index === n)
-                        .toggleClass('opacity-0', index !== n)
-                        .toggleClass('pointer-events-none', index !== n);
-                });
-
-                $dots.each(function(index) {
-                    if (index === n) {
-                        $(this).css('width', '48px').removeClass('w-3').addClass('w-12').css(
-                            'background-color', 'white').css('opacity', '1');
-                    } else {
-                        $(this).css('width', '12px').removeClass('w-12').addClass('w-3').css(
-                            'background-color', 'rgba(255,255,255,0.3)').css('opacity', '0.5');
-                    }
-                });
-            }
-
-            function nextSlide() {
-                currentSlide = (currentSlide + 1) % totalSlides;
-                showSlide(currentSlide);
-                resetAutoSlide();
-            }
-
-            function prevSlide() {
-                currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
-                showSlide(currentSlide);
-                resetAutoSlide();
-            }
-
-            function resetAutoSlide() {
-                clearInterval(autoSlideTimer);
-                autoSlideTimer = setInterval(nextSlide, 5000);
-            }
-
-            $('.carousel-next').on('click', nextSlide);
-            $('.carousel-prev').on('click', prevSlide);
-
-            $dots.on('click', function() {
-                currentSlide = $(this).data('slide');
-                showSlide(currentSlide);
-                resetAutoSlide();
-            });
-
-            // Initialize
-            showSlide(0);
-            autoSlideTimer = setInterval(nextSlide, 5000);
-        });
-    </script>
-    <section class="relative py-24 bg-white combo-grid-pattern">
+    {{-- <section class="relative py-24 bg-white combo-grid-pattern">
         <div class="max-w-7xl mx-auto px-10 lg:px-16">
             <div class="flex justify-between items-end mb-16">
                 <div>
@@ -326,108 +318,134 @@
                 </div>
             </div>
         </div>
-    </section>
-    @foreach ($allTypes as $type)
-        @if (!$loop->first)
-            <div class="max-w-7xl mx-auto px-10 lg:px-16">
-                <div class="my-10 h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent"></div>
-            </div>
-        @endif
-        <section class="max-w-7xl mx-auto px-10 lg:px-16">
-            @php
-                $packages = $type->packages;
-            @endphp
-            <div class="flex flex-col lg:flex-row lg:items-end justify-between mb-10 gap-8">
-                <div class="max-w-2xl">
-                    {{-- <span
-                        class="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-slate-400 bg-slate-50 border border-slate-100 px-3 py-1 rounded-full mb-4">
-                        Category
-                    </span> --}}
-                    <h2 class="text-4xl lg:text-5xl font-black text-[var(--enterprise-blue)] tracking-tight">
-                        {{ $type->name }}
+    </section> --}}
+    <br />
+    <br />
+    <section class="max-w-7xl mx-auto px-6 lg:px-16 py-10">
+        <div class="flex w-full flex-wrap items-center justify-center gap-2 p-1.5 bg-white border border-slate-200 rounded-2xl shadow-sm mb-10 max-w-max mx-auto">
+            @foreach ($allTypes as $type)
+                <button type="button"
+                    class="type-tab-btn {{ $loop->first ? 'is-active' : '' }} px-5 py-2.5 rounded-xl text-sm font-bold transition-all"
+                    data-target="type-panel-{{ $loop->index }}" aria-selected="{{ $loop->first ? 'true' : 'false' }}">
+                    {{ $type->name }}
+                </button>
+            @endforeach
+        </div>
+
+        @foreach ($allTypes as $type)
+            <div id="type-panel-{{ $loop->index }}" class="type-panel {{ $loop->first ? '' : 'hidden' }}">
+                @php
+                    $featuredPackage = $type->packages->first();
+                    $sectionTitle = $type->name;
+                    $sectionDescription =
+                        $featuredPackage?->description ?:
+                        'High-end extensions for Autodesk Inventor. Streamline your workflow with powerful CAD automation tools.';
+                @endphp
+                <div class="max-w-4xl mx-auto text-center mb-10">
+                    <h2
+                        class="text-4xl lg:text-6xl font-black text-[var(--enterprise-blue)] leading-[1.05] tracking-tight">
+                        {{ $sectionTitle }}
                     </h2>
-                    <p class="text-slate-500 text-lg mt-6 leading-relaxed">Precision-engineered packages tailored to
-                        specific
-                        engineering roles, from rapid prototyping to enterprise data management.</p>
+                    <p class="text-slate-500 text-lg mt-5 leading-relaxed max-w-3xl mx-auto">
+                        {{ $sectionDescription }}
+                    </p>
                 </div>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10 mb-10">
-                @forelse ($packages as $package)
-                    @php
-                        $pricing = $package->pricing->sortBy('price')->first();
-                        $price = $pricing ? (float) $pricing->price : 0;
-                        $currency = $pricing?->currency ?? 'EUR';
-                        $currencySymbol = $currency === 'EUR' ? '€' : $currency . ' ';
-                        $badge = 'Package';
-                        $fallbackImage =
-                            $package->avatar ?:
-                            'https://lh3.googleusercontent.com/aida-public/AB6AXuD0xn8klFRg-K-wRgdq9BzT8p7YQbk6CjpWvfNLtc2vdCkRslFovVEeXhTTPi8n6Wg4kQk6g5XGMAA9Eje2zDvPqgmIT-5DGhYHSfGg8_3ikow9PiqSqnjhbl4vKZrJGIdPvdSeyLeVSba8OMJLs1VMbFXsof6nhoC7sGi9QImZ1nT5NHC9Go5RlZWKq_GowsX26ajNPYPCPWaol77sCdSPRs-kfLoBSSMaOb37ctMPwcUx8bTWWT9eDcj23XJ1ltEnAAZOQQvyBjI';
-                        $desc = $package->description ?: 'Curated tools for rapid deployment and consistent results.';
-                    @endphp
-                    <div
-                        class="group flex flex-col glass-card rounded-[32px] overflow-hidden shadow-xl shadow-slate-200/40 hover:shadow-2xl hover:shadow-blue-1900/10 transition-all duration-500">
-                        <div class="relative aspect-[5/4] overflow-hidden m-3 rounded-[24px]">
-                            <img alt="{{ $package->name }}"
-                                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                                src="{{ $fallbackImage }}" />
-                            <div class="absolute top-4 left-4">
-                                <span
-                                    class="bg-white/95 backdrop-blur-sm text-[var(--enterprise-blue)] px-4 py-1.5 rounded-full text-[10px] font-extrabold uppercase tracking-widest shadow-lg">
-                                    {{ $badge }}
-                                </span>
-                            </div>
-                        </div>
-                        <div class="p-8 pt-4 flex flex-col flex-1">
-                            <h3 class="text-xl font-bold text-[var(--enterprise-blue)]">{{ $package->name }}</h3>
-                            <p class="text-slate-500 text-sm mt-3 leading-relaxed">
-                                {{ $desc }}
-                            </p>
-                            <div class="mt-auto pt-8 flex flex-col items-center">
-                                <div class="flex flex-col items-center mb-6">
-                                    <span class="text-3xl font-black text-[var(--enterprise-blue)] tracking-tight">
-                                        {{ $currencySymbol }}{{ number_format($price, 2) }}
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10 mb-10">
+                    @forelse ($type->packages as $package)
+                        @php
+                            $pricing = $package->pricing->sortBy('price')->first();
+                            $price = $pricing ? (float) $pricing->price : 0;
+                            $currency = $pricing?->currency ?? 'EUR';
+                            $currencySymbol = $currency === 'EUR' ? '€' : $currency . ' ';
+                            $badge = 'Package';
+                            $fallbackImage =
+                                $package->avatar ?:
+                                'https://lh3.googleusercontent.com/aida-public/AB6AXuD0xn8klFRg-K-wRgdq9BzT8p7YQbk6CjpWvfNLtc2vdCkRslFovVEeXhTTPi8n6Wg4kQk6g5XGMAA9Eje2zDvPqgmIT-5DGhYHSfGg8_3ikow9PiqSqnjhbl4vKZrJGIdPvdSeyLeVSba8OMJLs1VMbFXsof6nhoC7sGi9QImZ1nT5NHC9Go5RlZWKq_GowsX26ajNPYPCPWaol77sCdSPRs-kfLoBSSMaOb37ctMPwcUx8bTWWT9eDcj23XJ1ltEnAAZOQQvyBjI';
+                            $desc = $package->description ?: 'Curated tools for rapid deployment and consistent results.';
+                            $isCoreFreeType = $package->type?->name !== App\Constants\GlobalConstant::TYPE_CORE_FREE;
+                            $isCoreFree = $package->type?->name === App\Constants\GlobalConstant::TYPE_CORE_FREE;
+                            $badgeLabel = $isCoreFree ? 'Free' : $badge;
+                        @endphp
+                        <div
+                            class="group flex flex-col rounded-[32px] overflow-hidden transition-all duration-500 cursor-pointer {{ $isCoreFree ? 'core-free-card shadow-lg' : ($isCoreFreeType ? 'pro-card shadow-2xl hover:scale-[1.02] ring-1 ring-blue-500/30' : 'glass-card shadow-xl shadow-slate-200/40 hover:shadow-2xl hover:shadow-blue-900/10') }}"
+                            onclick="window.location.href='{{ route('package-detail', $package) }}'"
+                            role="button"
+                            tabindex="0"
+                            onkeydown="if(event.key==='Enter') window.location.href='{{ route('package-detail', $package) }}'">
+                            <div
+                                class="relative aspect-[5/4] overflow-hidden m-3 rounded-[24px] {{ $isCoreFreeType ? '' : 'bg-slate-50' }}">
+                                <img alt="{{ $package->name }}"
+                                    class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                                    src="{{ $fallbackImage }}" />
+                                <div class="absolute top-4 left-4">
+                                    <span
+                                        class="{{ $isCoreFree ? 'bg-blue-600 text-white' : ($isCoreFreeType ? 'bg-gradient-to-r from-blue-400 to-blue-600 text-white' : 'bg-white/95 backdrop-blur-sm text-[var(--enterprise-blue)]') }} px-4 py-1.5 rounded-full text-[10px] font-extrabold uppercase tracking-widest shadow-lg">
+                                        {{ $badgeLabel }}
                                     </span>
                                 </div>
-                                <button onclick="window.location.href='{{ route('package-detail', $package) }}'"
-                                    class="w-full py-4 bg-white text-[var(--enterprise-blue)] text-sm font-bold rounded-2xl hover:bg-gray-200 transition-all active:scale-[0.98] shadow-lg shadow-blue-900/10 mb-4 border-slate-200 border inline-flex items-center justify-center gap-2 whitespace-nowrap leading-none"
-                                    data-bundle-name="{{ $package->name }}" data-bundle-price="{{ $price }}"
-                                    data-bundle-image="{{ $fallbackImage }}"
-                                    data-bundle-items="{{ $package->products->pluck('name')->implode(',') }}">
-                                    <span class="inline-flex items-center gap-2">
-                                        <span>View Package</span>
-                                        <span class="material-symbols-outlined text-lg">visibility</span>
-                                    </span>
-                                </button>
-                                @if ($type->name !== App\Constants\GlobalConstant::TYPE_CORE_FREE)
-                                    <button
-                                        class="buyPackageNowBtn w-full py-4 bg-[var(--enterprise-blue)] text-white text-sm font-bold rounded-2xl hover:bg-blue-600 transition-all active:scale-[0.98] shadow-lg shadow-blue-900/10"
-                                        data-package-id="{{ $package->id }}" data-bundle-name="{{ $package->name }}"
-                                        data-bundle-price="{{ $price }}" data-bundle-image="{{ $fallbackImage }}"
-                                        data-bundle-period="{{ $pricing?->duration_months ?? '' }}"
-                                        data-bundle-items="{{ $package->products->pluck('name')->implode(',') }}">
-                                        <span class="inline-flex items-center gap-2">
-                                            <span>Buy Now</span>
-                                            <span class="material-symbols-outlined text-lg">shopping_cart</span>
-                                        </span>
-                                    </button>
+                            </div>
+                            <div class="p-8 pt-4 flex flex-col flex-1 {{ $isCoreFree || $isCoreFreeType ? 'text-center' : '' }}">
+                                <h3 class="text-xl {{ $isCoreFree ? 'font-black text-[var(--enterprise-blue)]' : ($isCoreFreeType ? 'font-black text-white' : 'font-bold text-[var(--enterprise-blue)]') }}">
+                                    {{ $package->name }}
+                                </h3>
+                                @if ($isCoreFree)
+                                    <p class="text-slate-600 text-sm mt-3 leading-relaxed">
+                                        {{ $desc }}
+                                    </p>
+                                @elseif ($isCoreFreeType)
+                                    <div class="mt-4 flex justify-center">
+                                        <ul class="space-y-2 text-xs text-blue-100/70 font-medium text-left inline-block">
+                                            @forelse ($package->products->take(4) as $product)
+                                                <li class="flex items-center gap-2">
+                                                    <span class="material-symbols-outlined glow-check text-base">check_circle</span>
+                                                    <span class="text-xs text-blue-50 font-semibold tracking-wide uppercase leading-snug">
+                                                        {{ $product->name }}
+                                                    </span>
+                                                </li>
+                                            @empty
+                                                <li class="text-blue-100/70">{{ $desc }}</li>
+                                            @endforelse
+                                        </ul>
+                                    </div>
+                                @else
+                                    <p class="text-slate-500 text-sm mt-3 leading-relaxed">
+                                        {{ $desc }}
+                                    </p>
                                 @endif
+                                <div class="mt-auto pt-8 flex flex-col items-center">
+                                    <div class="flex flex-col items-center mb-6">
+                                        <span
+                                            class="{{ $isCoreFree ? 'text-3xl text-[var(--enterprise-blue)]' : ($isCoreFreeType ? 'text-4xl text-white' : 'text-3xl text-[var(--enterprise-blue)]') }} font-black tracking-tight">
+                                            {{ $currencySymbol }}{{ number_format($price, 2) }}
+                                        </span>
+                                    </div>
+                                    @if ($isCoreFreeType)
+                                        <button
+                                            type="button"
+                                            onclick="event.stopPropagation();"
+                                            class="buyPackageNowBtn w-full py-4 text-sm font-black rounded-2xl transition-all shadow-lg hover:bg-blue-700 bg-[#137fec] text-white"
+                                            data-package-id="{{ $package->id }}" data-bundle-name="{{ $package->name }}"
+                                            data-bundle-price="{{ $price }}" data-bundle-image="{{ $fallbackImage }}"
+                                            data-bundle-period="{{ $pricing?->duration_months ?? '' }}"
+                                            data-bundle-detail-url="{{ route('package-detail', $package) }}"
+                                            data-bundle-items="{{ $package->products->pluck('name')->implode(',') }}">
+                                            <span class="inline-flex items-center gap-2">
+                                                <span>BUY NOW</span>
+                                                <span class="material-symbols-outlined text-lg">shopping_cart</span>
+                                            </span>
+                                        </button>
+                                    @endif
+                                </div>
                             </div>
                         </div>
-                    </div>
-                @empty
-                    <div class="col-span-full text-center text-slate-500">No packages found for this category.</div>
-                @endforelse
+                    @empty
+                        <div class="col-span-full text-center text-slate-500">No packages found for this category.</div>
+                    @endforelse
+                </div>
             </div>
-            {{-- <div class="flex justify-center mt-16">
-            <button id="loadMoreBtn"
-                class="px-12 py-4 bg-[var(--enterprise-blue)] text-white font-bold text-lg rounded-2xl shadow-lg shadow-blue-900/10 hover:bg-blue-600 transition-all active:scale-[0.98] flex items-center gap-2">
-                <span class="material-symbols-outlined">add_circle</span>
-                Load More Products
-            </button>
-        </div> --}}
-        </section>
-    @endforeach
-    <section class="bg-[#002d5b] py-2">
+        @endforeach
+    </section>
+     <section class="bg-[#002d5b] py-2">
         <div class="max-w-7xl mx-auto px-10 lg:px-16">
             <div
                 class="bg-[#002d5b] rounded-md px-6 py-3 flex flex-col md:flex-row items-center justify-center gap-4 md:gap-6">
@@ -443,7 +461,154 @@
             </div>
         </div>
     </section>
-    <section class="bg-slate-50 py-32 px-10 lg:px-16">
+    <section class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-10 lg:px-16">
+            <h2 class="text-5xl font-black text-[var(--enterprise-blue)] mb-12">Community</h2>
+            <div class="flex flex-col lg:flex-row gap-12 mb-20">
+                <div class="lg:w-1/3 p-10 border-l-4 border-blue-600">
+                    <h3 class="text-2xl font-bold mb-4">Community is at our core.</h3>
+                    <p class="text-slate-600 leading-relaxed mb-6">DI-TOOL has a passionate, engaged community of more than
+                        8 million users from every corner of the world. Discover the DI-TOOL community and the variety of
+                        programs available for all of our users.</p>
+                    <div class="flex flex-wrap gap-6 font-bold text-[#137fec]">
+                        <a class="flex items-center gap-2 hover:underline" href="#"><span
+                                class="material-symbols-outlined">arrow_circle_right</span> Find out more</a>
+                        <a class="flex items-center gap-2 hover:underline" href="#"><span
+                                class="material-symbols-outlined">arrow_circle_right</span> DI-TOOL User Group Network</a>
+                    </div>
+                </div>
+                <div class="lg:w-2/3">
+                    <img alt="Community Events" class="rounded-3xl shadow-xl w-full"
+                        src="https://d1yei2z3i6k35z.cloudfront.net/11186306/67d438b1af9b6_2025-03-14_21h09_01.png">
+                </div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div
+                    class="bg-white rounded-2xl shadow-lg border border-slate-100 overflow-hidden hover:shadow-xl transition-shadow">
+                    <div class="h-48 bg-slate-100 overflow-hidden">
+                        <img alt="Students" class="w-full h-full object-cover"
+                            src="https://www.solidworks.com/sites/default/filesd10/styles/og_image/public/migration/2022-11/solidworks-students-hero-3.jpg?itok=QOWmm9P9">
+                    </div>
+                    <div class="p-6">
+                        <h4 class="font-bold text-xl mb-3">DI-TOOL for Students</h4>
+                        <p class="text-slate-500 text-sm">As the industry standard for design and engineering, DI-TOOL is
+                            the perfect software platform...</p>
+                    </div>
+                </div>
+                <div
+                    class="bg-white rounded-2xl shadow-lg border border-slate-100 overflow-hidden hover:shadow-xl transition-shadow">
+                    <div class="h-48 bg-slate-100 overflow-hidden">
+                        <img alt="Makers" class="w-full h-full object-cover"
+                            src="https://www.solidworks.com/sites/default/filesd10/styles/og_image/public/2025-01/solidworks-makers-card-thumb.jpg?itok=HM7Y7HF_">
+                    </div>
+                    <div class="p-6">
+                        <h4 class="font-bold text-xl mb-3">DI-TOOL for Makers</h4>
+                        <p class="text-slate-500 text-sm">DI-TOOL for Makers provides full-functionality 3D CAD tools for
+                            personal use. Just $48 USD a ...</p>
+                    </div>
+                </div>
+                <div
+                    class="bg-white rounded-2xl shadow-lg border border-slate-100 overflow-hidden hover:shadow-xl transition-shadow">
+                    <div class="h-48 bg-slate-100 overflow-hidden">
+                        <img alt="Startups" class="w-full h-full object-cover"
+                            src="https://www.solidworks.com/sites/default/filesd10/styles/og_image/public/migration/opengraph_startup_drone_example1.jpg?itok=U6fjCCos">
+                    </div>
+                    <div class="p-6">
+                        <h4 class="font-bold text-xl mb-3">DI-TOOL for Startups Program</h4>
+                        <p class="text-slate-500 text-sm">Industry-leading 3D design tools for hardware startups at nominal
+                            cost</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="bg-[#002d5b] py-10">
+        <div class="max-w-7xl mx-auto px-10 lg:px-16">
+            <div class="flex flex-wrap items-center justify-center gap-x-10 gap-y-4 text-white text-2xl font-black mb-10">
+                <span>CAMELBAK</span>
+                <span>Vermeer</span>
+                <span>KNAPHEIDE</span>
+                <span>RESEMIN</span>
+                <span>KONICA MINOLTA</span>
+                <span>ColdSnap</span>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <article class="bg-white rounded-lg p-5 flex gap-4 shadow-lg">
+                    <img alt="Customer Story Metalworks" class="w-36 h-28 rounded object-cover flex-shrink-0"
+                        src="https://www.3ds.com/assets/invest/styles/card/public/2025-08/metalworks-banner.png.webp?itok=Pa3I3qDD">
+                    <div>
+                        <p class="text-slate-500 uppercase tracking-wider text-xs font-bold">Customer Story</p>
+                        <h3 class="text-4xl leading-tight font-black text-slate-900">How Metalworks ...</h3>
+                        <p class="text-slate-600 mt-2">Metalworks, Inc. slashes ...</p>
+                    </div>
+                </article>
+                <article class="bg-white rounded-lg p-5 flex gap-4 shadow-lg">
+                    <img alt="Customer Story Resemin" class="w-36 h-28 rounded object-cover flex-shrink-0"
+                        src="https://www.3ds.com/assets/invest/styles/card/public/2023-01/resemin-customer-story-banner.jpg.webp?itok=wG1lKOqS">
+                    <div>
+                        <p class="text-slate-500 uppercase tracking-wider text-xs font-bold">Customer Story</p>
+                        <h3 class="text-4xl leading-tight font-black text-slate-900">Resemin ...</h3>
+                        <p class="text-slate-600 mt-2">DI-TOOLS and 3DEXPERIENCE ...</p>
+                    </div>
+                </article>
+                <article class="bg-white rounded-lg p-5 flex gap-4 shadow-lg">
+                    <img alt="Customer Story BestTugs" class="w-36 h-28 rounded object-cover flex-shrink-0"
+                        src="https://www.3ds.com/assets/invest/styles/card/public/2025-08/best-tug-top-banner.jpg.webp?itok=cwyJ69xX">
+                    <div>
+                        <p class="text-slate-500 uppercase tracking-wider text-xs font-bold">Customer Story</p>
+                        <h3 class="text-4xl leading-tight font-black text-slate-900">Best Tugs Takes the ...</h3>
+                        <p class="text-slate-600 mt-2">BestTugs brings hybrid vehicle ...</p>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+    {{-- <section class="relative py-24 overflow-hidden">
+        <div class="absolute inset-0 z-0">
+            <img alt="Customer Story Background" class="w-full h-full object-cover opacity-10"
+                src="https://www.solidworks.com/sites/default/filesd10/styles/webp/public/2025-10/solidworks-customer-one-wheel-banner-2_0.jpg.webp?itok=_-nEDcQW">
+        </div>
+        <div class="max-w-7xl mx-auto px-10 lg:px-16 relative z-10">
+            <h2 class="text-5xl font-black text-[var(--enterprise-blue)] mb-16">Customer Stories</h2>
+            <div class="flex flex-col lg:flex-row gap-12 items-center">
+                <div class="lg:w-1/2 p-12 border-l-4 border-blue-600 bg-white shadow-2xl rounded-r-2xl">
+                    <h3 class="text-3xl font-bold text-slate-900 mb-6">How Future Motion Created Onewheel</h3>
+                    <p class="text-slate-600 text-lg mb-8 leading-relaxed">From a rough prototype to a radical ride, Future
+                        Motion relied on DI-TOOL for every phase of design, simulation, and production.</p>
+                    <div class="space-y-4">
+                        <a class="flex items-center gap-2 text-[#137fec] font-bold hover:underline" href="#">
+                            <span class="material-symbols-outlined">arrow_circle_right</span> Read Future Motion customer
+                            story
+                        </a>
+                        <a class="flex items-center gap-2 text-[#137fec] font-bold hover:underline" href="#">
+                            <span class="material-symbols-outlined">arrow_circle_right</span> All customer stories
+                        </a>
+                    </div>
+                </div>
+                <div class="lg:w-1/2 relative rounded-3xl overflow-hidden shadow-2xl">
+                    <iframe class="w-full aspect-video" src="https://www.youtube.com/watch?v=hnTQoO-VQrU&t"
+                        title="YouTube video player" frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowfullscreen>
+                    </iframe>
+                </div>
+            </div>
+        </div>
+    </section> --}}
+    {{-- <section class="bg-[#002d5b] py-2">
+        <div class="max-w-7xl mx-auto px-10 lg:px-16">
+            <div
+                class="bg-[#002d5b] rounded-md px-6 py-3 flex flex-col md:flex-row items-center justify-center gap-4 md:gap-6">
+                <p class="text-white text-xl font-bold">Stay up to date with the latest SOLIDWORKS news on SOLIDWORKS Live
+                </p>
+                <a href="#"
+                    class="inline-flex items-center justify-center rounded-full bg-white px-8 py-2.5 text-[#137fec] text-2xl font-black tracking-tight hover:bg-slate-100 transition-colors">
+                    Watch Now
+                </a>
+            </div>
+        </div>
+    </section> --}}
+     <section class="bg-slate-50 py-32 px-10 lg:px-16">
         <div class="max-w-7xl mx-auto">
             <div class="text-center mb-20">
                 <h2 class="text-4xl lg:text-5xl font-black text-[var(--enterprise-blue)] tracking-tight mb-6">Trusted by
@@ -519,172 +684,25 @@
             </div>
         </div>
     </section>
-    <section class="bg-[#002d5b] py-10">
-        <div class="max-w-7xl mx-auto px-10 lg:px-16">
-            <div class="flex flex-wrap items-center justify-center gap-x-10 gap-y-4 text-white text-2xl font-black mb-10">
-                <span>CAMELBAK</span>
-                <span>Vermeer</span>
-                <span>KNAPHEIDE</span>
-                <span>RESEMIN</span>
-                <span>KONICA MINOLTA</span>
-                <span>ColdSnap</span>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <article class="bg-white rounded-lg p-5 flex gap-4 shadow-lg">
-                    <img alt="Customer Story Metalworks" class="w-36 h-28 rounded object-cover flex-shrink-0"
-                        src="https://www.3ds.com/assets/invest/styles/card/public/2025-08/metalworks-banner.png.webp?itok=Pa3I3qDD">
-                    <div>
-                        <p class="text-slate-500 uppercase tracking-wider text-xs font-bold">Customer Story</p>
-                        <h3 class="text-4xl leading-tight font-black text-slate-900">How Metalworks ...</h3>
-                        <p class="text-slate-600 mt-2">Metalworks, Inc. slashes ...</p>
-                    </div>
-                </article>
-                <article class="bg-white rounded-lg p-5 flex gap-4 shadow-lg">
-                    <img alt="Customer Story Resemin" class="w-36 h-28 rounded object-cover flex-shrink-0"
-                        src="https://www.3ds.com/assets/invest/styles/card/public/2023-01/resemin-customer-story-banner.jpg.webp?itok=wG1lKOqS">
-                    <div>
-                        <p class="text-slate-500 uppercase tracking-wider text-xs font-bold">Customer Story</p>
-                        <h3 class="text-4xl leading-tight font-black text-slate-900">Resemin ...</h3>
-                        <p class="text-slate-600 mt-2">DI-TOOLS and 3DEXPERIENCE ...</p>
-                    </div>
-                </article>
-                <article class="bg-white rounded-lg p-5 flex gap-4 shadow-lg">
-                    <img alt="Customer Story BestTugs" class="w-36 h-28 rounded object-cover flex-shrink-0"
-                        src="https://www.3ds.com/assets/invest/styles/card/public/2025-08/best-tug-top-banner.jpg.webp?itok=cwyJ69xX">
-                    <div>
-                        <p class="text-slate-500 uppercase tracking-wider text-xs font-bold">Customer Story</p>
-                        <h3 class="text-4xl leading-tight font-black text-slate-900">Best Tugs Takes the ...</h3>
-                        <p class="text-slate-600 mt-2">BestTugs brings hybrid vehicle ...</p>
-                    </div>
-                </article>
-            </div>
-        </div>
-    </section>
-    <section class="relative py-24 overflow-hidden">
-        <div class="absolute inset-0 z-0">
-            <img alt="Customer Story Background" class="w-full h-full object-cover opacity-10"
-                src="https://www.solidworks.com/sites/default/filesd10/styles/webp/public/2025-10/solidworks-customer-one-wheel-banner-2_0.jpg.webp?itok=_-nEDcQW">
-        </div>
-        <div class="max-w-7xl mx-auto px-10 lg:px-16 relative z-10">
-            <h2 class="text-5xl font-black text-[var(--enterprise-blue)] mb-16">Customer Stories</h2>
-            <div class="flex flex-col lg:flex-row gap-12 items-center">
-                <div class="lg:w-1/2 p-12 border-l-4 border-blue-600 bg-white shadow-2xl rounded-r-2xl">
-                    <h3 class="text-3xl font-bold text-slate-900 mb-6">How Future Motion Created Onewheel</h3>
-                    <p class="text-slate-600 text-lg mb-8 leading-relaxed">From a rough prototype to a radical ride, Future
-                        Motion relied on DI-TOOL for every phase of design, simulation, and production.</p>
-                    <div class="space-y-4">
-                        <a class="flex items-center gap-2 text-[#137fec] font-bold hover:underline" href="#">
-                            <span class="material-symbols-outlined">arrow_circle_right</span> Read Future Motion customer
-                            story
-                        </a>
-                        <a class="flex items-center gap-2 text-[#137fec] font-bold hover:underline" href="#">
-                            <span class="material-symbols-outlined">arrow_circle_right</span> All customer stories
-                        </a>
-                    </div>
-                </div>
-                <div class="lg:w-1/2 relative rounded-3xl overflow-hidden shadow-2xl">
-                    <iframe class="w-full aspect-video" src="https://www.youtube.com/watch?v=hnTQoO-VQrU&t"
-                        title="YouTube video player" frameborder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        allowfullscreen>
-                    </iframe>
-                </div>
-            </div>
-        </div>
-    </section>
-    <section class="bg-[#002d5b] py-2">
-        <div class="max-w-7xl mx-auto px-10 lg:px-16">
-            <div
-                class="bg-[#002d5b] rounded-md px-6 py-3 flex flex-col md:flex-row items-center justify-center gap-4 md:gap-6">
-                <p class="text-white text-xl font-bold">Stay up to date with the latest SOLIDWORKS news on SOLIDWORKS Live
-                </p>
-                <a href="#"
-                    class="inline-flex items-center justify-center rounded-full bg-white px-8 py-2.5 text-[#137fec] text-2xl font-black tracking-tight hover:bg-slate-100 transition-colors">
-                    Watch Now
-                </a>
-            </div>
-        </div>
-    </section>
-    <section class="py-24 bg-white">
-        <div class="max-w-7xl mx-auto px-10 lg:px-16">
-            <h2 class="text-5xl font-black text-[var(--enterprise-blue)] mb-12">Community</h2>
-            <div class="flex flex-col lg:flex-row gap-12 mb-20">
-                <div class="lg:w-1/3 p-10 border-l-4 border-blue-600">
-                    <h3 class="text-2xl font-bold mb-4">Community is at our core.</h3>
-                    <p class="text-slate-600 leading-relaxed mb-6">DI-TOOL has a passionate, engaged community of more than
-                        8 million users from every corner of the world. Discover the DI-TOOL community and the variety of
-                        programs available for all of our users.</p>
-                    <div class="flex flex-wrap gap-6 font-bold text-[#137fec]">
-                        <a class="flex items-center gap-2 hover:underline" href="#"><span
-                                class="material-symbols-outlined">arrow_circle_right</span> Find out more</a>
-                        <a class="flex items-center gap-2 hover:underline" href="#"><span
-                                class="material-symbols-outlined">arrow_circle_right</span> DI-TOOL User Group Network</a>
-                    </div>
-                </div>
-                <div class="lg:w-2/3">
-                    <img alt="Community Events" class="rounded-3xl shadow-xl w-full"
-                        src="https://d1yei2z3i6k35z.cloudfront.net/11186306/67d438b1af9b6_2025-03-14_21h09_01.png">
-                </div>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div
-                    class="bg-white rounded-2xl shadow-lg border border-slate-100 overflow-hidden hover:shadow-xl transition-shadow">
-                    <div class="h-48 bg-slate-100 overflow-hidden">
-                        <img alt="Students" class="w-full h-full object-cover"
-                            src="https://www.solidworks.com/sites/default/filesd10/styles/og_image/public/migration/2022-11/solidworks-students-hero-3.jpg?itok=QOWmm9P9">
-                    </div>
-                    <div class="p-6">
-                        <h4 class="font-bold text-xl mb-3">DI-TOOL for Students</h4>
-                        <p class="text-slate-500 text-sm">As the industry standard for design and engineering, DI-TOOL is
-                            the perfect software platform...</p>
-                    </div>
-                </div>
-                <div
-                    class="bg-white rounded-2xl shadow-lg border border-slate-100 overflow-hidden hover:shadow-xl transition-shadow">
-                    <div class="h-48 bg-slate-100 overflow-hidden">
-                        <img alt="Makers" class="w-full h-full object-cover"
-                            src="https://www.solidworks.com/sites/default/filesd10/styles/og_image/public/2025-01/solidworks-makers-card-thumb.jpg?itok=HM7Y7HF_">
-                    </div>
-                    <div class="p-6">
-                        <h4 class="font-bold text-xl mb-3">DI-TOOL for Makers</h4>
-                        <p class="text-slate-500 text-sm">DI-TOOL for Makers provides full-functionality 3D CAD tools for
-                            personal use. Just $48 USD a ...</p>
-                    </div>
-                </div>
-                <div
-                    class="bg-white rounded-2xl shadow-lg border border-slate-100 overflow-hidden hover:shadow-xl transition-shadow">
-                    <div class="h-48 bg-slate-100 overflow-hidden">
-                        <img alt="Startups" class="w-full h-full object-cover"
-                            src="https://www.solidworks.com/sites/default/filesd10/styles/og_image/public/migration/opengraph_startup_drone_example1.jpg?itok=U6fjCCos">
-                    </div>
-                    <div class="p-6">
-                        <h4 class="font-bold text-xl mb-3">DI-TOOL for Startups Program</h4>
-                        <p class="text-slate-500 text-sm">Industry-leading 3D design tools for hardware startups at nominal
-                            cost</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <section class="max-w-7xl mx-auto px-10 py-32">
-        <div class="relative p-16 lg:p-24 bg-[var(--enterprise-blue)] rounded-[60px] overflow-hidden text-center">
+    <section class="max-w-7xl mx-auto px-10 py-8">
+        <div class="relative p-8 lg:p-12 bg-[var(--enterprise-blue)] rounded-[30px] overflow-hidden text-center">
             <div class="absolute inset-0 opacity-10 pointer-events-none">
-                <div class="absolute top-0 right-0 w-96 h-96 bg-blue-400 rounded-full blur-[100px] -mr-48 -mt-48"></div>
-                <div class="absolute bottom-0 left-0 w-96 h-96 bg-blue-600 rounded-full blur-[100px] -ml-48 -mb-48"></div>
+                <div class="absolute top-0 right-0 w-48 h-48 bg-blue-400 rounded-full blur-[50px] -mr-24 -mt-24"></div>
+                <div class="absolute bottom-0 left-0 w-48 h-48 bg-blue-600 rounded-full blur-[50px] -ml-24 -mb-24"></div>
             </div>
             <div class="relative z-10">
-                <h2 class="text-4xl lg:text-6xl font-black text-white mb-8 tracking-tight">Scale Your Engineering
+                <h2 class="text-2xl lg:text-3xl font-black text-white mb-4 tracking-tight">Scale Your Engineering
                     <br />Infrastructure Today
                 </h2>
-                <p class="text-blue-100 text-xl max-w-2xl mx-auto mb-12 font-medium">Connect with our solution architects
+                <p class="text-blue-100 text-base max-w-xl mx-auto mb-6 font-medium">Connect with our solution architects
                     to build a bespoke automation strategy for your manufacturing pipeline.</p>
-                <div class="flex flex-wrap justify-center gap-6">
+                <div class="flex flex-wrap justify-center gap-3">
                     <button
-                        class="px-12 py-5 bg-white text-[var(--enterprise-blue)] rounded-2xl font-bold text-lg shadow-xl hover:scale-105 transition-all">
+                        class="px-6 py-2.5 bg-white text-[var(--enterprise-blue)] rounded-xl font-bold text-base shadow-xl hover:scale-105 transition-all">
                         Request Custom Proposal
                     </button>
                     <button
-                        class="px-12 py-5 bg-white/10 backdrop-blur-md text-white border border-white/20 rounded-2xl font-bold text-lg hover:bg-white/20 transition-all">
+                        class="px-6 py-2.5 bg-white/10 backdrop-blur-md text-white border border-white/20 rounded-xl font-bold text-base hover:bg-white/20 transition-all">
                         Talk to an Expert
                     </button>
                 </div>
@@ -694,6 +712,24 @@
 @endsection
 
 @push('scripts')
+    <script>
+        $(document).ready(function() {
+            const $typeTabs = $('.type-tab-btn');
+            const $typePanels = $('.type-panel');
+            if ($typeTabs.length === 0 || $typePanels.length === 0) return;
+
+            $typeTabs.on('click', function() {
+                const target = $(this).data('target');
+                if (!target) return;
+
+                $typeTabs.removeClass('is-active').attr('aria-selected', 'false');
+                $(this).addClass('is-active').attr('aria-selected', 'true');
+
+                $typePanels.addClass('hidden');
+                $('#' + target).removeClass('hidden');
+            });
+        });
+    </script>
     <script>
         $(document).ready(function() {
             const $buyPackageNowBtn = $('.buyPackageNowBtn');
@@ -721,6 +757,7 @@
                 const price = Number($(this).data('bundle-price')) || 0;
                 const image = $(this).data('bundle-image') || '';
                 const period = ($(this).data('bundle-period') || '').toString();
+                const detailUrl = $(this).data('bundle-detail-url') || '';
 
                 const item = {
                     id,
@@ -729,7 +766,8 @@
                     period,
                     qty: 1,
                     type: 'package',
-                    image
+                    image,
+                    detailUrl
                 };
 
                 const items = getCart();
@@ -749,4 +787,62 @@
             });
         });
     </script>
+    <script>
+        $(document).ready(function() {
+            let currentSlide = 0;
+            const $slides = $('.carousel-slide');
+            const totalSlides = $slides.length;
+            const $dots = $('.carousel-dot');
+            let autoSlideTimer;
+
+            function showSlide(n) {
+                $slides.each(function(index) {
+                    $(this).toggleClass('opacity-100', index === n)
+                        .toggleClass('opacity-0', index !== n)
+                        .toggleClass('pointer-events-none', index !== n);
+                });
+
+                $dots.each(function(index) {
+                    if (index === n) {
+                        $(this).css('width', '48px').removeClass('w-3').addClass('w-12').css(
+                            'background-color', 'white').css('opacity', '1');
+                    } else {
+                        $(this).css('width', '12px').removeClass('w-12').addClass('w-3').css(
+                            'background-color', 'rgba(255,255,255,0.3)').css('opacity', '0.5');
+                    }
+                });
+            }
+
+            function nextSlide() {
+                currentSlide = (currentSlide + 1) % totalSlides;
+                showSlide(currentSlide);
+                resetAutoSlide();
+            }
+
+            function prevSlide() {
+                currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+                showSlide(currentSlide);
+                resetAutoSlide();
+            }
+
+            function resetAutoSlide() {
+                clearInterval(autoSlideTimer);
+                autoSlideTimer = setInterval(nextSlide, 5000);
+            }
+
+            $('.carousel-next').on('click', nextSlide);
+            $('.carousel-prev').on('click', prevSlide);
+
+            $dots.on('click', function() {
+                currentSlide = $(this).data('slide');
+                showSlide(currentSlide);
+                resetAutoSlide();
+            });
+
+            // Initialize
+            showSlide(0);
+            autoSlideTimer = setInterval(nextSlide, 5000);
+        });
+    </script>
 @endpush
+
