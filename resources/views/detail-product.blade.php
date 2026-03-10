@@ -36,7 +36,7 @@
         $productName = $product->name ?? 'Product';
         $productDesc = $product->description ?: 'Professional CAD productivity add-on for Autodesk Inventor workflows.';
         $mainImage =
-            '/' . $product->avatar ?: 'https://res.cloudinary.com/dkjfmxxom/image/upload/v1765015546/main_m50fl1.png';
+            $product->avatar ?: 'https://res.cloudinary.com/dkjfmxxom/image/upload/v1765015546/main_m50fl1.png';
 
         $imageItems = collect(explode(',', (string) $product->images))
             ->map(fn($item) => trim($item))
@@ -49,7 +49,8 @@
 
         $pricingOptions = $product->pricing->sortBy('duration_months')->values();
         $activePricing =
-            $pricingOptions->first() ?? (object) ['price' => 0, 'duration_months' => 0, 'currency' => 'EUR'];
+            $pricingOptions->sortByDesc('duration_months')->first() ??
+            (object) ['price' => 0, 'duration_months' => 0, 'currency' => 'EUR'];
         $currencyPrefix =
             ($activePricing->currency ?? 'EUR') === 'EUR' ? '€' : ($activePricing->currency ?? 'USD') . ' ';
 
@@ -63,6 +64,10 @@
             ['label' => 'Premium', 'active' => $isPremium],
         ];
 
+        $belongsToCoreFree = $product->packages->contains(function ($pkg) {
+            return $pkg->type?->name === \App\Constants\GlobalConstant::TYPE_CORE_FREE;
+        });
+
         $specs = [
             ['label' => 'Category', 'value' => $product->category?->name ?: 'N/A'],
             ['label' => 'Value Status', 'value' => $product->value_status ?: 'N/A'],
@@ -73,10 +78,19 @@
     @endphp
 
     <div class="mx-auto w-full max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
+        @php
+            $typeCode = $product->packages?->first()?->type?->code ?? '';
+        @endphp
         <nav class="flex items-center gap-2 text-sm font-medium text-slate-500">
             <a class="hover:text-primary transition-colors" href="{{ route('home') }}">Home</a>
             <span class="material-symbols-outlined text-sm">chevron_right</span>
-            <span class="text-slate-900">{{ $product->category?->name ?: 'Products' }}</span>
+            @if ($typeCode)
+                <a class="hover:text-primary transition-colors"
+                    href="{{ route('home', ['tab' => $typeCode]) }}">{{ $typeCode }}</a>
+                <span class="material-symbols-outlined text-sm">chevron_right</span>
+            @endif
+            <a class="hover:text-primary transition-colors"
+                href="{{ route('package-detail', ['package' => $product->packages?->first()?->slug]) }}">{{ $product->packages?->first()?->name }}</a>
             <span class="material-symbols-outlined text-sm">chevron_right</span>
             <span class="text-slate-900">{{ $productName }}</span>
         </nav>
@@ -87,18 +101,25 @@
             <div class="lg:col-span-7 flex flex-col gap-4">
                 <div
                     class="relative aspect-video w-full overflow-hidden rounded-xl bg-white shadow-lg border border-slate-200">
-                    <img id="productMainImage" alt="{{ $productName }}" class="h-full w-full object-cover"
+                    <div id="productMainVideo" class="w-full h-full">
+                        <iframe class="w-full h-full" src="https://www.youtube.com/embed/ArfewyEeXZA" title="Product video"
+                            frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                    <img id="productMainImage" alt="{{ $productName }}" class="h-full w-full object-cover hidden"
                         src="{{ $mainImage }}" />
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent pointer-events-none"></div>
                 </div>
 
                 <div class="grid grid-cols-4 gap-3 sm:gap-4">
                     @foreach ($imageItems as $img)
                         <button type="button"
                             class="productThumb aspect-video cursor-pointer overflow-hidden rounded-lg border-2 border-slate-200 ring-0 shadow-md transition-all hover:border-primary/70 focus:outline-none"
-                            data-src="{{ '/' . $img }}">
+                            data-src="{{ $img }}">
                             <img alt="Thumbnail" class="h-full w-full object-cover opacity-100 hover:opacity-90"
-                                src="{{ '/' . $img }}" />
+                                src="{{ $img }}" />
                         </button>
                     @endforeach
                 </div>
@@ -160,7 +181,7 @@
                         </div>
                     </div>
 
-                    @if ($pricingOptions->count() > 1)
+                    @if (!$belongsToCoreFree && $pricingOptions->count() > 1)
                         {{-- Subscription plan (only when multiple options to choose from) --}}
                         <div class="border-t border-slate-200 pt-6 pb-6">
                             <p class="text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-4">Select
@@ -170,8 +191,8 @@
                                     @php
                                         $optionPrefix = $option->currency === 'EUR' ? '€' : $option->currency . ' ';
                                     @endphp
-                                    <button type="button" aria-selected="{{ $loop->first ? 'true' : 'false' }}"
-                                        class="productPeriodBtn rounded-lg border-2 py-3.5 text-sm font-bold transition-all {{ $loop->first ? 'bg-[var(--enterprise-blue)] border-[var(--enterprise-blue)] text-white' : 'bg-white border-slate-200 text-slate-700 hover:border-[var(--enterprise-blue)]/50' }}"
+                                    <button type="button" aria-selected="{{ $loop->last ? 'true' : 'false' }}"
+                                        class="productPeriodBtn rounded-lg border-2 py-3.5 text-sm font-bold transition-all {{ $loop->last ? 'bg-[var(--enterprise-blue)] border-[var(--enterprise-blue)] text-white' : 'bg-white border-slate-200 text-slate-700 hover:border-[var(--enterprise-blue)]/50' }}"
                                         data-price="{{ number_format((float) $option->price, 2, '.', '') }}"
                                         data-duration="{{ (int) $option->duration_months }}"
                                         data-currency="{{ $optionPrefix }}">
@@ -182,48 +203,59 @@
                         </div>
                     @endif
 
-                    {{-- Price --}}
-                    <div class="border-t border-slate-200 pt-6 pb-6 text-center">
-                        @if ($savingsPercentProduct > 0)
-                            <p class="text-sm text-slate-400 line-through mb-1">
-                                {{ $currencyPrefix }}{{ number_format($originalPriceProduct, 2) }}</p>
-                        @endif
-                        <p class="flex items-baseline justify-center gap-0.5">
-                            <span
-                                class="text-2xl font-black text-slate-900 align-baseline">{{ trim($currencyPrefix) }}</span>
-                            <span id="productPrice"
-                                class="text-4xl font-black text-slate-900 tracking-tight">{{ number_format($currentPrice, 2) }}</span>
-                        </p>
-                        @if ($savingsPercentProduct > 0)
-                            <span
-                                class="inline-block mt-2 px-2.5 py-1 rounded-md bg-emerald-500 text-white text-[10px] font-bold uppercase tracking-wider">Save
-                                {{ $savingsPercentProduct }}% annually</span>
-                        @endif
-                        <span id="productDuration" class="sr-only"
-                            aria-hidden="true">{{ (int) $activePricing->duration_months > 0 ? (int) $activePricing->duration_months . ' months' : 'one-time' }}</span>
-                    </div>
+                    @if ($belongsToCoreFree)
+                        {{-- Core Free tools: no pricing, only download CTA via Core Free package --}}
+                        <div class="border-t border-slate-200 pt-6 space-y-4 text-center">
+                            <button type="button"
+                                class="getCoreFreeBtn w-full flex items-center justify-center gap-2 rounded-xl bg-[var(--enterprise-blue)] py-4 text-base font-bold text-white transition-all hover:bg-blue-700 active:scale-[0.98] shadow-lg">
+                                <span class="material-symbols-outlined text-xl">download</span>
+                                <span>Get Download</span>
+                            </button>
+                        </div>
+                    @else
+                        {{-- Price --}}
+                        <div class="border-t border-slate-200 pt-6 pb-6 text-center">
+                            @if ($savingsPercentProduct > 0)
+                                <p class="text-sm text-slate-400 line-through mb-1">
+                                    {{ $currencyPrefix }}{{ number_format($originalPriceProduct, 2) }}</p>
+                            @endif
+                            <p class="flex items-baseline justify-center gap-0.5">
+                                <span
+                                    class="text-2xl font-black text-slate-900 align-baseline">{{ trim($currencyPrefix) }}</span>
+                                <span id="productPrice"
+                                    class="text-4xl font-black text-slate-900 tracking-tight">{{ number_format($currentPrice, 2) }}</span>
+                            </p>
+                            @if ($savingsPercentProduct > 0)
+                                <span
+                                    class="inline-block mt-2 px-2.5 py-1 rounded-md bg-emerald-500 text-white text-[10px] font-bold uppercase tracking-wider">Save
+                                    {{ $savingsPercentProduct }}% annually</span>
+                            @endif
+                            <span id="productDuration" class="sr-only"
+                                aria-hidden="true">{{ (int) $activePricing->duration_months > 0 ? (int) $activePricing->duration_months . ' months' : 'one-time' }}</span>
+                        </div>
 
-                    {{-- CTAs + Guarantee --}}
-                    <div class="space-y-3">
-                        <button type="button"
-                            class="addProductToCartBtn w-full flex items-center justify-center gap-2 rounded-xl border-2 bg-white py-4 text-base font-bold text-[var(--enterprise-blue)] transition-all hover:bg-blue-50 active:scale-[0.98]"
-                            data-product-id="{{ $product->id }}" data-product-name="{{ $productName }}"
-                            data-product-detail-url="{{ route('product-detail', $product) }}">
-                            <span class="material-symbols-outlined text-xl">add_shopping_cart</span>
-                            <span>Add To Cart</span>
-                        </button>
-                        <button type="button"
-                            class="buyNowProductBtn w-full flex items-center justify-center gap-2 rounded-xl bg-[var(--enterprise-blue)] py-4 text-base font-bold text-white transition-all hover:bg-blue-700 active:scale-[0.98] shadow-lg"
-                            data-product-id="{{ $product->id }}" data-product-name="{{ $productName }}"
-                            data-product-detail-url="{{ route('product-detail', $product) }}">
-                            <span class="material-symbols-outlined text-xl">shopping_cart</span>
-                            <span>Buy Now</span>
-                        </button>
-                        <p class="flex items-center justify-center gap-2 text-xs text-slate-500">
-                            <span class="material-symbols-outlined text-base">verified_user</span>
-                            30-Day Money Back Guarantee
-                        </p>
-                    </div>
+                        {{-- CTAs + Guarantee --}}
+                        <div class="space-y-3">
+                            <button type="button"
+                                class="addProductToCartBtn w-full flex items-center justify-center gap-2 rounded-xl border-2 bg-white py-4 text-base font-bold text-[var(--enterprise-blue)] transition-all hover:bg-blue-50 active:scale-[0.98]"
+                                data-product-id="{{ $product->id }}" data-product-name="{{ $productName }}"
+                                data-product-detail-url="{{ route('product-detail', $product) }}">
+                                <span class="material-symbols-outlined text-xl">add_shopping_cart</span>
+                                <span>Add To Cart</span>
+                            </button>
+                            <button type="button"
+                                class="buyNowProductBtn w-full flex items-center justify-center gap-2 rounded-xl bg-[var(--enterprise-blue)] py-4 text-base font-bold text-white transition-all hover:bg-blue-700 active:scale-[0.98] shadow-lg"
+                                data-product-id="{{ $product->id }}" data-product-name="{{ $productName }}"
+                                data-product-detail-url="{{ route('product-detail', $product) }}">
+                                <span class="material-symbols-outlined text-xl">shopping_cart</span>
+                                <span>Buy Now</span>
+                            </button>
+                            <p class="flex items-center justify-center gap-2 text-xs text-slate-500">
+                                <span class="material-symbols-outlined text-base">verified_user</span>
+                                30-Day Money Back Guarantee
+                            </p>
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>
@@ -248,37 +280,35 @@
                                 $pkg->avatar ?:
                                 'https://lh3.googleusercontent.com/aida-public/AB6AXuD0xn8klFRg-K-wRgdq9BzT8p7YQbk6CjpWvfNLtc2vdCkRslFovVEeXhTTPi8n6Wg4kQk6g5XGMAA9Eje2zDvPqgmIT-5DGhYHSfGg8_3ikow9PiqSqnjhbl4vKZrJGIdPvdSeyLeVSba8OMJLs1VMbFXsof6nhoC7sGi9QImZ1nT5NHC9Go5RlZWKq_GowsX26ajNPYPCPWaol77sCdSPRs-kfLoBSSMaOb37ctMPwcUx8bTWWT9eDcj23XJ1ltEnAAZOQQvyBjI';
                             $desc = $pkg->description ?: 'Curated tools for rapid deployment and consistent results.';
-                            $isCoreFreeType = $pkg->type?->name !== App\Constants\GlobalConstant::TYPE_CORE_FREE;
                             $isCoreFree = $pkg->type?->name === App\Constants\GlobalConstant::TYPE_CORE_FREE;
                             $badgeLabel = $isCoreFree ? 'Free' : $badge;
                         @endphp
-                        <div class="group flex flex-col rounded-[32px] overflow-hidden transition-all duration-500 cursor-pointer {{ $isCoreFree ? 'core-free-card shadow-lg' : ($isCoreFreeType ? 'pro-card shadow-2xl hover:scale-[1.02] ring-1 ring-blue-500/30' : 'glass-card shadow-xl shadow-slate-200/40 hover:shadow-2xl hover:shadow-blue-900/10') }}"
+                        <div class="group flex flex-col rounded-[32px] overflow-hidden transition-all duration-500 cursor-pointer {{ $isCoreFree ? 'core-free-card shadow-lg' : 'pro-card shadow-2xl hover:scale-[1.02] ring-1 ring-blue-500/30' }}"
                             onclick="window.location.href='{{ route('package-detail', $pkg) }}'" role="button"
                             tabindex="0"
                             onkeydown="if(event.key==='Enter') window.location.href='{{ route('package-detail', $pkg) }}'">
                             <div
-                                class="relative aspect-[5/4] overflow-hidden m-3 rounded-[24px] {{ $isCoreFreeType ? '' : 'bg-slate-50' }}">
+                                class="relative aspect-[5/4] overflow-hidden m-3 rounded-[24px] {{ $isCoreFree ? 'bg-slate-50' : '' }}">
                                 <img alt="{{ $pkg->name }}"
                                     class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                                     src="{{ $fallbackImage }}" />
                                 <div class="absolute top-4 left-4">
                                     <span
-                                        class="{{ $isCoreFree ? 'bg-blue-600 text-white' : ($isCoreFreeType ? 'bg-gradient-to-r from-blue-400 to-blue-600 text-white' : 'bg-white/95 backdrop-blur-sm text-[var(--enterprise-blue)]') }} px-4 py-1.5 rounded-full text-[10px] font-extrabold uppercase tracking-widest shadow-lg">
+                                        class="{{ $isCoreFree ? 'bg-blue-600 text-white' : 'bg-gradient-to-r from-blue-400 to-blue-600 text-white' }} px-4 py-1.5 rounded-full text-[10px] font-extrabold uppercase tracking-widest shadow-lg">
                                         {{ $badgeLabel }}
                                     </span>
                                 </div>
                             </div>
-                            <div
-                                class="p-8 pt-4 flex flex-col flex-1 {{ $isCoreFreeType || $isCoreFree ? 'text-center' : '' }}">
+                            <div class="p-8 pt-4 flex flex-col flex-1 text-center">
                                 <h3
-                                    class="text-xl {{ $isCoreFree ? 'font-black text-[var(--enterprise-blue)]' : ($isCoreFreeType ? 'font-black text-white' : 'font-bold text-[var(--enterprise-blue)]') }}">
+                                    class="text-xl {{ $isCoreFree ? 'font-black text-[var(--enterprise-blue)]' : 'font-black text-white' }}">
                                     {{ $pkg->name }}
                                 </h3>
                                 @if ($isCoreFree)
                                     <p class="text-slate-600 text-sm mt-3 leading-relaxed">
                                         {{ $desc }}
                                     </p>
-                                @elseif ($isCoreFreeType)
+                                @else
                                     <div class="mt-4 flex justify-center">
                                         <ul class="space-y-2 text-xs text-blue-100/70 font-medium text-left inline-block">
                                             @forelse ($pkg->products->take(4) as $prod)
@@ -295,19 +325,15 @@
                                             @endforelse
                                         </ul>
                                     </div>
-                                @else
-                                    <p class="text-slate-500 text-sm mt-3 leading-relaxed">
-                                        {{ $desc }}
-                                    </p>
                                 @endif
                                 <div class="mt-auto pt-8 flex flex-col items-center">
-                                    <div class="flex flex-col items-center mb-6">
-                                        <span
-                                            class="{{ $isCoreFree ? 'text-3xl text-[var(--enterprise-blue)]' : ($isCoreFreeType ? 'text-4xl text-white' : 'text-3xl text-[var(--enterprise-blue)]') }} font-black tracking-tight">
-                                            {{ $currencySymbol }}{{ number_format($price, 2) }}
-                                        </span>
-                                    </div>
-                                    @if ($isCoreFreeType)
+                                    @if (!$isCoreFree && $pricing)
+                                        <div class="flex flex-col items-center mb-6">
+                                            <span
+                                                class="{{ $isCoreFree ? 'text-3xl text-[var(--enterprise-blue)]' : 'text-4xl text-white' }} font-black tracking-tight">
+                                                {{ $currencySymbol }}{{ number_format($price, 2) }}
+                                            </span>
+                                        </div>
                                         <button type="button" onclick="event.stopPropagation();"
                                             class="buyPackageNowBtn w-full py-4 text-sm font-black rounded-2xl transition-all shadow-lg hover:bg-blue-700 bg-[#137fec] text-white"
                                             data-package-id="{{ $pkg->id }}" data-bundle-name="{{ $pkg->name }}"
@@ -320,6 +346,13 @@
                                                 <span>BUY NOW</span>
                                                 <span class="material-symbols-outlined text-lg">shopping_cart</span>
                                             </span>
+                                        </button>
+                                    @endif
+                                    @if (!$isCoreFree && !$pricing)
+                                        <button type="button"
+                                            onclick="window.location.href='{{ route('package-detail', $pkg) }}'"
+                                            class="w-full py-4 text-sm font-black rounded-2xl transition-all shadow-lg hover:bg-blue-700 bg-[#137fec] text-white">
+                                            <span>COMING SOON</span>
                                         </button>
                                     @endif
                                 </div>
@@ -380,7 +413,7 @@
                             $itemCurrency =
                                 $itemPricing?->currency === 'EUR' ? 'EUR ' : ($itemPricing?->currency ?? 'USD') . ' ';
                             $itemImage =
-                                '/' . $item->avatar ?:
+                                $item->avatar ?:
                                 'https://res.cloudinary.com/dkjfmxxom/image/upload/v1765015546/main_m50fl1.png';
                             $itemPrice = $itemPricing ? (float) $itemPricing->price : 0;
                             $itemPeriod =
@@ -450,12 +483,20 @@
 
         $(document).ready(function() {
             const $mainImg = $('#productMainImage');
+            const $mainVideo = $('#productMainVideo');
+            const $videoIframe = $('#productMainVideo iframe');
             const $thumbs = $('.productThumb');
 
             if ($thumbs.length) {
                 $thumbs.first().addClass('border-primary ring-2 ring-primary ring-offset-2').removeClass(
                     'border-slate-200 ring-0');
             }
+
+            const showImage = (src) => {
+                $mainVideo.addClass('hidden');
+                $videoIframe.attr('src', '');
+                $mainImg.removeClass('hidden').attr('src', src);
+            };
 
             $thumbs.on('click', function() {
                 const $btn = $(this);
@@ -466,7 +507,7 @@
                     'border-slate-200 ring-0');
                 $btn.addClass('border-primary ring-2 ring-primary ring-offset-2').removeClass(
                     'border-slate-200 ring-0');
-                $mainImg.attr('src', src);
+                showImage(src);
             });
 
             const $periodBtns = $('.productPeriodBtn');
@@ -494,7 +535,7 @@
 
             const getSelectedPricing = () => {
                 const $selected = $('.productPeriodBtn[aria-selected="true"]').length ? $(
-                    '.productPeriodBtn[aria-selected="true"]').first() : $('.productPeriodBtn').first();
+                    '.productPeriodBtn[aria-selected="true"]').last() : $('.productPeriodBtn').last();
                 if ($selected.length) {
                     const duration = Number($selected.data('duration') || 0);
                     return {
@@ -611,6 +652,12 @@
                 window.dispatchEvent(new Event('cart:updated'));
                 window.location.href = '/checkout';
             });
+        });
+    </script>
+    <script>
+        // Open Core Free download popup when clicking "Get Download"
+        $(document).on('click', '.getCoreFreeBtn', function() {
+            $('#downloadModal').removeClass('hidden');
         });
     </script>
 @endpush

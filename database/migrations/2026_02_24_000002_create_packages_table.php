@@ -14,6 +14,7 @@ class CreatePackagesTable extends Migration
             $table->string('type_code')->nullable();
             $table->string('name');
             $table->string('slug')->unique();
+            $table->integer('level')->nullable();
             $table->text('avatar')->nullable();
             $table->text('video')->nullable();
             $table->text('images')->nullable();

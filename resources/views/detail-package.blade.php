@@ -10,7 +10,7 @@
         $packageImage =
             $package->avatar ??
             'https://lh3.googleusercontent.com/aida-public/AB6AXuDFiyfW16BqlTlp5m2Ic-34IvbXp4xo83UR5S6FBGhs_myfMUKK0zOD6-D5soN1dZ7I9ufcUPBqKA26S3YoFLE-PgwIOhbecYeIge6Cg5pEqBgWT0_SLslgpPzlfJn3gerNqxvgMfpPMkf96vf2ksZMWLHcGOyAoh2EzMbKeGQo5-IgD76WYpw3RytOSh4mLaxLP7A6CEnSy8eRUumlB3oTOOKmSkJiXmHjnezLGBeK3ZXh_TlM_KSElNndF0uwUb5_Gz_qJxG8DhM';
-        $packagePricing = $package->pricing->sortBy('price')->first();
+        $packagePricing = $package->pricing->sortByDesc('duration_months')->first();
         $packagePrice = $packagePricing ? (float) $packagePricing->price : 239;
         $packageDuration = $packagePricing ? (int) $packagePricing->duration_months : 12;
         $packageCurrency = $packagePricing?->currency ?? 'EUR';
@@ -54,11 +54,17 @@
             }
         </style>
         <div class="mx-auto w-full max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
+            @php
+                $typeCode = $package->type->name ?? null;
+            @endphp
             <nav class="flex items-center gap-2 text-sm font-medium text-slate-500 dark:text-slate-400">
-                <a class="hover:text-primary transition-colors" href="#">Home</a>
+                <a class="hover:text-primary transition-colors" href="{{ route('home') }}">Home</a>
                 <span class="material-symbols-outlined text-sm">chevron_right</span>
-                <a class="hover:text-primary transition-colors" href="#">Autodesk Inventor</a>
-                <span class="material-symbols-outlined text-sm">chevron_right</span>
+                @if ($typeCode)
+                    <a class="hover:text-primary transition-colors"
+                        href="{{ route('home', ['tab' => $typeCode]) }}">{{ $typeCode }}</a>
+                    <span class="material-symbols-outlined text-sm">chevron_right</span>
+                @endif
                 <span class="text-slate-900 ">{{ $packageName }}</span>
             </nav>
         </div>
@@ -85,9 +91,9 @@
                         @foreach ($package->images as $item)
                             <button type="button"
                                 class="packageThumb aspect-video cursor-pointer overflow-hidden rounded-lg border-2 border-slate-200 ring-0 shadow-md transition-all hover:border-primary/70 focus:outline-none"
-                                data-src="{{ '/' . $item }}">
+                                data-src="{{ $item }}">
                                 <img alt="Thumbnail" class="h-full w-full object-cover opacity-100 hover:opacity-90"
-                                    src="{{ '/' . $item }}" />
+                                    src="{{ $item }}" />
                             </button>
                         @endforeach
                     </div>
@@ -103,7 +109,7 @@
                     @php
                         $pricingOptions = $package->pricing->sortBy('duration_months')->values();
                         $activePricing =
-                            $pricingOptions->first() ??
+                            $pricingOptions->sortByDesc('duration_months')->first() ??
                             (object) [
                                 'price' => $packagePrice,
                                 'duration_months' => $packageDuration,
@@ -111,7 +117,7 @@
                             ];
                         $activeCurrencySymbol =
                             $activePricing->currency === 'EUR' ? '€' : $activePricing->currency . ' ';
-                        $isCoreFreeType = $package->type?->name !== App\Constants\GlobalConstant::TYPE_CORE_FREE;
+                        $isCoreFreeType = $package->type?->name === App\Constants\GlobalConstant::TYPE_CORE_FREE;
                         $currentPrice = (float) $activePricing->price;
                         $originalPrice =
                             $pricingOptions->count() > 0
@@ -148,7 +154,7 @@
                             </div>
                         </div>
 
-                        @if ($isCoreFreeType)
+                        @if (!$isCoreFreeType)
                             @if ($pricingOptions->count() > 0)
                                 {{-- Subscription plan (only when multiple options to choose from) --}}
                                 <div class="border-t border-slate-200 dark:border-slate-600 pt-6 pb-6">
@@ -158,7 +164,7 @@
                                     <div class="grid grid-cols-3 gap-3">
                                         @foreach ($pricingOptions as $option)
                                             @php
-                                                $isActive = $loop->first;
+                                                $isActive = $loop->last;
                                                 $optionCurrencySymbol =
                                                     $option->currency === 'EUR' ? '€' : $option->currency . ' ';
                                             @endphp
@@ -172,46 +178,48 @@
                                         @endforeach
                                     </div>
                                 </div>
-                            @endif
-
-                            {{-- Price: original struck, current prominent, savings badge --}}
-                            <div class="border-t border-slate-200 dark:border-slate-600 pt-6 pb-6 text-center">
-                                @if ($savingsPercent > 0)
-                                    <p class="text-sm text-slate-400 dark:text-slate-500 line-through mb-1">
-                                        {{ $activeCurrencySymbol }}{{ number_format($originalPrice, 2) }}</p>
-                                @endif
-                                <p class="flex items-baseline justify-center gap-0.5">
-                                    <span
-                                        class="text-2xl font-black text-slate-900 dark:text-white align-baseline">{{ $activeCurrencySymbol }}</span>
-                                    <span id="packagePrice"
-                                        class="text-4xl font-black text-slate-900 dark:text-white tracking-tight">{{ number_format($currentPrice, 2) }}</span>
-                                </p>
-                                <span id="packageDuration" class="sr-only"
-                                    aria-hidden="true">{{ (int) $activePricing->duration_months }} months</span>
-                                @if ($savingsPercent > 0)
-                                    <span
-                                        class="inline-block mt-2 px-2.5 py-1 rounded-md bg-emerald-500 text-white text-[10px] font-bold uppercase tracking-wider">Save
-                                        {{ $savingsPercent }}% annually</span>
-                                @endif
-                            </div>
-
-                            {{-- Buy Now + Guarantee --}}
-                            <div class="space-y-4">
+                                <div class="border-t border-slate-200 dark:border-slate-600 pt-6 pb-6 text-center">
+                                    @if ($savingsPercent > 0)
+                                        <p class="text-sm text-slate-400 dark:text-slate-500 line-through mb-1">
+                                            {{ $activeCurrencySymbol }}{{ number_format($originalPrice, 2) }}</p>
+                                    @endif
+                                    <p class="flex items-baseline justify-center gap-0.5">
+                                        <span
+                                            class="text-2xl font-black text-slate-900 dark:text-white align-baseline">{{ $activeCurrencySymbol }}</span>
+                                        <span id="packagePrice"
+                                            class="text-4xl font-black text-slate-900 dark:text-white tracking-tight">{{ number_format($currentPrice, 2) }}</span>
+                                    </p>
+                                    <span id="packageDuration" class="sr-only"
+                                        aria-hidden="true">{{ (int) $activePricing->duration_months }} months</span>
+                                    @if ($savingsPercent > 0)
+                                        <span
+                                            class="inline-block mt-2 px-2.5 py-1 rounded-md bg-emerald-500 text-white text-[10px] font-bold uppercase tracking-wider">Save
+                                            {{ $savingsPercent }}% annually</span>
+                                    @endif
+                                </div>
+                                <div class="space-y-4">
+                                    <button type="button"
+                                        class="buyNowPackageBtn w-full flex items-center justify-center gap-2 rounded-xl bg-[var(--enterprise-blue)] py-4 text-base font-bold text-white transition-all hover:bg-blue-700 active:scale-[0.98] shadow-lg"
+                                        data-package-id="{{ $package->id }}" data-package-name="{{ $packageName }}"
+                                        data-package-detail-url="{{ route('package-detail', $package) }}"
+                                        data-package-price="{{ number_format($currentPrice, 2, '.', '') }}"
+                                        data-package-period="{{ (int) $activePricing->duration_months }}">
+                                        <span class="material-symbols-outlined text-xl">shopping_cart</span>
+                                        <span>Buy Now</span>
+                                    </button>
+                                    <p
+                                        class="flex items-center justify-center gap-2 text-xs text-slate-500 dark:text-slate-400">
+                                        <span class="material-symbols-outlined text-base">verified_user</span>
+                                        30-Day Money Back Guarantee
+                                    </p>
+                                </div>
+                            @else
                                 <button type="button"
-                                    class="buyNowPackageBtn w-full flex items-center justify-center gap-2 rounded-xl bg-[var(--enterprise-blue)] py-4 text-base font-bold text-white transition-all hover:bg-blue-700 active:scale-[0.98] shadow-lg"
-                                    data-package-id="{{ $package->id }}" data-package-name="{{ $packageName }}"
-                                    data-package-detail-url="{{ route('package-detail', $package) }}"
-                                    data-package-price="{{ number_format($currentPrice, 2, '.', '') }}"
-                                    data-package-period="{{ (int) $activePricing->duration_months }}">
-                                    <span class="material-symbols-outlined text-xl">shopping_cart</span>
-                                    <span>Buy Now</span>
+                                    onclick="window.location.href='{{ route('package-detail', $package) }}'"
+                                    class="w-full h-12 text-sm font-black rounded-2xl transition-all shadow-lg hover:bg-blue-700 bg-[#137fec] text-white flex items-center justify-center">
+                                    <span>COMING SOON</span>
                                 </button>
-                                <p
-                                    class="flex items-center justify-center gap-2 text-xs text-slate-500 dark:text-slate-400">
-                                    <span class="material-symbols-outlined text-base">verified_user</span>
-                                    30-Day Money Back Guarantee
-                                </p>
-                            </div>
+                            @endif
                         @else
                             {{-- Core-free: no subscription/price block, just CTA --}}
                             <div class="border-t border-slate-200 dark:border-slate-600 pt-6 space-y-4">
@@ -259,29 +267,31 @@
                         </h2>
                     </div>
                     @php
-                        $toolItems = $package->products->count() ? $package->products : collect($fallbackTools);
+                        $isModel = $package->products->count() > 0;
+                        $toolItems = $isModel ? $package->products : collect($fallbackTools);
                     @endphp
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                         <div id="toolsCarousel" class="contents">
                             @foreach ($toolItems as $idx => $item)
                                 @php
-                                    $isModel = is_object($item);
-                                    $toolName = $isModel ? $item->name : $item['name'];
+                                    $item = (object) $item;
+                                    $toolName = $item->name ?? '';
                                     $toolPrice = 0;
                                     $toolCurrencySymbol = '€';
-                                    if ($isModel) {
-                                        $toolPricing = $item->pricing->sortBy('price')->first();
-                                        $toolPrice = $toolPricing ? (float) $toolPricing->price : 0;
-                                        $toolCurrency = $toolPricing?->currency ?? 'EUR';
-                                        $toolCurrencySymbol = $toolCurrency === 'EUR' ? '€' : $toolCurrency . ' ';
-                                        // $toolImage = $toolImageSources[$idx % count($toolImageSources)];
-                                        $toolImage =
-                                            env('APP_URL') . '/' . trim($item?->avatar) ??
-                                            $toolImageSources[$idx % count($toolImageSources)];
-                                    }
+                                    $toolPricing = isset($item->pricing)
+                                        ? collect($item->pricing)->sortBy('price')->first()
+                                        : null;
+                                    $toolPrice = $toolPricing ? (float) $toolPricing->price : 0;
+                                    $toolCurrency = $toolPricing?->currency ?? 'EUR';
+                                    $toolCurrencySymbol = $toolCurrency === 'EUR' ? '€' : $toolCurrency . ' ';
+                                    $toolImage =
+                                        isset($item->avatar) && trim((string) $item->avatar) !== ''
+                                            ? trim($item->avatar)
+                                            : $toolImageSources[$idx % count($toolImageSources)];
+                                    $hasProductId = isset($item->id);
                                 @endphp
-                                <div class="group bg-white  border-2 border-slate-200  rounded-xl overflow-hidden hover:shadow-lg transition-all {{ $isModel ? 'cursor-pointer' : '' }}"
-                                    @if ($isModel) onclick="window.location.href='{{ route('product-detail', $item) }}'"
+                                <div class="group bg-white  border-2 border-slate-200  rounded-xl overflow-hidden hover:shadow-lg transition-all {{ $isModel && $hasProductId ? 'cursor-pointer' : '' }}"
+                                    @if ($isModel && $hasProductId) onclick="window.location.href='{{ route('product-detail', $item) }}'"
                                         role="link" tabindex="0"
                                         onkeydown="if(event.key === 'Enter'){ window.location.href='{{ route('product-detail', $item) }}'; }" @endif>
                                     <div class="aspect-square bg-slate-100  p-4">
@@ -297,12 +307,12 @@
                                             <button
                                                 class="addProductToCartBtn w-8 h-8 rounded-full border border-slate-200  flex items-center justify-center hover:bg-[var(--enterprise-blue)] hover:text-white hover:border-[var(--enterprise-blue)] transition-all"
                                                 onclick="event.stopPropagation();"
-                                                data-product-id="{{ $isModel ? $item->id : $idx }}"
+                                                data-product-id="{{ $isModel && $hasProductId ? $item->id : $idx }}"
                                                 data-product-name="{{ $toolName }}"
                                                 data-product-price="{{ number_format((float) $toolPrice, 2, '.', '') }}"
                                                 data-product-currency="{{ $toolCurrencySymbol }}"
                                                 data-product-image="{{ $toolImage }}"
-                                                data-product-detail-url="{{ $isModel ? route('product-detail', $item) : '' }}">
+                                                data-product-detail-url="{{ $isModel && $hasProductId ? route('product-detail', $item) : '' }}">
                                                 <span class="material-symbols-outlined !text-sm">add</span>
                                             </button>
                                         </div>
@@ -355,7 +365,7 @@
             </div>
         </section> --}}
 
-            <section class="mb-24">
+            {{-- <section class="mb-24">
                 <div class="flex items-end justify-between mb-10">
                     <div>
                         <h2 class="text-3xl font-black mb-2">Save More with Bundles</h2>
@@ -443,7 +453,7 @@
                         </button>
                     </div>
                 </div>
-            </section>
+            </section> --}}
 
             <section class="mb-20">
                 <h2 class="text-2xl font-black mb-8">Frequently Bought Together</h2>
@@ -570,8 +580,8 @@
                     `/ ${duration} months` : 'one-time');
             });
 
-            // Default to first period option on load
-            $buttons.first().trigger('click');
+            // Default to max period option on load
+            $buttons.last().trigger('click');
         });
     </script>
     <script>

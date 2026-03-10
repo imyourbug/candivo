@@ -1,0 +1,57 @@
+@php
+    $post = $post ?? null;
+@endphp
+
+<div class="space-y-6">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="md:col-span-2">
+            <label for="title" class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1">Title <span class="text-rose-500">*</span></label>
+            <input type="text" name="title" id="title" value="{{ old('title', $post?->title) }}"
+                class="w-full px-4 py-2.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent @error('title') border-rose-500 @enderror"
+                required />
+            @error('title')
+                <p class="mt-1 text-sm text-rose-500">{{ $message }}</p>
+            @enderror
+        </div>
+        <div>
+            <label for="slug" class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1">Slug (URL)</label>
+            <input type="text" name="slug" id="slug" value="{{ old('slug', $post?->slug) }}"
+                class="w-full px-4 py-2.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent @error('slug') border-rose-500 @enderror"
+                placeholder="auto-generated if empty" />
+            @error('slug')
+                <p class="mt-1 text-sm text-rose-500">{{ $message }}</p>
+            @enderror
+        </div>
+        <div>
+            <label for="status" class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1">Status <span class="text-rose-500">*</span></label>
+            <select name="status" id="status" required
+                class="w-full px-4 py-2.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-primary @error('status') border-rose-500 @enderror">
+                <option value="draft" {{ old('status', $post?->status) === 'draft' ? 'selected' : '' }}>Draft</option>
+                <option value="published" {{ old('status', $post?->status) === 'published' ? 'selected' : '' }}>Published</option>
+                <option value="archived" {{ old('status', $post?->status) === 'archived' ? 'selected' : '' }}>Archived</option>
+            </select>
+            @error('status')
+                <p class="mt-1 text-sm text-rose-500">{{ $message }}</p>
+            @enderror
+        </div>
+    </div>
+
+    <div>
+        <label for="excerpt" class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1">Excerpt</label>
+        <input type="text" name="excerpt" id="excerpt" value="{{ old('excerpt', $post?->excerpt) }}"
+            class="w-full px-4 py-2.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-primary"
+            placeholder="Short summary for listings" />
+        @error('excerpt')
+            <p class="mt-1 text-sm text-rose-500">{{ $message }}</p>
+        @enderror
+    </div>
+
+    <div>
+        <label for="content" class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1">Content</label>
+        <textarea name="content" id="content" rows="12"
+            class="w-full px-4 py-2.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent @error('content') border-rose-500 @enderror">{{ old('content', $post?->content) }}</textarea>
+        @error('content')
+            <p class="mt-1 text-sm text-rose-500">{{ $message }}</p>
+        @enderror
+    </div>
+</div>

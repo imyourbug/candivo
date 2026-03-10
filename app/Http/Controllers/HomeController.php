@@ -3,14 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Constants\GlobalConstant;
-use App\Models\Package;
-use App\Models\Product;
 use App\Models\Type;
+use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        $tab = $request->input('tab', GlobalConstant::TYPE_PACKAGE);
         // $tools = Product::whereNotNull('category_id')->get();
         $allTypes = Type::with(['packages.products.pricing', 'categories.products.pricing'])
             ->get()
@@ -19,7 +19,7 @@ class HomeController extends Controller
             })
             ->values();
 
-        return view('home', compact('allTypes'));
+        return view('home', compact('allTypes', 'tab'));
     }
 
     public function about()

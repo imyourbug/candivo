@@ -321,19 +321,28 @@
     </section> --}}
     <br />
     <br />
+    @php
+        $hasActiveTab = $allTypes->contains('name', $tab);
+    @endphp
     <section class="max-w-7xl mx-auto px-6 lg:px-16 py-10">
         <div class="flex w-full flex-wrap items-center justify-center gap-2 p-1.5 bg-white border border-slate-200 rounded-2xl shadow-sm mb-10 max-w-max mx-auto">
             @foreach ($allTypes as $type)
+                @php
+                    $isActiveTab = $hasActiveTab ? $type->name === $tab : $loop->first;
+                @endphp
                 <button type="button"
-                    class="type-tab-btn {{ $loop->first ? 'is-active' : '' }} px-5 py-2.5 rounded-xl text-sm font-bold transition-all"
-                    data-target="type-panel-{{ $loop->index }}" aria-selected="{{ $loop->first ? 'true' : 'false' }}">
+                    class="type-tab-btn {{ $isActiveTab ? 'is-active' : '' }} px-5 py-2.5 rounded-xl text-sm font-bold transition-all"
+                    data-target="type-panel-{{ $loop->index }}" aria-selected="{{ $isActiveTab ? 'true' : 'false' }}">
                     {{ $type->name }}
                 </button>
             @endforeach
         </div>
 
         @foreach ($allTypes as $type)
-            <div id="type-panel-{{ $loop->index }}" class="type-panel {{ $loop->first ? '' : 'hidden' }}">
+            @php
+                $isActivePanel = $hasActiveTab ? $type->name === $tab : $loop->first;
+            @endphp
+            <div id="type-panel-{{ $loop->index }}" class="type-panel {{ $isActivePanel ? '' : 'hidden' }}">
                 @php
                     $featuredPackage = $type->packages->first();
                     $sectionTitle = $type->name;
@@ -350,98 +359,197 @@
                         {{ $sectionDescription }}
                     </p>
                 </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10 mb-10">
-                    @forelse ($type->packages as $package)
-                        @php
-                            $pricing = $package->pricing->sortBy('price')->first();
-                            $price = $pricing ? (float) $pricing->price : 0;
-                            $currency = $pricing?->currency ?? 'EUR';
-                            $currencySymbol = $currency === 'EUR' ? '€' : $currency . ' ';
-                            $badge = 'Package';
-                            $fallbackImage =
-                                $package->avatar ?:
-                                'https://lh3.googleusercontent.com/aida-public/AB6AXuD0xn8klFRg-K-wRgdq9BzT8p7YQbk6CjpWvfNLtc2vdCkRslFovVEeXhTTPi8n6Wg4kQk6g5XGMAA9Eje2zDvPqgmIT-5DGhYHSfGg8_3ikow9PiqSqnjhbl4vKZrJGIdPvdSeyLeVSba8OMJLs1VMbFXsof6nhoC7sGi9QImZ1nT5NHC9Go5RlZWKq_GowsX26ajNPYPCPWaol77sCdSPRs-kfLoBSSMaOb37ctMPwcUx8bTWWT9eDcj23XJ1ltEnAAZOQQvyBjI';
-                            $desc = $package->description ?: 'Curated tools for rapid deployment and consistent results.';
-                            $isCoreFreeType = $package->type?->name !== App\Constants\GlobalConstant::TYPE_CORE_FREE;
-                            $isCoreFree = $package->type?->name === App\Constants\GlobalConstant::TYPE_CORE_FREE;
-                            $badgeLabel = $isCoreFree ? 'Free' : $badge;
-                        @endphp
-                        <div
-                            class="group flex flex-col rounded-[32px] overflow-hidden transition-all duration-500 cursor-pointer {{ $isCoreFree ? 'core-free-card shadow-lg' : ($isCoreFreeType ? 'pro-card shadow-2xl hover:scale-[1.02] ring-1 ring-blue-500/30' : 'glass-card shadow-xl shadow-slate-200/40 hover:shadow-2xl hover:shadow-blue-900/10') }}"
-                            onclick="window.location.href='{{ route('package-detail', $package) }}'"
-                            role="button"
-                            tabindex="0"
-                            onkeydown="if(event.key==='Enter') window.location.href='{{ route('package-detail', $package) }}'">
-                            <div
-                                class="relative aspect-[5/4] overflow-hidden m-3 rounded-[24px] {{ $isCoreFreeType ? '' : 'bg-slate-50' }}">
-                                <img alt="{{ $package->name }}"
-                                    class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                                    src="{{ $fallbackImage }}" />
-                                <div class="absolute top-4 left-4">
-                                    <span
-                                        class="{{ $isCoreFree ? 'bg-blue-600 text-white' : ($isCoreFreeType ? 'bg-gradient-to-r from-blue-400 to-blue-600 text-white' : 'bg-white/95 backdrop-blur-sm text-[var(--enterprise-blue)]') }} px-4 py-1.5 rounded-full text-[10px] font-extrabold uppercase tracking-widest shadow-lg">
-                                        {{ $badgeLabel }}
-                                    </span>
-                                </div>
+                @php
+                    $packagesByLevel = $type->packages->groupBy('level')->sortKeys();
+                @endphp
+                @forelse ($packagesByLevel as $level => $levelPackages)
+                    <div class="mb-10">
+                        {{-- @if (!is_null($level))
+                            <div class="mb-4 flex items-center justify-between">
+                                <span class="text-xs font-bold tracking-[0.2em] uppercase text-slate-400">
+                                    Level {{ $level }}
+                                </span>
                             </div>
-                            <div class="p-8 pt-4 flex flex-col flex-1 {{ $isCoreFree || $isCoreFreeType ? 'text-center' : '' }}">
-                                <h3 class="text-xl {{ $isCoreFree ? 'font-black text-[var(--enterprise-blue)]' : ($isCoreFreeType ? 'font-black text-white' : 'font-bold text-[var(--enterprise-blue)]') }}">
-                                    {{ $package->name }}
-                                </h3>
-                                @if ($isCoreFree)
-                                    <p class="text-slate-600 text-sm mt-3 leading-relaxed">
-                                        {{ $desc }}
-                                    </p>
-                                @elseif ($isCoreFreeType)
-                                    <div class="mt-4 flex justify-center">
-                                        <ul class="space-y-2 text-xs text-blue-100/70 font-medium text-left inline-block">
-                                            @forelse ($package->products->take(4) as $product)
-                                                <li class="flex items-center gap-2">
-                                                    <span class="material-symbols-outlined glow-check text-base">check_circle</span>
-                                                    <span class="text-xs text-blue-50 font-semibold tracking-wide uppercase leading-snug">
-                                                        {{ $product->name }}
-                                                    </span>
-                                                </li>
-                                            @empty
-                                                <li class="text-blue-100/70">{{ $desc }}</li>
-                                            @endforelse
-                                        </ul>
-                                    </div>
-                                @else
-                                    <p class="text-slate-500 text-sm mt-3 leading-relaxed">
-                                        {{ $desc }}
-                                    </p>
-                                @endif
-                                <div class="mt-auto pt-8 flex flex-col items-center">
-                                    <div class="flex flex-col items-center mb-6">
-                                        <span
-                                            class="{{ $isCoreFree ? 'text-3xl text-[var(--enterprise-blue)]' : ($isCoreFreeType ? 'text-4xl text-white' : 'text-3xl text-[var(--enterprise-blue)]') }} font-black tracking-tight">
-                                            {{ $currencySymbol }}{{ number_format($price, 2) }}
-                                        </span>
-                                    </div>
-                                    @if ($isCoreFreeType)
-                                        <button
-                                            type="button"
-                                            onclick="event.stopPropagation();"
-                                            class="buyPackageNowBtn w-full py-4 text-sm font-black rounded-2xl transition-all shadow-lg hover:bg-blue-700 bg-[#137fec] text-white"
-                                            data-package-id="{{ $package->id }}" data-bundle-name="{{ $package->name }}"
-                                            data-bundle-price="{{ $price }}" data-bundle-image="{{ $fallbackImage }}"
-                                            data-bundle-period="{{ $pricing?->duration_months ?? '' }}"
-                                            data-bundle-detail-url="{{ route('package-detail', $package) }}"
-                                            data-bundle-items="{{ $package->products->pluck('name')->implode(',') }}">
-                                            <span class="inline-flex items-center gap-2">
-                                                <span>BUY NOW</span>
-                                                <span class="material-symbols-outlined text-lg">shopping_cart</span>
+                        @endif --}}
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10">
+                            @foreach ($levelPackages as $package)
+                                @php
+                                    $pricing = $package->pricing->sortBy('price')->first();
+                                    $price = $pricing ? (float) $pricing->price : 0;
+                                    $currency = $pricing?->currency ?? 'EUR';
+                                    $currencySymbol = $currency === 'EUR' ? '€' : $currency . ' ';
+                                    $badge = 'Package';
+                                    $fallbackImage =
+                                        $package->avatar ?:
+                                        'https://lh3.googleusercontent.com/aida-public/AB6AXuD0xn8klFRg-K-wRgdq9BzT8p7YQbk6CjpWvfNLtc2vdCkRslFovVEeXhTTPi8n6Wg4kQk6g5XGMAA9Eje2zDvPqgmIT-5DGhYHSfGg8_3ikow9PiqSqnjhbl4vKZrJGIdPvdSeyLeVSba8OMJLs1VMbFXsof6nhoC7sGi9QImZ1nT5NHC9Go5RlZWKq_GowsX26ajNPYPCPWaol77sCdSPRs-kfLoBSSMaOb37ctMPwcUx8bTWWT9eDcj23XJ1ltEnAAZOQQvyBjI';
+                                    $desc = $package->description ?: 'Curated tools for rapid deployment and consistent results.';
+                                    $isCoreFree = $package->type?->name === App\Constants\GlobalConstant::TYPE_CORE_FREE;
+                                    $badgeLabel = $isCoreFree ? 'Free' : $badge;
+                                @endphp
+                                <div
+                                    class="group flex flex-col rounded-[32px] overflow-hidden transition-all duration-500 cursor-pointer {{ $isCoreFree ? 'core-free-card shadow-lg' : 'pro-card shadow-2xl hover:scale-[1.02] ring-1 ring-blue-500/30' }}"
+                                    onclick="window.location.href='{{ route('package-detail', $package) }}'"
+                                    role="button"
+                                    tabindex="0"
+                                    onkeydown="if(event.key==='Enter') window.location.href='{{ route('package-detail', $package) }}'">
+                                    <div
+                                        class="relative aspect-[5/4] overflow-hidden m-3 rounded-[24px] {{ $isCoreFree ? 'bg-slate-50' : '' }}">
+                                        <img alt="{{ $package->name }}"
+                                            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                                            src="{{ $fallbackImage }}" />
+                                        <div class="absolute top-4 left-4">
+                                            <span
+                                                class="{{ $isCoreFree ? 'bg-blue-600 text-white' : 'bg-gradient-to-r from-blue-400 to-blue-600 text-white' }} px-4 py-1.5 rounded-full text-[10px] font-extrabold uppercase tracking-widest shadow-lg">
+                                                {{ $badgeLabel }}
                                             </span>
-                                        </button>
-                                    @endif
+                                        </div>
+                                    </div>
+                                    <div class="p-8 pt-4 flex flex-col flex-1 text-center">
+                                        <h3 class="text-xl {{ $isCoreFree ? 'font-black text-[var(--enterprise-blue)]' : 'font-black text-white' }}">
+                                            {{ $package->name }}
+                                        </h3>
+                                        @if ($isCoreFree)
+                                            <p class="text-slate-600 text-sm mt-3 leading-relaxed">
+                                                {{ $desc }}
+                                            </p>
+                                        @else
+                                            <div class="mt-4 flex justify-center">
+                                                <ul class="space-y-2 text-xs text-blue-100/70 font-medium text-left inline-block">
+                                                    @forelse ($package->products->take(4) as $product)
+                                                        <li class="flex items-center gap-2">
+                                                            <span class="material-symbols-outlined glow-check text-base">check_circle</span>
+                                                            <span class="text-xs text-blue-50 font-semibold tracking-wide uppercase leading-snug">
+                                                                {{ $product->name }}
+                                                            </span>
+                                                        </li>
+                                                    @empty
+                                                        <li class="text-blue-100/70">{{ $desc }}</li>
+                                                    @endforelse
+                                                </ul>
+                                            </div>
+                                        @endif
+                                        <div class="mt-auto pt-8 flex flex-col items-center">
+                                            @php
+                                                $showPrice = !$isCoreFree && $pricing;
+                                            @endphp
+                                            @if ($showPrice)
+                                                <div class="flex flex-col items-center mb-6">
+                                                    <span
+                                                        class="{{ $isCoreFree ? 'text-3xl text-[var(--enterprise-blue)]' : 'text-4xl text-white' }} font-black tracking-tight">
+                                                        {{ $currencySymbol }}{{ number_format($price, 2) }}
+                                                    </span>
+                                                </div>
+                                            @endif
+                                            @if (!$isCoreFree)
+                                                @if ($pricing)
+                                                    <button
+                                                        type="button"
+                                                        onclick="event.stopPropagation();"
+                                                        class="buyPackageNowBtn w-full h-12 text-sm font-black rounded-2xl transition-all shadow-lg hover:bg-blue-700 bg-[#137fec] text-white flex items-center justify-center"
+                                                        data-package-id="{{ $package->id }}" data-bundle-name="{{ $package->name }}"
+                                                        data-bundle-price="{{ $price }}" data-bundle-image="{{ $fallbackImage }}"
+                                                        data-bundle-period="{{ $pricing?->duration_months ?? '' }}"
+                                                        data-bundle-detail-url="{{ route('package-detail', $package) }}"
+                                                        data-bundle-items="{{ $package->products->pluck('name')->implode(',') }}">
+                                                        <span class="inline-flex items-center gap-2">
+                                                            <span class="material-symbols-outlined text-lg">shopping_cart</span>
+                                                            <span>BUY NOW</span>
+                                                        </span>
+                                                    </button>
+                                                @else
+                                                    <button
+                                                        type="button"
+                                                        onclick="window.location.href='{{ route('package-detail', $package) }}'"
+                                                        class="w-full h-12 text-sm font-black rounded-2xl transition-all shadow-lg hover:bg-blue-700 bg-[#137fec] text-white flex items-center justify-center">
+                                                        <span>COMING SOON</span>
+                                                    </button>
+                                                @endif
+                                            @endif
+                                        </div>
+                                    </div>
                                 </div>
+                            @endforeach
+                        </div>
+                    </div>
+                @empty
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10 mb-10">
+                        <div class="col-span-full text-center text-slate-500">No packages found for this category.</div>
+                    </div>
+                @endforelse
+
+                @php
+                    $isStandAloneType = $type->name === App\Constants\GlobalConstant::TYPE_STAND_ALONE;
+                @endphp
+
+                @if ($isStandAloneType)
+                    @php
+                        $allStandAloneTools = $type->packages
+                            ->flatMap(function ($pkg) {
+                                return $pkg->products;
+                            })
+                            ->unique('id')
+                            ->values();
+                        $standAloneToolImageSources = [
+                            'https://lh3.googleusercontent.com/aida-public/AB6AXuADz2fKqgxIvjaTj5-lGjwoNT8MCRI9OeB4VkBT9SfnOC-ejIGeSk2nZSzNi2tc9JY93KvGyMOmiKy8tcO0x3xjIw5jGCzLUci29fvhdZu98X_1JxqPLpbXHZ3Ym4g-7Cl4fUuzlgFhK4dZ2l2swKfmJbPbHDofoao3kqPWr2q94KpXn6N5Qv4CxRwEuB5YLgYmO9Pc1wu_Vi97_Egr6ITV3YeNLW5timi7sAh0xCzyu4iTEQKofUhBqDK_sasUb1I0nsMoYPf8AvQ',
+                            'https://lh3.googleusercontent.com/aida-public/AB6AXuA9u23NQRZqmg3IXYfIWNTXAFL7WsUsGqHdoGVLnNdK7IR6NMfqnxmfJ2129c5BEcdDq4ks2W9JKqUKWOmDOKk5cxuBmZlxgqmMvXxJTuq6SPcmruZIWUuDvt3lrP7KkmdtHLj_bzhmC2C66RWM2kgjbnQh-APZToYvnUXF6zKJ46TRkyzrfckVOzzj6S3m5HVpJEgHJUa9ud3-WaHYg-za064cNSOi6VpxM4OaDjBv1VTf8HX2g8VUf_vzzExLjwXkItLbAcjksQQ',
+                            'https://lh3.googleusercontent.com/aida-public/AB6AXuA9I9gE16lI_z4bFCY2M0qEe9EU-Dv3T8j4_cpEc1n3ronut_jQ_LX-_hwf47yXpe2xuYOTtR5FbQiuoYbMJiRSppBvJOQVPfDMuMvm-sSYIoFX37p4o7NrO56SddRIC3-kKN_sR9NQbsW3jpodY1phzOfvHpzuqqRm3mYZ06rvtNB3To6dH7Qn2QdtXtQtK5MMeHk4DDn-USfNovMi9Df3n5CXRcQVHvRl1wfaoZC4dhaP3oEZdZvs-7oRXwBmsdFDfUKifMcqI70',
+                            'https://lh3.googleusercontent.com/aida-public/AB6AXuD8lbZUTGd1GLg5HcHiZ1PADrs7-7Pw0CU5rwiAISq3Khpqu_ufOto0OrYiTpHuhdopfYOXwa98et43_8But4Xsrogiqw8AZeDDmZj9BXMePNe7aHPEBGkLfOdICIXHYu7FNHq8hmOM12r-TqQWmGl5HUX8i8GzNaGyUFsn2R2skZAu_N0-HqMkEQFLoSM9D4yeKMNkVoX9dzUHRM1nxM1DrycLtmy5QsL51Zzk7Iqf0RktXPVlV99_bGeM4zeIrTVLTt6N6ubZQos',
+                        ];
+                    @endphp
+
+                    @if ($allStandAloneTools->isNotEmpty())
+                        <div class="mt-12 w-full">
+                            <div class="flex items-center justify-between mb-10">
+                                <h2 class="text-3xl font-bold text-center flex items-center justify-center gap-3 w-full">
+                                    <span class="material-symbols-outlined text-primary text-4xl">inventory_2</span>
+                                    All Stand-Alone Tools
+                                </h2>
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                                @foreach ($allStandAloneTools as $idx => $tool)
+                                    @php
+                                        $toolName = $tool->name ?? '';
+                                        $toolPricing = $tool->pricing->sortBy('price')->first();
+                                        $toolPrice = $toolPricing ? (float) $toolPricing->price : 0;
+                                        $toolCurrency = $toolPricing?->currency ?? 'EUR';
+                                        $toolCurrencySymbol = $toolCurrency === 'EUR' ? '€' : $toolCurrency . ' ';
+                                        $toolImage = (isset($tool->avatar) && trim((string) $tool->avatar) !== '')
+                                            ? trim($tool->avatar)
+                                            : $standAloneToolImageSources[$idx % count($standAloneToolImageSources)];
+                                    @endphp
+                                    <div class="group bg-white border-2 border-slate-200 rounded-xl overflow-hidden hover:shadow-lg transition-all cursor-pointer"
+                                        onclick="window.location.href='{{ route('product-detail', $tool) }}'"
+                                        role="link" tabindex="0"
+                                        onkeydown="if(event.key === 'Enter'){ window.location.href='{{ route('product-detail', $tool) }}'; }">
+                                        <div class="aspect-square bg-slate-100 p-4">
+                                            <img class="w-full h-full object-contain mix-blend-multiply dark:mix-blend-normal opacity-80 group-hover:scale-110 transition-transform"
+                                                alt="{{ $toolName }}" src="{{ $toolImage }}" />
+                                        </div>
+                                        <div class="p-4">
+                                            <h4 class="font-bold text-sm mb-1 truncate">{{ $toolName }}</h4>
+                                            <div class="flex items-center justify-between">
+                                                <span class="text-[var(--enterprise-blue)] font-bold">
+                                                    {{ $toolCurrencySymbol }}{{ number_format($toolPrice, 2) }}
+                                                </span>
+                                                <button
+                                                    class="addProductToCartBtn w-8 h-8 rounded-full border border-slate-200 flex items-center justify-center hover:bg-[var(--enterprise-blue)] hover:text-white hover:border-[var(--enterprise-blue)] transition-all"
+                                                    onclick="event.stopPropagation();"
+                                                    data-product-id="{{ $tool->id }}"
+                                                    data-product-name="{{ $toolName }}"
+                                                    data-product-price="{{ number_format((float) $toolPrice, 2, '.', '') }}"
+                                                    data-product-currency="{{ $toolCurrencySymbol }}"
+                                                    data-product-image="{{ $toolImage }}"
+                                                    data-product-detail-url="{{ route('product-detail', $tool) }}">
+                                                    <span class="material-symbols-outlined !text-sm">add</span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
                             </div>
                         </div>
-                    @empty
-                        <div class="col-span-full text-center text-slate-500">No packages found for this category.</div>
-                    @endforelse
-                </div>
+                    @endif
+                @endif
             </div>
         @endforeach
     </section>

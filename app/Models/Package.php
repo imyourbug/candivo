@@ -14,6 +14,7 @@ class Package extends Model
         'type_code',
         'name',
         'slug',
+        'level',
         'description',
         'avatar',
         'video',

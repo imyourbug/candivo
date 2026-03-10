@@ -1,11 +1,31 @@
 @extends('layouts.main')
 @section('title', 'Di-tool Premium Checkout')
 @push('styles')
+    <style>
+        @keyframes place-order-spin {
+            to { transform: rotate(360deg); }
+        }
+        .place-order-spinner {
+            animation: place-order-spin 0.9s linear infinite;
+        }
+    </style>
 @endpush
 @section('content')
     <main class="flex-1 flex items-center justify-center p-6 md:p-12">
         <div class="glass-card w-full max-w-6xl rounded-[2rem] overflow-hidden flex flex-col md:flex-row shadow-2xl">
             <div class="flex-[1.4] p-8 md:p-12 border-b md:border-b-0 md:border-r border-white/40">
+                @if (session('success'))
+                    <div id="payment-status-success"
+                        class="mb-6 rounded-xl bg-emerald-50 border border-emerald-200 px-4 py-3 text-sm text-emerald-800">
+                        {{ session('success') }}
+                    </div>
+                @endif
+                @if (session('error'))
+                    <div id="payment-status-error"
+                        class="mb-6 rounded-xl bg-red-50 border border-red-200 px-4 py-3 text-sm text-red-700">
+                        {{ session('error') }}
+                    </div>
+                @endif
                 <div class="mb-10">
                     <h1 class="text-3xl font-extrabold text-slate-900 mb-2">Checkout Details</h1>
                     <p class="text-slate-500 font-medium">Complete your purchase for Autodesk Inventor Add-ons</p>
@@ -72,7 +92,7 @@
                         </div>
                         <div class="flex gap-4 mb-6">
                             <label class="relative flex-1 cursor-pointer group">
-                                <input checked="" class="peer absolute opacity-0" name="payment" type="radio" />
+                                <input checked="" class="peer absolute opacity-0" name="payment_method" type="radio" value="paypal" />
                                 <div
                                     class="flex flex-col items-center justify-center p-4 rounded-xl border-2 border-transparent bg-white/40 glass-input peer-checked:border-blue-600 peer-checked:bg-blue-50/50 transition-all">
                                     <span
@@ -82,27 +102,17 @@
                                 </div>
                             </label>
                             <label class="relative flex-1 cursor-pointer group">
-                                <input class="peer absolute opacity-0" name="payment" type="radio" />
+                                <input class="peer absolute opacity-0" name="payment_method" type="radio" value="mollie" />
                                 <div
                                     class="flex flex-col items-center justify-center p-4 rounded-xl border-2 border-transparent bg-white/40 glass-input peer-checked:border-blue-600 peer-checked:bg-blue-50/50 transition-all">
                                     <span
                                         class="material-symbols-outlined text-slate-600 group-hover:text-blue-600 mb-1">credit_card</span>
                                     <span
-                                        class="text-[10px] font-bold uppercase tracking-tighter text-slate-500">Card</span>
-                                </div>
-                            </label>
-                            <label class="relative flex-1 cursor-pointer group">
-                                <input class="peer absolute opacity-0" name="payment" type="radio" />
-                                <div
-                                    class="flex flex-col items-center justify-center p-4 rounded-xl border-2 border-transparent bg-white/40 glass-input peer-checked:border-blue-600 peer-checked:bg-blue-50/50 transition-all">
-                                    <span
-                                        class="material-symbols-outlined text-slate-600 group-hover:text-blue-600 mb-1">ios</span>
-                                    <span
-                                        class="text-[10px] font-bold uppercase tracking-tighter text-slate-500">Apple</span>
+                                        class="text-[10px] font-bold uppercase tracking-tighter text-slate-500">Mollie</span>
                                 </div>
                             </label>
                         </div>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        {{-- <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div class="flex flex-col gap-2 md:col-span-2">
                                 <label class="text-sm font-semibold text-slate-700 ml-1">Card Number</label>
                                 <div class="relative">
@@ -125,7 +135,7 @@
                                     class="glass-input h-14 rounded-xl px-4 outline-none text-slate-900 placeholder:text-slate-400"
                                     placeholder="***" type="password" />
                             </div>
-                        </div>
+                        </div> --}}
                     </section>
                 </div>
             </div>
@@ -179,17 +189,35 @@
                     </div>
                 </div>
                 <div class="">
+                    <form id="paypal-checkout-form" method="POST" action="{{ route('paypal.handle') }}" class="checkout-form">
+                        @csrf
+                        <input type="hidden" name="order_total" id="order_total" value="0">
+                        <input type="hidden" name="cart_data" id="cart_data_paypal" value="">
+                    </form>
+                    <form id="mollie-checkout-form" method="POST" action="{{ route('mollie.handle') }}" class="checkout-form">
+                        @csrf
+                        <input type="hidden" name="order_total" id="order_total_mollie" value="0">
+                        <input type="hidden" name="cart_data" id="cart_data_mollie" value="">
+                    </form>
                     <div class="flex items-center gap-2 text-slate-500 text-xs font-medium justify-center mb-6">
                         <span class="material-symbols-outlined text-sm">verified_user</span>
                         <span>Encrypted Secure Checkout</span>
                     </div>
-                    <button
-                        class="premium-button w-full h-16 rounded-2xl text-white font-extrabold text-lg flex items-center justify-center gap-3 active:scale-95">
-                        <span>Place Your Order</span>
-                        <span class="material-symbols-outlined">arrow_forward</span>
+                    <button type="button" id="place-order-btn"
+                        class="premium-button w-full h-16 rounded-2xl text-white font-extrabold text-lg flex items-center justify-center gap-3 active:scale-95"
+                        data-empty-url="{{ route('home', ['tab' => 'Package']) }}">
+                        <span class="place-order-loading hidden items-center gap-2">
+                            <span class="material-symbols-outlined place-order-spinner" style="font-size: 1.5rem;">progress_activity</span>
+                            <span>Processing...</span>
+                        </span>
+                        <span class="place-order-content flex items-center gap-3">
+                            <span class="place-order-label">Place Your Order</span>
+                            <span class="material-symbols-outlined place-order-icon">arrow_forward</span>
+                        </span>
                     </button>
                     <p class="text-center text-[11px] text-slate-400 mt-6 leading-relaxed">
-                        By placing this order, you agree to the Terms of Service. Your digital license will be sent to your
+                        By placing this order, you agree to the Terms of Service. Your digital license will be sent to
+                        your
                         email immediately upon successful payment.
                     </p>
                 </div>
@@ -199,14 +227,21 @@
 
 @push('scripts')
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const summaryHeading = Array.from(document.querySelectorAll('h2')).find((el) => el.textContent
-                .trim() ===
-                'Order Summary');
-            if (!summaryHeading) return;
+        $(function() {
+            if ($('#payment-status-success').length) {
+                try {
+                    localStorage.removeItem('cart');
+                    window.dispatchEvent(new Event('cart:updated'));
+                } catch (e) {}
+            }
 
-            const summaryRoot = summaryHeading.closest('.mb-10');
-            if (!summaryRoot) return;
+            const $summaryHeading = $('h2').filter(function() {
+                return $(this).text().trim() === 'Order Summary';
+            }).first();
+            if (!$summaryHeading.length) return;
+
+            const $summaryRoot = $summaryHeading.closest('.mb-10');
+            if (!$summaryRoot.length) return;
 
             const escapeHtml = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({
                 '&': '&amp;',
@@ -214,23 +249,14 @@
                 '>': '&gt;',
                 '"': '&quot;',
                 "'": '&#39;'
-            } [c]));
-            const formatPrice = (value) => `€ ${(Number(value) || 0).toFixed(2)}`;
+            }[c]));
+            const formatPrice = (value) => `$ ${(Number(value) || 0).toFixed(2)}`;
 
-            let items = [];
-            try {
-                const raw = localStorage.getItem('cart');
-                items = raw ? JSON.parse(raw) : [];
-            } catch (e) {
-                items = [];
-            }
+            const $priceBlock = $summaryRoot.find('.space-y-4.px-2');
+            if (!$priceBlock.length) return;
 
-            const staticCard = summaryRoot.querySelector('.glass-card');
-            const priceBlock = summaryRoot.querySelector('.space-y-4.px-2');
-            if (!staticCard || !priceBlock) return;
-
-            const orderItemsEl = document.createElement('div');
-            orderItemsEl.className = 'space-y-4 mb-8';
+            const $orderItemsEl = $('<div/>').addClass('space-y-4 mb-8');
+            const $placeOrderBtn = $('#place-order-btn');
 
             const getCart = () => {
                 try {
@@ -246,26 +272,56 @@
                 } catch (e) {}
             };
 
-            const rows = Array.from(priceBlock.querySelectorAll('.flex.justify-between.items-center'));
-            const originalPriceValue = rows[0]?.lastElementChild;
-            const discountValue = rows[1]?.lastElementChild;
-            const processingFeeValue = rows[2]?.lastElementChild;
-            const totalAmountValue = priceBlock.querySelector('.text-4xl.font-black.text-slate-900.tracking-tight');
-            const savingsValue = priceBlock.querySelector('.text-emerald-500.font-black.text-lg');
+            const $rows = $priceBlock.find('.flex.justify-between.items-center');
+            const $originalPriceValue = $rows.eq(0).children().last();
+            const $discountValue = $rows.eq(1).children().last();
+            const $processingFeeValue = $rows.eq(2).children().last();
+            const $totalAmountValue = $priceBlock.find('.text-4xl.font-black.text-slate-900.tracking-tight').first();
+            const $savingsValue = $priceBlock.find('.text-emerald-500.font-black.text-lg').first();
             const discount = 0;
             const processingFee = 0;
 
             function updateTotals(subtotal) {
                 const total = subtotal - discount + processingFee;
-                if (originalPriceValue) {
-                    originalPriceValue.classList.remove('line-through', 'text-slate-400');
-                    originalPriceValue.classList.add('text-slate-800');
-                    originalPriceValue.textContent = formatPrice(subtotal);
+                const totalStr = (Number(total) || 0).toFixed(2);
+                $('#order_total').val(totalStr);
+                $('#order_total_mollie').val(totalStr);
+                if ($originalPriceValue.length) {
+                    $originalPriceValue
+                        .removeClass('line-through text-slate-400')
+                        .addClass('text-slate-800')
+                        .text(formatPrice(subtotal));
                 }
-                if (discountValue) discountValue.textContent = formatPrice(discount);
-                if (processingFeeValue) processingFeeValue.textContent = formatPrice(processingFee);
-                if (totalAmountValue) totalAmountValue.textContent = formatPrice(total);
-                if (savingsValue) savingsValue.textContent = formatPrice(discount);
+                if ($discountValue.length) {
+                    $discountValue.text(formatPrice(discount));
+                }
+                if ($processingFeeValue.length) {
+                    $processingFeeValue.text(formatPrice(processingFee));
+                }
+                if ($totalAmountValue.length) {
+                    $totalAmountValue.text(formatPrice(total));
+                }
+                if ($savingsValue.length) {
+                    $savingsValue.text(formatPrice(discount));
+                }
+
+                if ($placeOrderBtn.length) {
+                    if (subtotal <= 0) {
+                        $placeOrderBtn.prop('disabled', false)
+                            .removeClass('opacity-60 cursor-not-allowed')
+                            .addClass('active:scale-95');
+                        $placeOrderBtn.find('.place-order-label').text("Let's Buy Something");
+                        $placeOrderBtn.find('.place-order-icon').text('shopping_cart');
+                    } else {
+                        $placeOrderBtn.prop('disabled', false)
+                            .removeClass('opacity-60 cursor-not-allowed')
+                            .addClass('active:scale-95');
+                        $placeOrderBtn.find('.place-order-label').text('Place Your Order');
+                        $placeOrderBtn.find('.place-order-icon').text('arrow_forward');
+                    }
+                    $placeOrderBtn.find('.place-order-loading').addClass('hidden');
+                    $placeOrderBtn.find('.place-order-content').removeClass('hidden');
+                }
             }
 
             function renderOrderSummary() {
@@ -273,13 +329,13 @@
                 let subtotal = 0;
 
                 if (!items.length) {
-                    orderItemsEl.innerHTML = `
+                    $orderItemsEl.html(`
                         <div class="glass-card !bg-white/80 p-5 rounded-2xl">
                             <p class="text-sm text-slate-500 font-medium">Your cart is empty.</p>
                         </div>
-                    `;
+                    `);
                 } else {
-                    orderItemsEl.innerHTML = items.map((item, idx) => {
+                    const html = items.map((item, idx) => {
                         const qty = Number(item.qty) || 1;
                         const price = Number(item.price) || 0;
                         const lineTotal = qty * price;
@@ -313,20 +369,22 @@
                             </div>
                         `;
                     }).join('');
+                    $orderItemsEl.html(html);
                 }
 
                 updateTotals(subtotal);
 
-                orderItemsEl.querySelectorAll('.checkout-incr').forEach(btn => btn.addEventListener('click', function() {
-                    const idx = Number(this.dataset.idx);
+                $orderItemsEl.find('.checkout-incr').off('click').on('click', function() {
+                    const idx = Number($(this).data('idx'));
                     const items = getCart();
                     items[idx].qty = (items[idx].qty || 1) + 1;
                     setCart(items);
-                    window.dispatchEvent(new Event('cart:updated'));
+                    $(window).trigger('cart:updated');
                     renderOrderSummary();
-                }));
-                orderItemsEl.querySelectorAll('.checkout-decr').forEach(btn => btn.addEventListener('click', function() {
-                    const idx = Number(this.dataset.idx);
+                });
+
+                $orderItemsEl.find('.checkout-decr').off('click').on('click', function() {
+                    const idx = Number($(this).data('idx'));
                     const items = getCart();
                     const currentQty = items[idx].qty || 1;
                     if (currentQty <= 1) {
@@ -335,21 +393,52 @@
                         items[idx].qty = currentQty - 1;
                     }
                     setCart(items);
-                    window.dispatchEvent(new Event('cart:updated'));
+                    $(window).trigger('cart:updated');
                     renderOrderSummary();
-                }));
-                orderItemsEl.querySelectorAll('.checkout-remove').forEach(btn => btn.addEventListener('click', function() {
-                    const idx = Number(this.dataset.idx);
+                });
+
+                $orderItemsEl.find('.checkout-remove').off('click').on('click', function() {
+                    const idx = Number($(this).data('idx'));
                     const items = getCart();
                     items.splice(idx, 1);
                     setCart(items);
-                    window.dispatchEvent(new Event('cart:updated'));
+                    $(window).trigger('cart:updated');
                     renderOrderSummary();
-                }));
+                });
             }
 
-            staticCard.replaceWith(orderItemsEl);
+            $summaryRoot.find('.glass-card').first().replaceWith($orderItemsEl);
             renderOrderSummary();
+
+            $('#place-order-btn').on('click', function() {
+                const $btn = $(this);
+                const cart = getCart();
+                if (!cart || cart.length === 0) {
+                    const url = $btn.data('empty-url');
+                    if (url) window.location.href = url;
+                    return;
+                }
+                if ($btn.prop('disabled')) return;
+                const method = $('input[name="payment_method"]:checked').val();
+                if (method !== 'mollie' && method !== 'paypal') {
+                    alert('Please select PayPal or Mollie to place your order.');
+                    return;
+                }
+                $btn.find('.place-order-content').addClass('hidden');
+                $btn.find('.place-order-loading').removeClass('hidden').addClass('flex');
+                $btn.prop('disabled', true);
+
+                const totalStr = $('#order_total').val();
+                const cartStr = JSON.stringify(cart);
+                $('#order_total_mollie').val(totalStr);
+                $('#cart_data_paypal').val(cartStr);
+                $('#cart_data_mollie').val(cartStr);
+                if (method === 'mollie') {
+                    $('#mollie-checkout-form').submit();
+                } else {
+                    $('#paypal-checkout-form').submit();
+                }
+            });
         });
     </script>
 @endpush

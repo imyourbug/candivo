@@ -175,6 +175,7 @@ class DatabaseSeeder extends Seeder
                     'price_duration_2' => $priceDuration2,
                     'duration_3' => $duration3,
                     'price_duration_3' => $priceDuration3,
+                    'category' => trim($row[$columns['Category']] ?? '')
                 ];
             } else {
                 // Package row (IsTool = 0)
@@ -185,6 +186,7 @@ class DatabaseSeeder extends Seeder
                     'package_id' => $packageIdCode,
                     'name' => $name,
                     'slug' => $productSlug,
+                    'level' => (int) trim($row[$columns['Level']] ?? 1),
                     'description' => trim($row[$columns['Description']] ?? '') ?: null,
                     'avatar' => trim($row[$columns['Avatar']] ?? '') ?: 'https://res.cloudinary.com/dkjfmxxom/image/upload/v1765015546/main_m50fl1.png',
                     'video' => 'https://www.youtube.com/embed/4SOkxF6oeKI',
@@ -231,6 +233,15 @@ class DatabaseSeeder extends Seeder
         $basicProducts = [];
         $expertProducts = [];
         $premiumLayerProducts = [];
+        $fileManagerProducts = [];
+        $drawingExportProducts = [];
+        $iPropertyQuantityProducts = [];
+        $advancedToolsProducts = [];
+        $assemblyModelingProducts = [];
+        $revisionAndReplaceProducts = [];
+        $pdfPublishingSetProducts = [];
+        $productionDrawingSetProducts = [];
+        $propertyEssentialsSetProducts = [];
 
         foreach ($productRecords as $record) {
             if ($record['is_basic']) {
@@ -242,12 +253,48 @@ class DatabaseSeeder extends Seeder
             if ($record['is_premium']) {
                 $premiumLayerProducts[] = $record['model']->id;
             }
+            if (str_contains($record['category'], 'File Management')) {
+                $fileManagerProducts[] = $record['model']->id;
+            }
+            if (str_contains($record['category'], 'Drawing & Export')) {
+                $drawingExportProducts[] = $record['model']->id;
+            }
+            if (str_contains($record['category'], 'iProperty & Quantity')) {
+                $iPropertyQuantityProducts[] = $record['model']->id;
+            }
+            if (str_contains($record['category'], 'Advanced Tools')) {
+                $advancedToolsProducts[] = $record['model']->id;
+            }
+            if (str_contains($record['category'], 'Assembly & Modeling')) {
+                $assemblyModelingProducts[] = $record['model']->id;
+            }
+            if (str_contains($record['category'], 'Revision & Replace Set')) {
+                $revisionAndReplaceProducts[] = $record['model']->id;
+            }
+            if (str_contains($record['category'], 'PDF Publishing Set')) {
+                $pdfPublishingSetProducts[] = $record['model']->id;
+            }
+            if (str_contains($record['category'], 'Production Drawing Set')) {
+                $productionDrawingSetProducts[] = $record['model']->id;
+            }
+            if (str_contains($record['category'], 'Property Essentials Set')) {
+                $propertyEssentialsSetProducts[] = $record['model']->id;
+            }
         }
 
         // Find the corresponding packages created from CSV (IsTool = 0 rows)
         $basicPkg = Package::where('slug', 'basic')->first();
         $expertPkg = Package::where('slug', 'expert')->first();
         $premiumLayerPkg = Package::where('slug', 'premium-service-layer')->first();
+        $fileManagerPkg = Package::where('slug', 'file-management')->first();
+        $drawingExportPkg = Package::where('slug', 'drawing-export')->first();
+        $iPropertyQuantityPkg = Package::where('slug', 'iproperty-quantity')->first();
+        $advancedToolsPkg = Package::where('slug', 'advanced-tools')->first();
+        $assemblyModelingPkg = Package::where('slug', 'assembly-modeling')->first();
+        $revisionAndReplacePkg = Package::where('slug', 'revision-replace-set')->first();
+        $pdfPublishingSetPkg = Package::where('slug', 'pdf-publishing-set')->first();
+        $productionDrawingSetPkg = Package::where('slug', 'production-drawing-set')->first();
+        $propertyEssentialsSetPkg = Package::where('slug', 'property-essentials-set')->first();
 
         if ($basicPkg && !empty($basicProducts)) {
             $basicPkg->products()->attach($basicProducts);
@@ -257,6 +304,33 @@ class DatabaseSeeder extends Seeder
         }
         if ($premiumLayerPkg && !empty($premiumLayerProducts)) {
             $premiumLayerPkg->products()->attach($premiumLayerProducts);
+        }
+        if ($fileManagerPkg && !empty($fileManagerProducts)) {
+            $fileManagerPkg->products()->attach($fileManagerProducts);
+        }
+        if ($drawingExportPkg && !empty($drawingExportProducts)) {
+            $drawingExportPkg->products()->attach($drawingExportProducts);
+        }
+        if ($iPropertyQuantityPkg && !empty($iPropertyQuantityProducts)) {
+            $iPropertyQuantityPkg->products()->attach($iPropertyQuantityProducts);
+        }
+        if ($advancedToolsPkg && !empty($advancedToolsProducts)) {
+            $advancedToolsPkg->products()->attach($advancedToolsProducts);
+        }
+        if ($assemblyModelingPkg && !empty($assemblyModelingProducts)) {
+            $assemblyModelingPkg->products()->attach($assemblyModelingProducts);
+        }
+        if ($revisionAndReplacePkg && !empty($revisionAndReplaceProducts)) {
+            $revisionAndReplacePkg->products()->attach($revisionAndReplaceProducts);
+        }
+        if ($pdfPublishingSetPkg && !empty($pdfPublishingSetProducts)) {
+            $pdfPublishingSetPkg->products()->attach($pdfPublishingSetProducts);
+        }
+        if ($productionDrawingSetPkg && !empty($productionDrawingSetProducts)) {
+            $productionDrawingSetPkg->products()->attach($productionDrawingSetProducts);
+        }
+        if ($propertyEssentialsSetPkg && !empty($propertyEssentialsSetProducts)) {
+            $propertyEssentialsSetPkg->products()->attach($propertyEssentialsSetProducts);
         }
 
         // Add pricing for all packages from price modeling (Duration 1–3 / Price duration 1–3)
@@ -285,12 +359,12 @@ class DatabaseSeeder extends Seeder
             'package_id' => 'PKG-' . strtoupper('core-free'),
             'name' => 'Core Free',
             'slug' => 'core-free',
+            'level' => 1,
             'description' => 'Essential tools for Core Free Inventor operations.',
-            'avatar' => 'https://res.cloudinary.com/dkjfmxxom/image/upload/v1765015546/main_m50fl1.png',
+            'avatar' => '/images/package/core-free.png',
             'video' => 'https://www.youtube.com/embed/4SOkxF6oeKI',
             'images' => implode(',', [
-                'https://res.cloudinary.com/dkjfmxxom/image/upload/v1765015546/main_m50fl1.png',
-                'https://res.cloudinary.com/dkjfmxxom/image/upload/v1765015546/main_m50fl1.png',
+                '/images/package/core-free.png',
             ]),
             'type_code' => $coreFreeType->code,
         ]);

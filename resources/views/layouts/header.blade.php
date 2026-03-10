@@ -1,8 +1,9 @@
 <header class="sticky top-0 z-50 w-full border-b border-[#e7edf3] bg-white/95 backdrop-blur-sm px-6 md:px-20 py-4">
     <div class="max-w-[1200px] mx-auto flex items-center justify-between gap-8">
         <div class="flex items-center gap-8">
-            <div class="flex items-center gap-2 text-[#002b5c] hover:cursor-pointer" onclick="window.location.href='{{ route('home') }}'">
-                <img src="{{ asset('logo.jpeg') }}" alt="DI-TOOLS Logo" class="h-12 w-auto rounded object-cover" />
+            <div class="flex items-center gap-2 text-[#002b5c] hover:cursor-pointer"
+                onclick="window.location.href='{{ route('home') }}'">
+                <img src="{{ asset('logo.png') }}" alt="DI-TOOLS Logo" class="h-12 w-auto rounded object-cover" />
             </div>
             @include('layouts.menu')
         </div>
