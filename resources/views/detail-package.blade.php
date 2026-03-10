@@ -66,44 +66,28 @@
         <main class="mx-auto w-full max-w-7xl grow px-4 py-6 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 gap-12 lg:grid-cols-12">
                 <div class="lg:col-span-7 flex flex-col gap-4">
-                    @php
-                        $videoUrl = $package->video ?? null;
-                    @endphp
                     <div
                         class="relative aspect-video w-full overflow-hidden rounded-xl bg-white  shadow-lg border border-slate-200 ">
-                        <img id="packageMainImage" alt="Product Main View" class="h-full w-full object-cover"
-                            data-alt="Main product interface screenshot for Drawing and Export tool"
-                            src="{{ $packageImage }}" />
-                        {{-- <div id="packageMainVideo" class="w-full h-full">
-                            <iframe class="w-full h-full" src="{{ $videoUrl }}" title="Package video" frameborder="0"
+                        <div id="packageMainVideo" class="w-full h-full">
+                            <iframe class="w-full h-full" src="https://www.youtube.com/embed/ArfewyEeXZA"
+                                title="Package video" frameborder="0"
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                                 allowfullscreen>
                             </iframe>
-                        </div> --}}
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+                        </div>
+                        <img id="packageMainImage" alt="Product Main View" class="h-full w-full object-cover hidden"
+                            data-alt="Main product interface screenshot for Drawing and Export tool"
+                            src="{{ $packageImage }}" />
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent pointer-events-none">
+                        </div>
                     </div>
                     <div class="grid grid-cols-4 gap-3 sm:gap-4" id="packageThumbGrid">
-                        {{-- @if ($videoUrl)
-                            <button type="button"
-                                class="packageVideoThumb aspect-video cursor-pointer overflow-hidden rounded-lg border-2 border-slate-200 ring-0 shadow-md transition-all hover:border-primary/70 focus:outline-none"
-                                data-video="{{ $videoUrl }}">
-                                <div class="relative w-full h-full">
-                                    <img alt="Video Thumbnail" class="w-full h-full object-cover"
-                                        src="{{ $packageImage }}" />
-                                    <div class="absolute inset-0 flex items-center justify-center bg-black/30">
-                                        <div class="size-10 rounded-full bg-white/90 flex items-center justify-center">
-                                            <span class="material-symbols-outlined text-slate-900">play_arrow</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </button>
-                        @endif --}}
                         @foreach ($package->images as $item)
                             <button type="button"
                                 class="packageThumb aspect-video cursor-pointer overflow-hidden rounded-lg border-2 border-slate-200 ring-0 shadow-md transition-all hover:border-primary/70 focus:outline-none"
-                                data-src="{{ $item }}">
+                                data-src="{{ '/' . $item }}">
                                 <img alt="Thumbnail" class="h-full w-full object-cover opacity-100 hover:opacity-90"
-                                    src="{{ $item }}" />
+                                    src="{{ '/' . $item }}" />
                             </button>
                         @endforeach
                     </div>
@@ -571,7 +555,7 @@
             $buttons.on('click', function() {
                 const $btn = $(this);
                 $buttons.removeClass(selectedClass).addClass(unselectedClass).attr('aria-selected',
-                'false');
+                    'false');
                 $btn.removeClass(unselectedClass).addClass(selectedClass).attr('aria-selected', 'true');
 
                 const price = $btn.data('price') ?? '0.00';
@@ -803,12 +787,9 @@
             const $mainVideo = $('#packageMainVideo');
             const $videoIframe = $('#packageMainVideo iframe');
             const $thumbs = $('.packageThumb');
-            const $videoThumb = $('.packageVideoThumb');
 
             const clearActive = () => {
                 $thumbs.removeClass('border-primary ring-2 ring-primary ring-offset-2')
-                    .addClass('border-slate-200 ring-0');
-                $videoThumb.removeClass('border-primary ring-2 ring-primary ring-offset-2')
                     .addClass('border-slate-200 ring-0');
             };
 
@@ -821,7 +802,9 @@
             const showVideo = (src) => {
                 $mainImg.addClass('hidden');
                 $mainVideo.removeClass('hidden');
-                // $videoIframe.attr('src', src);
+                if (src) {
+                    $videoIframe.attr('src', src);
+                }
             };
 
             if ($thumbs.length) {
@@ -839,16 +822,6 @@
                     .removeClass('border-slate-200 ring-0');
                 showImage(src);
             });
-
-            // $videoThumb.on('click', function() {
-            //     const $btn = $(this);
-            //     const src = $btn.data('video');
-            //     if (!src) return;
-            //     clearActive();
-            //     $btn.addClass('border-primary ring-2 ring-primary ring-offset-2')
-            //         .removeClass('border-slate-200 ring-0');
-            //     showVideo(src);
-            // });
         });
 
         $(document).on('click', '.getCoreFreeBtn', function() {

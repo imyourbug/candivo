@@ -158,7 +158,7 @@
         </div>
         <div class="carousel-slide absolute inset-0 transition-opacity duration-1000 opacity-0" data-slide="3">
             <img alt="Industrial Scalability" class="absolute inset-0 w-full h-full object-cover"
-                src="/images/slides/4.jpg" />
+                src="/images/slides/4.png" />
             <div
                 class="absolute inset-0 bg-gradient-to-r from-[var(--enterprise-blue)]/90 via-[var(--enterprise-blue)]/40 to-transparent">
             </div>

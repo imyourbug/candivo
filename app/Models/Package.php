@@ -11,7 +11,7 @@ class Package extends Model
     protected $fillable = [
         'package_id',
         'category_id',
-        'type_id',
+        'type_code',
         'name',
         'slug',
         'description',
@@ -39,7 +39,7 @@ class Package extends Model
 
     public function type()
     {
-        return $this->belongsTo(Type::class, 'type_id', 'id');
+        return $this->belongsTo(Type::class, 'type_code', 'code');
     }
 
     public function getImagesAttribute($value)

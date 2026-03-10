@@ -96,9 +96,9 @@
                     @foreach ($imageItems as $img)
                         <button type="button"
                             class="productThumb aspect-video cursor-pointer overflow-hidden rounded-lg border-2 border-slate-200 ring-0 shadow-md transition-all hover:border-primary/70 focus:outline-none"
-                            data-src="{{ $img }}">
+                            data-src="{{ '/' . $img }}">
                             <img alt="Thumbnail" class="h-full w-full object-cover opacity-100 hover:opacity-90"
-                                src="{{ $img }}" />
+                                src="{{ '/' . $img }}" />
                         </button>
                     @endforeach
                 </div>
@@ -283,8 +283,10 @@
                                         <ul class="space-y-2 text-xs text-blue-100/70 font-medium text-left inline-block">
                                             @forelse ($pkg->products->take(4) as $prod)
                                                 <li class="flex items-center gap-2">
-                                                    <span class="material-symbols-outlined glow-check text-base">check_circle</span>
-                                                    <span class="text-xs text-blue-50 font-semibold tracking-wide uppercase leading-snug">
+                                                    <span
+                                                        class="material-symbols-outlined glow-check text-base">check_circle</span>
+                                                    <span
+                                                        class="text-xs text-blue-50 font-semibold tracking-wide uppercase leading-snug">
                                                         {{ $prod->name }}
                                                     </span>
                                                 </li>
@@ -529,7 +531,7 @@
                 const name = $btn.data('product-name') || 'Product';
                 const detailUrl = $btn.data('product-detail-url') || '';
                 const fromButton = $btn.data('product-price') !== undefined && $btn.data('product-price') !==
-                '';
+                    '';
                 const price = fromButton ? Number($btn.data('product-price')) || 0 : getSelectedPricing().price;
                 const period = fromButton ? ($btn.data('product-currency') || '').trim() : getSelectedPricing()
                     .period;

@@ -11,7 +11,7 @@ class CreatePackagesTable extends Migration
             $table->id();
             $table->string('package_id', 100)->nullable()->comment('PKG + UPPERCASE_SLUG');
             $table->foreignId('category_id')->nullable()->constrained('categories');
-            $table->foreignId('type_id')->nullable()->constrained('types');
+            $table->string('type_code')->nullable();
             $table->string('name');
             $table->string('slug')->unique();
             $table->text('avatar')->nullable();
