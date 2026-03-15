@@ -1,662 +1,732 @@
-<!DOCTYPE html>
+@extends('layouts.main')
+@section('title', 'Di-tool Help Center | Autodesk Inventor Solutions')
 
-<html lang="en">
-
-<head>
-    <meta charset="utf-8" />
-    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <link crossorigin="" href="https://fonts.gstatic.com/" rel="preconnect" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;display=swap"
-        rel="stylesheet" />
-    <link
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
-        rel="stylesheet" />
-    <title>Premium Di-tool Experience | Enterprise CAD Solutions</title>
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <style type="text/tailwindcss">
-        :root {
-            --enterprise-blue: #002D5B;
-            --accent-blue: #0066FF;
-            --surface-grey: #F1F5F9;
-            --glass-bg: rgba(255, 255, 255, 0.65);
-            --glass-border: rgba(255, 255, 255, 0.4);
+@push('styles')
+    <style>
+        .hero-pattern {
+            background-color: #137fec;
+            background-image: radial-gradient(rgba(255, 255, 255, 0.2) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+        .help-sidebar-scroll::-webkit-scrollbar {
+            width: 4px;
         }
 
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #FFFFFF;
+        .help-sidebar-scroll::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 10px;
         }
 
-        .glass-card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid var(--glass-border);
+        .help-nav-details summary {
+            list-style: none;
         }
 
-        .slider-gradient {
-            background: linear-gradient(90deg, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.8) 40%, rgba(255, 255, 255, 0) 100%);
+        .help-nav-details summary::-webkit-details-marker {
+            display: none;
         }
 
-        .text-gradient {
-            background: linear-gradient(135deg, var(--enterprise-blue), var(--accent-blue));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        .help-nav-tree .nav-expand-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 1.25rem;
+            flex-shrink: 0;
+            font-size: 0.875rem;
+            font-weight: 700;
+            color: #64748b;
         }
 
-        .combo-grid-pattern {
-            background-image: radial-gradient(circle at 2px 2px, #e2e8f0 1px, transparent 0);
-            background-size: 24px 24px;
+        .help-nav-tree .nav-expand-icon::before {
+            content: '+';
         }
 
-        .pro-card {
-            background: linear-gradient(145deg, #001a33 0%, #000d1a 100%);
-            border: 1px solid rgba(0, 102, 255, 0.3);
-            box-shadow: 0 0 40px rgba(0, 102, 255, 0.15);
-        }
-
-        .pro-card:hover {
-            box-shadow: 0 0 60px rgba(0, 102, 255, 0.25);
-        }
-
-        .glow-check {
-            color: #00d4ff;
-            text-shadow: 0 0 8px rgba(0, 212, 255, 0.8);
-        }
-
-        .premium-gold-btn {
-            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
-            color: #001a33 !important;
-            box-shadow: 0 10px 20px rgba(255, 165, 0, 0.2);
-        }
-
-        .premium-gold-btn:hover {
-            background: linear-gradient(135deg, #FFDF33 0%, #FFB733 100%);
-            transform: translateY(-2px);
+        .help-nav-tree details[open] > summary .nav-expand-icon::before {
+            content: '−';
         }
     </style>
-</head>
+@endpush
 
-<body class="text-slate-900 overflow-x-hidden selection:bg-blue-100 selection:text-[var(--enterprise-blue)]">
-    <div class="relative flex min-h-screen w-full flex-col">
-        <header
-            class="sticky top-0 z-[100] flex items-center justify-between bg-white/70 backdrop-blur-xl border-b border-slate-200/50 px-8 lg:px-16 py-5">
-            <div class="flex items-center gap-16">
-                <div class="flex items-center gap-3">
-                    <div
-                        class="size-10 flex items-center justify-center bg-[var(--enterprise-blue)] text-white rounded-xl shadow-lg shadow-blue-900/20">
-                        <span class="material-symbols-outlined text-2xl">architecture</span>
-                    </div>
-                    <h2 class="text-[var(--enterprise-blue)] text-2xl font-black tracking-tight">DI-TOOL</h2>
+@section('content')
+    {{-- Golden top banner (image reference) --}}
+    <div class="h-1.5 w-full bg-amber-400" aria-hidden="true"></div>
+    <section class="hero-pattern py-20 px-4 text-center">
+        <div class="max-w-3xl mx-auto">
+            <h1 class="text-4xl md:text-5xl font-extrabold text-white mb-6 leading-tight">How can we help you today?</h1>
+            <p class="text-white/80 text-lg mb-10 font-medium">Search for video tutorials, FAQs, or technical documentation
+                for Autodesk Inventor tools.</p>
+            <div class="relative max-w-2xl mx-auto">
+                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                    <span class="material-symbols-outlined text-slate-400">search</span>
                 </div>
-                <nav class="hidden lg:flex items-center gap-10">
-                    <a class="text-slate-500 text-sm font-semibold hover:text-[var(--enterprise-blue)] transition-all flex items-center gap-1"
-                        href="#">Solutions <span
-                            class="material-symbols-outlined text-xs">keyboard_arrow_down</span></a>
-                    <a class="text-slate-500 text-sm font-semibold hover:text-[var(--enterprise-blue)] transition-all"
-                        href="#">Ecosystem</a>
-                    <a class="text-slate-500 text-sm font-semibold hover:text-[var(--enterprise-blue)] transition-all"
-                        href="#">Enterprise</a>
-                </nav>
-            </div>
-            <div class="flex items-center gap-8">
-                <div class="hidden xl:flex items-center gap-2 text-slate-400">
-                    <span class="material-symbols-outlined text-xl">search</span>
-                    <input class="bg-transparent border-none p-0 text-sm focus:ring-0 placeholder:text-slate-400 w-48"
-                        placeholder="Search enterprise tools..." type="text" />
-                </div>
-                <div class="h-6 w-px bg-slate-200"></div>
+                <input
+                    class="block w-full pl-12 pr-32 py-4 bg-white border-0 rounded-xl shadow-xl focus:ring-2 focus:ring-primary text-slate-900 placeholder:text-slate-400 text-lg"
+                    placeholder="Search for video tutorials or FAQs..." type="text" />
                 <button
-                    class="flex items-center gap-2 px-6 py-2.5 bg-[var(--enterprise-blue)] text-white rounded-full text-sm font-bold shadow-lg shadow-blue-900/10 hover:bg-blue-800 transition-all">
-                    <span class="material-symbols-outlined text-lg">shopping_bag</span>
-                    Shop Portal
+                    class="absolute right-2 top-2 bottom-2 px-6 bg-primary text-white font-bold rounded-lg hover:bg-primary/90 transition-colors">
+                    Search
                 </button>
             </div>
-        </header>
-        <main class="flex-1">
-            <section class="relative h-[850px] w-full overflow-hidden bg-slate-900 group">
-                <!-- Slide 1 -->
-                <div class="absolute inset-0 transition-opacity duration-1000">
-                    <img alt="Industrial Engineering" class="absolute inset-0 w-full h-full object-cover"
-                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuDaaOCAJfB_wQimtec2AgHNqZ7hLUljB046ysVnbgyvG3BsckvZW2X71gbSJDiQ7aBsXAJHMlY1eQ31iqEsardnfjSExfkOaoGffufIKKKoUjf0CNLTae1BjkX-dY7AS6h5Mdel2N4slAaeWbnOBt4COwMznqCfxUezTwKhZjqPpIqNNIEsvFMk8hrNgIMM68Gvf8Gsm9y3o7442M9wKvejJKI_8OsfFiPd9h3aNq0KehFce4kUx9Xvmcrl-Hrvn84ofKyx9q5fTA4" />
-                    <div
-                        class="absolute inset-0 bg-gradient-to-r from-[var(--enterprise-blue)]/90 via-[var(--enterprise-blue)]/40 to-transparent">
+        </div>
+    </section>
+
+    <div class="flex min-h-[calc(100vh-4px)] bg-[#f6f7f8] dark:bg-slate-950">
+        {{-- Sidebar Navigation (example + image style) --}}
+        <aside
+            class="w-72 flex-shrink-0 border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 flex flex-col sticky top-0 h-[calc(100vh-6px)]">
+            <nav class="help-nav-tree flex-1 overflow-y-auto p-4 space-y-0 help-sidebar-scroll">
+                <p class="px-3 text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">You can find your issue here...</p>
+                {{-- Level 1 (collapsed) --}}
+                <details class="help-nav-details">
+                    <summary class="flex items-center gap-2 py-1.5 cursor-pointer text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded px-1 text-sm font-medium">
+                        <span class="nav-expand-icon" aria-hidden="true"></span>
+                        <span>Di-tool What's New</span>
+                    </summary>
+                    <div class="ml-5 mt-0.5 space-y-0 border-l border-slate-200 dark:border-slate-700 pl-3">
+                        <a class="block py-1.5 text-slate-600 dark:text-slate-400 hover:text-[#137fec] text-sm" href="#">2024 Release</a>
+                        <a class="block py-1.5 text-slate-600 dark:text-slate-400 hover:text-[#137fec] text-sm" href="#">2024.1 Updates</a>
                     </div>
-                    <div class="relative h-full max-w-7xl mx-auto px-10 lg:px-16 flex flex-col justify-center">
-                        <div class="max-w-3xl">
-                            <span
-                                class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-500/10 text-blue-400 text-xs font-bold tracking-widest uppercase mb-8 border border-blue-500/20">
-                                <span class="size-1.5 bg-blue-400 rounded-full animate-pulse"></span>
-                                Next-Gen CAD Solutions
-                            </span>
-                            <h1 class="text-6xl lg:text-8xl font-black text-white leading-[0.95] tracking-tighter mb-8">
-                                Engineered for <br /><span class="text-blue-400">Performance.</span>
-                            </h1>
-                            <p class="text-blue-50/80 text-xl lg:text-2xl max-w-xl mb-12 leading-relaxed">
-                                The definitive toolkit for Autodesk Inventor professionals. Automate complexities and
-                                drive innovation at scale.
-                            </p>
-                            <div class="flex items-center gap-6">
-                                <button
-                                    class="px-10 py-5 bg-white text-[var(--enterprise-blue)] rounded-2xl font-bold text-lg shadow-2xl hover:scale-[1.05] transition-all">
-                                    Get Started Now
+                </details>
+                <details class="help-nav-details">
+                    <summary class="flex items-center gap-2 py-1.5 cursor-pointer text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded px-1 text-sm font-medium">
+                        <span class="nav-expand-icon" aria-hidden="true"></span>
+                        <span>Release Notes</span>
+                    </summary>
+                    <div class="ml-5 mt-0.5 space-y-0 border-l border-slate-200 dark:border-slate-700 pl-3">
+                        <a class="block py-1.5 text-slate-600 dark:text-slate-400 hover:text-[#137fec] text-sm" href="#">Version History</a>
+                    </div>
+                </details>
+                <details class="help-nav-details">
+                    <summary class="flex items-center gap-2 py-1.5 cursor-pointer text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded px-1 text-sm font-medium">
+                        <span class="nav-expand-icon" aria-hidden="true"></span>
+                        <span>Get Started videos</span>
+                    </summary>
+                    <div class="ml-5 mt-0.5 space-y-0 border-l border-slate-200 dark:border-slate-700 pl-3">
+                        <a class="block py-1.5 text-slate-600 dark:text-slate-400 hover:text-[#137fec] text-sm" href="#video-tutorials">Quick Start</a>
+                        <a class="block py-1.5 text-slate-600 dark:text-slate-400 hover:text-[#137fec] text-sm" href="#">Installation</a>
+                    </div>
+                </details>
+                <details class="help-nav-details">
+                    <summary class="flex items-center gap-2 py-1.5 cursor-pointer text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded px-1 text-sm font-medium">
+                        <span class="nav-expand-icon" aria-hidden="true"></span>
+                        <span>Tutorials</span>
+                    </summary>
+                    <div class="ml-5 mt-0.5 space-y-0 border-l border-slate-200 dark:border-slate-700 pl-3">
+                        <a class="block py-1.5 text-slate-600 dark:text-slate-400 hover:text-[#137fec] text-sm" href="#">Part Modeling</a>
+                        <a class="block py-1.5 text-slate-600 dark:text-slate-400 hover:text-[#137fec] text-sm" href="#">Assembly</a>
+                        <a class="block py-1.5 text-slate-600 dark:text-slate-400 hover:text-[#137fec] text-sm" href="#">iLogic</a>
+                    </div>
+                </details>
+
+                {{-- Level 1 (expanded) – Help Topics --}}
+                <details class="help-nav-details" open>
+                    <summary class="flex items-center gap-2 py-1.5 cursor-pointer text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded px-1 text-sm font-medium">
+                        <span class="nav-expand-icon" aria-hidden="true"></span>
+                        <span>Di-tool Help Topics</span>
+                    </summary>
+                    <div class="ml-5 mt-0.5 space-y-0 border-l border-slate-200 dark:border-slate-700 pl-3">
+                        {{-- Level 2: Inventor Basics (expanded) --}}
+                        <details class="help-nav-details" open>
+                            <summary class="flex items-center gap-2 py-1.5 cursor-pointer text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded px-1 text-sm font-medium">
+                                <span class="nav-expand-icon" aria-hidden="true"></span>
+                                <span>Inventor Basics</span>
+                            </summary>
+                            <div class="ml-5 mt-0.5 space-y-0 border-l border-slate-200 dark:border-slate-700 pl-3">
+                                {{-- Level 3: User Interface (expanded) --}}
+                                <details class="help-nav-details" open>
+                                    <summary class="flex items-center gap-2 py-1.5 cursor-pointer text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded px-1 text-sm font-medium">
+                                        <span class="nav-expand-icon" aria-hidden="true"></span>
+                                        <span>User Interface</span>
+                                    </summary>
+                                    <div class="ml-5 mt-0.5 space-y-0 border-l border-slate-200 dark:border-slate-700 pl-3">
+                                        {{-- Level 4: About Home (expanded) --}}
+                                        <details class="help-nav-details" open>
+                                            <summary class="flex items-center gap-2 py-1.5 cursor-pointer text-[#137fec] bg-[#137fec]/10 hover:bg-[#137fec]/15 rounded px-1 text-sm font-semibold">
+                                                <span class="nav-expand-icon" aria-hidden="true"></span>
+                                                <span>About Home</span>
+                                            </summary>
+                                            <div class="ml-5 mt-0.5 space-y-0 border-l border-slate-200 dark:border-slate-700 pl-3">
+                                                {{-- Level 5: About the Ribbon (expanded) --}}
+                                                <details class="help-nav-details" open>
+                                                    <summary class="flex items-center gap-2 py-1.5 cursor-pointer text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded px-1 text-sm font-medium">
+                                                        <span class="nav-expand-icon" aria-hidden="true"></span>
+                                                        <span>About the Ribbon</span>
+                                                    </summary>
+                                                    <div class="ml-5 mt-0.5 space-y-0 border-l border-slate-200 dark:border-slate-700 pl-3">
+                                                        <a class="block py-1.5 text-slate-600 dark:text-slate-400 hover:text-[#137fec] text-sm" href="#">To Work with the Ribbon</a>
+                                                        <a class="block py-1.5 text-slate-600 dark:text-slate-400 hover:text-[#137fec] text-sm" href="#">To Work with Icons, Tooltips</a>
+                                                        <a class="block py-1.5 text-slate-600 dark:text-slate-400 hover:text-[#137fec] text-sm" href="#">To Customize User Commands</a>
+                                                        <a class="block py-1.5 text-slate-600 dark:text-slate-400 hover:text-[#137fec] text-sm" href="#">To Highlight New and Updated Commands</a>
+                                                        <a class="block py-1.5 text-slate-600 dark:text-slate-400 hover:text-[#137fec] text-sm" href="#">Reference for Customize Dialog Ribbon Tab</a>
+                                                    </div>
+                                                </details>
+                                            </div>
+                                        </details>
+                                        <a class="block py-1.5 text-slate-600 dark:text-slate-400 hover:text-[#137fec] text-sm" href="#about-ribbon">About the Ribbon</a>
+                                    </div>
+                                </details>
+                                <a class="block py-1.5 text-slate-600 dark:text-slate-400 hover:text-[#137fec] text-sm" href="#">Reference for Customize Dialog Ribbon Tab</a>
+                                <a class="block py-1.5 text-slate-600 dark:text-slate-400 hover:text-[#137fec] text-sm" href="#">To Repeat the Last Command</a>
+                            </div>
+                        </details>
+                    </div>
+                </details>
+
+                {{-- More Level 1 (collapsed) --}}
+                <details class="help-nav-details">
+                    <summary class="flex items-center gap-2 py-1.5 cursor-pointer text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded px-1 text-sm font-medium">
+                        <span class="nav-expand-icon" aria-hidden="true"></span>
+                        <span>Di-tool Browser</span>
+                    </summary>
+                    <div class="ml-5 mt-0.5 space-y-0 border-l border-slate-200 dark:border-slate-700 pl-3">
+                        <a class="block py-1.5 text-slate-600 dark:text-slate-400 hover:text-[#137fec] text-sm" href="#">Browser Panel</a>
+                    </div>
+                </details>
+                <details class="help-nav-details">
+                    <summary class="flex items-center gap-2 py-1.5 cursor-pointer text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded px-1 text-sm font-medium">
+                        <span class="nav-expand-icon" aria-hidden="true"></span>
+                        <span>About Marking Menus</span>
+                    </summary>
+                    <div class="ml-5 mt-0.5 space-y-0 border-l border-slate-200 dark:border-slate-700 pl-3">
+                        <a class="block py-1.5 text-slate-600 dark:text-slate-400 hover:text-[#137fec] text-sm" href="#">Marking Menu Options</a>
+                    </div>
+                </details>
+                <details class="help-nav-details">
+                    <summary class="flex items-center gap-2 py-1.5 cursor-pointer text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded px-1 text-sm font-medium">
+                        <span class="nav-expand-icon" aria-hidden="true"></span>
+                        <span>To Work with the Navigation Bar</span>
+                    </summary>
+                    <div class="ml-5 mt-0.5 space-y-0 border-l border-slate-200 dark:border-slate-700 pl-3">
+                        <a class="block py-1.5 text-slate-600 dark:text-slate-400 hover:text-[#137fec] text-sm" href="#">Navigation Bar</a>
+                    </div>
+                </details>
+                <details class="help-nav-details">
+                    <summary class="flex items-center gap-2 py-1.5 cursor-pointer text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded px-1 text-sm font-medium">
+                        <span class="nav-expand-icon" aria-hidden="true"></span>
+                        <span>About Graphics Windows</span>
+                    </summary>
+                    <div class="ml-5 mt-0.5 space-y-0 border-l border-slate-200 dark:border-slate-700 pl-3">
+                        <a class="block py-1.5 text-slate-600 dark:text-slate-400 hover:text-[#137fec] text-sm" href="#">Graphics Window</a>
+                    </div>
+                </details>
+                <details class="help-nav-details">
+                    <summary class="flex items-center gap-2 py-1.5 cursor-pointer text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded px-1 text-sm font-medium">
+                        <span class="nav-expand-icon" aria-hidden="true"></span>
+                        <span>About InfoCenter</span>
+                    </summary>
+                    <div class="ml-5 mt-0.5 space-y-0 border-l border-slate-200 dark:border-slate-700 pl-3">
+                        <a class="block py-1.5 text-slate-600 dark:text-slate-400 hover:text-[#137fec] text-sm" href="#">InfoCenter</a>
+                    </div>
+                </details>
+                <a class="flex items-center gap-2 py-1.5 pl-7 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-[#137fec] rounded px-1 text-sm" href="#video-tutorials">Video Tutorials</a>
+                <a class="flex items-center gap-2 py-1.5 pl-7 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-[#137fec] rounded px-1 text-sm" href="#faq">FAQs</a>
+                <a class="flex items-center gap-2 py-1.5 pl-7 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-[#137fec] rounded px-1 text-sm" href="#documentation">Documentation</a>
+            </nav>
+            <div class="p-4 border-t border-slate-100 dark:border-slate-800">
+                <button
+                    class="w-full flex items-center justify-center gap-2 bg-[#137fec] hover:bg-[#137fec]/90 text-white font-bold py-2.5 px-4 rounded-lg text-sm transition-all shadow-sm">
+                    <span class="material-symbols-outlined text-sm">confirmation_number</span>
+                    Support Ticket
+                </button>
+            </div>
+        </aside>
+
+        {{-- Main content area --}}
+        <main class="flex-1 flex flex-col min-w-0 overflow-auto">
+            <div class="max-w-6xl w-full mx-auto px-2 lg:px-2 py-8">
+                {{-- Back + Title + SHARE (image style) --}}
+                <div class="mb-6">
+                    <button type="button"
+                        class="flex items-center gap-1.5 text-[#137fec] text-sm font-bold hover:opacity-90 transition-opacity">
+                        <span class="material-symbols-outlined text-sm">arrow_back</span>
+                        Back to Search Results
+                    </button>
+                </div>
+                <div class="flex flex-wrap items-start justify-between gap-4 mb-6">
+                    <h2 id="about-help" class="text-4xl font-black text-slate-900 dark:text-white tracking-tight">About Help
+                        Center</h2>
+                    <a href="#"
+                        class="flex items-center gap-1.5 text-slate-600 dark:text-slate-400 hover:text-[#137fec] text-sm font-bold">
+                        <span class="material-symbols-outlined text-lg">share</span>
+                        SHARE
+                    </a>
+                </div>
+                <hr class="border-slate-200 dark:border-slate-700 mb-8" />
+
+                {{-- What's New (image: version links) --}}
+                <p class="text-sm text-slate-600 dark:text-slate-400 mb-1">
+                    <span class="font-semibold text-slate-700 dark:text-slate-300">What's New:</span>
+                    <a class="text-[#137fec] font-medium hover:underline" href="#">2024</a>,
+                    <a class="text-[#137fec] font-medium hover:underline" href="#">2024.1</a>,
+                    <a class="text-[#137fec] font-medium hover:underline" href="#">2024.2</a>
+                </p>
+                <p class="text-slate-700 dark:text-slate-300 leading-relaxed mb-10">
+                    Use the Help Center to search tutorials, open FAQs, and download documentation.
+                </p>
+
+                {{-- Interactive card + numbered list (image: "Set Projects, Open files, Create New files") --}}
+                <section class="mb-12">
+                    <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2">Search, open tutorials, and get
+                        support</h3>
+                    <p class="text-slate-600 dark:text-slate-400 mb-4">Use this panel for quick access to help resources.
+                    </p>
+                    <div
+                        class="bg-slate-100 dark:bg-slate-800/60 rounded-xl border border-slate-200 dark:border-slate-700 p-6 shadow-sm">
+                        <h4 class="font-bold text-slate-900 dark:text-white mb-4">Di-tool Help Center</h4>
+                        <div class="space-y-3">
+                            <div class="flex items-center gap-3 flex-wrap">
+                                <span
+                                    class="flex items-center justify-center w-7 h-7 rounded-full bg-slate-700 text-white text-sm font-bold">1</span>
+                                <div class="relative flex-1 min-w-[200px] max-w-md">
+                                    <span
+                                        class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xl">search</span>
+                                    <input
+                                        class="w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-600 rounded-lg py-2.5 pl-10 pr-4 text-sm focus:ring-2 focus:ring-[#137fec]/30"
+                                        placeholder="Search tutorials or FAQs..." type="text" />
+                                </div>
+                                <button type="button"
+                                    class="p-2 rounded-lg border border-slate-200 dark:border-slate-600 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
+                                    title="Settings"><span
+                                        class="material-symbols-outlined text-lg">more_horiz</span></button>
+                            </div>
+                            <div class="flex items-center gap-3 flex-wrap">
+                                <span
+                                    class="flex items-center justify-center w-7 h-7 rounded-full bg-slate-700 text-white text-sm font-bold">2</span>
+                                <button type="button"
+                                    class="flex items-center gap-2 px-4 py-2 rounded-lg border border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 text-sm font-medium hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors">
+                                    Open... <span class="material-symbols-outlined text-lg">arrow_drop_down</span>
                                 </button>
-                                <button
-                                    class="px-10 py-5 bg-white/10 backdrop-blur-md text-white border border-white/20 rounded-2xl font-bold text-lg hover:bg-white/20 transition-all">
-                                    Watch Demo
+                            </div>
+                            <div class="flex items-center gap-3 flex-wrap">
+                                <span
+                                    class="flex items-center justify-center w-7 h-7 rounded-full bg-slate-700 text-white text-sm font-bold">3</span>
+                                <button type="button"
+                                    class="flex items-center gap-2 px-4 py-2 rounded-lg border border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 text-sm font-medium hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors">
+                                    New... <span class="material-symbols-outlined text-lg">arrow_drop_down</span>
                                 </button>
                             </div>
                         </div>
                     </div>
-                </div>
-                <!-- Navigation Arrows -->
-                <button
-                    class="absolute left-8 top-1/2 -translate-y-1/2 size-16 rounded-full bg-white/10 backdrop-blur-lg border border-white/20 text-white flex items-center justify-center hover:bg-white/20 hover:scale-110 transition-all z-20 opacity-0 group-hover:opacity-100">
-                    <span class="material-symbols-outlined text-3xl">chevron_left</span>
-                </button>
-                <button
-                    class="absolute right-8 top-1/2 -translate-y-1/2 size-16 rounded-full bg-white/10 backdrop-blur-lg border border-white/20 text-white flex items-center justify-center hover:bg-white/20 hover:scale-110 transition-all z-20 opacity-0 group-hover:opacity-100">
-                    <span class="material-symbols-outlined text-3xl">chevron_right</span>
-                </button>
-                <!-- Dot Indicators -->
-                <div class="absolute bottom-12 left-1/2 -translate-x-1/2 flex gap-4 z-20">
-                    <button class="w-12 h-1.5 bg-white rounded-full transition-all"></button>
-                    <button class="w-3 h-1.5 bg-white/30 rounded-full hover:bg-white/50 transition-all"></button>
-                    <button class="w-3 h-1.5 bg-white/30 rounded-full hover:bg-white/50 transition-all"></button>
-                    <button class="w-3 h-1.5 bg-white/30 rounded-full hover:bg-white/50 transition-all"></button>
-                </div>
-            </section>
-            <section class="relative py-24 bg-white combo-grid-pattern">
-                <div class="max-w-7xl mx-auto px-10 lg:px-16">
-                    <div class="flex justify-between items-end mb-16">
-                        <div>
-                            <span
-                                class="text-[var(--accent-blue)] text-xs font-black uppercase tracking-widest mb-3 block">Optimized
-                                Workflows</span>
-                            <h2 class="text-4xl font-black text-[var(--enterprise-blue)] tracking-tight">Featured Combos
-                            </h2>
+                    <ol class="mt-6 space-y-2 text-sm text-slate-700 dark:text-slate-300 list-decimal list-inside">
+                        <li><strong>Search:</strong> Enter keywords to find video tutorials, FAQs, or technical
+                            documentation.</li>
+                        <li><strong>Open:</strong> Browse and open recent help articles or saved bookmarks.</li>
+                        <li><strong>New:</strong> Start a new support request or open the documentation library.</li>
+                    </ol>
+                </section>
+
+                {{-- Video Tutorials --}}
+                <section id="video-tutorials" class="mb-16">
+                    <h3 class="text-2xl font-bold text-slate-900 dark:text-white mb-4">Video Tutorials</h3>
+                    <p class="text-slate-600 dark:text-slate-400 mb-6">Master Di-tool with our step-by-step visual guides.
+                    </p>
+                    <div class="flex gap-2 mb-6 flex-wrap">
+                        <button type="button"
+                            class="px-4 py-1.5 rounded-full bg-[#137fec] text-white text-sm font-bold">All</button>
+                        <button type="button"
+                            class="px-4 py-1.5 rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 text-sm font-medium hover:border-[#137fec]">Assembly</button>
+                        <button type="button"
+                            class="px-4 py-1.5 rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 text-sm font-medium hover:border-[#137fec]">Drawing
+                            Export</button>
+                        <button type="button"
+                            class="px-4 py-1.5 rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 text-sm font-medium hover:border-[#137fec]">API
+                            / iLogic</button>
+                    </div>
+                    <div class="relative" id="videoTutorialsSliderWrap">
+                        <div class="overflow-hidden rounded-xl" id="videoTutorialsSlider">
+                            <div class="flex gap-4 md:gap-6 transition-transform duration-300 ease-out"
+                                id="videoTutorialsTrack" style="transform: translateX(0);">
+                                <div class="video-slide flex-shrink-0 w-1/2 md:w-1/3 lg:w-1/4 px-1 md:px-2">
+                                    <div class="group cursor-pointer">
+                                        <div
+                                            class="relative aspect-video rounded-xl overflow-hidden mb-4 shadow-md bg-slate-200">
+                                            <img alt="3D mechanical assembly"
+                                                class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBLqLTx0MHzpfC1ReXg6fImXeksiBW6VrpCR6iENn-hLUp6V7jtxnyVYsQfn8nSDo4NUDxC1tuWmBwCL0UHFP-gmcAzVjhL3DMtH6vlb6BYN-bEV7_MR_veuXkHDqZbe-JMvYRyHcto9YgqH5Okzjsad4vyjC1_GjMJkK3pTpwPoq-Sx_Y1B849OgPRMfL5DHJ_Hh-b0CWKiZnzBbmqbkcFeD6WIOHDpGL_66oJyO0VQfr0gWrqBKgyfFmzUAAmNyfzXwROml_TcwU" />
+                                            <div
+                                                class="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors flex items-center justify-center">
+                                                <span
+                                                    class="material-symbols-outlined text-white text-5xl opacity-0 group-hover:opacity-100 transition-opacity">play_circle</span>
+                                            </div>
+                                            <div
+                                                class="absolute bottom-2 right-2 bg-black/70 text-white text-xs px-2 py-1 rounded font-bold">
+                                                12:45</div>
+                                        </div>
+                                        <h4
+                                            class="font-bold text-slate-900 dark:text-white group-hover:text-[#137fec] transition-colors text-lg mb-1">
+                                            Optimizing Assembly Performance</h4>
+                                        <p class="text-sm text-slate-500 dark:text-slate-400 line-clamp-2">Learn advanced
+                                            techniques for large assemblies in Inventor.</p>
+                                    </div>
+                                </div>
+                                <div class="video-slide flex-shrink-0 w-1/2 md:w-1/3 lg:w-1/4 px-1 md:px-2">
+                                    <div class="group cursor-pointer">
+                                        <div
+                                            class="relative aspect-video rounded-xl overflow-hidden mb-4 shadow-md bg-slate-200">
+                                            <img alt="Technical blueprint"
+                                                class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuCIzwLHyDG-bom9lS_AdOCJz7x23yItyG1UBgff3xmr9ylPtwgnMbw05wDEwMdqMwBCI4QSk989vO0I9On9zCBfDIYEAHeHNB0ylbQ0bA8mRhLeBjUiEDryASybE9zU__58Q6QL0EfISKdW7h3Uv2uniuDZjRGI07YLLwPTRZDO9p4hR53OabgBxecaHvNMKDBLOublv13oOKiJetMBHut8D9yPPqyQNMLUxIFcVp0PppaWH5Xh0GFMPHNLi3SmAoJyMuhOJTr6rgc" />
+                                            <div
+                                                class="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors flex items-center justify-center">
+                                                <span
+                                                    class="material-symbols-outlined text-white text-5xl opacity-0 group-hover:opacity-100 transition-opacity">play_circle</span>
+                                            </div>
+                                            <div
+                                                class="absolute bottom-2 right-2 bg-black/70 text-white text-xs px-2 py-1 rounded font-bold">
+                                                08:20</div>
+                                        </div>
+                                        <h4
+                                            class="font-bold text-slate-900 dark:text-white group-hover:text-[#137fec] transition-colors text-lg mb-1">
+                                            Automating Drawing Exports</h4>
+                                        <p class="text-sm text-slate-500 dark:text-slate-400 line-clamp-2">One-click
+                                            multi-format exports (PDF, DXF, DWG).</p>
+                                    </div>
+                                </div>
+                                <div class="video-slide flex-shrink-0 w-1/2 md:w-1/3 lg:w-1/4 px-1 md:px-2">
+                                    <div class="group cursor-pointer">
+                                        <div
+                                            class="relative aspect-video rounded-xl overflow-hidden mb-4 shadow-md bg-slate-200">
+                                            <img alt="iLogic scripts"
+                                                class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuCVKgS9jlegl8Mr0_Yes8z7MddMF296IMRwaEektZescWruv0Dhoq11YHB2QC65WV_LHlzn_QXxjiL4fYlp_r-WhRlnyZi1-bDEhkkb8EsVE-CFY9y1zE-GkDw7x8BDa2AseXWjBfWq_cctZJLq6R2zu7F1oTuCbKBqHdd2EL8EM9LXSRkLoXvWkmEiAQvA_P3c7Frf7zC00OE_sFkjSp2m9FjVbdQrSYI_CF6pkCR2sSb3JJmSDvQpYevoeZHcbHG383BRXfPM5V4" />
+                                            <div
+                                                class="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors flex items-center justify-center">
+                                                <span
+                                                    class="material-symbols-outlined text-white text-5xl opacity-0 group-hover:opacity-100 transition-opacity">play_circle</span>
+                                            </div>
+                                            <div
+                                                class="absolute bottom-2 right-2 bg-black/70 text-white text-xs px-2 py-1 rounded font-bold">
+                                                15:10</div>
+                                        </div>
+                                        <h4
+                                            class="font-bold text-slate-900 dark:text-white group-hover:text-[#137fec] transition-colors text-lg mb-1">
+                                            Getting Started with iLogic</h4>
+                                        <p class="text-sm text-slate-500 dark:text-slate-400 line-clamp-2">Introduction to
+                                            the Di-tool API and your first script.</p>
+                                    </div>
+                                </div>
+                                <div class="video-slide flex-shrink-0 w-1/2 md:w-1/3 lg:w-1/4 px-1 md:px-2">
+                                    <div class="group cursor-pointer">
+                                        <div
+                                            class="relative aspect-video rounded-xl overflow-hidden mb-4 shadow-md bg-slate-200">
+                                            <img alt="BOM and drawing"
+                                                class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBLqLTx0MHzpfC1ReXg6fImXeksiBW6VrpCR6iENn-hLUp6V7jtxnyVYsQfn8nSDo4NUDxC1tuWmBwCL0UHFP-gmcAzVjhL3DMtH6vlb6BYN-bEV7_MR_veuXkHDqZbe-JMvYRyHcto9YgqH5Okzjsad4vyjC1_GjMJkK3pTpwPoq-Sx_Y1B849OgPRMfL5DHJ_Hh-b0CWKiZnzBbmqbkcFeD6WIOHDpGL_66oJyO0VQfr0gWrqBKgyfFmzUAAmNyfzXwROml_TcwU" />
+                                            <div
+                                                class="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors flex items-center justify-center">
+                                                <span
+                                                    class="material-symbols-outlined text-white text-5xl opacity-0 group-hover:opacity-100 transition-opacity">play_circle</span>
+                                            </div>
+                                            <div
+                                                class="absolute bottom-2 right-2 bg-black/70 text-white text-xs px-2 py-1 rounded font-bold">
+                                                10:30</div>
+                                        </div>
+                                        <h4
+                                            class="font-bold text-slate-900 dark:text-white group-hover:text-[#137fec] transition-colors text-lg mb-1">
+                                            BOM and Drawing Standards</h4>
+                                        <p class="text-sm text-slate-500 dark:text-slate-400 line-clamp-2">Best practices
+                                            for BOM and consistent drawing output.</p>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <a class="group flex items-center gap-2 text-[var(--enterprise-blue)] font-bold text-sm hover:text-[var(--accent-blue)] transition-colors"
-                            href="#">
-                            Explore all Combos
-                            <span
-                                class="material-symbols-outlined text-lg group-hover:translate-x-1 transition-transform">arrow_right_alt</span>
+                        <button type="button" id="videoSliderPrev"
+                            class="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-2 md:-translate-x-4 z-10 w-10 h-10 md:w-12 md:h-12 rounded-full bg-white dark:bg-slate-800 shadow-lg border border-slate-200 dark:border-slate-600 flex items-center justify-center text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors"
+                            aria-label="Previous">
+                            <span class="material-symbols-outlined text-2xl">chevron_left</span>
+                        </button>
+                        <button type="button" id="videoSliderNext"
+                            class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-2 md:translate-x-4 z-10 w-10 h-10 md:w-12 md:h-12 rounded-full bg-white dark:bg-slate-800 shadow-lg border border-slate-200 dark:border-slate-600 flex items-center justify-center text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors"
+                            aria-label="Next">
+                            <span class="material-symbols-outlined text-2xl">chevron_right</span>
+                        </button>
+                        <div class="flex justify-center gap-2 mt-6" id="videoSliderDots"></div>
+                    </div>
+                </section>
+
+                {{-- Recent Documents (image) --}}
+                <section class="mb-16">
+                    <h3 class="text-2xl font-bold text-slate-900 dark:text-white mb-4">Recent Documents</h3>
+                    <p class="text-slate-600 dark:text-slate-400 mb-4">Quick access to your recently viewed help articles.
+                    </p>
+                    <div
+                        class="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 divide-y divide-slate-100 dark:divide-slate-700">
+                        <a href="#"
+                            class="flex items-center gap-3 p-4 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
+                            <span class="material-symbols-outlined text-slate-400">description</span>
+                            <span class="text-sm font-medium text-slate-700 dark:text-slate-200">User Manual v2.1</span>
+                        </a>
+                        <a href="#"
+                            class="flex items-center gap-3 p-4 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
+                            <span class="material-symbols-outlined text-slate-400">play_circle</span>
+                            <span class="text-sm font-medium text-slate-700 dark:text-slate-200">Getting Started with
+                                iLogic</span>
+                        </a>
+                        <a href="#"
+                            class="flex items-center gap-3 p-4 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
+                            <span class="material-symbols-outlined text-slate-400">quiz</span>
+                            <span class="text-sm font-medium text-slate-700 dark:text-slate-200">Licensing and activation
+                                FAQ</span>
                         </a>
                     </div>
-                    <div class="grid grid-cols-1 gap-8">
-                        <div
-                            class="group relative flex flex-col lg:flex-row bg-white rounded-[40px] border border-slate-100 shadow-xl shadow-slate-200/40 overflow-hidden hover:shadow-2xl transition-all duration-500">
-                            <div class="lg:w-1/3 relative h-64 lg:h-auto overflow-hidden">
-                                <img alt="Starter Combo"
-                                    class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuD0xn8klFRg-K-wRgdq9BzT8p7YQbk6CjpWvfNLtc2vdCkRslFovVEeXhTTPi8n6Wg4kQk6g5XGMAA9Eje2zDvPqgmIT-5DGhYHSfGg8_3ikow9PiqSqnjhbl4vKZrJGIdPvdSeyLeVSba8OMJLs1VMbFXsof6nhoC7sGi9QImZ1nT5NHC9Go5RlZWKq_GowsX26ajNPYPCPWaol77sCdSPRs-kfLoBSSMaOb37ctMPwcUx8bTWWT9eDcj23XJ1ltEnAAZOQQvyBjI" />
-                                <div class="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent"></div>
-                            </div>
+                </section>
+
+                {{-- FAQs --}}
+                <section id="faq" class="mb-16">
+                    <h3 class="text-2xl font-bold text-slate-900 dark:text-white mb-6">Frequently Asked Questions</h3>
+                    <div class="space-y-4">
+                        <details
+                            class="group bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 open:ring-1 open:ring-[#137fec] overflow-hidden">
+                            <summary class="flex items-center justify-between p-5 cursor-pointer list-none">
+                                <span class="font-bold text-slate-800 dark:text-slate-100">How to update Di-tool to the
+                                    latest Inventor version?</span>
+                                <span
+                                    class="material-symbols-outlined transition-transform group-open:rotate-180">expand_more</span>
+                            </summary>
                             <div
-                                class="flex-1 p-10 lg:p-12 flex flex-col lg:flex-row lg:items-center justify-between gap-8">
-                                <div class="max-w-md">
-                                    <div
-                                        class="inline-flex px-3 py-1 rounded-full bg-blue-50 text-[var(--accent-blue)] text-[10px] font-extrabold uppercase tracking-widest mb-4">
-                                        Foundation Pack</div>
-                                    <h3 class="text-3xl font-black text-[var(--enterprise-blue)] mb-4">Starter Combo
-                                    </h3>
-                                    <div class="flex flex-wrap items-center gap-3 text-slate-500">
-                                        <span
-                                            class="flex items-center gap-1.5 py-1 px-3 bg-slate-50 rounded-lg text-xs font-semibold">Modeling
-                                            Suite</span>
-                                        <span class="material-symbols-outlined text-slate-300 text-sm">add</span>
-                                        <span
-                                            class="flex items-center gap-1.5 py-1 px-3 bg-slate-50 rounded-lg text-xs font-semibold">Simulation
-                                            Lite</span>
-                                        <span class="material-symbols-outlined text-slate-300 text-sm">add</span>
-                                        <span
-                                            class="flex items-center gap-1.5 py-1 px-3 bg-slate-50 rounded-lg text-xs font-semibold">Cloud
-                                            Sync</span>
-                                    </div>
-                                </div>
-                                <div class="flex flex-col items-center lg:items-end lg:text-right min-w-[200px]">
-                                    <div class="mb-6 text-center lg:text-right">
-                                        <span
-                                            class="text-slate-300 text-sm line-through font-medium block mb-1">$849.00</span>
-                                        <span
-                                            class="text-4xl font-black text-[var(--enterprise-blue)] tracking-tight">$649.00</span>
-                                    </div>
-                                    <button
-                                        class="w-full lg:w-auto px-10 py-4 bg-[var(--enterprise-blue)] text-white text-sm font-bold rounded-2xl hover:bg-blue-600 transition-all shadow-lg shadow-blue-900/10 flex items-center justify-center gap-2">
-                                        <span class="material-symbols-outlined text-xl">shopping_cart</span>
-                                        Buy Bundle
-                                    </button>
-                                </div>
+                                class="p-5 pt-0 text-slate-600 dark:text-slate-400 border-t border-slate-100 dark:border-slate-700 text-sm leading-relaxed">
+                                To update Di-tool, close Autodesk Inventor, then run the Di-tool Installer. The installer
+                                will automatically detect your Inventor versions (2022–2024) and apply the latest plugins.
                             </div>
-                        </div>
-                        <div
-                            class="group relative flex flex-col lg:flex-row bg-white rounded-[40px] border border-slate-100 shadow-xl shadow-slate-200/40 overflow-hidden hover:shadow-2xl transition-all duration-500">
-                            <div class="lg:w-1/3 relative h-64 lg:h-auto overflow-hidden">
-                                <img alt="Enterprise Stack"
-                                    class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuABiuR3EtpFe7mIKUqtUleN7jxNUwJHyaX4f444l0nXna-mbpS_TTTQFVYxdzPcL7zZ5KLSiZ0JQxUE-0-AQlofogRoRXJq6v8YtmeS9ZqI3AHDN1fVnkMQLLFMfOfeG2vQIwR6dtsbCTCWYvl6gfnmu9Iv9wjXbFKH-Z5hXsifmpNlzii0TKZOUs-sDUXiUCvQVzX-RosgPdyc8Am5nR8-JnDje3cBRFe2-eoFa2Ruv9AeD8XaIuLfCnL6EU69DDsNvgybAgrNsFs" />
-                                <div class="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent"></div>
-                                <div class="absolute top-6 left-6">
-                                    <span
-                                        class="bg-blue-600 text-white px-4 py-1.5 rounded-full text-[10px] font-extrabold uppercase tracking-widest shadow-xl">Top
-                                        Choice</span>
-                                </div>
-                            </div>
+                        </details>
+                        <details
+                            class="group bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 open:ring-1 open:ring-[#137fec] overflow-hidden">
+                            <summary class="flex items-center justify-between p-5 cursor-pointer list-none">
+                                <span class="font-bold text-slate-800 dark:text-slate-100">Can I use Di-tool on multiple
+                                    computers?</span>
+                                <span
+                                    class="material-symbols-outlined transition-transform group-open:rotate-180">expand_more</span>
+                            </summary>
                             <div
-                                class="flex-1 p-10 lg:p-12 flex flex-col lg:flex-row lg:items-center justify-between gap-8">
-                                <div class="max-w-md">
-                                    <div
-                                        class="inline-flex px-3 py-1 rounded-full bg-blue-50 text-[var(--accent-blue)] text-[10px] font-extrabold uppercase tracking-widest mb-4">
-                                        Advanced Workflow</div>
-                                    <h3 class="text-3xl font-black text-[var(--enterprise-blue)] mb-4">Enterprise Stack
-                                    </h3>
-                                    <div class="flex flex-wrap items-center gap-3 text-slate-500">
-                                        <span
-                                            class="flex items-center gap-1.5 py-1 px-3 bg-slate-50 rounded-lg text-xs font-semibold">Automation
-                                            Pro</span>
-                                        <span class="material-symbols-outlined text-slate-300 text-sm">add</span>
-                                        <span
-                                            class="flex items-center gap-1.5 py-1 px-3 bg-slate-50 rounded-lg text-xs font-semibold">Data
-                                            Manager</span>
-                                        <span class="material-symbols-outlined text-slate-300 text-sm">add</span>
-                                        <span
-                                            class="flex items-center gap-1.5 py-1 px-3 bg-slate-50 rounded-lg text-xs font-semibold">API
-                                            Access</span>
-                                    </div>
-                                </div>
-                                <div class="flex flex-col items-center lg:items-end lg:text-right min-w-[200px]">
-                                    <div class="mb-6 text-center lg:text-right">
-                                        <span
-                                            class="text-slate-300 text-sm line-through font-medium block mb-1">$1,649.00</span>
-                                        <span
-                                            class="text-4xl font-black text-[var(--enterprise-blue)] tracking-tight">$1,299.00</span>
-                                    </div>
-                                    <button
-                                        class="w-full lg:w-auto px-10 py-4 bg-[var(--enterprise-blue)] text-white text-sm font-bold rounded-2xl hover:bg-blue-600 transition-all shadow-lg shadow-blue-900/10 flex items-center justify-center gap-2">
-                                        <span class="material-symbols-outlined text-xl">shopping_cart</span>
-                                        Buy Bundle
-                                    </button>
-                                </div>
+                                class="p-5 pt-0 text-slate-600 dark:text-slate-400 border-t border-slate-100 dark:border-slate-700 text-sm leading-relaxed">
+                                Licensing is per-user. You can activate Di-tool on up to two devices as long as you are the
+                                primary user of both.
                             </div>
-                        </div>
+                        </details>
+                        <details
+                            class="group bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 open:ring-1 open:ring-[#137fec] overflow-hidden">
+                            <summary class="flex items-center justify-between p-5 cursor-pointer list-none">
+                                <span class="font-bold text-slate-800 dark:text-slate-100">Where are custom iLogic snippets
+                                    stored?</span>
+                                <span
+                                    class="material-symbols-outlined transition-transform group-open:rotate-180">expand_more</span>
+                            </summary>
+                            <div
+                                class="p-5 pt-0 text-slate-600 dark:text-slate-400 border-t border-slate-100 dark:border-slate-700 text-sm leading-relaxed">
+                                All snippets are stored in %AppData%/Roaming/Di-tool/iLogicScripts. You can sync this folder
+                                with your team using OneDrive or Git.
+                            </div>
+                        </details>
                     </div>
-                </div>
-            </section>
-            <section class="max-w-7xl mx-auto px-10 lg:px-16 py-32">
-                <div class="flex flex-col lg:flex-row lg:items-end justify-between mb-20 gap-8">
-                    <div class="max-w-2xl">
-                        <h2 class="text-4xl lg:text-5xl font-black text-[var(--enterprise-blue)] tracking-tight">The
-                            Software Suite: Free &amp; Pro</h2>
-                        <p class="text-slate-500 text-lg mt-6 leading-relaxed">Choose the level that fits your
-                            workflow. Start for free with our essential tools or scale up to our Pro tier for advanced
-                            enterprise automation.</p>
-                    </div>
-                    <div class="flex items-center gap-4 bg-slate-50 p-2 rounded-2xl">
-                        <button
-                            class="px-6 py-2 bg-white shadow-sm rounded-xl text-sm font-bold text-[var(--enterprise-blue)]">All
-                            Packages</button>
-                        <button
-                            class="px-6 py-2 hover:bg-white/50 rounded-xl text-sm font-bold text-slate-400 transition-all">Automation</button>
-                        <button
-                            class="px-6 py-2 hover:bg-white/50 rounded-xl text-sm font-bold text-slate-400 transition-all">Analysis</button>
-                    </div>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10">
+                </section>
+
+                {{-- Documentation --}}
+                <section id="documentation" class="mb-16">
+                    <h3 class="text-2xl font-bold text-slate-900 dark:text-white mb-6">Documentation</h3>
                     <div
-                        class="group flex flex-col bg-white border border-slate-200 rounded-[32px] overflow-hidden shadow-sm hover:shadow-md transition-all duration-300">
-                        <div class="relative aspect-[5/4] overflow-hidden m-3 rounded-[24px] bg-slate-50">
-                            <img alt="Modeling Suite"
-                                class="w-full h-full object-cover opacity-90 transition-transform duration-700 group-hover:scale-105"
-                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuD0xn8klFRg-K-wRgdq9BzT8p7YQbk6CjpWvfNLtc2vdCkRslFovVEeXhTTPi8n6Wg4kQk6g5XGMAA9Eje2zDvPqgmIT-5DGhYHSfGg8_3ikow9PiqSqnjhbl4vKZrJGIdPvdSeyLeVSba8OMJLs1VMbFXsof6nhoC7sGi9QImZ1nT5NHC9Go5RlZWKq_GowsX26ajNPYPCPWaol77sCdSPRs-kfLoBSSMaOb37ctMPwcUx8bTWWT9eDcj23XJ1ltEnAAZOQQvyBjI" />
-                            <div class="absolute top-4 left-4">
-                                <span
-                                    class="bg-slate-100 text-slate-600 px-4 py-1.5 rounded-full text-[10px] font-extrabold uppercase tracking-widest border border-slate-200">Free
-                                    Edition</span>
-                            </div>
-                        </div>
-                        <div class="p-8 pt-4 flex flex-col flex-1">
-                            <h3 class="text-xl font-bold text-[var(--enterprise-blue)]">Modeling Lite</h3>
-                            <p class="text-slate-500 text-sm mt-3 leading-relaxed">Essential parametric tools for
-                                standard 3D design tasks.</p>
-                            <div class="mt-auto pt-8 flex flex-col items-center">
-                                <div class="flex flex-col items-center mb-6">
-                                    <span
-                                        class="text-3xl font-black text-[var(--enterprise-blue)] tracking-tight">$0.00</span>
-                                </div>
-                                <button
-                                    class="w-full py-4 border-2 border-[var(--enterprise-blue)] text-[var(--enterprise-blue)] text-sm font-bold rounded-2xl hover:bg-slate-50 transition-all active:scale-[0.98]">
-                                    Download Now
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    <div
-                        class="group flex flex-col pro-card rounded-[32px] overflow-hidden shadow-2xl hover:scale-[1.02] transition-all duration-500 ring-1 ring-blue-500/30">
-                        <div class="relative aspect-[5/4] overflow-hidden m-3 rounded-[24px]">
-                            <img alt="Automation Pro"
-                                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuABiuR3EtpFe7mIKUqtUleN7jxNUwJHyaX4f444l0nXna-mbpS_TTTQFVYxdzPcL7zZ5KLSiZ0JQxUE-0-AQlofogRoRXJq6v8YtmeS9ZqI3AHDN1fVnkMQLLFMfOfeG2vQIwR6dtsbCTCWYvl6gfnmu9Iv9wjXbFKH-Z5hXsifmpNlzii0TKZOUs-sDUXiUCvQVzX-RosgPdyc8Am5nR8-JnDje3cBRFe2-eoFa2Ruv9AeD8XaIuLfCnL6EU69DDsNvgybAgrNsFs" />
-                            <div class="absolute top-4 left-4 flex flex-col gap-2">
-                                <span
-                                    class="bg-gradient-to-r from-amber-400 to-amber-600 text-white px-4 py-1.5 rounded-full text-[10px] font-extrabold uppercase tracking-widest shadow-lg flex items-center gap-1">
-                                    <span class="material-symbols-outlined text-xs fill-1">workspace_premium</span> Pro
-                                    Tier
-                                </span>
-                                <span
-                                    class="bg-blue-600/90 backdrop-blur-sm text-white px-3 py-1 rounded-full text-[8px] font-black uppercase tracking-tighter">Recommended
-                                    for Professionals</span>
-                            </div>
-                        </div>
-                        <div class="p-8 pt-4 flex flex-col flex-1 text-center">
-                            <h3 class="text-xl font-black text-white">Automation Pro</h3>
-                            <ul class="mt-4 space-y-2 text-xs text-blue-100/70 font-medium">
-                                <li class="flex items-center justify-center gap-2"><span
-                                        class="material-symbols-outlined glow-check text-sm">check_circle</span>
-                                    Advanced iLogic Logic</li>
-                                <li class="flex items-center justify-center gap-2"><span
-                                        class="material-symbols-outlined glow-check text-sm">check_circle</span> API
-                                    Access &amp; Integration</li>
-                                <li class="flex items-center justify-center gap-2"><span
-                                        class="material-symbols-outlined glow-check text-sm">check_circle</span> Custom
-                                    Script Triggers</li>
-                                <li class="flex items-center justify-center gap-2"><span
-                                        class="material-symbols-outlined glow-check text-sm">check_circle</span> Batch
-                                    Processing Suite</li>
-                            </ul>
-                            <div class="mt-auto pt-8 flex flex-col items-center">
-                                <div class="flex flex-col items-center mb-6">
-                                    <span class="text-blue-400/50 text-[10px] font-bold uppercase mb-2">Trusted by 10k+
-                                        Engineers</span>
-                                    <span class="text-blue-300/40 text-sm line-through font-medium mb-1">$899.00</span>
-                                    <span class="text-4xl font-black text-white tracking-tight">$699.00</span>
-                                </div>
-                                <button
-                                    class="w-full py-4 premium-gold-btn text-sm font-black rounded-2xl transition-all shadow-lg">
-                                    UPGRADE TO PRO
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    <div
-                        class="group flex flex-col bg-white border border-slate-200 rounded-[32px] overflow-hidden shadow-sm hover:shadow-md transition-all duration-300">
-                        <div class="relative aspect-[5/4] overflow-hidden m-3 rounded-[24px] bg-slate-50">
-                            <img alt="Simulation Kit"
-                                class="w-full h-full object-cover opacity-90 transition-transform duration-700 group-hover:scale-105"
-                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuA5ypRmi7k6qRIULbfebvTvm4YLkotQAsl0fuvoVN3_ey3_lN1103cSN3sDrhqQaZl2-_QjOBauKYx99stjEOciMbxxQaf456cwpxJa0ZflS6ToVT08SkHN0Fj6Ce0BayX--RufQQ8SZ06e_XUA8zjBxJeiJq_M72LEfFsst-ZZEjy4ROAvrLG4dcE6G6vU3oI7DqstMnFZH6jpQA3ogsb9OyyZ46SOxmk1_Jnc-o35PvEHeXvk1SGDdLlj-uvLiLJg-c-8D4buEHA" />
-                            <div class="absolute top-4 left-4">
-                                <span
-                                    class="bg-slate-100 text-slate-600 px-4 py-1.5 rounded-full text-[10px] font-extrabold uppercase tracking-widest border border-slate-200">Free
-                                    Edition</span>
-                            </div>
-                        </div>
-                        <div class="p-8 pt-4 flex flex-col flex-1">
-                            <h3 class="text-xl font-bold text-[var(--enterprise-blue)]">Simulation Lite</h3>
-                            <p class="text-slate-500 text-sm mt-3 leading-relaxed">Basic FEA modules for simple stress
-                                check validation.</p>
-                            <div class="mt-auto pt-8 flex flex-col items-center">
-                                <div class="flex flex-col items-center mb-6">
-                                    <span
-                                        class="text-3xl font-black text-[var(--enterprise-blue)] tracking-tight">$0.00</span>
-                                </div>
-                                <button
-                                    class="w-full py-4 border-2 border-[var(--enterprise-blue)] text-[var(--enterprise-blue)] text-sm font-bold rounded-2xl hover:bg-slate-50 transition-all active:scale-[0.98]">
-                                    Download Now
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    <div
-                        class="group flex flex-col pro-card rounded-[32px] overflow-hidden shadow-2xl hover:scale-[1.02] transition-all duration-500 ring-1 ring-blue-500/30">
-                        <div class="relative aspect-[5/4] overflow-hidden m-3 rounded-[24px]">
-                            <img alt="Data Manager"
-                                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuAfGGGqCcjGOwLyeLuLmIRlJq9Zn1MxNLSqJKqPA6x97tONidMOdo5r6MGwyaCxQpWAcU9VyfCurG_26Wi1yalEuauitJr9fgE2904hioT2Z9ojg_nfhQwacSPiX3nkCURAxSrtdkp8HJFz7UhgfMloaDB5whaFAjCzX6Hjnh4NVkd3PBp37Pvr0s5jDKRbplLCMynvBnxUYgzhjpFCUSM81QaRI-8z6BXkATRcNOgvaDgX_v_l_Hg3X1iFWzpcNkJJRNVbgUXQ5cw" />
-                            <div class="absolute top-4 left-4 flex flex-col gap-2">
-                                <span
-                                    class="bg-gradient-to-r from-blue-600 to-blue-800 text-white px-4 py-1.5 rounded-full text-[10px] font-extrabold uppercase tracking-widest shadow-lg flex items-center gap-1">
-                                    <span class="material-symbols-outlined text-xs">verified</span> Enterprise Pro
-                                </span>
-                                <span
-                                    class="bg-blue-600/90 backdrop-blur-sm text-white px-3 py-1 rounded-full text-[8px] font-black uppercase tracking-tighter">Recommended
-                                    for Professionals</span>
-                            </div>
-                        </div>
-                        <div class="p-8 pt-4 flex flex-col flex-1 text-center">
-                            <h3 class="text-xl font-black text-white">Data Manager Pro</h3>
-                            <ul class="mt-4 space-y-2 text-xs text-blue-100/70 font-medium">
-                                <li class="flex items-center justify-center gap-2"><span
-                                        class="material-symbols-outlined glow-check text-sm">check_circle</span> Global
-                                    Sync Engines</li>
-                                <li class="flex items-center justify-center gap-2"><span
-                                        class="material-symbols-outlined glow-check text-sm">check_circle</span> 24/7
-                                    Priority Support</li>
-                                <li class="flex items-center justify-center gap-2"><span
-                                        class="material-symbols-outlined glow-check text-sm">check_circle</span>
-                                    Multi-Region Server Lock</li>
-                                <li class="flex items-center justify-center gap-2"><span
-                                        class="material-symbols-outlined glow-check text-sm">check_circle</span>
-                                    Version History Audit</li>
-                            </ul>
-                            <div class="mt-auto pt-8 flex flex-col items-center">
-                                <div class="flex flex-col items-center mb-6">
-                                    <span class="text-blue-400/50 text-[10px] font-bold uppercase mb-2">Trusted by 10k+
-                                        Engineers</span>
-                                    <span class="text-blue-300/40 text-sm line-through font-medium mb-1">$750.00</span>
-                                    <span class="text-4xl font-black text-white tracking-tight">$550.00</span>
-                                </div>
-                                <button
-                                    class="w-full py-4 premium-gold-btn text-sm font-black rounded-2xl transition-all shadow-lg">
-                                    GO PRO TODAY
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            <section class="bg-slate-50 py-32 px-10 lg:px-16">
-                <div class="max-w-7xl mx-auto">
-                    <div class="text-center mb-20">
-                        <h2 class="text-4xl lg:text-5xl font-black text-[var(--enterprise-blue)] tracking-tight mb-6">
-                            Trusted by Industry Leaders</h2>
-                        <p class="text-slate-500 text-xl">Powering the design workflows of global engineering firms.
-                        </p>
-                    </div>
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        <div class="p-10 bg-white rounded-[32px] shadow-sm border border-slate-100 flex flex-col">
-                            <div class="flex gap-1 text-yellow-400 mb-6">
-                                <span class="material-symbols-outlined fill-1">star</span>
-                                <span class="material-symbols-outlined fill-1">star</span>
-                                <span class="material-symbols-outlined fill-1">star</span>
-                                <span class="material-symbols-outlined fill-1">star</span>
-                                <span class="material-symbols-outlined fill-1">star</span>
-                            </div>
-                            <p class="text-slate-600 italic text-lg mb-8 leading-relaxed">"The Automation Pro suite
-                                reduced our design turnaround time by 40%. It's an indispensable part of our Inventor
-                                ecosystem now."</p>
-                            <div class="mt-auto flex items-center gap-4">
-                                <div class="size-14 rounded-full bg-slate-200 overflow-hidden">
-                                    <img alt="CAD Manager" class="w-full h-full object-cover"
-                                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuCoYH66do9h7uxk1Ffx8OaZ5jc8zxTXUMae61hpmfO0hjQGCsDvuvGcCiouhA7IwzFgUiP3fLTwsS5pmHxHq2FrfI9gvCDmjv3Q4VpOQU-zYU4aqPWEzSIfp0O7FUvfGFC5pTBzhIa5AHNxkLF1Yg7alxULV4Kz8w8BKgmMyqfHTMpLcVHnK5oQX4n9VqLmHV9335Q4IxtJOManBxBSt7D10b56pHW6k3LirsmYqvfiRy8WOT9nFxjrEjbdnX6eqb9MG1CuKFgYqTE" />
+                        class="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 divide-y divide-slate-100 dark:divide-slate-700">
+                        <div
+                            class="p-4 flex items-center justify-between group hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
+                            <div class="flex items-center gap-3">
+                                <div class="bg-red-50 dark:bg-red-900/20 text-red-500 p-2 rounded-lg">
+                                    <span class="material-symbols-outlined">description</span>
                                 </div>
                                 <div>
-                                    <h4 class="font-bold text-[var(--enterprise-blue)]">Marcus Thorne</h4>
-                                    <p class="text-slate-400 text-sm uppercase font-bold tracking-widest">CAD Manager
+                                    <p class="font-bold text-slate-800 dark:text-slate-100 text-sm">User Manual v2.1</p>
+                                    <p class="text-xs text-slate-500">PDF • 4.2 MB</p>
+                                </div>
+                            </div>
+                            <button type="button"
+                                class="p-2 text-[#137fec] hover:bg-[#137fec]/10 rounded-full transition-colors">
+                                <span class="material-symbols-outlined">download</span>
+                            </button>
+                        </div>
+                        <div
+                            class="p-4 flex items-center justify-between group hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
+                            <div class="flex items-center gap-3">
+                                <div class="bg-blue-50 dark:bg-blue-900/20 text-blue-500 p-2 rounded-lg">
+                                    <span class="material-symbols-outlined">architecture</span>
+                                </div>
+                                <div>
+                                    <p class="font-bold text-slate-800 dark:text-slate-100 text-sm">Standard Templates</p>
+                                    <p class="text-xs text-slate-500">ZIP • 12.8 MB</p>
+                                </div>
+                            </div>
+                            <button type="button"
+                                class="p-2 text-[#137fec] hover:bg-[#137fec]/10 rounded-full transition-colors">
+                                <span class="material-symbols-outlined">download</span>
+                            </button>
+                        </div>
+                        <div
+                            class="p-4 flex items-center justify-between group hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
+                            <div class="flex items-center gap-3">
+                                <div class="bg-amber-50 dark:bg-amber-900/20 text-amber-500 p-2 rounded-lg">
+                                    <span class="material-symbols-outlined">code</span>
+                                </div>
+                                <div>
+                                    <p class="font-bold text-slate-800 dark:text-slate-100 text-sm">iLogic Snippet Library
                                     </p>
+                                    <p class="text-xs text-slate-500">JSON • 0.5 MB</p>
                                 </div>
                             </div>
-                        </div>
-                        <div class="p-10 bg-white rounded-[32px] shadow-sm border border-slate-100 flex flex-col">
-                            <div class="flex gap-1 text-yellow-400 mb-6">
-                                <span class="material-symbols-outlined fill-1">star</span>
-                                <span class="material-symbols-outlined fill-1">star</span>
-                                <span class="material-symbols-outlined fill-1">star</span>
-                                <span class="material-symbols-outlined fill-1">star</span>
-                                <span class="material-symbols-outlined fill-1">star</span>
-                            </div>
-                            <p class="text-slate-600 italic text-lg mb-8 leading-relaxed">"Di-tool provides the most
-                                robust simulation modules we've tested. Integration is seamless and the results are
-                                consistently accurate."</p>
-                            <div class="mt-auto flex items-center gap-4">
-                                <div class="size-14 rounded-full bg-slate-200 overflow-hidden">
-                                    <img alt="Design Engineer" class="w-full h-full object-cover"
-                                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuDDzW4Gk16j8AXdQ9uZdq9z8aIZ2Y9l-Ir6HQnKMgKz2f-2eZ9SauF6BQLIh2azUJtAHi8AScH6ABHiWLv_P-3NXEoxBmWH__6oH1Z4oq3qH8FoCiE8O1bHhY8OQvRBWvLA9r_28vXrrBOPvJfeNGGc4LiBTwIwY-hxauPwraryQmfuSC70r_mhuYLiqzVLsmgpe-KLbCzMNCafc_Sru_0AvSXvzTUxcf5Zl0AeVYCJhGFsboXSUuUp2FwzYnJl8u8LU1nMRE3HhNc" />
-                                </div>
-                                <div>
-                                    <h4 class="font-bold text-[var(--enterprise-blue)]">Sarah Jenkins</h4>
-                                    <p class="text-slate-400 text-sm uppercase font-bold tracking-widest">Senior Design
-                                        Engineer</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="p-10 bg-white rounded-[32px] shadow-sm border border-slate-100 flex flex-col">
-                            <div class="flex gap-1 text-yellow-400 mb-6">
-                                <span class="material-symbols-outlined fill-1">star</span>
-                                <span class="material-symbols-outlined fill-1">star</span>
-                                <span class="material-symbols-outlined fill-1">star</span>
-                                <span class="material-symbols-outlined fill-1">star</span>
-                                <span class="material-symbols-outlined fill-1">star</span>
-                            </div>
-                            <p class="text-slate-600 italic text-lg mb-8 leading-relaxed">"Switching to Di-tool's data
-                                management was the best decision for our global team. Coordination is now effortless
-                                across timezones."</p>
-                            <div class="mt-auto flex items-center gap-4">
-                                <div class="size-14 rounded-full bg-slate-200 overflow-hidden">
-                                    <img alt="CTO" class="w-full h-full object-cover"
-                                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuCHprD3TRIZ1El70UrHj-SzqpyaCMKfaQjV4JzW1j_MSLXjgftqCp2X-l1MO2ylfldgSdCHvqUyRriCdL8pcEoN9Fv54BE36DnbueBGc1sJqGJbkq91KZ0YOuh2vTODvTc7fOlKZeiQb-5hSbsm2chmkKpK_GSYPWJQ6PeFeuZdo4ph6LZsU9UNjD4l3X2XlF3fBNsv5KrX1HE0T2HMDNfBLWxoDB0588Izds7Yix5M1OWo5nFiarc-i8rIzh22ujG_bG8LpECEw9w" />
-                                </div>
-                                <div>
-                                    <h4 class="font-bold text-[var(--enterprise-blue)]">David Chen</h4>
-                                    <p class="text-slate-400 text-sm uppercase font-bold tracking-widest">Technical
-                                        Director</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            <section class="max-w-7xl mx-auto px-10 py-32">
-                <div
-                    class="relative p-16 lg:p-24 bg-[var(--enterprise-blue)] rounded-[60px] overflow-hidden text-center">
-                    <div class="absolute inset-0 opacity-10 pointer-events-none">
-                        <div
-                            class="absolute top-0 right-0 w-96 h-96 bg-blue-400 rounded-full blur-[100px] -mr-48 -mt-48">
-                        </div>
-                        <div
-                            class="absolute bottom-0 left-0 w-96 h-96 bg-blue-600 rounded-full blur-[100px] -ml-48 -mb-48">
-                        </div>
-                    </div>
-                    <div class="relative z-10">
-                        <h2 class="text-4xl lg:text-6xl font-black text-white mb-8 tracking-tight">Scale Your
-                            Engineering <br />Infrastructure Today</h2>
-                        <p class="text-blue-100 text-xl max-w-2xl mx-auto mb-12 font-medium">Connect with our solution
-                            architects to build a bespoke automation strategy for your manufacturing pipeline.</p>
-                        <div class="flex flex-wrap justify-center gap-6">
-                            <button
-                                class="px-12 py-5 bg-white text-[var(--enterprise-blue)] rounded-2xl font-bold text-lg shadow-xl hover:scale-105 transition-all">
-                                Request Custom Proposal
-                            </button>
-                            <button
-                                class="px-12 py-5 bg-white/10 backdrop-blur-md text-white border border-white/20 rounded-2xl font-bold text-lg hover:bg-white/20 transition-all">
-                                Talk to an Expert
+                            <button type="button"
+                                class="p-2 text-[#137fec] hover:bg-[#137fec]/10 rounded-full transition-colors">
+                                <span class="material-symbols-outlined">download</span>
                             </button>
                         </div>
                     </div>
-                </div>
-            </section>
-        </main>
-        <footer class="bg-white border-t border-slate-200">
-            <div class="max-w-7xl mx-auto px-10 lg:px-16 py-24">
-                <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-12 lg:gap-16">
-                    <div class="col-span-2 lg:col-span-2">
-                        <div class="flex items-center gap-3 mb-8">
-                            <div
-                                class="size-8 flex items-center justify-center bg-[var(--enterprise-blue)] text-white rounded-lg">
-                                <span class="material-symbols-outlined text-lg">architecture</span>
-                            </div>
-                            <h2 class="text-[var(--enterprise-blue)] text-xl font-black tracking-tighter">DI-TOOL</h2>
+                    <div class="mt-8 p-6 bg-[#137fec]/10 rounded-xl border border-[#137fec]/20">
+                        <h4 class="font-extrabold text-[#137fec] mb-2">Need a custom tool?</h4>
+                        <p class="text-slate-700 dark:text-slate-300 text-sm mb-4">Our engineering team can develop custom
+                            Autodesk Inventor plugins tailored to your workflow.</p>
+                        <a class="inline-flex items-center text-sm font-bold text-[#137fec] hover:underline"
+                            href="#">
+                            Contact Engineering
+                            <span class="material-symbols-outlined text-sm ml-1">arrow_forward</span>
+                        </a>
+                    </div>
+                </section>
+
+                {{-- Prev / Next (example style) --}}
+                <div class="pt-8 border-t border-slate-200 dark:border-slate-800 flex justify-between">
+                    <a class="group flex flex-col items-start gap-2" href="#">
+                        <span class="text-xs font-bold text-slate-400 uppercase tracking-widest">Previous</span>
+                        <div
+                            class="flex items-center gap-2 text-slate-700 dark:text-slate-200 font-bold group-hover:text-[#137fec] transition-colors">
+                            <span class="material-symbols-outlined">arrow_back</span>
+                            Inventor Basics
                         </div>
-                        <p class="text-slate-400 text-sm leading-relaxed max-w-xs mb-8">
-                            The premium standard for Autodesk Inventor extensions. Driving engineering excellence
-                            through intelligent automation.
-                        </p>
-                        <div class="flex gap-4">
-                            <a class="size-10 rounded-full bg-slate-50 border border-slate-100 flex items-center justify-center text-slate-400 hover:text-[var(--enterprise-blue)] transition-all"
-                                href="#">
-                                <span class="material-symbols-outlined text-xl">share</span>
-                            </a>
-                            <a class="size-10 rounded-full bg-slate-50 border border-slate-100 flex items-center justify-center text-slate-400 hover:text-[var(--enterprise-blue)] transition-all"
-                                href="#">
-                                <span class="material-symbols-outlined text-xl">public</span>
-                            </a>
+                    </a>
+                    <a class="group flex flex-col items-end gap-2" href="#">
+                        <span class="text-xs font-bold text-slate-400 uppercase tracking-widest">Next</span>
+                        <div
+                            class="flex items-center gap-2 text-slate-700 dark:text-slate-200 font-bold group-hover:text-[#137fec] transition-colors">
+                            About the Ribbon
+                            <span class="material-symbols-outlined">arrow_forward</span>
                         </div>
-                    </div>
-                    <div>
-                        <h4
-                            class="text-[var(--enterprise-blue)] font-extrabold text-xs mb-8 uppercase tracking-[0.2em]">
-                            Ecosystem</h4>
-                        <ul class="space-y-4">
-                            <li><a class="text-slate-500 text-sm font-medium hover:text-[var(--enterprise-blue)] transition-colors"
-                                    href="#">Standard Suite</a></li>
-                            <li><a class="text-slate-500 text-sm font-medium hover:text-[var(--enterprise-blue)] transition-colors"
-                                    href="#">Pro Modules</a></li>
-                            <li><a class="text-slate-500 text-sm font-medium hover:text-[var(--enterprise-blue)] transition-colors"
-                                    href="#">Enterprise API</a></li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h4
-                            class="text-[var(--enterprise-blue)] font-extrabold text-xs mb-8 uppercase tracking-[0.2em]">
-                            Resources</h4>
-                        <ul class="space-y-4">
-                            <li><a class="text-slate-500 text-sm font-medium hover:text-[var(--enterprise-blue)] transition-colors"
-                                    href="#">Documentation</a></li>
-                            <li><a class="text-slate-500 text-sm font-medium hover:text-[var(--enterprise-blue)] transition-colors"
-                                    href="#">Case Studies</a></li>
-                            <li><a class="text-slate-500 text-sm font-medium hover:text-[var(--enterprise-blue)] transition-colors"
-                                    href="#">Training</a></li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h4
-                            class="text-[var(--enterprise-blue)] font-extrabold text-xs mb-8 uppercase tracking-[0.2em]">
-                            Support</h4>
-                        <ul class="space-y-4">
-                            <li><a class="text-slate-500 text-sm font-medium hover:text-[var(--enterprise-blue)] transition-colors"
-                                    href="#">Help Center</a></li>
-                            <li><a class="text-slate-500 text-sm font-medium hover:text-[var(--enterprise-blue)] transition-colors"
-                                    href="#">Status</a></li>
-                            <li><a class="text-slate-500 text-sm font-medium hover:text-[var(--enterprise-blue)] transition-colors"
-                                    href="#">Contact</a></li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h4
-                            class="text-[var(--enterprise-blue)] font-extrabold text-xs mb-8 uppercase tracking-[0.2em]">
-                            Company</h4>
-                        <ul class="space-y-4">
-                            <li><a class="text-slate-500 text-sm font-medium hover:text-[var(--enterprise-blue)] transition-colors"
-                                    href="#">About Us</a></li>
-                            <li><a class="text-slate-500 text-sm font-medium hover:text-[var(--enterprise-blue)] transition-colors"
-                                    href="#">Privacy</a></li>
-                            <li><a class="text-slate-500 text-sm font-medium hover:text-[var(--enterprise-blue)] transition-colors"
-                                    href="#">Terms</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div
-                    class="mt-24 pt-10 border-t border-slate-100 flex flex-col md:flex-row justify-between items-center gap-6">
-                    <p class="text-slate-400 text-[10px] font-bold uppercase tracking-widest">© 2024 Di-tool Systems.
-                        All rights reserved.</p>
-                    <div class="flex items-center gap-10">
-                        <span class="text-slate-300 text-[10px] font-bold uppercase tracking-widest">ISO 9001
-                            Certified</span>
-                        <span class="text-slate-300 text-[10px] font-bold uppercase tracking-widest">Privacy
-                            Shield</span>
-                    </div>
+                    </a>
                 </div>
             </div>
-        </footer>
+        </main>
     </div>
-</body>
 
-</html>
+    {{-- Floating Quick Support --}}
+    <div class="fixed bottom-6 right-6 flex flex-col items-end gap-3 z-[100] group">
+        <div
+            class="hidden group-hover:block bg-white dark:bg-slate-800 shadow-2xl rounded-xl p-4 border border-slate-200 dark:border-slate-700 mb-2 w-64 animate-in fade-in slide-in-from-bottom-2">
+            <p class="font-bold text-slate-900 dark:text-white mb-1">How can we help?</p>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mb-3">Our support team typically responds within 2 hours
+                during business hours.</p>
+            <button type="button"
+                class="w-full py-2 bg-[#137fec] text-white text-xs font-bold rounded hover:bg-[#137fec]/90 transition-all">Open
+                Support Ticket</button>
+        </div>
+        <button type="button"
+            class="size-14 bg-[#137fec] text-white rounded-full shadow-2xl flex items-center justify-center hover:scale-110 transition-transform active:scale-95">
+            <span class="material-symbols-outlined text-3xl">question_answer</span>
+        </button>
+    </div>
+@endsection
+
+@push('scripts')
+    <script>
+        $(function() {
+            var $wrap = $('#videoTutorialsSliderWrap');
+            var $track = $('#videoTutorialsTrack');
+            var $prevBtn = $('#videoSliderPrev');
+            var $nextBtn = $('#videoSliderNext');
+            var $dotsContainer = $('#videoSliderDots');
+
+            if (!$track.length || !$wrap.length) return;
+
+            var $slides = $track.children('.video-slide');
+            var totalSlides = $slides.length;
+            if (totalSlides === 0) return;
+
+            var currentStep = 0;
+
+            function getVisibleCount() {
+                var w = $(window).width();
+                if (w >= 1024) return 4;
+                if (w >= 768) return 3;
+                return 2;
+            }
+
+            function getStepSize() {
+                var $first = $slides.eq(0);
+                return $first.length ? $first.outerWidth(true) : 0;
+            }
+
+            function getMaxStep() {
+                var visible = getVisibleCount();
+                return Math.max(0, totalSlides - visible);
+            }
+
+            function getTotalSteps() {
+                return getMaxStep() + 1;
+            }
+
+            function getOffset() {
+                return -currentStep * getStepSize();
+            }
+
+            function buildDots() {
+                var totalSteps = getTotalSteps();
+                $dotsContainer.empty();
+                if (totalSteps <= 1) {
+                    $prevBtn.addClass('opacity-50 pointer-events-none');
+                    $nextBtn.addClass('opacity-50 pointer-events-none');
+                    return;
+                }
+                $prevBtn.removeClass('opacity-50 pointer-events-none');
+                $nextBtn.removeClass('opacity-50 pointer-events-none');
+                for (var i = 0; i < totalSteps; i++) {
+                    var $dot = $(
+                        '<button type="button" class="video-slider-dot w-2.5 h-2.5 rounded-full transition-all" data-index="' +
+                        i + '" aria-label="Go to step ' + (i + 1) + '"></button>');
+                    $dotsContainer.append($dot);
+                }
+                $dotsContainer.find('.video-slider-dot').on('click', function() {
+                    goTo(parseInt($(this).data('index'), 10));
+                });
+                updateDots();
+            }
+
+            function updateDots() {
+                $dotsContainer.find('.video-slider-dot').each(function(i) {
+                    var $dot = $(this);
+                    $dot.toggleClass('bg-[#137fec]', i === currentStep);
+                    $dot.toggleClass('bg-slate-300 dark:bg-slate-600', i !== currentStep);
+                    $dot.toggleClass('w-8', i === currentStep);
+                    $dot.toggleClass('w-2.5', i !== currentStep);
+                });
+                $prevBtn.toggleClass('opacity-50 pointer-events-none', currentStep <= 0);
+                $nextBtn.toggleClass('opacity-50 pointer-events-none', currentStep >= getMaxStep());
+            }
+
+            function goTo(step) {
+                var maxStep = getMaxStep();
+                currentStep = Math.max(0, Math.min(step, maxStep));
+                $track.css('transform', 'translateX(' + getOffset() + 'px)');
+                updateDots();
+            }
+
+            $prevBtn.on('click', function() {
+                goTo(currentStep - 1);
+            });
+            $nextBtn.on('click', function() {
+                goTo(currentStep + 1);
+            });
+
+            buildDots();
+            goTo(0);
+
+            $(window).on('resize', function() {
+                var maxStep = getMaxStep();
+                currentStep = Math.min(currentStep, maxStep);
+                currentStep = Math.max(0, currentStep);
+                $track.css('transform', 'translateX(' + getOffset() + 'px)');
+                buildDots();
+            });
+        });
+    </script>
+@endpush

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
+use App\Http\Controllers\Admin\IssueTypeController as AdminIssueTypeController;
 use App\Http\Controllers\Admin\LoginController as AdminLoginController;
 use App\Http\Controllers\Admin\PostController as AdminPostController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
@@ -33,6 +34,10 @@ Route::get('help-center', [HelpCenterController::class, 'index'])->name('help-ce
 Route::get('product-detail/{product:slug}', [ProductController::class, 'detail'])->name('product-detail');
 Route::get('package-detail/{package:slug}', [PackageController::class, 'detail'])->name('package-detail');
 
+Route::group(['prefix' => 'issue', 'as' => 'issue.'], function () {
+    Route::get('/{slug}', [HelpCenterController::class, 'detail'])->name('detail');
+});
+
 // Auth redirect for admin: unauthenticated users hitting admin go to admin login
 Route::get('login', fn () => redirect()->route('admin.login'))->name('login');
 
@@ -46,6 +51,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
         Route::post('logout', [AdminLoginController::class, 'logout'])->name('logout');
         Route::resource('products', AdminProductController::class)->except(['show']);
         Route::resource('posts', AdminPostController::class)->except(['show']);
+        Route::resource('issue-types', AdminIssueTypeController::class)->except(['show']);
     });
 });
 

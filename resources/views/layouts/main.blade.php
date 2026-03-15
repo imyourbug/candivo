@@ -107,6 +107,12 @@
     {{-- Cart component (drawer + overlay) --}}
     @include('components.cart')
 
+    <!-- Back to top button -->
+    <button id="backToTopBtn"
+        class="fixed bottom-6 right-6 z-40 hidden rounded-full bg-[var(--accent-blue)] text-white shadow-lg px-6 py-5 text-sm font-semibold hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-300 transition">
+        ↑
+    </button>
+
     <script>
         $(document).ready(function() {
             const popupKey = 'announcementPopupDismissed';
@@ -136,33 +142,42 @@
     </script>
 
     <script>
-        // Cart behaviour: toggle, render from localStorage 'cart' array
-        (function() {
-            function qs(id) {
-                return document.getElementById(id);
+        // Back to top behaviour (jQuery)
+        $(function() {
+            const $btn = $('#backToTopBtn');
+            if ($btn.length === 0) return;
+
+            const $header = $('header, #siteHeader').first();
+            let threshold = 120;
+            if ($header.length) {
+                threshold = $header.outerHeight() || threshold;
             }
 
-            const cartToggle = qs('cartToggle');
-            const cartDrawer = qs('cartDrawer');
-            const cartOverlay = qs('cartOverlay');
-            const cartClose = qs('cartClose');
-            const cartItems = qs('cartItems');
-            const cartTotal = qs('cartTotal');
-            const checkoutBtn = qs('checkoutBtn');
-            const cartCountBadge = qs('cartCountBadge');
+            $(window).on('scroll', function() {
+                if ($(this).scrollTop() > threshold) {
+                    $btn.removeClass('hidden');
+                } else {
+                    $btn.addClass('hidden');
+                }
+            });
 
-            function openCart() {
-                if (cartDrawer) cartDrawer.classList.remove('translate-x-full');
-                if (cartOverlay) cartOverlay.classList.remove('hidden');
-                if (cartToggle) cartToggle.setAttribute('aria-expanded', 'true');
-                renderCart();
-            }
+            $btn.on('click', function() {
+                $('html, body').animate({ scrollTop: 0 }, 400);
+            });
+        });
+    </script>
 
-            function closeCart() {
-                if (cartDrawer) cartDrawer.classList.add('translate-x-full');
-                if (cartOverlay) cartOverlay.classList.add('hidden');
-                if (cartToggle) cartToggle.setAttribute('aria-expanded', 'false');
-            }
+    <script>
+        // Cart behaviour: toggle, render from localStorage 'cart' array (jQuery version)
+        $(function() {
+            const $cartToggle = $('#cartToggle');
+            const $cartDrawer = $('#cartDrawer');
+            const $cartOverlay = $('#cartOverlay');
+            const $cartClose = $('#cartClose');
+            const $cartItems = $('#cartItems');
+            const $cartTotal = $('#cartTotal');
+            const $checkoutBtn = $('#checkoutBtn');
+            const $cartCountBadge = $('#cartCountBadge');
 
             function getCart() {
                 try {
@@ -180,20 +195,20 @@
             }
 
             function updateCartBadge() {
-                if (!cartCountBadge) return;
+                if ($cartCountBadge.length === 0) return;
                 const items = getCart();
                 const totalQty = items.reduce((sum, it) => sum + (Number(it.qty) || 1), 0);
-                cartCountBadge.textContent = String(totalQty);
+                $cartCountBadge.text(String(totalQty));
                 if (totalQty > 0) {
-                    cartCountBadge.classList.remove('hidden');
+                    $cartCountBadge.removeClass('hidden');
                 } else {
-                    cartCountBadge.classList.add('hidden');
+                    $cartCountBadge.addClass('hidden');
                 }
             }
 
             function updateCheckoutState(items) {
-                if (!checkoutBtn) return;
-                checkoutBtn.disabled = !Array.isArray(items) || items.length === 0;
+                if ($checkoutBtn.length === 0) return;
+                $checkoutBtn.prop('disabled', !Array.isArray(items) || items.length === 0);
             }
 
             function formatPrice(p) {
@@ -202,13 +217,23 @@
                 return '\u20AC' + n.toFixed(2);
             }
 
+            function escapeHtml(s) {
+                return String(s).replace(/[&<>\"]/g, c => ({
+                    '&': '&amp;',
+                    '<': '&lt;',
+                    '>': '&gt;',
+                    '"': '&quot;'
+                } [c]));
+            }
+
             function renderCart() {
-                if (!cartItems) return;
+                if ($cartItems.length === 0) return;
                 const items = getCart();
-                cartItems.innerHTML = '';
+                $cartItems.empty();
+
                 if (!items.length) {
-                    cartItems.innerHTML = '<div class="text-sm text-slate-500">Your cart is empty.</div>';
-                    cartTotal.textContent = '\u20AC0.00';
+                    $cartItems.html('<div class="text-sm text-slate-500">Your cart is empty.</div>');
+                    $cartTotal.text('\u20AC0.00');
                     updateCartBadge();
                     updateCheckoutState(items);
                     return;
@@ -220,9 +245,8 @@
                     const price = Number(it.price) || 0;
                     total += price * qty;
 
-                    const itemEl = document.createElement('div');
-                    itemEl.className = 'pb-6 mb-6 border-b border-slate-100 dark:border-slate-200';
-                    itemEl.innerHTML = `
+                    const html = `
+                        <div class="pb-6 mb-6 border-b border-slate-100 dark:border-slate-200">
                             <div class="flex justify-between items-start">
                                 <div class="max-w-[65%]">
                                     <h4 class="font-bold text-slate-900 dark:text-[var(--enterprise-blue)]">${escapeHtml(it.name || 'Item')}</h4>
@@ -237,106 +261,121 @@
                                     <button data-idx="${idx}" class="remove mt-3 text-sm text-red-500">Remove</button>
                                 </div>
                             </div>
-                        `;
-                    cartItems.appendChild(itemEl);
+                        </div>
+                    `;
+                    $cartItems.append(html);
                 });
 
-                cartTotal.textContent = formatPrice(total);
+                $cartTotal.text(formatPrice(total));
                 updateCartBadge();
                 updateCheckoutState(items);
-
-                // attach listeners
-                cartItems.querySelectorAll('.incr').forEach(btn => btn.addEventListener('click', function() {
-                    const idx = Number(this.dataset.idx);
-                    const items = getCart();
-                    items[idx].qty = (items[idx].qty || 1) + 1;
-                    setCart(items);
-                    renderCart();
-                }));
-                cartItems.querySelectorAll('.decr').forEach(btn => btn.addEventListener('click', function() {
-                    const idx = Number(this.dataset.idx);
-                    const items = getCart();
-                    const currentQty = items[idx].qty || 1;
-                    if (currentQty <= 1) {
-                        items.splice(idx, 1);
-                    } else {
-                        items[idx].qty = currentQty - 1;
-                    }
-                    setCart(items);
-                    renderCart();
-                }));
-                cartItems.querySelectorAll('.remove').forEach(btn => btn.addEventListener('click', function() {
-                    const idx = Number(this.dataset.idx);
-                    const items = getCart();
-                    items.splice(idx, 1);
-                    setCart(items);
-                    renderCart();
-                }));
             }
 
-            function escapeHtml(s) {
-                return String(s).replace(/[&<>\"]/g, c => ({
-                    '&': '&amp;',
-                    '<': '&lt;',
-                    '>': '&gt;',
-                    '"': '&quot;'
-                } [c]));
+            function openCart() {
+                if ($cartDrawer.length) $cartDrawer.removeClass('translate-x-full');
+                if ($cartOverlay.length) $cartOverlay.removeClass('hidden');
+                if ($cartToggle.length) $cartToggle.attr('aria-expanded', 'true');
+                renderCart();
             }
 
-            if (cartToggle) cartToggle.addEventListener('click', openCart);
-            if (cartClose) cartClose.addEventListener('click', closeCart);
-            if (cartOverlay) cartOverlay.addEventListener('click', closeCart);
-            if (checkoutBtn) checkoutBtn.addEventListener('click', function() {
+            function closeCart() {
+                if ($cartDrawer.length) $cartDrawer.addClass('translate-x-full');
+                if ($cartOverlay.length) $cartOverlay.addClass('hidden');
+                if ($cartToggle.length) $cartToggle.attr('aria-expanded', 'false');
+            }
+
+            // Event bindings
+            $cartToggle.on('click', openCart);
+            $cartClose.on('click', closeCart);
+            $cartOverlay.on('click', closeCart);
+
+            $checkoutBtn.on('click', function() {
                 const items = getCart();
                 if (!Array.isArray(items) || items.length === 0) return;
                 window.location.href = '/checkout';
             });
-            window.addEventListener('cart:updated', function() {
-                updateCartBadge();
-                updateCheckoutState(getCart());
+
+            // Delegate item actions
+            $cartItems.on('click', '.incr', function() {
+                const idx = Number($(this).data('idx'));
+                const items = getCart();
+                items[idx].qty = (items[idx].qty || 1) + 1;
+                setCart(items);
+                renderCart();
             });
-            window.addEventListener('storage', function(e) {
-                if (e.key === 'cart') {
+
+            $cartItems.on('click', '.decr', function() {
+                const idx = Number($(this).data('idx'));
+                const items = getCart();
+                const currentQty = items[idx].qty || 1;
+                if (currentQty <= 1) {
+                    items.splice(idx, 1);
+                } else {
+                    items[idx].qty = currentQty - 1;
+                }
+                setCart(items);
+                renderCart();
+            });
+
+            $cartItems.on('click', '.remove', function() {
+                const idx = Number($(this).data('idx'));
+                const items = getCart();
+                items.splice(idx, 1);
+                setCart(items);
+                renderCart();
+            });
+
+            // Listen for external cart updates
+            $(window).on('cart:updated', function() {
+                const items = getCart();
+                updateCartBadge();
+                updateCheckoutState(items);
+            });
+
+            $(window).on('storage', function(e) {
+                if (e.originalEvent && e.originalEvent.key === 'cart') {
+                    const items = getCart();
                     updateCartBadge();
-                    updateCheckoutState(getCart());
+                    updateCheckoutState(items);
                 }
             });
 
-            // initial render (if cart present)
-            document.addEventListener('DOMContentLoaded', function() {
-                renderCart();
-                updateCartBadge();
-                updateCheckoutState(getCart());
-            });
+            // Initial render
+            renderCart();
+            updateCartBadge();
+            updateCheckoutState(getCart());
 
             // Account dropdown: toggle behaviour
-            const accountToggle = document.getElementById('accountToggle');
-            const accountMenu = document.getElementById('accountMenu');
-            if (accountToggle && accountMenu) {
-                accountToggle.addEventListener('click', function(e) {
+            const $accountToggle = $('#accountToggle');
+            const $accountMenu = $('#accountMenu');
+
+            if ($accountToggle.length && $accountMenu.length) {
+                $accountToggle.on('click', function(e) {
                     e.stopPropagation();
-                    const open = accountMenu.classList.contains('opacity-100');
+                    const open = $accountMenu.hasClass('opacity-100');
                     if (open) {
-                        accountMenu.classList.add('invisible');
-                        accountMenu.classList.remove('opacity-100');
-                        accountToggle.setAttribute('aria-expanded', 'false');
+                        $accountMenu.addClass('invisible').removeClass('opacity-100');
+                        $accountToggle.attr('aria-expanded', 'false');
                     } else {
-                        accountMenu.classList.remove('invisible');
-                        accountMenu.classList.add('opacity-100');
-                        accountToggle.setAttribute('aria-expanded', 'true');
+                        $accountMenu.removeClass('invisible').addClass('opacity-100');
+                        $accountToggle.attr('aria-expanded', 'true');
                     }
                 });
 
                 // close on outside click
-                document.addEventListener('click', function(ev) {
-                    if (!accountMenu.contains(ev.target) && !accountToggle.contains(ev.target)) {
-                        accountMenu.classList.add('invisible');
-                        accountMenu.classList.remove('opacity-100');
-                        accountToggle.setAttribute('aria-expanded', 'false');
+                $(document).on('click', function(ev) {
+                    if (
+                        !$accountMenu.is(ev.target) &&
+                        $accountMenu.has(ev.target).length === 0 &&
+                        !$accountToggle.is(ev.target) &&
+                        $accountToggle.has(ev.target).length === 0
+                    ) {
+                        $accountMenu.addClass('invisible').removeClass('opacity-100');
+                        $accountToggle.attr('aria-expanded', 'false');
                     }
                 });
             }
-        })();
+        });
     </script>
 
     @stack('scripts')

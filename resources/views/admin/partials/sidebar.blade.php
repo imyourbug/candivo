@@ -27,6 +27,11 @@
             <span class="material-symbols-outlined">article</span>
             <span>Blog</span>
         </a>
+        <a class="{{ in_array($currentRoute, ['admin.issue-types.index', 'admin.issue-types.create', 'admin.issue-types.edit']) ? 'active-sidebar-item text-primary font-semibold' : 'sidebar-item text-slate-600 dark:text-slate-300 font-medium' }} flex items-center gap-3 px-3 py-3 rounded-lg transition-colors"
+            href="{{ route('admin.issue-types.index') }}">
+            <span class="material-symbols-outlined">help</span>
+            <span>Issue Helper</span>
+        </a>
         <a class="sidebar-item flex items-center gap-3 px-3 py-3 rounded-lg text-slate-600 dark:text-slate-300 font-medium transition-colors"
             href="#">
             <span class="material-symbols-outlined">auto_awesome_motion</span>

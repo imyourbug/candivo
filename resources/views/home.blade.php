@@ -576,7 +576,7 @@
                 <div class="lg:w-1/3 p-10 border-l-4 border-blue-600">
                     <h3 class="text-2xl font-bold mb-4">Community is at our core.</h3>
                     <p class="text-slate-600 leading-relaxed mb-6">DI-TOOL has a passionate, engaged community of more than
-                        8 million users from every corner of the world. Discover the DI-TOOL community and the variety of
+                        100K users from every corner of the world. Discover the DI-TOOL community and the variety of
                         programs available for all of our users.</p>
                     <div class="flex flex-wrap gap-6 font-bold text-[#137fec]">
                         <a class="flex items-center gap-2 hover:underline" href="#"><span

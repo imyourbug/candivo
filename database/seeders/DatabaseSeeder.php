@@ -9,6 +9,7 @@ use App\Models\Package;
 use App\Models\Pricing;
 use App\Constants\GlobalConstant;
 use App\Models\Type;
+use App\Models\IssueType;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
@@ -403,5 +404,65 @@ class DatabaseSeeder extends Seeder
                 'currency' => 'EUR',
             ],
         ]);
+
+        // Issue types tree for Help Center sidebar (up to level 5)
+        $this->seedIssueTypes();
+    }
+
+    private function seedIssueTypes(): void
+    {
+        if (IssueType::query()->exists()) {
+            return;
+        }
+
+        // Level 1
+        $whatsNew = IssueType::create(['name' => "Di-tool What's New", 'slug' => 'di-tool-whats-new', 'sort_order' => 0, 'has_url' => false]);
+        $releaseNotes = IssueType::create(['name' => 'Release Notes', 'slug' => 'release-notes', 'sort_order' => 1, 'has_url' => false]);
+        $getStarted = IssueType::create(['name' => 'Get Started videos', 'slug' => 'get-started-videos', 'sort_order' => 2, 'has_url' => false]);
+        $tutorials = IssueType::create(['name' => 'Tutorials', 'slug' => 'tutorials', 'sort_order' => 3, 'has_url' => false]);
+        $helpTopics = IssueType::create(['name' => 'Di-tool Help Topics', 'slug' => 'di-tool-help-topics', 'sort_order' => 4, 'has_url' => false]);
+
+        // Level 2 under Help Topics
+        $inventorBasics = IssueType::create(['parent_id' => $helpTopics->id, 'name' => 'Inventor Basics', 'slug' => 'inventor-basics', 'sort_order' => 0, 'has_url' => false]);
+        $userInterface = IssueType::create(['parent_id' => $helpTopics->id, 'name' => 'User Interface', 'slug' => 'user-interface', 'sort_order' => 1, 'has_url' => false]);
+
+        // Level 3 under Inventor Basics
+        $gettingStarted = IssueType::create(['parent_id' => $inventorBasics->id, 'name' => 'Getting Started', 'slug' => 'getting-started', 'sort_order' => 0, 'has_url' => true, 'description' => 'Getting Started']);
+        $partModeling = IssueType::create(['parent_id' => $inventorBasics->id, 'name' => 'Part Modeling', 'slug' => 'part-modeling', 'sort_order' => 1, 'has_url' => false]);
+
+        // Level 4 under Getting Started
+        $installation = IssueType::create(['parent_id' => $gettingStarted->id, 'name' => 'Installation', 'slug' => 'installation', 'sort_order' => 0, 'has_url' => true]);
+        $firstLaunch = IssueType::create(['parent_id' => $gettingStarted->id, 'name' => 'First Launch', 'slug' => 'first-launch', 'sort_order' => 1, 'has_url' => true]);
+
+        // Level 4 under Part Modeling
+        $sketching = IssueType::create(['parent_id' => $partModeling->id, 'name' => 'Sketching', 'slug' => 'sketching', 'sort_order' => 0, 'has_url' => false]);
+        $features = IssueType::create(['parent_id' => $partModeling->id, 'name' => 'Features', 'slug' => 'features', 'sort_order' => 1, 'has_url' => false]);
+
+        // Level 5 under Sketching
+        IssueType::create(['parent_id' => $sketching->id, 'name' => 'Create Sketch', 'slug' => 'create-sketch', 'sort_order' => 0, 'has_url' => true]);
+        IssueType::create(['parent_id' => $sketching->id, 'name' => 'Dimensions', 'slug' => 'dimensions', 'sort_order' => 1, 'has_url' => true]);
+
+        // Level 5 under Features
+        IssueType::create(['parent_id' => $features->id, 'name' => 'Extrude', 'slug' => 'extrude', 'sort_order' => 0, 'has_url' => true]);
+        IssueType::create(['parent_id' => $features->id, 'name' => 'Revolve', 'slug' => 'revolve', 'sort_order' => 1, 'has_url' => true]);
+
+        // Level 3 under User Interface
+        $aboutHome = IssueType::create(['parent_id' => $userInterface->id, 'name' => 'About Home', 'slug' => 'about-home', 'sort_order' => 0, 'has_url' => false]);
+        IssueType::create(['parent_id' => $userInterface->id, 'name' => 'Browser Panel', 'slug' => 'browser-panel', 'sort_order' => 1, 'has_url' => true]);
+
+        // Level 4 under About Home
+        $aboutRibbon = IssueType::create(['parent_id' => $aboutHome->id, 'name' => 'About the Ribbon', 'slug' => 'about-the-ribbon', 'sort_order' => 0, 'has_url' => false]);
+
+        // Level 5 under About the Ribbon
+        IssueType::create(['parent_id' => $aboutRibbon->id, 'name' => 'To Work with the Ribbon', 'slug' => 'to-work-with-the-ribbon', 'sort_order' => 0, 'has_url' => true]);
+        IssueType::create(['parent_id' => $aboutRibbon->id, 'name' => 'To Work with Icons, Tooltips', 'slug' => 'to-work-with-icons-tooltips', 'sort_order' => 1, 'has_url' => true]);
+        IssueType::create(['parent_id' => $aboutRibbon->id, 'name' => 'To Customize User Commands', 'slug' => 'to-customize-user-commands', 'sort_order' => 2, 'has_url' => true]);
+
+        // More Level 1
+        IssueType::create(['name' => 'Di-tool Browser', 'slug' => 'di-tool-browser', 'sort_order' => 5, 'has_url' => false]);
+        IssueType::create(['name' => 'About Marking Menus', 'slug' => 'about-marking-menus', 'sort_order' => 6, 'has_url' => false]);
+        IssueType::create(['name' => 'To Work with the Navigation Bar', 'slug' => 'to-work-with-navigation-bar', 'sort_order' => 7, 'has_url' => false]);
+        IssueType::create(['name' => 'About Graphics Windows', 'slug' => 'about-graphics-windows', 'sort_order' => 8, 'has_url' => false]);
+        IssueType::create(['name' => 'About InfoCenter', 'slug' => 'about-infocenter', 'sort_order' => 9, 'has_url' => false]);
     }
 }
