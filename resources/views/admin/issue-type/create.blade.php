@@ -14,7 +14,7 @@
     </header>
 
     <div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden max-w-2xl">
-        <form action="{{ route('admin.issue-types.store') }}" method="post" class="p-6 md:p-8">
+        <form id="issue-type-form" action="{{ route('admin.issue-types.store') }}" method="post" class="p-6 md:p-8" novalidate>
             @csrf
             @include('admin.issue-type._form', ['issueType' => null, 'parentOptions' => $parentOptions])
             <div class="mt-8 pt-6 border-t border-slate-200 dark:border-slate-800 flex items-center gap-3">
@@ -31,40 +31,21 @@
 @endsection
 
 @push('admin-styles')
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote-lite.min.css" rel="stylesheet">
     <style>
-        .cke_chrome { border-radius: 0.5rem !important; }
-        .cke_top { border-radius: 0.5rem 0.5rem 0 0 !important; }
-        .cke_bottom { border-radius: 0 0 0.5rem 0.5rem !important; }
-        /* Hide CKEditor upgrade/security notification */
-        .cke_notifications_area { display: none !important; }
+        .note-editor .note-editing-area .note-editable { min-height: 220px; }
     </style>
 @endpush
 
 @push('admin-scripts')
-    <script src="https://cdn.jsdelivr.net/npm/ckeditor4@4.22.1/ckeditor.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote-lite.min.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var textarea = document.getElementById('issue-type-description');
-            if (textarea && typeof CKEDITOR !== 'undefined') {
-                CKEDITOR.replace('issue-type-description', {
+        $(function() {
+            var $textarea = $('#issue-type-description');
+            if ($textarea.length && typeof $.fn.summernote === 'function') {
+                $textarea.summernote({
                     height: 220,
-                    removePlugins: 'elementspath',
-                    resize_enabled: true,
-                    toolbar: [
-                        { name: 'basicstyles', items: ['Bold', 'Italic', 'Underline', 'Strike'] },
-                        { name: 'paragraph', items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent'] },
-                        { name: 'links', items: ['Link', 'Unlink'] },
-                        { name: 'styles', items: ['Format', 'Styles'] },
-                        { name: 'colors', items: ['TextColor', 'BGColor'] },
-                        { name: 'tools', items: ['Maximize'] }
-                    ],
-                    on: {
-                        instanceReady: function(ev) {
-                            ev.editor.on('notificationShow', function(e) {
-                                e.cancel();
-                            }, null, null, 999);
-                        }
-                    }
+                    tabsize: 2
                 });
             }
         });

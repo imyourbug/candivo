@@ -225,8 +225,11 @@
                             <div class="border-t border-slate-200 dark:border-slate-600 pt-6 space-y-4">
                                 <button type="button"
                                     class="getCoreFreeBtn w-full flex items-center justify-center gap-2 rounded-xl bg-[var(--enterprise-blue)] py-4 text-base font-bold text-white transition-all hover:bg-blue-700 active:scale-[0.98] shadow-lg"
-                                    data-package-id="{{ $package->id }}" data-package-name="{{ $packageName }}">
-                                    <span>Get {{ $packageName }}</span>
+                                    data-package-id="{{ $package->id }}" data-package-name="{{ $packageName }}"
+                                    data-download-entity-type="package" data-download-entity-id="{{ $package->id }}"
+                                    data-download-entity-name="{{ $packageName }}">
+                                    <span class="material-symbols-outlined text-xl">download</span>
+                                    <span>Download</span>
                                 </button>
                                 <p
                                     class="flex items-center justify-center gap-2 text-xs text-slate-500 dark:text-slate-400">
@@ -275,49 +278,16 @@
                             @foreach ($toolItems as $idx => $item)
                                 @php
                                     $item = (object) $item;
-                                    $toolName = $item->name ?? '';
-                                    $toolPrice = 0;
-                                    $toolCurrencySymbol = '€';
-                                    $toolPricing = isset($item->pricing)
-                                        ? collect($item->pricing)->sortBy('price')->first()
-                                        : null;
-                                    $toolPrice = $toolPricing ? (float) $toolPricing->price : 0;
-                                    $toolCurrency = $toolPricing?->currency ?? 'EUR';
-                                    $toolCurrencySymbol = $toolCurrency === 'EUR' ? '€' : $toolCurrency . ' ';
-                                    $toolImage =
-                                        isset($item->avatar) && trim((string) $item->avatar) !== ''
-                                            ? trim($item->avatar)
-                                            : $toolImageSources[$idx % count($toolImageSources)];
                                     $hasProductId = isset($item->id);
                                 @endphp
-                                <div class="group bg-white  border-2 border-slate-200  rounded-xl overflow-hidden hover:shadow-lg transition-all {{ $isModel && $hasProductId ? 'cursor-pointer' : '' }}"
-                                    @if ($isModel && $hasProductId) onclick="window.location.href='{{ route('product-detail', $item) }}'"
-                                        role="link" tabindex="0"
-                                        onkeydown="if(event.key === 'Enter'){ window.location.href='{{ route('product-detail', $item) }}'; }" @endif>
-                                    <div class="aspect-square bg-slate-100  p-4">
-                                        <img class="w-full h-full object-contain mix-blend-multiply dark:mix-blend-normal opacity-80 group-hover:scale-110 transition-transform"
-                                            alt="{{ $toolName }}" src="{{ $toolImage }}" />
-                                    </div>
-                                    <div class="p-4">
-                                        <h4 class="font-bold text-sm mb-1 truncate">{{ $toolName }}</h4>
-                                        <div class="flex items-center justify-between">
-                                            <span class="text-[var(--enterprise-blue)] font-bold">
-                                                {{ $toolCurrencySymbol }}{{ number_format($toolPrice, 2) }}
-                                            </span>
-                                            <button
-                                                class="addProductToCartBtn w-8 h-8 rounded-full border border-slate-200  flex items-center justify-center hover:bg-[var(--enterprise-blue)] hover:text-white hover:border-[var(--enterprise-blue)] transition-all"
-                                                onclick="event.stopPropagation();"
-                                                data-product-id="{{ $isModel && $hasProductId ? $item->id : $idx }}"
-                                                data-product-name="{{ $toolName }}"
-                                                data-product-price="{{ number_format((float) $toolPrice, 2, '.', '') }}"
-                                                data-product-currency="{{ $toolCurrencySymbol }}"
-                                                data-product-image="{{ $toolImage }}"
-                                                data-product-detail-url="{{ $isModel && $hasProductId ? route('product-detail', $item) : '' }}">
-                                                <span class="material-symbols-outlined !text-sm">add</span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
+                                @include('components.cards.tool-card', [
+                                    'tool' => $item,
+                                    'idx' => $idx,
+                                    'imageSources' => $toolImageSources,
+                                    'isClickable' => $isModel && $hasProductId,
+                                    'productId' => $isModel && $hasProductId ? $item->id : $idx,
+                                    'detailUrl' => $isModel && $hasProductId ? route('product-detail', $item) : '',
+                                ])
                             @endforeach
                         </div>
                     </div>
@@ -585,51 +555,9 @@
         });
     </script>
     <script>
-        // Lightweight top-right toast for add-to-cart feedback.
-        window.showAddToCartToast = function(message) {
-            let container = document.getElementById('cartToastContainer');
-            if (!container) {
-                container = document.createElement('div');
-                container.id = 'cartToastContainer';
-                container.className = 'fixed top-4 right-4 z-[9999] flex flex-col gap-2 pointer-events-none';
-                document.body.appendChild(container);
-            }
-
-            const toast = document.createElement('div');
-            toast.className =
-                'pointer-events-auto min-w-[220px] max-w-[320px] rounded-lg border border-green-700 bg-green-600 px-4 py-3 text-sm font-medium text-white shadow-lg opacity-0 translate-y-[-8px] transition-all duration-300';
-            toast.textContent = message;
-            container.appendChild(toast);
-
-            requestAnimationFrame(() => {
-                toast.classList.remove('opacity-0', 'translate-y-[-8px]');
-            });
-
-            setTimeout(() => {
-                toast.classList.add('opacity-0', 'translate-y-[-8px]');
-                setTimeout(() => toast.remove(), 300);
-            }, 1800);
-        };
-    </script>
-    <script>
         $(document).ready(function() {
             const $addBtn = $('.addToCartBtn');
             if ($addBtn.length === 0) return;
-
-            const getCart = () => {
-                try {
-                    const raw = localStorage.getItem('cart');
-                    return raw ? JSON.parse(raw) : [];
-                } catch (e) {
-                    return [];
-                }
-            };
-
-            const setCart = (items) => {
-                try {
-                    localStorage.setItem('cart', JSON.stringify(items));
-                } catch (e) {}
-            };
 
             $addBtn.on('click', function() {
                 const $selected = $('.periodBtn.border-primary');
@@ -649,23 +577,9 @@
                     type: 'package',
                     image
                 };
-
-                const items = getCart();
-                const existingIdx = items.findIndex(it =>
-                    String(it.type || 'package') === 'package' &&
-                    String(it.id ?? '') === item.id &&
-                    String(it.period ?? '') === item.period
-                );
-                if (existingIdx >= 0) {
-                    items[existingIdx].qty = (items[existingIdx].qty || 1) + 1;
-                } else {
-                    items.push(item);
-                }
-                setCart(items);
-                window.dispatchEvent(new Event('cart:updated'));
-
-                if (typeof window.showAddToCartToast === 'function') {
-                    window.showAddToCartToast(`${name} added to cart`);
+                if (window.CartCommon) {
+                    window.CartCommon.addPackageItem(item);
+                    window.CartCommon.notifyAdded(name);
                 }
             });
         });
@@ -674,21 +588,6 @@
         $(document).ready(function() {
             const $addProductBtn = $('.addProductToCartBtn');
             if ($addProductBtn.length === 0) return;
-
-            const getCart = () => {
-                try {
-                    const raw = localStorage.getItem('cart');
-                    return raw ? JSON.parse(raw) : [];
-                } catch (e) {
-                    return [];
-                }
-            };
-
-            const setCart = (items) => {
-                try {
-                    localStorage.setItem('cart', JSON.stringify(items));
-                } catch (e) {}
-            };
 
             $addProductBtn.on('click', function() {
                 const id = $(this).data('product-id');
@@ -708,22 +607,9 @@
                     image,
                     detailUrl
                 };
-
-                const items = getCart();
-                const existingIdx = items.findIndex(it =>
-                    String(it.type || 'product') === 'product' &&
-                    String(it.id ?? '') === String(item.id)
-                );
-                if (existingIdx >= 0) {
-                    items[existingIdx].qty = (items[existingIdx].qty || 1) + 1;
-                } else {
-                    items.push(item);
-                }
-                setCart(items);
-                window.dispatchEvent(new Event('cart:updated'));
-
-                if (typeof window.showAddToCartToast === 'function') {
-                    window.showAddToCartToast(`${name} added to cart`);
+                if (window.CartCommon) {
+                    window.CartCommon.addProductItem(item);
+                    window.CartCommon.notifyAdded(name);
                 }
             });
         });
@@ -733,27 +619,16 @@
             const $buyNowBtn = $('.buyNowPackageBtn');
             if ($buyNowBtn.length === 0) return;
 
-            const getCart = () => {
-                try {
-                    const raw = localStorage.getItem('cart');
-                    return raw ? JSON.parse(raw) : [];
-                } catch (e) {
-                    return [];
-                }
-            };
+            $(document).on('click', '.buyNowPackageBtn', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
 
-            const setCart = (items) => {
-                try {
-                    localStorage.setItem('cart', JSON.stringify(items));
-                } catch (e) {}
-            };
-
-            $buyNowBtn.on('click', function() {
                 const $selected = $('.periodBtn[aria-selected="true"]').length ? $(
                     '.periodBtn[aria-selected="true"]') : $('.periodBtn').first();
                 const hasPeriodButtons = $('.periodBtn').length > 0;
-                const price = hasPeriodButtons ? ($selected.data('price') ?? 0) : ($(this).data(
-                    'package-price') ?? $('#packagePrice').text() || 0);
+                const fallbackPriceText = $('#packagePrice').text() || 0;
+                const price = hasPeriodButtons ? ($selected.data('price') ?? 0) : (($(this).data(
+                    'package-price') ?? fallbackPriceText));
                 const duration = hasPeriodButtons ? ($selected.data('duration') ?? '').toString() : ($(this)
                     .data('package-period') ?? '').toString();
                 const name = $(this).data('package-name') || 'Package';
@@ -773,20 +648,16 @@
                     detailUrl
                 };
 
-                const items = getCart();
-                const existingIdx = items.findIndex(it =>
-                    String(it.type || 'package') === 'package' &&
-                    String(it.id ?? '') === item.id &&
-                    String(it.period ?? '') === item.period
-                );
-                if (existingIdx >= 0) {
-                    items[existingIdx].qty = (items[existingIdx].qty || 1) + 1;
+                if (window.CartCommon) {
+                    window.CartCommon.addPackageItem(item);
                 } else {
+                    // Fallback to avoid no-op if shared helper is unavailable.
+                    const raw = localStorage.getItem('cart');
+                    const items = raw ? JSON.parse(raw) : [];
                     items.push(item);
+                    localStorage.setItem('cart', JSON.stringify(items));
                 }
 
-                setCart(items);
-                window.dispatchEvent(new Event('cart:updated'));
                 window.location.href = '/checkout';
             });
         });
@@ -832,10 +703,6 @@
                     .removeClass('border-slate-200 ring-0');
                 showImage(src);
             });
-        });
-
-        $(document).on('click', '.getCoreFreeBtn', function() {
-            $('#downloadModal').removeClass('hidden');
         });
     </script>
 @endpush

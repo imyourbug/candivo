@@ -13,7 +13,7 @@
     <title>@yield('title', 'Di-tool - Premium CAD Solutions')</title>
     <link rel="icon" type="image/png" href="{{ asset('logo.png') }}" />
     {{-- <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script> --}}
-    <script src="/js/tailwind.js"></script>
+    <script src="/js/tailwind.js?v=1"></script>
     <script>
         tailwind.config = {
           darkMode: 'class', 
@@ -73,7 +73,7 @@
         }
 
         .discount-badge {
-            background: linear-gradient(135deg, #10b981, #059669);
+            background: #4c739a;
             box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
         }
 
@@ -126,19 +126,125 @@
             // Show popup on page load if not dismissed
             $('#announcementPopup').fadeIn(300);
 
-            // Close popup on close button or dismiss button
-            $('#announcementPopup').on('click', '.popup-close, .popup-dismiss', function() {
-                // Check if "Don't ask again" is checked
+            function closeAnnouncementPopup() {
                 if ($('#dontAskAgain').is(':checked')) {
                     localStorage.setItem(popupKey, 'true');
                 }
                 $('#announcementPopup').fadeOut(300);
+            }
+
+            $('#announcementPopup').on('click', '.popup-close, .popup-dismiss', function() {
+                closeAnnouncementPopup();
+            });
+
+            $('#announcementPopup').on('click', '.announcement-popup-backdrop', function(e) {
+                if (e.target === this) {
+                    closeAnnouncementPopup();
+                }
             });
         });
 
         $(document).on('click', '.download-modal-close', function() {
             $('#downloadModal').addClass('hidden');
         });
+    </script>
+
+    <script>
+        // Global toast utility for all pages.
+        window.showToast = function(message, type = 'success') {
+            if (!message) return;
+
+            let container = document.getElementById('globalToastContainer');
+            if (!container) {
+                container = document.createElement('div');
+                container.id = 'globalToastContainer';
+                container.className = 'fixed top-4 right-4 z-[9999] flex flex-col gap-2 pointer-events-none';
+                document.body.appendChild(container);
+            }
+
+            const toast = document.createElement('div');
+            const variants = {
+                success: 'border-green-700 bg-green-600 text-white',
+                error: 'border-red-700 bg-red-600 text-white',
+                warning: 'border-amber-700 bg-amber-500 text-white',
+                info: 'border-blue-700 bg-blue-600 text-white',
+            };
+            const variantClass = variants[type] || variants.success;
+            toast.className =
+                `pointer-events-auto min-w-[220px] max-w-[320px] rounded-lg border px-4 py-3 text-sm font-medium shadow-lg opacity-0 translate-y-[-8px] transition-all duration-300 ${variantClass}`;
+            toast.textContent = message;
+            container.appendChild(toast);
+
+            requestAnimationFrame(() => {
+                toast.classList.remove('opacity-0', 'translate-y-[-8px]');
+            });
+
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'translate-y-[-8px]');
+                setTimeout(() => toast.remove(), 300);
+            }, 2200);
+        };
+
+        // Backward compatible helper used by existing pages.
+        window.showAddToCartToast = function(message) {
+            window.showToast(message, 'success');
+        };
+
+        // Shared cart utilities for pages that add items to cart.
+        window.CartCommon = window.CartCommon || {
+            getCart() {
+                try {
+                    const raw = localStorage.getItem('cart');
+                    return raw ? JSON.parse(raw) : [];
+                } catch (e) {
+                    return [];
+                }
+            },
+            setCart(items) {
+                try {
+                    localStorage.setItem('cart', JSON.stringify(items));
+                } catch (e) {}
+            },
+            emitUpdated() {
+                window.dispatchEvent(new Event('cart:updated'));
+            },
+            addProductItem(item) {
+                const items = this.getCart();
+                const existingIdx = items.findIndex(it =>
+                    String(it.type || 'product') === 'product' &&
+                    String(it.id ?? '') === String(item.id)
+                );
+                if (existingIdx >= 0) {
+                    items[existingIdx].qty = (items[existingIdx].qty || 1) + 1;
+                    items[existingIdx].price = item.price;
+                    items[existingIdx].period = item.period;
+                } else {
+                    items.push(item);
+                }
+                this.setCart(items);
+                this.emitUpdated();
+            },
+            addPackageItem(item) {
+                const items = this.getCart();
+                const existingIdx = items.findIndex(it =>
+                    String(it.type || 'package') === 'package' &&
+                    String(it.id ?? '') === String(item.id) &&
+                    String(it.period ?? '') === String(item.period ?? '')
+                );
+                if (existingIdx >= 0) {
+                    items[existingIdx].qty = (items[existingIdx].qty || 1) + 1;
+                } else {
+                    items.push(item);
+                }
+                this.setCart(items);
+                this.emitUpdated();
+            },
+            notifyAdded(name) {
+                if (typeof window.showToast === 'function') {
+                    window.showToast(`${name} added to cart`, 'success');
+                }
+            }
+        };
     </script>
 
     <script>

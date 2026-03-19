@@ -10,6 +10,7 @@ use App\Models\Pricing;
 use App\Constants\GlobalConstant;
 use App\Models\Type;
 use App\Models\IssueType;
+use App\Models\Post;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
@@ -24,11 +25,13 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        User::create([
+        $admin = User::create([
             'name' => 'admin',
             'email' => 'admin@gmail.com',
             'password' => bcrypt('12345678'),
         ]);
+
+        $this->seedHomeBlogPosts($admin);
 
         // Create types
         $coreFreeType = Type::create(['name' => GlobalConstant::TYPE_CORE_FREE, 'code' => GlobalConstant::TYPE_CORE_FREE]);
@@ -407,6 +410,100 @@ class DatabaseSeeder extends Seeder
 
         // Issue types tree for Help Center sidebar (up to level 5)
         $this->seedIssueTypes();
+    }
+
+    /**
+     * Six published posts matching the former home.blade.php Community cards (order 0–2)
+     * and customer-story row (order 3–5), with hero images from the original markup.
+     */
+    private function seedHomeBlogPosts(User $author): void
+    {
+        $posts = [
+            [
+                'title' => 'DI-TOOL for Students',
+                'slug' => 'di-tool-for-students',
+                'excerpt' => 'As the industry standard for design and engineering, DI-TOOL is the perfect software platform for students building real-world skills.',
+                'image' => 'https://www.solidworks.com/sites/default/filesd10/styles/og_image/public/migration/2022-11/solidworks-students-hero-3.jpg?itok=QOWmm9P9',
+                'order' => 0,
+                'body' => <<<'HTML'
+<p>DI-TOOL gives students access to professional-grade 3D CAD, simulation, and collaboration workflows so coursework aligns with what employers expect in mechanical design and engineering.</p>
+<p>From classroom projects to competitions, you can model, test, and document designs with the same mindset used in industry—without compromising on depth or quality.</p>
+HTML,
+            ],
+            [
+                'title' => 'DI-TOOL for Makers',
+                'slug' => 'di-tool-for-makers',
+                'excerpt' => 'DI-TOOL for Makers provides full-functionality 3D CAD tools for personal use. Just $48 USD a year for makers who want serious design power.',
+                'image' => 'https://www.solidworks.com/sites/default/filesd10/styles/og_image/public/2025-01/solidworks-makers-card-thumb.jpg?itok=HM7Y7HF_',
+                'order' => 1,
+                'body' => <<<'HTML'
+<p>Whether you are prototyping at home or building a side project, DI-TOOL for Makers delivers the core modeling, assembly, and drawing tools you need to turn ideas into manufacturable designs.</p>
+<p>An affordable annual option keeps full-featured CAD within reach so you can iterate faster and share files with collaborators or service bureaus.</p>
+HTML,
+            ],
+            [
+                'title' => 'DI-TOOL for Startups Program',
+                'slug' => 'di-tool-for-startups-program',
+                'excerpt' => 'Industry-leading 3D design tools for hardware startups at nominal cost—scale your product development without outgrowing your stack overnight.',
+                'image' => 'https://www.solidworks.com/sites/default/filesd10/styles/og_image/public/migration/opengraph_startup_drone_example1.jpg?itok=U6fjCCos',
+                'order' => 2,
+                'body' => <<<'HTML'
+<p>Hardware startups need speed, clarity, and a toolchain that investors and manufacturing partners recognize. DI-TOOL helps teams move from concept to BOM-ready models with structured workflows.</p>
+<p>The Startups Program is structured to keep costs predictable while you validate product–market fit and grow your engineering headcount.</p>
+HTML,
+            ],
+            [
+                'title' => 'How Metalworks Accelerates Production with DI-TOOL',
+                'slug' => 'customer-story-metalworks',
+                'excerpt' => 'Metalworks, Inc. slashes rework and handoffs by standardizing on DI-TOOL for Inventor automation and drawing delivery.',
+                'image' => 'https://www.3ds.com/assets/invest/styles/card/public/2025-08/metalworks-banner.png.webp?itok=Pa3I3qDD',
+                'order' => 3,
+                'body' => <<<'HTML'
+<p>Metalworks faced growing pressure to deliver fabrication-ready packages on tighter schedules. By adopting DI-TOOL alongside Autodesk Inventor, the team reduced repetitive documentation work and improved consistency across jobs.</p>
+<p>Automations around title blocks, BOM exports, and revision tracking helped engineers stay focused on design changes instead of manual updates—cutting cycle time on repeat builds.</p>
+HTML,
+            ],
+            [
+                'title' => 'Resemin Standardizes Mine Operations Engineering on DI-TOOLS',
+                'slug' => 'customer-story-resemin',
+                'excerpt' => 'DI-TOOLS and a connected design experience help Resemin coordinate complex equipment programs across disciplines and sites.',
+                'image' => 'https://www.3ds.com/assets/invest/styles/card/public/2023-01/resemin-customer-story-banner.jpg.webp?itok=wG1lKOqS',
+                'order' => 4,
+                'body' => <<<'HTML'
+<p>Resemin engineers heavy machinery for demanding underground environments. Unified CAD practices and reusable templates mean fewer errors when specifications change late in a program.</p>
+<p>With DI-TOOLS integrated into their workflow, teams can trace requirements from layout to detail drawings and keep stakeholders aligned on a single source of truth.</p>
+HTML,
+            ],
+            [
+                'title' => 'Best Tugs Takes Hybrid Tow Tractors from Concept to Ramp-Up',
+                'slug' => 'customer-story-best-tugs',
+                'excerpt' => 'BestTugs brings hybrid vehicle innovation to the ramp with DI-TOOL-backed design, validation, and supplier-ready documentation.',
+                'image' => 'https://www.3ds.com/assets/invest/styles/card/public/2025-08/best-tug-top-banner.jpg.webp?itok=cwyJ69xX',
+                'order' => 5,
+                'body' => <<<'HTML'
+<p>BestTugs develops hybrid tow tractors where weight, thermal management, and safety systems must evolve together. DI-TOOL supports rapid iteration as powertrain and chassis teams converge on a buildable architecture.</p>
+<p>From customer-specific options to certification packages, structured data and drawing automation reduce friction as production volumes increase.</p>
+HTML,
+            ],
+        ];
+
+        foreach ($posts as $row) {
+            $alt = htmlspecialchars($row['title'], ENT_QUOTES, 'UTF-8');
+            $content = '<p><img src="' . $row['image'] . '" alt="' . $alt . '"></p>' . $row['body'];
+
+            Post::updateOrCreate(
+                ['slug' => $row['slug']],
+                [
+                    'title' => $row['title'],
+                    'excerpt' => $row['excerpt'],
+                    'content' => $content,
+                    'status' => 'published',
+                    'published_at' => now()->subDays(60 - (int) $row['order']),
+                    'user_id' => $author->id,
+                    'order' => (int) $row['order'],
+                ]
+            );
+        }
     }
 
     private function seedIssueTypes(): void

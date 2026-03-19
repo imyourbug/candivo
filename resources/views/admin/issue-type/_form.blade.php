@@ -24,7 +24,7 @@
             <label for="name" class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1">Name <span class="text-rose-500">*</span></label>
             <input type="text" name="name" id="name" value="{{ old('name', $issueType?->name) }}"
                 class="w-full px-4 py-2.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent @error('name') border-rose-500 @enderror"
-                required />
+                />
             @error('name')
                 <p class="mt-1 text-sm text-rose-500">{{ $message }}</p>
             @enderror
@@ -70,3 +70,48 @@
         @enderror
     </div>
 </div>
+
+@push('admin-scripts')
+    <script>
+        $(function() {
+            const $form = $('#issue-type-form');
+            if (!$form.length) return;
+
+            const $name = $('#name');
+
+            function setIssueErr($field, msg) {
+                $field.toggleClass('border-rose-500', !!msg);
+                let $p = $field.siblings('.js-issue-client-error');
+                if (!$p.length) {
+                    $p = $('<p class="js-issue-client-error text-sm text-rose-500 mt-1"></p>');
+                    $field.after($p);
+                }
+                $p.text(msg || '');
+                if (!msg) { $p.remove(); }
+            }
+
+            function validateIssueName() {
+                const v = ($name.val() || '').trim();
+                if (!v) {
+                    setIssueErr($name, 'Name is required.');
+                    return false;
+                }
+                setIssueErr($name, '');
+                return true;
+            }
+
+            $name.on('input blur', function() { validateIssueName(); });
+
+            $form.on('submit', function(e) {
+                const $desc = $('#issue-type-description');
+                if ($desc.length && typeof $.fn.summernote === 'function') {
+                    $desc.val($desc.summernote('code'));
+                }
+                if (!validateIssueName()) {
+                    e.preventDefault();
+                    return false;
+                }
+            });
+        });
+    </script>
+@endpush

@@ -58,8 +58,7 @@
     <section class="relative h-[850px] w-full overflow-hidden bg-slate-900 group" id="heroCarousel">
         <!-- Slide 1 -->
         <div class="carousel-slide absolute inset-0 transition-opacity duration-1000 opacity-100" data-slide="0">
-            <img alt="Industrial Engineering" class="absolute inset-0 w-full h-full object-cover"
-                src="/images/slides/1.png" />
+            <img alt="Industrial Engineering" class="absolute inset-0 w-full h-full object-cover" src="/images/slides/1.png" />
             <div
                 class="absolute inset-0 bg-gradient-to-r from-[var(--enterprise-blue)]/90 via-[var(--enterprise-blue)]/40 to-transparent">
             </div>
@@ -325,7 +324,8 @@
         $hasActiveTab = $allTypes->contains('name', $tab);
     @endphp
     <section class="max-w-7xl mx-auto px-6 lg:px-16 py-10">
-        <div class="flex w-full flex-wrap items-center justify-center gap-2 p-1.5 bg-white border border-slate-200 rounded-2xl shadow-sm mb-10 max-w-max mx-auto">
+        <div
+            class="flex w-full flex-wrap items-center justify-center gap-2 p-1.5 bg-white border border-slate-200 rounded-2xl shadow-sm mb-10 max-w-max mx-auto">
             @foreach ($allTypes as $type)
                 @php
                     $isActiveTab = $hasActiveTab ? $type->name === $tab : $loop->first;
@@ -351,8 +351,7 @@
                         'High-end extensions for Autodesk Inventor. Streamline your workflow with powerful CAD automation tools.';
                 @endphp
                 <div class="max-w-4xl mx-auto text-center mb-10">
-                    <h2
-                        class="text-4xl lg:text-6xl font-black text-[var(--enterprise-blue)] leading-[1.05] tracking-tight">
+                    <h2 class="text-4xl lg:text-6xl font-black text-[var(--enterprise-blue)] leading-[1.05] tracking-tight">
                         {{ $sectionTitle }}
                     </h2>
                     <p class="text-slate-500 text-lg mt-5 leading-relaxed max-w-3xl mx-auto">
@@ -373,101 +372,10 @@
                         @endif --}}
                         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10">
                             @foreach ($levelPackages as $package)
-                                @php
-                                    $pricing = $package->pricing->sortBy('price')->first();
-                                    $price = $pricing ? (float) $pricing->price : 0;
-                                    $currency = $pricing?->currency ?? 'EUR';
-                                    $currencySymbol = $currency === 'EUR' ? '€' : $currency . ' ';
-                                    $badge = 'Package';
-                                    $fallbackImage =
-                                        $package->avatar ?:
-                                        'https://lh3.googleusercontent.com/aida-public/AB6AXuD0xn8klFRg-K-wRgdq9BzT8p7YQbk6CjpWvfNLtc2vdCkRslFovVEeXhTTPi8n6Wg4kQk6g5XGMAA9Eje2zDvPqgmIT-5DGhYHSfGg8_3ikow9PiqSqnjhbl4vKZrJGIdPvdSeyLeVSba8OMJLs1VMbFXsof6nhoC7sGi9QImZ1nT5NHC9Go5RlZWKq_GowsX26ajNPYPCPWaol77sCdSPRs-kfLoBSSMaOb37ctMPwcUx8bTWWT9eDcj23XJ1ltEnAAZOQQvyBjI';
-                                    $desc = $package->description ?: 'Curated tools for rapid deployment and consistent results.';
-                                    $isCoreFree = $package->type?->name === App\Constants\GlobalConstant::TYPE_CORE_FREE;
-                                    $badgeLabel = $isCoreFree ? 'Free' : $badge;
-                                @endphp
-                                <div
-                                    class="group flex flex-col rounded-[32px] overflow-hidden transition-all duration-500 cursor-pointer {{ $isCoreFree ? 'core-free-card shadow-lg' : 'pro-card shadow-2xl hover:scale-[1.02] ring-1 ring-blue-500/30' }}"
-                                    onclick="window.location.href='{{ route('package-detail', $package) }}'"
-                                    role="button"
-                                    tabindex="0"
-                                    onkeydown="if(event.key==='Enter') window.location.href='{{ route('package-detail', $package) }}'">
-                                    <div
-                                        class="relative aspect-[5/4] overflow-hidden m-3 rounded-[24px] {{ $isCoreFree ? 'bg-slate-50' : '' }}">
-                                        <img alt="{{ $package->name }}"
-                                            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                                            src="{{ $fallbackImage }}" />
-                                        <div class="absolute top-4 left-4">
-                                            <span
-                                                class="{{ $isCoreFree ? 'bg-blue-600 text-white' : 'bg-gradient-to-r from-blue-400 to-blue-600 text-white' }} px-4 py-1.5 rounded-full text-[10px] font-extrabold uppercase tracking-widest shadow-lg">
-                                                {{ $badgeLabel }}
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <div class="p-8 pt-4 flex flex-col flex-1 text-center">
-                                        <h3 class="text-xl {{ $isCoreFree ? 'font-black text-[var(--enterprise-blue)]' : 'font-black text-white' }}">
-                                            {{ $package->name }}
-                                        </h3>
-                                        @if ($isCoreFree)
-                                            <p class="text-slate-600 text-sm mt-3 leading-relaxed">
-                                                {{ $desc }}
-                                            </p>
-                                        @else
-                                            <div class="mt-4 flex justify-center">
-                                                <ul class="space-y-2 text-xs text-blue-100/70 font-medium text-left inline-block">
-                                                    @forelse ($package->products->take(4) as $product)
-                                                        <li class="flex items-center gap-2">
-                                                            <span class="material-symbols-outlined glow-check text-base">check_circle</span>
-                                                            <span class="text-xs text-blue-50 font-semibold tracking-wide uppercase leading-snug">
-                                                                {{ $product->name }}
-                                                            </span>
-                                                        </li>
-                                                    @empty
-                                                        <li class="text-blue-100/70">{{ $desc }}</li>
-                                                    @endforelse
-                                                </ul>
-                                            </div>
-                                        @endif
-                                        <div class="mt-auto pt-8 flex flex-col items-center">
-                                            @php
-                                                $showPrice = !$isCoreFree && $pricing;
-                                            @endphp
-                                            @if ($showPrice)
-                                                <div class="flex flex-col items-center mb-6">
-                                                    <span
-                                                        class="{{ $isCoreFree ? 'text-3xl text-[var(--enterprise-blue)]' : 'text-4xl text-white' }} font-black tracking-tight">
-                                                        {{ $currencySymbol }}{{ number_format($price, 2) }}
-                                                    </span>
-                                                </div>
-                                            @endif
-                                            @if (!$isCoreFree)
-                                                @if ($pricing)
-                                                    <button
-                                                        type="button"
-                                                        onclick="event.stopPropagation();"
-                                                        class="buyPackageNowBtn w-full h-12 text-sm font-black rounded-2xl transition-all shadow-lg hover:bg-blue-700 bg-[#137fec] text-white flex items-center justify-center"
-                                                        data-package-id="{{ $package->id }}" data-bundle-name="{{ $package->name }}"
-                                                        data-bundle-price="{{ $price }}" data-bundle-image="{{ $fallbackImage }}"
-                                                        data-bundle-period="{{ $pricing?->duration_months ?? '' }}"
-                                                        data-bundle-detail-url="{{ route('package-detail', $package) }}"
-                                                        data-bundle-items="{{ $package->products->pluck('name')->implode(',') }}">
-                                                        <span class="inline-flex items-center gap-2">
-                                                            <span class="material-symbols-outlined text-lg">shopping_cart</span>
-                                                            <span>BUY NOW</span>
-                                                        </span>
-                                                    </button>
-                                                @else
-                                                    <button
-                                                        type="button"
-                                                        onclick="window.location.href='{{ route('package-detail', $package) }}'"
-                                                        class="w-full h-12 text-sm font-black rounded-2xl transition-all shadow-lg hover:bg-blue-700 bg-[#137fec] text-white flex items-center justify-center">
-                                                        <span>COMING SOON</span>
-                                                    </button>
-                                                @endif
-                                            @endif
-                                        </div>
-                                    </div>
-                                </div>
+                                @include('components.cards.package-card', [
+                                    'package' => $package,
+                                    'ctaSizeClass' => 'h-12',
+                                ])
                             @endforeach
                         </div>
                     </div>
@@ -483,12 +391,6 @@
 
                 @if ($isStandAloneType)
                     @php
-                        $allStandAloneTools = $type->packages
-                            ->flatMap(function ($pkg) {
-                                return $pkg->products;
-                            })
-                            ->unique('id')
-                            ->values();
                         $standAloneToolImageSources = [
                             'https://lh3.googleusercontent.com/aida-public/AB6AXuADz2fKqgxIvjaTj5-lGjwoNT8MCRI9OeB4VkBT9SfnOC-ejIGeSk2nZSzNi2tc9JY93KvGyMOmiKy8tcO0x3xjIw5jGCzLUci29fvhdZu98X_1JxqPLpbXHZ3Ym4g-7Cl4fUuzlgFhK4dZ2l2swKfmJbPbHDofoao3kqPWr2q94KpXn6N5Qv4CxRwEuB5YLgYmO9Pc1wu_Vi97_Egr6ITV3YeNLW5timi7sAh0xCzyu4iTEQKofUhBqDK_sasUb1I0nsMoYPf8AvQ',
                             'https://lh3.googleusercontent.com/aida-public/AB6AXuA9u23NQRZqmg3IXYfIWNTXAFL7WsUsGqHdoGVLnNdK7IR6NMfqnxmfJ2129c5BEcdDq4ks2W9JKqUKWOmDOKk5cxuBmZlxgqmMvXxJTuq6SPcmruZIWUuDvt3lrP7KkmdtHLj_bzhmC2C66RWM2kgjbnQh-APZToYvnUXF6zKJ46TRkyzrfckVOzzj6S3m5HVpJEgHJUa9ud3-WaHYg-za064cNSOi6VpxM4OaDjBv1VTf8HX2g8VUf_vzzExLjwXkItLbAcjksQQ',
@@ -497,54 +399,26 @@
                         ];
                     @endphp
 
-                    @if ($allStandAloneTools->isNotEmpty())
+                    @if (isset($allTools) && $allTools->isNotEmpty())
                         <div class="mt-12 w-full">
-                            <div class="flex items-center justify-between mb-10">
-                                <h2 class="text-3xl font-bold text-center flex items-center justify-center gap-3 w-full">
+                            <div
+                                class="h-[10px] w-full bg-gradient-to-r from-transparent via-[#137fec]/60 to-transparent mb-10">
+                            </div>
+                            <div class="flex items-center justify-center mb-10">
+                                <h2 class="text-3xl font-bold flex items-center justify-center gap-3 tracking-tight">
                                     <span class="material-symbols-outlined text-primary text-4xl">inventory_2</span>
                                     All Stand-Alone Tools
                                 </h2>
                             </div>
                             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                                @foreach ($allStandAloneTools as $idx => $tool)
-                                    @php
-                                        $toolName = $tool->name ?? '';
-                                        $toolPricing = $tool->pricing->sortBy('price')->first();
-                                        $toolPrice = $toolPricing ? (float) $toolPricing->price : 0;
-                                        $toolCurrency = $toolPricing?->currency ?? 'EUR';
-                                        $toolCurrencySymbol = $toolCurrency === 'EUR' ? '€' : $toolCurrency . ' ';
-                                        $toolImage = (isset($tool->avatar) && trim((string) $tool->avatar) !== '')
-                                            ? trim($tool->avatar)
-                                            : $standAloneToolImageSources[$idx % count($standAloneToolImageSources)];
-                                    @endphp
-                                    <div class="group bg-white border-2 border-slate-200 rounded-xl overflow-hidden hover:shadow-lg transition-all cursor-pointer"
-                                        onclick="window.location.href='{{ route('product-detail', $tool) }}'"
-                                        role="link" tabindex="0"
-                                        onkeydown="if(event.key === 'Enter'){ window.location.href='{{ route('product-detail', $tool) }}'; }">
-                                        <div class="aspect-square bg-slate-100 p-4">
-                                            <img class="w-full h-full object-contain mix-blend-multiply dark:mix-blend-normal opacity-80 group-hover:scale-110 transition-transform"
-                                                alt="{{ $toolName }}" src="{{ $toolImage }}" />
-                                        </div>
-                                        <div class="p-4">
-                                            <h4 class="font-bold text-sm mb-1 truncate">{{ $toolName }}</h4>
-                                            <div class="flex items-center justify-between">
-                                                <span class="text-[var(--enterprise-blue)] font-bold">
-                                                    {{ $toolCurrencySymbol }}{{ number_format($toolPrice, 2) }}
-                                                </span>
-                                                <button
-                                                    class="addProductToCartBtn w-8 h-8 rounded-full border border-slate-200 flex items-center justify-center hover:bg-[var(--enterprise-blue)] hover:text-white hover:border-[var(--enterprise-blue)] transition-all"
-                                                    onclick="event.stopPropagation();"
-                                                    data-product-id="{{ $tool->id }}"
-                                                    data-product-name="{{ $toolName }}"
-                                                    data-product-price="{{ number_format((float) $toolPrice, 2, '.', '') }}"
-                                                    data-product-currency="{{ $toolCurrencySymbol }}"
-                                                    data-product-image="{{ $toolImage }}"
-                                                    data-product-detail-url="{{ route('product-detail', $tool) }}">
-                                                    <span class="material-symbols-outlined !text-sm">add</span>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
+                                @foreach ($allTools as $idx => $tool)
+                                    @include('components.cards.tool-card', [
+                                        'tool' => $tool,
+                                        'idx' => $idx,
+                                        'imageSources' => $standAloneToolImageSources,
+                                        'isClickable' => true,
+                                        'productId' => $tool->id,
+                                    ])
                                 @endforeach
                             </div>
                         </div>
@@ -553,7 +427,7 @@
             </div>
         @endforeach
     </section>
-     <section class="bg-[#002d5b] py-2">
+    <section class="bg-[#002d5b] py-2">
         <div class="max-w-7xl mx-auto px-10 lg:px-16">
             <div
                 class="bg-[#002d5b] rounded-md px-6 py-3 flex flex-col md:flex-row items-center justify-center gap-4 md:gap-6">
@@ -591,42 +465,32 @@
                 </div>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div
-                    class="bg-white rounded-2xl shadow-lg border border-slate-100 overflow-hidden hover:shadow-xl transition-shadow">
-                    <div class="h-48 bg-slate-100 overflow-hidden">
-                        <img alt="Students" class="w-full h-full object-cover"
-                            src="https://www.solidworks.com/sites/default/filesd10/styles/og_image/public/migration/2022-11/solidworks-students-hero-3.jpg?itok=QOWmm9P9">
-                    </div>
-                    <div class="p-6">
-                        <h4 class="font-bold text-xl mb-3">DI-TOOL for Students</h4>
-                        <p class="text-slate-500 text-sm">As the industry standard for design and engineering, DI-TOOL is
-                            the perfect software platform...</p>
-                    </div>
-                </div>
-                <div
-                    class="bg-white rounded-2xl shadow-lg border border-slate-100 overflow-hidden hover:shadow-xl transition-shadow">
-                    <div class="h-48 bg-slate-100 overflow-hidden">
-                        <img alt="Makers" class="w-full h-full object-cover"
-                            src="https://www.solidworks.com/sites/default/filesd10/styles/og_image/public/2025-01/solidworks-makers-card-thumb.jpg?itok=HM7Y7HF_">
-                    </div>
-                    <div class="p-6">
-                        <h4 class="font-bold text-xl mb-3">DI-TOOL for Makers</h4>
-                        <p class="text-slate-500 text-sm">DI-TOOL for Makers provides full-functionality 3D CAD tools for
-                            personal use. Just $48 USD a ...</p>
-                    </div>
-                </div>
-                <div
-                    class="bg-white rounded-2xl shadow-lg border border-slate-100 overflow-hidden hover:shadow-xl transition-shadow">
-                    <div class="h-48 bg-slate-100 overflow-hidden">
-                        <img alt="Startups" class="w-full h-full object-cover"
-                            src="https://www.solidworks.com/sites/default/filesd10/styles/og_image/public/migration/opengraph_startup_drone_example1.jpg?itok=U6fjCCos">
-                    </div>
-                    <div class="p-6">
-                        <h4 class="font-bold text-xl mb-3">DI-TOOL for Startups Program</h4>
-                        <p class="text-slate-500 text-sm">Industry-leading 3D design tools for hardware startups at nominal
-                            cost</p>
-                    </div>
-                </div>
+                @forelse ($homePostsCommunity as $post)
+                    <a href="{{ route('post-detail', $post) }}"
+                        class="group bg-white rounded-2xl shadow-lg border border-slate-100 overflow-hidden hover:shadow-xl transition-shadow block text-left">
+                        <div class="h-48 bg-slate-100 overflow-hidden">
+                            @if ($post->featured_image_url)
+                                <img alt="{{ $post->title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                                    src="{{ $post->featured_image_url }}">
+                            @else
+                                <div
+                                    class="w-full h-full bg-gradient-to-br from-[#137fec] to-[#002d5b] flex items-center justify-center">
+                                    <span class="material-symbols-outlined text-white text-6xl opacity-90">article</span>
+                                </div>
+                            @endif
+                        </div>
+                        <div class="p-6">
+                            <h4 class="font-bold text-xl mb-3 text-slate-900 group-hover:text-[#137fec] transition-colors">
+                                {{ $post->title }}</h4>
+                            <p class="text-slate-500 text-sm line-clamp-3">
+                                {{ \Illuminate\Support\Str::limit(strip_tags($post->excerpt ?: $post->content ?? ''), 160) }}
+                            </p>
+                        </div>
+                    </a>
+                @empty
+                    <p class="md:col-span-3 text-slate-500 text-center py-8">No blog posts yet. Publish posts in the admin
+                        to show them here.</p>
+                @endforelse
             </div>
         </div>
     </section>
@@ -641,33 +505,36 @@
                 <span>ColdSnap</span>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <article class="bg-white rounded-lg p-5 flex gap-4 shadow-lg">
-                    <img alt="Customer Story Metalworks" class="w-36 h-28 rounded object-cover flex-shrink-0"
-                        src="https://www.3ds.com/assets/invest/styles/card/public/2025-08/metalworks-banner.png.webp?itok=Pa3I3qDD">
-                    <div>
-                        <p class="text-slate-500 uppercase tracking-wider text-xs font-bold">Customer Story</p>
-                        <h3 class="text-4xl leading-tight font-black text-slate-900">How Metalworks ...</h3>
-                        <p class="text-slate-600 mt-2">Metalworks, Inc. slashes ...</p>
-                    </div>
-                </article>
-                <article class="bg-white rounded-lg p-5 flex gap-4 shadow-lg">
-                    <img alt="Customer Story Resemin" class="w-36 h-28 rounded object-cover flex-shrink-0"
-                        src="https://www.3ds.com/assets/invest/styles/card/public/2023-01/resemin-customer-story-banner.jpg.webp?itok=wG1lKOqS">
-                    <div>
-                        <p class="text-slate-500 uppercase tracking-wider text-xs font-bold">Customer Story</p>
-                        <h3 class="text-4xl leading-tight font-black text-slate-900">Resemin ...</h3>
-                        <p class="text-slate-600 mt-2">DI-TOOLS and 3DEXPERIENCE ...</p>
-                    </div>
-                </article>
-                <article class="bg-white rounded-lg p-5 flex gap-4 shadow-lg">
-                    <img alt="Customer Story BestTugs" class="w-36 h-28 rounded object-cover flex-shrink-0"
-                        src="https://www.3ds.com/assets/invest/styles/card/public/2025-08/best-tug-top-banner.jpg.webp?itok=cwyJ69xX">
-                    <div>
-                        <p class="text-slate-500 uppercase tracking-wider text-xs font-bold">Customer Story</p>
-                        <h3 class="text-4xl leading-tight font-black text-slate-900">Best Tugs Takes the ...</h3>
-                        <p class="text-slate-600 mt-2">BestTugs brings hybrid vehicle ...</p>
-                    </div>
-                </article>
+                @forelse ($homePostsStories as $post)
+                    <a href="{{ route('post-detail', $post) }}"
+                        class="bg-white rounded-lg p-5 flex gap-4 shadow-lg hover:shadow-xl transition-shadow group">
+                        @if ($post->featured_image_url)
+                            <img alt="{{ $post->title }}" class="w-36 h-28 rounded object-cover flex-shrink-0"
+                                src="{{ $post->featured_image_url }}">
+                        @else
+                            <div
+                                class="w-36 h-28 rounded flex-shrink-0 bg-gradient-to-br from-[#137fec] to-[#002d5b] flex items-center justify-center">
+                                <span class="material-symbols-outlined text-white text-4xl opacity-90">article</span>
+                            </div>
+                        @endif
+                        <div class="min-w-0">
+                            <p class="text-slate-500 uppercase tracking-wider text-xs font-bold">Blog</p>
+                            <h3
+                                class="text-2xl md:text-3xl leading-tight font-black text-slate-900 group-hover:text-[#137fec] transition-colors line-clamp-2">
+                                {{ $post->title }}</h3>
+                            <p class="text-slate-600 mt-2 text-sm line-clamp-2">
+                                {{ \Illuminate\Support\Str::limit(strip_tags($post->excerpt ?: $post->content ?? ''), 120) }}
+                            </p>
+                        </div>
+                    </a>
+                @empty
+                    @if ($homePostsCommunity->isEmpty())
+                        {{-- already shown above --}}
+                    @else
+                        <p class="lg:col-span-3 text-blue-100 text-center py-4 text-sm">Add more published posts to fill this
+                            row (posts 4–6 by home order).</p>
+                    @endif
+                @endforelse
             </div>
         </div>
     </section>
@@ -716,7 +583,7 @@
             </div>
         </div>
     </section> --}}
-     <section class="bg-slate-50 py-32 px-10 lg:px-16">
+    <section class="bg-slate-50 py-32 px-10 lg:px-16">
         <div class="max-w-7xl mx-auto">
             <div class="text-center mb-20">
                 <h2 class="text-4xl lg:text-5xl font-black text-[var(--enterprise-blue)] tracking-tight mb-6">Trusted by
@@ -826,15 +693,50 @@
             const $typePanels = $('.type-panel');
             if ($typeTabs.length === 0 || $typePanels.length === 0) return;
 
-            $typeTabs.on('click', function() {
-                const target = $(this).data('target');
+            let typeTabAutoTimer;
+
+            function activateTypeTab($tab) {
+                const target = $tab.data('target');
                 if (!target) return;
 
                 $typeTabs.removeClass('is-active').attr('aria-selected', 'false');
-                $(this).addClass('is-active').attr('aria-selected', 'true');
+                $tab.addClass('is-active').attr('aria-selected', 'true');
 
                 $typePanels.addClass('hidden');
                 $('#' + target).removeClass('hidden');
+            }
+
+            function getActiveTypeTabIndex() {
+                const $active = $typeTabs.filter('.is-active');
+                if ($active.length) return $typeTabs.index($active);
+                return 0;
+            }
+
+            function advanceTypeTab() {
+                const next = (getActiveTypeTabIndex() + 1) % $typeTabs.length;
+                activateTypeTab($typeTabs.eq(next));
+            }
+
+            function resetTypeTabAutoAdvance() {
+                clearInterval(typeTabAutoTimer);
+                // typeTabAutoTimer = setInterval(advanceTypeTab, 5000);
+                typeTabAutoTimer = setInterval(advanceTypeTab, 30000);
+            }
+
+            $typeTabs.on('click', function() {
+                activateTypeTab($(this));
+                resetTypeTabAutoAdvance();
+            });
+
+            resetTypeTabAutoAdvance();
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('.getCoreFreeBtn').on('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                $('#downloadModal').removeClass('hidden');
             });
         });
     </script>
@@ -842,21 +744,6 @@
         $(document).ready(function() {
             const $buyPackageNowBtn = $('.buyPackageNowBtn');
             if ($buyPackageNowBtn.length === 0) return;
-
-            const getCart = () => {
-                try {
-                    const raw = localStorage.getItem('cart');
-                    return raw ? JSON.parse(raw) : [];
-                } catch (e) {
-                    return [];
-                }
-            };
-
-            const setCart = (items) => {
-                try {
-                    localStorage.setItem('cart', JSON.stringify(items));
-                } catch (e) {}
-            };
 
             $buyPackageNowBtn.on('click', function() {
                 const rawId = $(this).data('package-id');
@@ -877,21 +764,43 @@
                     image,
                     detailUrl
                 };
-
-                const items = getCart();
-                const existingIdx = items.findIndex(it =>
-                    String(it.type || 'package') === 'package' &&
-                    String(it.id ?? '') === item.id &&
-                    String(it.period ?? '') === item.period
-                );
-                if (existingIdx >= 0) {
-                    items[existingIdx].qty = (items[existingIdx].qty || 1) + 1;
-                } else {
-                    items.push(item);
+                if (window.CartCommon) {
+                    window.CartCommon.addPackageItem(item);
                 }
-                setCart(items);
-                window.dispatchEvent(new Event('cart:updated'));
                 window.location.href = '/checkout';
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            const $addProductBtn = $('.addProductToCartBtn');
+            if ($addProductBtn.length === 0) return;
+
+            $addProductBtn.on('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+
+                const id = $(this).data('product-id');
+                const name = $(this).data('product-name') || 'Product';
+                const price = Number($(this).data('product-price')) || 0;
+                const period = ($(this).data('product-currency') || '').trim();
+                const image = $(this).data('product-image') || '';
+                const detailUrl = $(this).data('product-detail-url') || '';
+
+                const item = {
+                    id: `product-${id}`,
+                    name,
+                    price,
+                    period,
+                    qty: 1,
+                    type: 'product',
+                    image,
+                    detailUrl
+                };
+                if (window.CartCommon) {
+                    window.CartCommon.addProductItem(item);
+                    window.CartCommon.notifyAdded(name);
+                }
             });
         });
     </script>
@@ -953,4 +862,3 @@
         });
     </script>
 @endpush
-

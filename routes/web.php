@@ -4,15 +4,21 @@ use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\IssueTypeController as AdminIssueTypeController;
 use App\Http\Controllers\Admin\LoginController as AdminLoginController;
 use App\Http\Controllers\Admin\PostController as AdminPostController;
+use App\Http\Controllers\Admin\OrderController as AdminOrderController;
+use App\Http\Controllers\Admin\PackageController as AdminPackageController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
+use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\ComboController;
+use App\Http\Controllers\DownloadController;
 use App\Http\Controllers\HelpCenterController;
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PackageController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\MollieController;
 use App\Http\Controllers\PaypalController;
 use App\Http\Controllers\ProductController;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 
@@ -33,6 +39,8 @@ Route::get('about', [HomeController::class, 'about'])->name('about');
 Route::get('help-center', [HelpCenterController::class, 'index'])->name('help-center');
 Route::get('product-detail/{product:slug}', [ProductController::class, 'detail'])->name('product-detail');
 Route::get('package-detail/{package:slug}', [PackageController::class, 'detail'])->name('package-detail');
+Route::get('posts/{post:slug}', [PostController::class, 'detail'])->name('post-detail');
+Route::post('download/request', [DownloadController::class, 'sendFreeMail'])->name('download.request');
 
 Route::group(['prefix' => 'issue', 'as' => 'issue.'], function () {
     Route::get('/{slug}', [HelpCenterController::class, 'detail'])->name('detail');
@@ -50,11 +58,21 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
         Route::get('/', [AdminDashboardController::class, 'index'])->name('dashboard');
         Route::post('logout', [AdminLoginController::class, 'logout'])->name('logout');
         Route::resource('products', AdminProductController::class)->except(['show']);
+        Route::resource('packages', AdminPackageController::class)->except(['show']);
         Route::resource('posts', AdminPostController::class)->except(['show']);
         Route::resource('issue-types', AdminIssueTypeController::class)->except(['show']);
+        Route::resource('orders', AdminOrderController::class)->only(['index', 'show', 'update']);
+        Route::resource('users', AdminUserController::class)->except(['show']);
     });
 });
 
-Route::get('test', function () {
-    return view('example');
+Route::get('test', function (Request $request) {
+    // return view('mail.mail-free', [
+    //     'firstItemName' => 'DI Tools',
+    //     'firstItemPeriod' => '1 month',
+    //     'customerName' => 'John Doe',
+    // ]);
+    $view = $request->input('view') ?? 'example';
+
+    return view($view);
 })->name('test');

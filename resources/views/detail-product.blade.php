@@ -207,9 +207,11 @@
                         {{-- Core Free tools: no pricing, only download CTA via Core Free package --}}
                         <div class="border-t border-slate-200 pt-6 space-y-4 text-center">
                             <button type="button"
-                                class="getCoreFreeBtn w-full flex items-center justify-center gap-2 rounded-xl bg-[var(--enterprise-blue)] py-4 text-base font-bold text-white transition-all hover:bg-blue-700 active:scale-[0.98] shadow-lg">
+                                class="getCoreFreeBtn w-full flex items-center justify-center gap-2 rounded-xl bg-[var(--enterprise-blue)] py-4 text-base font-bold text-white transition-all hover:bg-blue-700 active:scale-[0.98] shadow-lg"
+                                data-download-entity-type="product" data-download-entity-id="{{ $product->id }}"
+                                data-download-entity-name="{{ $productName }}">
                                 <span class="material-symbols-outlined text-xl">download</span>
-                                <span>Get Download</span>
+                                <span>Download</span>
                             </button>
                         </div>
                     @else
@@ -270,94 +272,7 @@
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10">
                     @foreach ($product->packages as $pkg)
-                        @php
-                            $pricing = $pkg->pricing->sortBy('price')->first();
-                            $price = $pricing ? (float) $pricing->price : 0;
-                            $currency = $pricing?->currency ?? 'EUR';
-                            $currencySymbol = $currency === 'EUR' ? '€' : $currency . ' ';
-                            $badge = 'Package';
-                            $fallbackImage =
-                                $pkg->avatar ?:
-                                'https://lh3.googleusercontent.com/aida-public/AB6AXuD0xn8klFRg-K-wRgdq9BzT8p7YQbk6CjpWvfNLtc2vdCkRslFovVEeXhTTPi8n6Wg4kQk6g5XGMAA9Eje2zDvPqgmIT-5DGhYHSfGg8_3ikow9PiqSqnjhbl4vKZrJGIdPvdSeyLeVSba8OMJLs1VMbFXsof6nhoC7sGi9QImZ1nT5NHC9Go5RlZWKq_GowsX26ajNPYPCPWaol77sCdSPRs-kfLoBSSMaOb37ctMPwcUx8bTWWT9eDcj23XJ1ltEnAAZOQQvyBjI';
-                            $desc = $pkg->description ?: 'Curated tools for rapid deployment and consistent results.';
-                            $isCoreFree = $pkg->type?->name === App\Constants\GlobalConstant::TYPE_CORE_FREE;
-                            $badgeLabel = $isCoreFree ? 'Free' : $badge;
-                        @endphp
-                        <div class="group flex flex-col rounded-[32px] overflow-hidden transition-all duration-500 cursor-pointer {{ $isCoreFree ? 'core-free-card shadow-lg' : 'pro-card shadow-2xl hover:scale-[1.02] ring-1 ring-blue-500/30' }}"
-                            onclick="window.location.href='{{ route('package-detail', $pkg) }}'" role="button"
-                            tabindex="0"
-                            onkeydown="if(event.key==='Enter') window.location.href='{{ route('package-detail', $pkg) }}'">
-                            <div
-                                class="relative aspect-[5/4] overflow-hidden m-3 rounded-[24px] {{ $isCoreFree ? 'bg-slate-50' : '' }}">
-                                <img alt="{{ $pkg->name }}"
-                                    class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                                    src="{{ $fallbackImage }}" />
-                                <div class="absolute top-4 left-4">
-                                    <span
-                                        class="{{ $isCoreFree ? 'bg-blue-600 text-white' : 'bg-gradient-to-r from-blue-400 to-blue-600 text-white' }} px-4 py-1.5 rounded-full text-[10px] font-extrabold uppercase tracking-widest shadow-lg">
-                                        {{ $badgeLabel }}
-                                    </span>
-                                </div>
-                            </div>
-                            <div class="p-8 pt-4 flex flex-col flex-1 text-center">
-                                <h3
-                                    class="text-xl {{ $isCoreFree ? 'font-black text-[var(--enterprise-blue)]' : 'font-black text-white' }}">
-                                    {{ $pkg->name }}
-                                </h3>
-                                @if ($isCoreFree)
-                                    <p class="text-slate-600 text-sm mt-3 leading-relaxed">
-                                        {{ $desc }}
-                                    </p>
-                                @else
-                                    <div class="mt-4 flex justify-center">
-                                        <ul class="space-y-2 text-xs text-blue-100/70 font-medium text-left inline-block">
-                                            @forelse ($pkg->products->take(4) as $prod)
-                                                <li class="flex items-center gap-2">
-                                                    <span
-                                                        class="material-symbols-outlined glow-check text-base">check_circle</span>
-                                                    <span
-                                                        class="text-xs text-blue-50 font-semibold tracking-wide uppercase leading-snug">
-                                                        {{ $prod->name }}
-                                                    </span>
-                                                </li>
-                                            @empty
-                                                <li class="text-blue-100/70">{{ $desc }}</li>
-                                            @endforelse
-                                        </ul>
-                                    </div>
-                                @endif
-                                <div class="mt-auto pt-8 flex flex-col items-center">
-                                    @if (!$isCoreFree && $pricing)
-                                        <div class="flex flex-col items-center mb-6">
-                                            <span
-                                                class="{{ $isCoreFree ? 'text-3xl text-[var(--enterprise-blue)]' : 'text-4xl text-white' }} font-black tracking-tight">
-                                                {{ $currencySymbol }}{{ number_format($price, 2) }}
-                                            </span>
-                                        </div>
-                                        <button type="button" onclick="event.stopPropagation();"
-                                            class="buyPackageNowBtn w-full py-4 text-sm font-black rounded-2xl transition-all shadow-lg hover:bg-blue-700 bg-[#137fec] text-white"
-                                            data-package-id="{{ $pkg->id }}" data-bundle-name="{{ $pkg->name }}"
-                                            data-bundle-price="{{ $price }}"
-                                            data-bundle-image="{{ $fallbackImage }}"
-                                            data-bundle-period="{{ $pricing?->duration_months ?? '' }}"
-                                            data-bundle-detail-url="{{ route('package-detail', $pkg) }}"
-                                            data-bundle-items="{{ $pkg->products->pluck('name')->implode(',') }}">
-                                            <span class="inline-flex items-center gap-2">
-                                                <span>BUY NOW</span>
-                                                <span class="material-symbols-outlined text-lg">shopping_cart</span>
-                                            </span>
-                                        </button>
-                                    @endif
-                                    @if (!$isCoreFree && !$pricing)
-                                        <button type="button"
-                                            onclick="window.location.href='{{ route('package-detail', $pkg) }}'"
-                                            class="w-full py-4 text-sm font-black rounded-2xl transition-all shadow-lg hover:bg-blue-700 bg-[#137fec] text-white">
-                                            <span>COMING SOON</span>
-                                        </button>
-                                    @endif
-                                </div>
-                            </div>
-                        </div>
+                        @include('components.cards.package-card', ['package' => $pkg, 'ctaSizeClass' => 'py-4'])
                     @endforeach
                 </div>
             </section>
@@ -459,28 +374,6 @@
 
 @push('scripts')
     <script>
-        window.showAddToCartToast = window.showAddToCartToast || function(message) {
-            let container = document.getElementById('cartToastContainer');
-            if (!container) {
-                container = document.createElement('div');
-                container.id = 'cartToastContainer';
-                container.className = 'fixed top-4 right-4 z-[9999] flex flex-col gap-2 pointer-events-none';
-                document.body.appendChild(container);
-            }
-
-            const toast = document.createElement('div');
-            toast.className =
-                'pointer-events-auto min-w-[220px] max-w-[320px] rounded-lg border border-green-700 bg-green-600 px-4 py-3 text-sm font-medium text-white shadow-lg opacity-0 translate-y-[-8px] transition-all duration-300';
-            toast.textContent = message;
-            container.appendChild(toast);
-
-            requestAnimationFrame(() => toast.classList.remove('opacity-0', 'translate-y-[-8px]'));
-            setTimeout(() => {
-                toast.classList.add('opacity-0', 'translate-y-[-8px]');
-                setTimeout(() => toast.remove(), 300);
-            }, 1800);
-        };
-
         $(document).ready(function() {
             const $mainImg = $('#productMainImage');
             const $mainVideo = $('#productMainVideo');
@@ -552,21 +445,6 @@
                 };
             };
 
-            const getCart = () => {
-                try {
-                    const raw = localStorage.getItem('cart');
-                    return raw ? JSON.parse(raw) : [];
-                } catch (e) {
-                    return [];
-                }
-            };
-
-            const setCart = (items) => {
-                try {
-                    localStorage.setItem('cart', JSON.stringify(items));
-                } catch (e) {}
-            };
-
             const upsertProductToCart = ($btn) => {
                 const id = String($btn.data('product-id') || '');
                 const name = $btn.data('product-name') || 'Product';
@@ -589,29 +467,17 @@
                     image,
                     detailUrl
                 };
-
-                const items = getCart();
-                const existingIdx = items.findIndex(it =>
-                    String(it.type || 'product') === 'product' &&
-                    String(it.id || '') === String(item.id)
-                );
-
-                if (existingIdx >= 0) {
-                    items[existingIdx].qty = (items[existingIdx].qty || 1) + 1;
-                    items[existingIdx].price = item.price;
-                    items[existingIdx].period = item.period;
-                } else {
-                    items.push(item);
+                if (window.CartCommon) {
+                    window.CartCommon.addProductItem(item);
                 }
-
-                setCart(items);
-                window.dispatchEvent(new Event('cart:updated'));
                 return name;
             };
 
             $('.addProductToCartBtn').on('click', function() {
                 const name = upsertProductToCart($(this));
-                window.showAddToCartToast(`${name} added to cart`);
+                if (window.CartCommon) {
+                    window.CartCommon.notifyAdded(name);
+                }
             });
 
             $('.buyNowProductBtn').on('click', function() {
@@ -637,27 +503,11 @@
                     image,
                     detailUrl
                 };
-                const items = getCart();
-                const existingIdx = items.findIndex(it =>
-                    String(it.type || 'package') === 'package' &&
-                    String(it.id ?? '') === item.id &&
-                    String(it.period ?? '') === item.period
-                );
-                if (existingIdx >= 0) {
-                    items[existingIdx].qty = (items[existingIdx].qty || 1) + 1;
-                } else {
-                    items.push(item);
+                if (window.CartCommon) {
+                    window.CartCommon.addPackageItem(item);
                 }
-                setCart(items);
-                window.dispatchEvent(new Event('cart:updated'));
                 window.location.href = '/checkout';
             });
-        });
-    </script>
-    <script>
-        // Open Core Free download popup when clicking "Get Download"
-        $(document).on('click', '.getCoreFreeBtn', function() {
-            $('#downloadModal').removeClass('hidden');
         });
     </script>
 @endpush

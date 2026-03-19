@@ -14,7 +14,7 @@
     </header>
 
     <div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden max-w-4xl">
-        <form action="{{ route('admin.products.update', $product) }}" method="post" class="p-6 md:p-8">
+        <form id="admin-product-form" action="{{ route('admin.products.update', $product) }}" method="post" class="p-6 md:p-8" novalidate>
             @csrf
             @method('PUT')
             @include('admin.product._form', ['product' => $product, 'categories' => $categories])

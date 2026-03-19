@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\Pricing;
 use App\Models\Product;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -68,7 +69,11 @@ class ProductController extends Controller
         }
         $validated['product_id'] = $validated['product_id'] ?? 'PRD-' . strtoupper(Str::slug($validated['name'], '_'));
 
-        Product::create($validated);
+        $pricingTiers = $validated['pricing_tiers'] ?? [];
+        unset($validated['pricing_tiers']);
+
+        $product = Product::create($validated);
+        $this->syncProductPricing($product, $pricingTiers);
 
         return redirect()->route('admin.products.index')
             ->with('success', 'Product created successfully.');
@@ -79,6 +84,7 @@ class ProductController extends Controller
      */
     public function edit(Product $product): View
     {
+        $product->load(['pricing']);
         $categories = Category::orderBy('name')->get();
         return view('admin.product.edit', compact('product', 'categories'));
     }
@@ -94,7 +100,11 @@ class ProductController extends Controller
             $validated['slug'] = Str::slug($validated['name']);
         }
 
+        $pricingTiers = $validated['pricing_tiers'] ?? [];
+        unset($validated['pricing_tiers']);
+
         $product->update($validated);
+        $this->syncProductPricing($product, $pricingTiers);
 
         return redirect()->route('admin.products.index')
             ->with('success', 'Product updated successfully.');
@@ -131,12 +141,10 @@ class ProductController extends Controller
             'is_basic' => ['nullable', 'integer', 'in:0,1'],
             'is_professional' => ['nullable', 'integer', 'in:0,1'],
             'is_premium' => ['nullable', 'integer', 'in:0,1'],
-            'duration_1' => ['nullable', 'integer', 'min:0'],
-            'price_duration_1' => ['nullable', 'numeric', 'min:0'],
-            'duration_2' => ['nullable', 'integer', 'min:0'],
-            'price_duration_2' => ['nullable', 'numeric', 'min:0'],
-            'duration_3' => ['nullable', 'integer', 'min:0'],
-            'price_duration_3' => ['nullable', 'numeric', 'min:0'],
+            'pricing_tiers' => ['nullable', 'array'],
+            'pricing_tiers.*.duration_months' => ['nullable', 'integer', 'min:0'],
+            'pricing_tiers.*.price' => ['nullable', 'numeric', 'min:0'],
+            'pricing_tiers.*.currency' => ['nullable', 'string', 'max:10'],
             'avatar' => ['nullable', 'string'],
             'video' => ['nullable', 'string'],
             'images' => ['nullable', 'string'],
@@ -147,5 +155,62 @@ class ProductController extends Controller
             'slug.unique' => 'This URL slug is already in use.',
             'status.required' => 'Please select a status.',
         ]);
+    }
+
+    /**
+     * Replace product pricing rows and mirror first three tiers onto legacy duration_* columns.
+     *
+     * @param  array<int, array<string, mixed>>|null  $tiers
+     */
+    private function syncProductPricing(Product $product, ?array $tiers): void
+    {
+        $product->pricing()->delete();
+
+        $rows = [];
+        foreach ($tiers ?? [] as $row) {
+            $months = isset($row['duration_months']) && $row['duration_months'] !== '' && $row['duration_months'] !== null
+                ? (int) $row['duration_months']
+                : null;
+            $priceRaw = $row['price'] ?? null;
+            $price = $priceRaw !== null && $priceRaw !== '' ? (float) $priceRaw : null;
+            $currency = isset($row['currency']) && is_string($row['currency']) && $row['currency'] !== ''
+                ? $row['currency']
+                : 'EUR';
+
+            if ($months === null || $months < 0) {
+                continue;
+            }
+            if ($price === null || $price < 0) {
+                continue;
+            }
+
+            $rows[$months] = [
+                'duration_months' => $months,
+                'price' => $price,
+                'currency' => $currency,
+            ];
+        }
+
+        $sorted = array_values($rows);
+        usort($sorted, fn ($a, $b) => $a['duration_months'] <=> $b['duration_months']);
+
+        foreach ($sorted as $r) {
+            Pricing::create([
+                'entity_id' => $product->id,
+                'entity_type' => 'product',
+                'duration_months' => $r['duration_months'],
+                'price' => $r['price'],
+                'currency' => $r['currency'],
+            ]);
+        }
+
+        $product->forceFill([
+            'duration_1' => $sorted[0]['duration_months'] ?? null,
+            'price_duration_1' => isset($sorted[0]) ? $sorted[0]['price'] : null,
+            'duration_2' => $sorted[1]['duration_months'] ?? null,
+            'price_duration_2' => isset($sorted[1]) ? $sorted[1]['price'] : null,
+            'duration_3' => $sorted[2]['duration_months'] ?? null,
+            'price_duration_3' => isset($sorted[2]) ? $sorted[2]['price'] : null,
+        ])->save();
     }
 }

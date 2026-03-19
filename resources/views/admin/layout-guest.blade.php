@@ -11,6 +11,7 @@
     @hasSection('guest-footer')
         @yield('guest-footer')
     @endif
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     @stack('admin-scripts')
 </body>
 </html>

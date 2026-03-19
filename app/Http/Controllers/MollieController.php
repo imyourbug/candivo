@@ -22,6 +22,9 @@ class MollieController extends Controller
     {
         $amount = $request->input('order_total');
         $cartData = $request->input('cart_data');
+        $customerContact = trim((string) $request->input('customer_contact', ''));
+        $country = trim((string) $request->input('country', ''));
+        $major = trim((string) $request->input('customer_major', ''));
 
         if ($amount === null || ! is_numeric($amount) || $amount <= 0) {
             return redirect()
@@ -37,7 +40,17 @@ class MollieController extends Controller
                 ->with('error', 'Your cart is empty. Please add items before checkout.');
         }
 
-        $order = $this->orderService->createOrderFromCart($cart, $amount, Order::PAYMENT_MOLLIE);
+        $order = $this->orderService->createOrderFromCart(
+            $cart,
+            $amount,
+            Order::PAYMENT_MOLLIE,
+            'USD',
+            [
+                'email' => $customerContact,
+                'country' => $country,
+                'major' => $major,
+            ]
+        );
 
         $returnUrl = URL::temporarySignedRoute('mollie.success', now()->addHours(1), ['order_id' => $order->id]);
         $cancelUrl = URL::temporarySignedRoute('mollie.cancel', now()->addHours(1), ['order_id' => $order->id]);

@@ -32,61 +32,52 @@
                 </div>
                 <div class="space-y-10">
                     <section>
-                        <div class="flex items-center gap-2 mb-5 text-blue-600">
+                        <div class="flex items-center gap-2 mb-5 text-[#4c739a]">
                             <span class="material-symbols-outlined">alternate_email</span>
                             <h3 class="font-bold uppercase tracking-widest text-xs">Customer Information</h3>
                         </div>
                         <div class="grid grid-cols-1 gap-4">
                             <div class="flex flex-col gap-2">
-                                <label class="text-sm font-semibold text-slate-700 ml-1">Email or Phone</label>
+                                <label class="text-sm font-semibold text-slate-700 ml-1">Email</label>
                                 <input
                                     class="glass-input h-14 rounded-xl px-4 outline-none focus:ring-2 focus:ring-blue-500/20 text-slate-900 placeholder:text-slate-400"
-                                    placeholder="name@company.com" type="text" />
+                                    name="customer_contact" placeholder="name@company.com" type="text" autocomplete="email" />
                             </div>
                         </div>
                     </section>
                     <section>
-                        <div class="flex items-center gap-2 mb-5 text-blue-600">
+                        <div class="flex items-center gap-2 mb-5 text-[#4c739a]">
                             <span class="material-symbols-outlined">local_shipping</span>
                             <h3 class="font-bold uppercase tracking-widest text-xs">Licensing Address</h3>
                         </div>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div class="flex flex-col gap-2 md:col-span-2">
-                                <label class="text-sm font-semibold text-slate-700 ml-1">Full Name</label>
+                                <label class="text-sm font-semibold text-slate-700 ml-1">Country</label>
                                 <input
                                     class="glass-input h-14 rounded-xl px-4 outline-none text-slate-900 placeholder:text-slate-400"
-                                    placeholder="John Doe" type="text" />
+                                    name="country" placeholder="United States" type="text" autocomplete="country-name" />
                             </div>
                             <div class="flex flex-col gap-2 md:col-span-2">
-                                <label class="text-sm font-semibold text-slate-700 ml-1">Street Address</label>
-                                <input
-                                    class="glass-input h-14 rounded-xl px-4 outline-none text-slate-900 placeholder:text-slate-400"
-                                    placeholder="123 Engineering Way" type="text" />
+                                <label class="text-sm font-semibold text-slate-700 ml-1">Major</label>
+                                <select
+                                    class="glass-input h-14 rounded-xl px-4 outline-none text-slate-900"
+                                    name="customer_major">
+                                    <option value="" selected>Select your major</option>
+                                    <option value="computer_science">Computer Science</option>
+                                    <option value="information_technology">Information Technology</option>
+                                    <option value="business_administration">Business Administration</option>
+                                    <option value="marketing">Marketing</option>
+                                    <option value="finance">Finance</option>
+                                    <option value="engineering">Engineering</option>
+                                    <option value="design">Design</option>
+                                    <option value="other">Other</option>
+                                </select>
                             </div>
-                            <div class="flex flex-col gap-2">
-                                <label class="text-sm font-semibold text-slate-700 ml-1">City</label>
-                                <input
-                                    class="glass-input h-14 rounded-xl px-4 outline-none text-slate-900 placeholder:text-slate-400"
-                                    placeholder="San Francisco" type="text" />
-                            </div>
-                            <div class="grid grid-cols-2 gap-4">
-                                <div class="flex flex-col gap-2">
-                                    <label class="text-sm font-semibold text-slate-700 ml-1">State</label>
-                                    <input
-                                        class="glass-input h-14 rounded-xl px-4 outline-none text-slate-900 placeholder:text-slate-400"
-                                        placeholder="CA" type="text" />
-                                </div>
-                                <div class="flex flex-col gap-2">
-                                    <label class="text-sm font-semibold text-slate-700 ml-1">Zip</label>
-                                    <input
-                                        class="glass-input h-14 rounded-xl px-4 outline-none text-slate-900 placeholder:text-slate-400"
-                                        placeholder="94103" type="text" />
-                                </div>
-                            </div>
+                            
                         </div>
                     </section>
                     <section>
-                        <div class="flex items-center gap-2 mb-5 text-blue-600">
+                        <div class="flex items-center gap-2 mb-5 text-[#4c739a]">
                             <span class="material-symbols-outlined">payments</span>
                             <h3 class="font-bold uppercase tracking-widest text-xs">Payment Method</h3>
                         </div>
@@ -96,7 +87,7 @@
                                 <div
                                     class="flex flex-col items-center justify-center p-4 rounded-xl border-2 border-transparent bg-white/40 glass-input peer-checked:border-blue-600 peer-checked:bg-blue-50/50 transition-all">
                                     <span
-                                        class="material-symbols-outlined text-slate-600 group-hover:text-blue-600 mb-1">account_balance_wallet</span>
+                                        class="material-symbols-outlined text-slate-600 group-hover:text-[#4c739a] mb-1">account_balance_wallet</span>
                                     <span
                                         class="text-[10px] font-bold uppercase tracking-tighter text-slate-500">Paypal</span>
                                 </div>
@@ -106,7 +97,7 @@
                                 <div
                                     class="flex flex-col items-center justify-center p-4 rounded-xl border-2 border-transparent bg-white/40 glass-input peer-checked:border-blue-600 peer-checked:bg-blue-50/50 transition-all">
                                     <span
-                                        class="material-symbols-outlined text-slate-600 group-hover:text-blue-600 mb-1">credit_card</span>
+                                        class="material-symbols-outlined text-slate-600 group-hover:text-[#4c739a] mb-1">credit_card</span>
                                     <span
                                         class="text-[10px] font-bold uppercase tracking-tighter text-slate-500">Mollie</span>
                                 </div>
@@ -168,7 +159,7 @@
                                     class="discount-badge text-[10px] text-white font-black px-1.5 py-0.5 rounded uppercase tracking-wide">SAVE
                                     25%</span>
                             </div>
-                            <span class="text-emerald-600 font-bold">-$50.00</span>
+                            <span class="text-[#4c739a] font-bold">-$50.00</span>
                         </div>
                         <div class="flex justify-between items-center">
                             <span class="text-slate-500 font-medium">Processing Fee</span>
@@ -183,21 +174,27 @@
                             <div class="text-right">
                                 <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest mb-1">Total
                                     Savings</p>
-                                <p class="text-emerald-500 font-black text-lg">$50.00</p>
+                                <p class="text-[#4c739a] font-black text-lg">$50.00</p>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="">
-                    <form id="paypal-checkout-form" method="POST" action="{{ route('paypal.handle') }}" class="checkout-form">
+                    <form id="paypal-checkout-form" method="POST" action="{{ route('paypal.handle') }}" class="checkout-form" novalidate>
                         @csrf
                         <input type="hidden" name="order_total" id="order_total" value="0">
                         <input type="hidden" name="cart_data" id="cart_data_paypal" value="">
+                        <input type="hidden" name="customer_contact" id="customer_contact_paypal" value="">
+                        <input type="hidden" name="country" id="country_paypal" value="">
+                        <input type="hidden" name="customer_major" id="customer_major_paypal" value="">
                     </form>
-                    <form id="mollie-checkout-form" method="POST" action="{{ route('mollie.handle') }}" class="checkout-form">
+                    <form id="mollie-checkout-form" method="POST" action="{{ route('mollie.handle') }}" class="checkout-form" novalidate>
                         @csrf
                         <input type="hidden" name="order_total" id="order_total_mollie" value="0">
                         <input type="hidden" name="cart_data" id="cart_data_mollie" value="">
+                        <input type="hidden" name="customer_contact" id="customer_contact_mollie" value="">
+                        <input type="hidden" name="country" id="country_mollie" value="">
+                        <input type="hidden" name="customer_major" id="customer_major_mollie" value="">
                     </form>
                     <div class="flex items-center gap-2 text-slate-500 text-xs font-medium justify-center mb-6">
                         <span class="material-symbols-outlined text-sm">verified_user</span>
@@ -257,6 +254,98 @@
 
             const $orderItemsEl = $('<div/>').addClass('space-y-4 mb-8');
             const $placeOrderBtn = $('#place-order-btn');
+            const $contactInput = $('input[name="customer_contact"]');
+            const $countryInput = $('input[name="country"]');
+            const $majorSelect = $('select[name="customer_major"]');
+
+            /** Last successful checkout details (browser localStorage; same device/profile returns here). */
+            const CHECKOUT_CUSTOMER_STORAGE_KEY = 'candivo_checkout_customer';
+
+            function applyCheckoutCustomerFromStorage() {
+                try {
+                    const raw = localStorage.getItem(CHECKOUT_CUSTOMER_STORAGE_KEY);
+                    if (!raw) return;
+                    const data = JSON.parse(raw);
+                    if (!data || typeof data !== 'object') return;
+                    if (data.customer_contact && $contactInput.length) {
+                        $contactInput.val(String(data.customer_contact));
+                    }
+                    if (data.country && $countryInput.length) {
+                        $countryInput.val(String(data.country));
+                    }
+                    if (data.customer_major && $majorSelect.length) {
+                        $majorSelect.val(String(data.customer_major));
+                    }
+                    if (data.payment_method) {
+                        const pm = String(data.payment_method);
+                        if (pm === 'paypal' || pm === 'mollie') {
+                            $('input[name="payment_method"][value="' + pm + '"]').prop('checked', true);
+                        }
+                    }
+                } catch (e) {}
+            }
+
+            function saveCheckoutCustomerToStorage() {
+                try {
+                    const payload = {
+                        customer_contact: String($contactInput.val() || '').trim(),
+                        country: String($countryInput.val() || '').trim(),
+                        customer_major: String($majorSelect.val() || '').trim(),
+                        payment_method: String($('input[name="payment_method"]:checked').val() || 'paypal')
+                    };
+                    localStorage.setItem(CHECKOUT_CUSTOMER_STORAGE_KEY, JSON.stringify(payload));
+                } catch (e) {}
+            }
+
+            function setFieldError($field, message) {
+                if (!$field.length) return;
+                $field.toggleClass('ring-2 ring-red-400/40 border-red-400', !!message);
+                let $error = $field.siblings('.field-error');
+                if (!$error.length) {
+                    $error = $('<p class="field-error text-xs text-red-500 mt-1"></p>');
+                    $field.after($error);
+                }
+                $error.text(message || '');
+                if (!message) $error.remove();
+            }
+
+            function validateCheckoutForm(showErrors = true) {
+                let isValid = true;
+                const email = String($contactInput.val() || '').trim();
+                const country = String($countryInput.val() || '').trim();
+                const major = String($majorSelect.val() || '').trim();
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+                if (!emailRegex.test(email)) {
+                    isValid = false;
+                    if (showErrors) setFieldError($contactInput, 'Please enter a valid email address.');
+                } else if (showErrors) {
+                    setFieldError($contactInput, '');
+                }
+
+                if (!country) {
+                    isValid = false;
+                    if (showErrors) setFieldError($countryInput, 'Country is required.');
+                } else if (showErrors) {
+                    setFieldError($countryInput, '');
+                }
+
+                if (!major) {
+                    isValid = false;
+                    if (showErrors) setFieldError($majorSelect, 'Please select your major.');
+                } else if (showErrors) {
+                    setFieldError($majorSelect, '');
+                }
+
+                return isValid;
+            }
+
+            applyCheckoutCustomerFromStorage();
+            validateCheckoutForm(false);
+
+            $contactInput.on('input blur change', () => validateCheckoutForm(true));
+            $countryInput.on('input blur change', () => validateCheckoutForm(true));
+            $majorSelect.on('change blur', () => validateCheckoutForm(true));
 
             const getCart = () => {
                 try {
@@ -421,21 +510,40 @@
                 if ($btn.prop('disabled')) return;
                 const method = $('input[name="payment_method"]:checked').val();
                 if (method !== 'mollie' && method !== 'paypal') {
-                    alert('Please select PayPal or Mollie to place your order.');
+                    if (typeof window.showToast === 'function') {
+                        window.showToast('Please select PayPal or Mollie to place your order.', 'warning');
+                    }
                     return;
                 }
+
+                if (!validateCheckoutForm(true)) {
+                    if (typeof window.showToast === 'function') {
+                        window.showToast('Please complete all required fields before placing your order.', 'error');
+                    }
+                    return;
+                }
+
+                saveCheckoutCustomerToStorage();
+
                 $btn.find('.place-order-content').addClass('hidden');
                 $btn.find('.place-order-loading').removeClass('hidden').addClass('flex');
                 $btn.prop('disabled', true);
 
-                const totalStr = $('#order_total').val();
+                let totalStr = $('#order_total').val();
                 const cartStr = JSON.stringify(cart);
                 $('#order_total_mollie').val(totalStr);
                 $('#cart_data_paypal').val(cartStr);
                 $('#cart_data_mollie').val(cartStr);
+                $('#customer_contact_paypal').val(String($contactInput.val() || '').trim());
+                $('#customer_contact_mollie').val(String($contactInput.val() || '').trim());
+                $('#country_paypal').val(String($countryInput.val() || '').trim());
+                $('#country_mollie').val(String($countryInput.val() || '').trim());
+                $('#customer_major_paypal').val(String($majorSelect.val() || '').trim());
+                $('#customer_major_mollie').val(String($majorSelect.val() || '').trim());
                 if (method === 'mollie') {
                     $('#mollie-checkout-form').submit();
                 } else {
+                    $('#order_total').val(totalStr);
                     $('#paypal-checkout-form').submit();
                 }
             });

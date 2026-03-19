@@ -22,6 +22,11 @@
             <span class="material-symbols-outlined">inventory_2</span>
             <span>Products</span>
         </a>
+        <a class="{{ in_array($currentRoute, ['admin.packages.index', 'admin.packages.create', 'admin.packages.edit']) ? 'active-sidebar-item text-primary font-semibold' : 'sidebar-item text-slate-600 dark:text-slate-300 font-medium' }} flex items-center gap-3 px-3 py-3 rounded-lg transition-colors"
+            href="{{ route('admin.packages.index') }}">
+            <span class="material-symbols-outlined">widgets</span>
+            <span>Packages</span>
+        </a>
         <a class="{{ in_array($currentRoute, ['admin.posts.index', 'admin.posts.create', 'admin.posts.edit']) ? 'active-sidebar-item text-primary font-semibold' : 'sidebar-item text-slate-600 dark:text-slate-300 font-medium' }} flex items-center gap-3 px-3 py-3 rounded-lg transition-colors"
             href="{{ route('admin.posts.index') }}">
             <span class="material-symbols-outlined">article</span>
@@ -37,13 +42,13 @@
             <span class="material-symbols-outlined">auto_awesome_motion</span>
             <span>Combos</span>
         </a>
-        <a class="sidebar-item flex items-center gap-3 px-3 py-3 rounded-lg text-slate-600 dark:text-slate-300 font-medium transition-colors"
-            href="#">
-            <span class="material-symbols-outlined">bar_chart</span>
-            <span>Sales</span>
+        <a class="{{ str_starts_with($currentRoute, 'admin.orders') ? 'active-sidebar-item text-primary font-semibold' : 'sidebar-item text-slate-600 dark:text-slate-300 font-medium' }} flex items-center gap-3 px-3 py-3 rounded-lg transition-colors"
+            href="{{ route('admin.orders.index') }}">
+            <span class="material-symbols-outlined">receipt_long</span>
+            <span>Orders</span>
         </a>
-        <a class="sidebar-item flex items-center gap-3 px-3 py-3 rounded-lg text-slate-600 dark:text-slate-300 font-medium transition-colors"
-            href="#">
+        <a class="{{ in_array($currentRoute, ['admin.users.index', 'admin.users.create', 'admin.users.edit']) ? 'active-sidebar-item text-primary font-semibold' : 'sidebar-item text-slate-600 dark:text-slate-300 font-medium' }} flex items-center gap-3 px-3 py-3 rounded-lg transition-colors"
+            href="{{ route('admin.users.index') }}">
             <span class="material-symbols-outlined">group</span>
             <span>Users</span>
         </a>

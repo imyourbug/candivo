@@ -93,15 +93,20 @@ class PostController extends Controller
             $slugRule[] = 'unique:posts,slug';
         }
 
-        return $request->validate([
+        $data = $request->validate([
             'title' => ['required', 'string', 'max:255'],
             'slug' => $slugRule,
             'excerpt' => ['nullable', 'string', 'max:500'],
             'content' => ['nullable', 'string'],
             'status' => ['required', 'string', 'in:draft,published,archived'],
+            'order' => ['nullable', 'integer', 'min:0', 'max:999999'],
         ], [
             'title.required' => 'Title is required.',
             'slug.unique' => 'This URL slug is already in use.',
         ]);
+
+        $data['order'] = (int) ($data['order'] ?? 0);
+
+        return $data;
     }
 }

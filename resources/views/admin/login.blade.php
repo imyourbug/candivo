@@ -30,7 +30,7 @@
                 </div>
             @endif
 
-            <form method="POST" action="{{ route('admin.login') }}" class="space-y-6">
+            <form id="admin-login-form" method="POST" action="{{ route('admin.login') }}" class="space-y-6" novalidate>
                 @csrf
                 <div class="space-y-2">
                     <label class="text-sm font-semibold text-slate-700 dark:text-slate-300" for="email">Email Address</label>
@@ -40,11 +40,11 @@
                             class="w-full pl-11 pr-4 py-3.5 bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-lg text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none @error('email') border-red-500 @enderror"
                             id="email"
                             name="email"
-                            type="email"
+                            type="text"
+                            inputmode="email"
                             value="{{ old('email') }}"
                             placeholder="e.g. admin@di-tool.com"
                             autocomplete="email"
-                            required
                             autofocus
                         />
                     </div>
@@ -63,7 +63,6 @@
                             type="password"
                             placeholder="••••••••"
                             autocomplete="current-password"
-                            required
                         />
                         <button type="button" class="absolute right-4 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 toggle-password" aria-label="Toggle password visibility">
                             <span class="material-symbols-outlined text-[20px]">visibility</span>
@@ -99,16 +98,76 @@
 
 @push('admin-scripts')
 <script>
-    document.querySelector('.toggle-password')?.addEventListener('click', function() {
-        const input = document.getElementById('password');
-        const icon = this.querySelector('.material-symbols-outlined');
-        if (input.type === 'password') {
-            input.type = 'text';
-            icon.textContent = 'visibility_off';
-        } else {
-            input.type = 'password';
-            icon.textContent = 'visibility';
+    $(function() {
+        $('.toggle-password').on('click', function() {
+            const input = document.getElementById('password');
+            const icon = $(this).find('.material-symbols-outlined')[0];
+            if (!input || !icon) return;
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.textContent = 'visibility_off';
+            } else {
+                input.type = 'password';
+                icon.textContent = 'visibility';
+            }
+        });
+
+        const $form = $('#admin-login-form');
+        const $email = $('#email');
+        const $password = $('#password');
+        const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        function setLoginErr($field, msg) {
+            $field.toggleClass('border-red-500', !!msg);
+            const $wrap = $field.closest('.space-y-2');
+            let $p = $wrap.find('.js-login-client-error');
+            if (!$p.length) {
+                $p = $('<p class="js-login-client-error text-sm text-red-500 mt-1"></p>');
+                $wrap.append($p);
+            }
+            $p.text(msg || '');
+            if (!msg) { $p.remove(); }
         }
+
+        function validateLoginFields() {
+            let ok = true;
+            const em = ($email.val() || '').trim();
+            if (!em) {
+                setLoginErr($email, 'Email is required.');
+                ok = false;
+            } else if (!emailRe.test(em)) {
+                setLoginErr($email, 'Please enter a valid email address.');
+                ok = false;
+            } else {
+                setLoginErr($email, '');
+            }
+            const pw = $password.val() || '';
+            if (!pw) {
+                setLoginErr($password, 'Password is required.');
+                ok = false;
+            } else {
+                setLoginErr($password, '');
+            }
+            return ok;
+        }
+
+        $email.on('input blur', function() {
+            const em = ($email.val() || '').trim();
+            if (!em) setLoginErr($email, 'Email is required.');
+            else if (!emailRe.test(em)) setLoginErr($email, 'Please enter a valid email address.');
+            else setLoginErr($email, '');
+        });
+        $password.on('input blur', function() {
+            const pw = $password.val() || '';
+            setLoginErr($password, pw ? '' : 'Password is required.');
+        });
+
+        $form.on('submit', function(e) {
+            if (!validateLoginFields()) {
+                e.preventDefault();
+                return false;
+            }
+        });
     });
 </script>
 @endpush

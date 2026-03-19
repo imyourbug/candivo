@@ -15,13 +15,27 @@ class Post extends Model
         'status',
         'published_at',
         'user_id',
+        'order',
     ];
 
     protected function casts(): array
     {
         return [
             'published_at' => 'datetime',
+            'order' => 'integer',
         ];
+    }
+
+    /**
+     * First <img src="..."> in HTML content, for home cards when no dedicated image field exists.
+     */
+    public function getFeaturedImageUrlAttribute(): ?string
+    {
+        if (preg_match('/<img[^>]+src=["\']([^"\']+)["\']/i', (string) $this->content, $m)) {
+            return $m[1];
+        }
+
+        return null;
     }
 
     public function author(): BelongsTo

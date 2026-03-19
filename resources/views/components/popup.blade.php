@@ -1,4 +1,5 @@
-<div class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-gray-900/60 backdrop-blur-md">
+<div
+    class="announcement-popup-backdrop fixed inset-0 z-50 flex items-center justify-center p-4 bg-gray-900/60 backdrop-blur-md">
     <div class="relative w-full max-w-lg rounded-2xl shadow-2xl overflow-hidden border border-white/10 text-white">
         <div class="absolute inset-0 z-0">
             <img alt="High-tech environment" class="w-full h-full object-cover scale-110 blur-sm brightness-50"
