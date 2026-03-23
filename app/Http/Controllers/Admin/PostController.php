@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Post;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
 
@@ -52,6 +53,10 @@ class PostController extends Controller
         }
         $validated['user_id'] = auth()->id();
 
+        if ($request->hasFile('avatar')) {
+            $validated['avatar'] = $request->file('avatar')->store('posts/avatars', 'public');
+        }
+
         Post::create($validated);
 
         return redirect()->route('admin.posts.index')
@@ -71,6 +76,13 @@ class PostController extends Controller
             $validated['slug'] = Str::slug($validated['title']);
         }
 
+        if ($request->hasFile('avatar')) {
+            if ($post->avatar) {
+                Storage::disk('public')->delete($post->avatar);
+            }
+            $validated['avatar'] = $request->file('avatar')->store('posts/avatars', 'public');
+        }
+
         $post->update($validated);
 
         return redirect()->route('admin.posts.index')
@@ -79,7 +91,11 @@ class PostController extends Controller
 
     public function destroy(Post $post): RedirectResponse
     {
+        if ($post->avatar) {
+            Storage::disk('public')->delete($post->avatar);
+        }
         $post->delete();
+
         return redirect()->route('admin.posts.index')
             ->with('success', 'Post deleted successfully.');
     }
@@ -88,7 +104,7 @@ class PostController extends Controller
     {
         $slugRule = ['nullable', 'string', 'max:255'];
         if ($post) {
-            $slugRule[] = 'unique:posts,slug,' . $post->id;
+            $slugRule[] = 'unique:posts,slug,'.$post->id;
         } else {
             $slugRule[] = 'unique:posts,slug';
         }
@@ -100,6 +116,7 @@ class PostController extends Controller
             'content' => ['nullable', 'string'],
             'status' => ['required', 'string', 'in:draft,published,archived'],
             'order' => ['nullable', 'integer', 'min:0', 'max:999999'],
+            'avatar' => ['nullable', 'image', 'max:3072'],
         ], [
             'title.required' => 'Title is required.',
             'slug.unique' => 'This URL slug is already in use.',

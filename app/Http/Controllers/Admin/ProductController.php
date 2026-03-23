@@ -67,7 +67,9 @@ class ProductController extends Controller
         if (empty($validated['slug'])) {
             $validated['slug'] = Str::slug($validated['name']);
         }
-        $validated['product_id'] = $validated['product_id'] ?? 'PRD-' . strtoupper(Str::slug($validated['name'], '_'));
+        if (empty($validated['product_id'])) {
+            $validated['product_id'] = $this->generateProductId($validated['name'], $validated['slug']);
+        }
 
         $pricingTiers = $validated['pricing_tiers'] ?? [];
         unset($validated['pricing_tiers']);
@@ -98,6 +100,9 @@ class ProductController extends Controller
 
         if (empty($validated['slug'])) {
             $validated['slug'] = Str::slug($validated['name']);
+        }
+        if (empty($validated['product_id'])) {
+            $validated['product_id'] = $this->generateProductId($validated['name'], $validated['slug']);
         }
 
         $pricingTiers = $validated['pricing_tiers'] ?? [];
@@ -212,5 +217,14 @@ class ProductController extends Controller
             'duration_3' => $sorted[2]['duration_months'] ?? null,
             'price_duration_3' => isset($sorted[2]) ? $sorted[2]['price'] : null,
         ])->save();
+    }
+
+    private function generateProductId(string $name, string $slug): string
+    {
+        $nameUpper = strtoupper(Str::slug($name, '_'));
+        $nameUpper = $nameUpper !== '' ? $nameUpper : 'PRODUCT';
+        $slugPart = $slug !== '' ? $slug : Str::slug($name);
+
+        return "PRD-{$nameUpper}-{$slugPart}";
     }
 }

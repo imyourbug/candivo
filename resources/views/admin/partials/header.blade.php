@@ -8,6 +8,11 @@
     </div>
     <div class="flex items-center gap-6">
         <div class="flex items-center gap-2">
+            <button id="admin-theme-toggle" type="button"
+                class="p-2 text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors"
+                title="Toggle theme">
+                <span id="admin-theme-toggle-icon" class="material-symbols-outlined">dark_mode</span>
+            </button>
             <button class="p-2 text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg relative">
                 <span class="material-symbols-outlined">notifications</span>
                 <span class="absolute top-2 right-2 w-2 h-2 bg-primary rounded-full border-2 border-white dark:border-slate-900"></span>

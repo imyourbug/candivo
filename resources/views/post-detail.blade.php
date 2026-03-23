@@ -165,7 +165,7 @@
             </nav>
 
             <div class="grid grid-cols-1 gap-12 lg:grid-cols-12">
-                <article class="lg:col-span-8">
+                <article class="lg:col-span-9">
                     <header class="mb-8">
                         <span
                             class="inline-flex items-center rounded-full bg-[#137fec]/10 px-3 py-1 text-xs font-bold text-[#137fec] mb-4 uppercase tracking-wider">Blog</span>
@@ -210,7 +210,7 @@
                     </div>
                 </article>
 
-                <aside class="lg:col-span-4 space-y-10">
+                <aside class="lg:col-span-3 space-y-10">
                     <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
                         <h3 class="text-sm font-bold text-slate-900 uppercase tracking-widest mb-6">Related articles</h3>
                         @if ($relatedPosts->isEmpty())

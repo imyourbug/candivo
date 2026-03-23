@@ -52,7 +52,9 @@ class PackageController extends Controller
         if (empty($validated['slug'])) {
             $validated['slug'] = Str::slug($validated['name']);
         }
-        $validated['package_id'] = $validated['package_id'] ?? 'PKG-' . strtoupper(Str::slug($validated['name'], '_'));
+        if (empty($validated['package_id'])) {
+            $validated['package_id'] = $this->generatePackageId($validated['name'], $validated['slug']);
+        }
 
         $pricingTiers = $validated['pricing_tiers'] ?? [];
         $productIds = $validated['product_ids'] ?? [];
@@ -81,6 +83,9 @@ class PackageController extends Controller
 
         if (empty($validated['slug'])) {
             $validated['slug'] = Str::slug($validated['name']);
+        }
+        if (empty($validated['package_id'])) {
+            $validated['package_id'] = $this->generatePackageId($validated['name'], $validated['slug']);
         }
 
         $pricingTiers = $validated['pricing_tiers'] ?? [];
@@ -180,5 +185,14 @@ class PackageController extends Controller
                 'currency' => $r['currency'],
             ]);
         }
+    }
+
+    private function generatePackageId(string $name, string $slug): string
+    {
+        $nameUpper = strtoupper(Str::slug($name, '_'));
+        $nameUpper = $nameUpper !== '' ? $nameUpper : 'PACKAGE';
+        $slugPart = $slug !== '' ? $slug : Str::slug($name);
+
+        return "PKG-{$nameUpper}-{$slugPart}";
     }
 }

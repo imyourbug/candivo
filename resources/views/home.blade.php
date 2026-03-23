@@ -450,7 +450,7 @@
                 <div class="lg:w-1/3 p-10 border-l-4 border-blue-600">
                     <h3 class="text-2xl font-bold mb-4">Community is at our core.</h3>
                     <p class="text-slate-600 leading-relaxed mb-6">DI-TOOL has a passionate, engaged community of more than
-                        100K users from every corner of the world. Discover the DI-TOOL community and the variety of
+                        5,000+ users from every corner of the world. Discover the DI-TOOL community and the variety of
                         programs available for all of our users.</p>
                     <div class="flex flex-wrap gap-6 font-bold text-[#137fec]">
                         <a class="flex items-center gap-2 hover:underline" href="#"><span
@@ -466,12 +466,16 @@
             </div>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 @forelse ($homePostsCommunity as $post)
+                    @php
+                        $blogCardImage = $post->avatar_url ?? $post->featured_image_url;
+                    @endphp
                     <a href="{{ route('post-detail', $post) }}"
                         class="group bg-white rounded-2xl shadow-lg border border-slate-100 overflow-hidden hover:shadow-xl transition-shadow block text-left">
                         <div class="h-48 bg-slate-100 overflow-hidden">
-                            @if ($post->featured_image_url)
-                                <img alt="{{ $post->title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                                    src="{{ $post->featured_image_url }}">
+                            @if ($blogCardImage)
+                                <img alt="{{ $post->title }}" width="480" height="192" loading="lazy" decoding="async"
+                                    class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                                    src="{{ $blogCardImage }}">
                             @else
                                 <div
                                     class="w-full h-full bg-gradient-to-br from-[#137fec] to-[#002d5b] flex items-center justify-center">
@@ -482,8 +486,8 @@
                         <div class="p-6">
                             <h4 class="font-bold text-xl mb-3 text-slate-900 group-hover:text-[#137fec] transition-colors">
                                 {{ $post->title }}</h4>
-                            <p class="text-slate-500 text-sm line-clamp-3">
-                                {{ \Illuminate\Support\Str::limit(strip_tags($post->excerpt ?: $post->content ?? ''), 160) }}
+                            <p class="text-slate-500 line-clamp-3 text-sm">
+                                {{ $post->home_preview_text }}
                             </p>
                         </div>
                     </a>
@@ -506,11 +510,15 @@
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 @forelse ($homePostsStories as $post)
+                    @php
+                        $blogCardImage = $post->avatar_url ?? $post->featured_image_url;
+                    @endphp
                     <a href="{{ route('post-detail', $post) }}"
                         class="bg-white rounded-lg p-5 flex gap-4 shadow-lg hover:shadow-xl transition-shadow group">
-                        @if ($post->featured_image_url)
-                            <img alt="{{ $post->title }}" class="w-36 h-28 rounded object-cover flex-shrink-0"
-                                src="{{ $post->featured_image_url }}">
+                        @if ($blogCardImage)
+                            <img alt="{{ $post->title }}" width="144" height="112" loading="lazy" decoding="async"
+                                class="h-28 w-36 flex-shrink-0 rounded object-cover"
+                                src="{{ $blogCardImage }}">
                         @else
                             <div
                                 class="w-36 h-28 rounded flex-shrink-0 bg-gradient-to-br from-[#137fec] to-[#002d5b] flex items-center justify-center">
@@ -522,8 +530,8 @@
                             <h3
                                 class="text-2xl md:text-3xl leading-tight font-black text-slate-900 group-hover:text-[#137fec] transition-colors line-clamp-2">
                                 {{ $post->title }}</h3>
-                            <p class="text-slate-600 mt-2 text-sm line-clamp-2">
-                                {{ \Illuminate\Support\Str::limit(strip_tags($post->excerpt ?: $post->content ?? ''), 120) }}
+                            <p class="mt-2 line-clamp-2 text-sm text-slate-600">
+                                {{ \Illuminate\Support\Str::limit($post->home_preview_text, 120) }}
                             </p>
                         </div>
                     </a>

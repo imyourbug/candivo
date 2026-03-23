@@ -2,19 +2,22 @@
 
 namespace Database\Seeders;
 
-use App\Models\Category;
-use App\Models\User;
-use App\Models\Product;
-use App\Models\Package;
-use App\Models\Pricing;
 use App\Constants\GlobalConstant;
-use App\Models\Type;
+use App\Models\Category;
 use App\Models\IssueType;
+use App\Models\Package;
 use App\Models\Post;
+use App\Models\Pricing;
+use App\Models\Product;
+use App\Models\Type;
+use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use RuntimeException;
+use Throwable;
 
 class DatabaseSeeder extends Seeder
 {
@@ -40,8 +43,8 @@ class DatabaseSeeder extends Seeder
 
         // create products and packages from CSV data
         $csvPath = public_path('Di-Tools.csv');
-        if (!file_exists($csvPath)) {
-            throw new RuntimeException('CSV file not found at: ' . $csvPath);
+        if (! file_exists($csvPath)) {
+            throw new RuntimeException('CSV file not found at: '.$csvPath);
         }
 
         $rows = array_map('str_getcsv', file($csvPath));
@@ -62,11 +65,13 @@ class DatabaseSeeder extends Seeder
 
         $toBool = function (?string $value): int {
             $value = strtoupper(trim((string) $value));
+
             return $value === 'TRUE' ? 1 : 0;
         };
 
         $toPrice = function (?string $value): float {
             $clean = preg_replace('/[^\d.\-]/', '', (string) $value);
+
             return $clean === '' ? 0.0 : (float) $clean;
         };
 
@@ -84,13 +89,14 @@ class DatabaseSeeder extends Seeder
             $productSlug = $baseProductSlug;
             $productSuffix = 2;
             while (in_array($productSlug, $usedProductSlugs, true)) {
-                $productSlug = $baseProductSlug . '-' . $productSuffix;
+                $productSlug = $baseProductSlug.'-'.$productSuffix;
                 $productSuffix++;
             }
             $usedProductSlugs[] = $productSlug;
 
             $parseDuration = function (?string $v): ?int {
                 $v = trim((string) $v);
+
                 return $v === '' ? null : (int) $v;
             };
             $parsePriceDuration = function (?string $v) use ($toPrice): ?float {
@@ -98,6 +104,7 @@ class DatabaseSeeder extends Seeder
                 if ($v === '') {
                     return null;
                 }
+
                 return $toPrice($v) ?: null;
             };
 
@@ -123,7 +130,7 @@ class DatabaseSeeder extends Seeder
                 $isProfessional = $toBool($row[$columns['Professional']] ?? '');
                 $isPremium = $toBool($row[$columns['Premium']] ?? '');
 
-                $productIdCode = 'PRD-' . strtoupper($productSlug);
+                $productIdCode = 'PRD-'.strtoupper(Str::slug($name, '_')).'-'.$productSlug;
                 $isFreeRaw = trim((string) ($row[$columns['IsFree']] ?? ''));
                 $isFree = $isFreeRaw === '1' ? 1 : 0;
 
@@ -179,11 +186,11 @@ class DatabaseSeeder extends Seeder
                     'price_duration_2' => $priceDuration2,
                     'duration_3' => $duration3,
                     'price_duration_3' => $priceDuration3,
-                    'category' => trim($row[$columns['Category']] ?? '')
+                    'category' => trim($row[$columns['Category']] ?? ''),
                 ];
             } else {
                 // Package row (IsTool = 0)
-                $packageIdCode = 'PKG-' . strtoupper($productSlug);
+                $packageIdCode = 'PKG-'.strtoupper(Str::slug($name, '_')).'-'.$productSlug;
                 // dd($row[$columns['Avatar']], $row[$columns['Type']]);
 
                 $package = Package::create([
@@ -300,40 +307,40 @@ class DatabaseSeeder extends Seeder
         $productionDrawingSetPkg = Package::where('slug', 'production-drawing-set')->first();
         $propertyEssentialsSetPkg = Package::where('slug', 'property-essentials-set')->first();
 
-        if ($basicPkg && !empty($basicProducts)) {
+        if ($basicPkg && ! empty($basicProducts)) {
             $basicPkg->products()->attach($basicProducts);
         }
-        if ($expertPkg && !empty($expertProducts)) {
+        if ($expertPkg && ! empty($expertProducts)) {
             $expertPkg->products()->attach($expertProducts);
         }
-        if ($premiumLayerPkg && !empty($premiumLayerProducts)) {
+        if ($premiumLayerPkg && ! empty($premiumLayerProducts)) {
             $premiumLayerPkg->products()->attach($premiumLayerProducts);
         }
-        if ($fileManagerPkg && !empty($fileManagerProducts)) {
+        if ($fileManagerPkg && ! empty($fileManagerProducts)) {
             $fileManagerPkg->products()->attach($fileManagerProducts);
         }
-        if ($drawingExportPkg && !empty($drawingExportProducts)) {
+        if ($drawingExportPkg && ! empty($drawingExportProducts)) {
             $drawingExportPkg->products()->attach($drawingExportProducts);
         }
-        if ($iPropertyQuantityPkg && !empty($iPropertyQuantityProducts)) {
+        if ($iPropertyQuantityPkg && ! empty($iPropertyQuantityProducts)) {
             $iPropertyQuantityPkg->products()->attach($iPropertyQuantityProducts);
         }
-        if ($advancedToolsPkg && !empty($advancedToolsProducts)) {
+        if ($advancedToolsPkg && ! empty($advancedToolsProducts)) {
             $advancedToolsPkg->products()->attach($advancedToolsProducts);
         }
-        if ($assemblyModelingPkg && !empty($assemblyModelingProducts)) {
+        if ($assemblyModelingPkg && ! empty($assemblyModelingProducts)) {
             $assemblyModelingPkg->products()->attach($assemblyModelingProducts);
         }
-        if ($revisionAndReplacePkg && !empty($revisionAndReplaceProducts)) {
+        if ($revisionAndReplacePkg && ! empty($revisionAndReplaceProducts)) {
             $revisionAndReplacePkg->products()->attach($revisionAndReplaceProducts);
         }
-        if ($pdfPublishingSetPkg && !empty($pdfPublishingSetProducts)) {
+        if ($pdfPublishingSetPkg && ! empty($pdfPublishingSetProducts)) {
             $pdfPublishingSetPkg->products()->attach($pdfPublishingSetProducts);
         }
-        if ($productionDrawingSetPkg && !empty($productionDrawingSetProducts)) {
+        if ($productionDrawingSetPkg && ! empty($productionDrawingSetProducts)) {
             $productionDrawingSetPkg->products()->attach($productionDrawingSetProducts);
         }
-        if ($propertyEssentialsSetPkg && !empty($propertyEssentialsSetProducts)) {
+        if ($propertyEssentialsSetPkg && ! empty($propertyEssentialsSetProducts)) {
             $propertyEssentialsSetPkg->products()->attach($propertyEssentialsSetProducts);
         }
 
@@ -360,7 +367,7 @@ class DatabaseSeeder extends Seeder
 
         // Create the Core Free package and attach all Core-Free products
         $coreFreePkg = Package::create([
-            'package_id' => 'PKG-' . strtoupper('core-free'),
+            'package_id' => 'PKG-'.strtoupper(Str::slug('Core Free', '_')).'-core-free',
             'name' => 'Core Free',
             'slug' => 'core-free',
             'level' => 1,
@@ -379,7 +386,7 @@ class DatabaseSeeder extends Seeder
                 $coreFreeProducts[] = $record['model']->id;
             }
         }
-        if (!empty($coreFreeProducts)) {
+        if (! empty($coreFreeProducts)) {
             $coreFreePkg->products()->attach($coreFreeProducts);
         }
 
@@ -413,96 +420,511 @@ class DatabaseSeeder extends Seeder
     }
 
     /**
-     * Six published posts matching the former home.blade.php Community cards (order 0–2)
-     * and customer-story row (order 3–5), with hero images from the original markup.
+     * Published posts: DI-TOOLS trio from *_detail_updated.html (order 0–2); CADINVO carousel B
+     * from B_template_synced_final_*_matchC_nomargin.html (order 3–5). Home can show order 0–5.
+     * Optional avatar_source: remote URL (480px) downloaded into storage/app/public/posts/avatars for post->avatar.
      */
     private function seedHomeBlogPosts(User $author): void
     {
+        $legacySlugs = [
+            'di-tool-for-students',
+            'di-tool-for-makers',
+            'di-tool-for-startups-program',
+            'customer-story-metalworks',
+            'customer-story-resemin',
+            'customer-story-best-tugs',
+        ];
+        Post::query()->whereIn('slug', $legacySlugs)->delete();
+
         $posts = [
             [
-                'title' => 'DI-TOOL for Students',
-                'slug' => 'di-tool-for-students',
-                'excerpt' => 'As the industry standard for design and engineering, DI-TOOL is the perfect software platform for students building real-world skills.',
-                'image' => 'https://www.solidworks.com/sites/default/filesd10/styles/og_image/public/migration/2022-11/solidworks-students-hero-3.jpg?itok=QOWmm9P9',
+                'title' => 'DI-TOOLS for Engineering Teams',
+                'slug' => 'di-tools-for-engineering-teams',
+                'excerpt' => 'Create a more consistent engineering environment where every team member follows the same structure, standards, and workflow logic.',
                 'order' => 0,
-                'body' => <<<'HTML'
-<p>DI-TOOL gives students access to professional-grade 3D CAD, simulation, and collaboration workflows so coursework aligns with what employers expect in mechanical design and engineering.</p>
-<p>From classroom projects to competitions, you can model, test, and document designs with the same mindset used in industry—without compromising on depth or quality.</p>
+                'avatar_source' => 'https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&w=480&q=75',
+                'content' => <<<'HTML'
+<div class="not-prose text-left -mx-2 sm:mx-0 text-slate-700">
+<div class="rounded-3xl overflow-hidden border border-slate-200 bg-white shadow-sm">
+<header class="border-b border-slate-200 bg-white px-6 py-10 md:px-10 md:py-14">
+<div class="grid gap-8 items-center lg:grid-cols-2">
+<div>
+<span class="inline-flex items-center gap-2 rounded-full border border-[#137fec]/25 bg-[#137fec]/10 px-4 py-2 text-xs font-bold uppercase tracking-widest text-[#137fec]">DI-TOOLS for Engineering Teams</span>
+<h2 class="mt-5 text-3xl font-extrabold tracking-tight text-slate-900 leading-tight md:text-5xl">Standardize workflows.<span class="block text-[#137fec]">Scale with confidence.</span></h2>
+<p class="mt-4 max-w-xl text-lg text-slate-600">Create a more consistent engineering environment where every team member follows the same structure, standards, and workflow logic.</p>
+</div>
+<article class="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm">
+<img src="https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&amp;fit=crop&amp;w=1400&amp;q=80" alt="Engineering team collaborating" class="h-64 w-full object-cover md:h-[390px]" width="1400" height="390" />
+<div class="border-t border-slate-100 bg-slate-50 p-6">
+<h3 class="text-xl font-bold text-slate-900">One standard across the team</h3>
+<p class="mt-2 text-sm text-slate-600">Give managers and team leads a clearer system for collaboration, onboarding, and project consistency.</p>
+</div>
+</article>
+</div>
+<div class="mt-10 grid gap-4 md:grid-cols-3">
+<div class="rounded-2xl border border-slate-200 bg-slate-50 p-6">
+<strong class="block text-xl text-[#137fec]">Better alignment</strong>
+<p class="mt-2 text-sm text-slate-600">Bring engineers under one shared way of working instead of relying on individual habits.</p>
+</div>
+<div class="rounded-2xl border border-slate-200 bg-slate-50 p-6">
+<strong class="block text-xl text-[#137fec]">Easier onboarding</strong>
+<p class="mt-2 text-sm text-slate-600">Help new engineers adapt faster with clear structure and shared expectations.</p>
+</div>
+<div class="rounded-2xl border border-slate-200 bg-slate-50 p-6">
+<strong class="block text-xl text-[#137fec]">Scalable teamwork</strong>
+<p class="mt-2 text-sm text-slate-600">Grow projects and teams without losing control over process and consistency.</p>
+</div>
+</div>
+</header>
+<div class="grid gap-6 bg-[#f6f7f8] p-6 md:grid-cols-3 md:gap-8 md:p-10">
+<article class="space-y-8 rounded-2xl border border-slate-200 bg-white p-6 md:col-span-2 md:p-8">
+<section>
+<h2 class="text-2xl font-bold text-slate-900 md:text-3xl">The challenge</h2>
+<p class="mt-3 text-[15.8px] leading-relaxed text-slate-700">As teams grow, different working habits create inconsistency across projects. Team workflow, properties, and outputs start to vary from engineer to engineer, making collaboration harder and scaling more difficult.</p>
+</section>
+<section class="border-t border-slate-200 pt-8">
+<h2 class="text-2xl font-bold text-slate-900 md:text-3xl">What this helps improve</h2>
+<ul class="mt-4 list-none space-y-3 p-0">
+<li class="grid grid-cols-[40px_1fr] gap-4 rounded-2xl border border-slate-200 bg-slate-50 p-4"><span class="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-[#137fec]/10 text-sm font-extrabold text-[#137fec]">01</span><div><strong class="block text-base text-slate-900">Team workflow</strong><span class="text-sm text-slate-600">Keep everyone working under one shared process so projects stay more predictable.</span></div></li>
+<li class="grid grid-cols-[40px_1fr] gap-4 rounded-2xl border border-slate-200 bg-slate-50 p-4"><span class="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-[#137fec]/10 text-sm font-extrabold text-[#137fec]">02</span><div><strong class="block text-base text-slate-900">Shared standards</strong><span class="text-sm text-slate-600">Reduce variation across engineers and create more consistency from one project to the next.</span></div></li>
+<li class="grid grid-cols-[40px_1fr] gap-4 rounded-2xl border border-slate-200 bg-slate-50 p-4"><span class="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-[#137fec]/10 text-sm font-extrabold text-[#137fec]">03</span><div><strong class="block text-base text-slate-900">Team coordination</strong><span class="text-sm text-slate-600">Make collaboration smoother by giving the whole team a clearer structure to follow.</span></div></li>
+</ul>
+</section>
+<section class="border-t border-slate-200 pt-8">
+<h2 class="text-2xl font-bold text-slate-900 md:text-3xl">The result</h2>
+<p class="mt-3 text-[15.8px] leading-relaxed text-slate-700">A more structured team workflow makes collaboration easier, onboarding faster, and engineering delivery more scalable. Instead of depending on personal habits, the whole team works with more consistency and control.</p>
+</section>
+</article>
+<aside class="md:col-span-1">
+<div class="rounded-2xl border border-slate-200 bg-slate-50 p-6">
+<img src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&amp;fit=crop&amp;w=1200&amp;q=80" alt="Engineer working at workstation" class="mb-4 h-56 w-full rounded-2xl object-cover" width="1200" height="236" />
+<h3 class="text-xl font-bold text-slate-900">Built for managers and growing teams</h3>
+<p class="mt-2 text-sm text-slate-600">Support engineering managers with a clearer, more repeatable way to align teams across projects.</p>
+<blockquote class="mt-4 border-l-4 border-[#137fec] rounded-r-2xl bg-[#137fec]/5 py-4 pl-5 pr-4 text-sm text-slate-700 not-italic"><strong class="text-slate-900">DI-TOOLS</strong> helps teams standardize workflows and eliminate manual errors without slowing down delivery.</blockquote>
+</div>
+</aside>
+</div>
+</div>
+</div>
 HTML,
             ],
             [
-                'title' => 'DI-TOOL for Makers',
-                'slug' => 'di-tool-for-makers',
-                'excerpt' => 'DI-TOOL for Makers provides full-functionality 3D CAD tools for personal use. Just $48 USD a year for makers who want serious design power.',
-                'image' => 'https://www.solidworks.com/sites/default/filesd10/styles/og_image/public/2025-01/solidworks-makers-card-thumb.jpg?itok=HM7Y7HF_',
+                'title' => 'DI-TOOLS for Manufacturing Output',
+                'slug' => 'di-tools-for-manufacturing-output',
+                'excerpt' => 'Create production-ready deliverables with cleaner exports, more complete handoff, and fewer output problems before release.',
                 'order' => 1,
-                'body' => <<<'HTML'
-<p>Whether you are prototyping at home or building a side project, DI-TOOL for Makers delivers the core modeling, assembly, and drawing tools you need to turn ideas into manufacturable designs.</p>
-<p>An affordable annual option keeps full-featured CAD within reach so you can iterate faster and share files with collaborators or service bureaus.</p>
+                'avatar_source' => 'https://images.unsplash.com/photo-1565008447742-97f6f38c985c?auto=format&fit=crop&w=480&q=75',
+                'content' => <<<'HTML'
+<div class="not-prose text-left -mx-2 sm:mx-0 text-slate-700">
+<div class="rounded-3xl overflow-hidden border border-slate-200 bg-white shadow-sm">
+<header class="border-b border-slate-200 bg-white px-6 py-10 md:px-10 md:py-14">
+<div class="grid gap-8 items-center lg:grid-cols-2">
+<div>
+<span class="inline-flex items-center gap-2 rounded-full border border-[#137fec]/25 bg-[#137fec]/10 px-4 py-2 text-xs font-bold uppercase tracking-widest text-[#137fec]">DI-TOOLS for Manufacturing Output</span>
+<h2 class="mt-5 text-3xl font-extrabold tracking-tight text-slate-900 leading-tight md:text-5xl">Automate outputs.<span class="block text-[#137fec]">Deliver to production faster.</span></h2>
+<p class="mt-4 max-w-xl text-lg text-slate-600">Create production-ready deliverables with cleaner exports, more complete handoff, and fewer output problems before release.</p>
+</div>
+<article class="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm">
+<img src="https://images.unsplash.com/photo-1565008447742-97f6f38c985c?auto=format&amp;fit=crop&amp;w=1400&amp;q=80" alt="Manufacturing workflow and production planning" class="h-64 w-full object-cover md:h-[390px]" width="1400" height="390" />
+<div class="border-t border-slate-100 bg-slate-50 p-6">
+<h3 class="text-xl font-bold text-slate-900">Built for production handoff</h3>
+<p class="mt-2 text-sm text-slate-600">Give manufacturing and delivery teams the files they need with less ambiguity and fewer last-minute issues.</p>
+</div>
+</article>
+</div>
+<div class="mt-10 grid gap-4 md:grid-cols-3">
+<div class="rounded-2xl border border-slate-200 bg-slate-50 p-6">
+<strong class="block text-xl text-[#137fec]">Cleaner delivery</strong>
+<p class="mt-2 text-sm text-slate-600">Make sure production receives complete, organized deliverables instead of incomplete handoff packages.</p>
+</div>
+<div class="rounded-2xl border border-slate-200 bg-slate-50 p-6">
+<strong class="block text-xl text-[#137fec]">Higher reliability</strong>
+<p class="mt-2 text-sm text-slate-600">Reduce output mistakes that slow down manufacturing and create avoidable rework.</p>
+</div>
+<div class="rounded-2xl border border-slate-200 bg-slate-50 p-6">
+<strong class="block text-xl text-[#137fec]">Smoother release</strong>
+<p class="mt-2 text-sm text-slate-600">Move from design completion to production release with more confidence.</p>
+</div>
+</div>
+</header>
+<div class="grid gap-6 bg-[#f6f7f8] p-6 md:grid-cols-3 md:gap-8 md:p-10">
+<article class="space-y-8 rounded-2xl border border-slate-200 bg-white p-6 md:col-span-2 md:p-8">
+<section>
+<h2 class="text-2xl font-bold text-slate-900 md:text-3xl">The challenge</h2>
+<p class="mt-3 text-[15.8px] leading-relaxed text-slate-700">Production teams do not need more CAD complexity. They need correct files, complete data, and reliable outputs. When exports are inconsistent or incomplete, small handoff issues quickly turn into manufacturing delays.</p>
+</section>
+<section class="border-t border-slate-200 pt-8">
+<h2 class="text-2xl font-bold text-slate-900 md:text-3xl">What this helps deliver</h2>
+<ul class="mt-4 list-none space-y-3 p-0">
+<li class="grid grid-cols-[40px_1fr] gap-4 rounded-2xl border border-slate-200 bg-slate-50 p-4"><span class="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-[#137fec]/10 text-sm font-extrabold text-[#137fec]">01</span><div><strong class="block text-base text-slate-900">Complete outputs</strong><span class="text-sm text-slate-600">Make sure required files are prepared in a clearer and more repeatable delivery process.</span></div></li>
+<li class="grid grid-cols-[40px_1fr] gap-4 rounded-2xl border border-slate-200 bg-slate-50 p-4"><span class="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-[#137fec]/10 text-sm font-extrabold text-[#137fec]">02</span><div><strong class="block text-base text-slate-900">Reliable documentation</strong><span class="text-sm text-slate-600">Keep BOM and supporting information more consistent before handoff to production.</span></div></li>
+<li class="grid grid-cols-[40px_1fr] gap-4 rounded-2xl border border-slate-200 bg-slate-50 p-4"><span class="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-[#137fec]/10 text-sm font-extrabold text-[#137fec]">03</span><div><strong class="block text-base text-slate-900">Production handoff</strong><span class="text-sm text-slate-600">Help manufacturing teams receive the right deliverables with less confusion and less rework.</span></div></li>
+</ul>
+</section>
+<section class="border-t border-slate-200 pt-8">
+<h2 class="text-2xl font-bold text-slate-900 md:text-3xl">The result</h2>
+<p class="mt-3 text-[15.8px] leading-relaxed text-slate-700">The result is a cleaner path from design to manufacturing: fewer missing files, better delivery confidence, and more reliable production release.</p>
+</section>
+</article>
+<aside class="md:col-span-1">
+<div class="rounded-2xl border border-slate-200 bg-slate-50 p-6">
+<img src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&amp;fit=crop&amp;w=1200&amp;q=80" alt="Engineer reviewing manufacturing output" class="mb-4 h-56 w-full rounded-2xl object-cover" width="1200" height="236" />
+<h3 class="text-xl font-bold text-slate-900">Built for production teams</h3>
+<p class="mt-2 text-sm text-slate-600">Support manufacturing readiness with a more dependable output and handoff process.</p>
+<blockquote class="mt-4 border-l-4 border-[#137fec] rounded-r-2xl bg-[#137fec]/5 py-4 pl-5 pr-4 text-sm text-slate-700 not-italic"><strong class="text-slate-900">DI-TOOLS</strong> helps automate exports, BOM, and file delivery for production-ready outputs.</blockquote>
+</div>
+</aside>
+</div>
+</div>
+</div>
 HTML,
             ],
             [
-                'title' => 'DI-TOOL for Startups Program',
-                'slug' => 'di-tool-for-startups-program',
-                'excerpt' => 'Industry-leading 3D design tools for hardware startups at nominal cost—scale your product development without outgrowing your stack overnight.',
-                'image' => 'https://www.solidworks.com/sites/default/filesd10/styles/og_image/public/migration/opengraph_startup_drone_example1.jpg?itok=U6fjCCos',
+                'title' => 'DI-TOOLS for CAD Automation',
+                'slug' => 'di-tools-for-cad-automation',
+                'excerpt' => 'Help engineers spend less time on repetitive CAD work and more time on actual design decisions.',
                 'order' => 2,
-                'body' => <<<'HTML'
-<p>Hardware startups need speed, clarity, and a toolchain that investors and manufacturing partners recognize. DI-TOOL helps teams move from concept to BOM-ready models with structured workflows.</p>
-<p>The Startups Program is structured to keep costs predictable while you validate product–market fit and grow your engineering headcount.</p>
+                'avatar_source' => 'https://images.unsplash.com/photo-1581092335397-9583eb92d232?auto=format&fit=crop&w=480&q=75',
+                'content' => <<<'HTML'
+<div class="not-prose text-left -mx-2 sm:mx-0 text-slate-700">
+<div class="rounded-3xl overflow-hidden border border-slate-200 bg-white shadow-sm">
+<header class="border-b border-slate-200 bg-white px-6 py-10 md:px-10 md:py-14">
+<div class="grid gap-8 items-center lg:grid-cols-2">
+<div>
+<span class="inline-flex items-center gap-2 rounded-full border border-[#137fec]/25 bg-[#137fec]/10 px-4 py-2 text-xs font-bold uppercase tracking-widest text-[#137fec]">DI-TOOLS for CAD Automation</span>
+<h2 class="mt-5 text-3xl font-extrabold tracking-tight text-slate-900 leading-tight md:text-5xl">Eliminate repetitive tasks.<span class="block text-[#137fec]">Automate your CAD workflow.</span></h2>
+<p class="mt-4 max-w-xl text-lg text-slate-600">Help engineers spend less time on repetitive CAD work and more time on actual design decisions.</p>
+</div>
+<article class="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm">
+<img src="https://images.unsplash.com/photo-1581092335397-9583eb92d232?auto=format&amp;fit=crop&amp;w=1400&amp;q=80" alt="CAD workflow and engineering automation" class="h-64 w-full object-cover md:h-[390px]" width="1400" height="390" />
+<div class="border-t border-slate-100 bg-slate-50 p-6">
+<h3 class="text-xl font-bold text-slate-900">Built for daily CAD work</h3>
+<p class="mt-2 text-sm text-slate-600">Reduce the constant clicks, repeated steps, and manual updates that slow down everyday engineering work.</p>
+</div>
+</article>
+</div>
+<div class="mt-10 grid gap-4 md:grid-cols-3">
+<div class="rounded-2xl border border-slate-200 bg-slate-50 p-6">
+<strong class="block text-xl text-[#137fec]">Less manual work</strong>
+<p class="mt-2 text-sm text-slate-600">Take repetitive steps out of the workflow so engineers can focus on design.</p>
+</div>
+<div class="rounded-2xl border border-slate-200 bg-slate-50 p-6">
+<strong class="block text-xl text-[#137fec]">More productivity</strong>
+<p class="mt-2 text-sm text-slate-600">Turn time-consuming CAD routines into a faster and more practical daily workflow.</p>
+</div>
+<div class="rounded-2xl border border-slate-200 bg-slate-50 p-6">
+<strong class="block text-xl text-[#137fec]">Faster execution</strong>
+<p class="mt-2 text-sm text-slate-600">Move through engineering tasks faster without wasting time on repeated actions.</p>
+</div>
+</div>
+</header>
+<div class="grid gap-6 bg-[#f6f7f8] p-6 md:grid-cols-3 md:gap-8 md:p-10">
+<article class="space-y-8 rounded-2xl border border-slate-200 bg-white p-6 md:col-span-2 md:p-8">
+<section>
+<h2 class="text-2xl font-bold text-slate-900 md:text-3xl">The challenge</h2>
+<p class="mt-3 text-[15.8px] leading-relaxed text-slate-700">Engineers often spend too much time exporting files, renaming outputs, updating data, and repeating the same CAD actions again and again. These tasks do not add design value, but they consume time every day.</p>
+</section>
+<section class="border-t border-slate-200 pt-8">
+<h2 class="text-2xl font-bold text-slate-900 md:text-3xl">What this helps reduce</h2>
+<ul class="mt-4 list-none space-y-3 p-0">
+<li class="grid grid-cols-[40px_1fr] gap-4 rounded-2xl border border-slate-200 bg-slate-50 p-4"><span class="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-[#137fec]/10 text-sm font-extrabold text-[#137fec]">01</span><div><strong class="block text-base text-slate-900">Repeated steps</strong><span class="text-sm text-slate-600">Cut down repetitive actions that make everyday CAD work slower and more frustrating.</span></div></li>
+<li class="grid grid-cols-[40px_1fr] gap-4 rounded-2xl border border-slate-200 bg-slate-50 p-4"><span class="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-[#137fec]/10 text-sm font-extrabold text-[#137fec]">02</span><div><strong class="block text-base text-slate-900">Manual updates</strong><span class="text-sm text-slate-600">Reduce time spent changing the same data over and over by hand.</span></div></li>
+<li class="grid grid-cols-[40px_1fr] gap-4 rounded-2xl border border-slate-200 bg-slate-50 p-4"><span class="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-[#137fec]/10 text-sm font-extrabold text-[#137fec]">03</span><div><strong class="block text-base text-slate-900">Admin-heavy CAD work</strong><span class="text-sm text-slate-600">Spend less time on file handling and more time on real engineering work.</span></div></li>
+</ul>
+</section>
+<section class="border-t border-slate-200 pt-8">
+<h2 class="text-2xl font-bold text-slate-900 md:text-3xl">The result</h2>
+<p class="mt-3 text-[15.8px] leading-relaxed text-slate-700">Engineers work faster, deal with less repetition, and spend more time designing instead of managing routine CAD tasks.</p>
+</section>
+</article>
+<aside class="md:col-span-1">
+<div class="rounded-2xl border border-slate-200 bg-slate-50 p-6">
+<img src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&amp;fit=crop&amp;w=1200&amp;q=80" alt="Engineer working with CAD system" class="mb-4 h-56 w-full rounded-2xl object-cover" width="1200" height="236" />
+<h3 class="text-xl font-bold text-slate-900">Built for engineers in daily use</h3>
+<p class="mt-2 text-sm text-slate-600">Create a more practical workflow for engineers who want to move faster with less manual overhead.</p>
+<blockquote class="mt-4 border-l-4 border-[#137fec] rounded-r-2xl bg-[#137fec]/5 py-4 pl-5 pr-4 text-sm text-slate-700 not-italic"><strong class="text-slate-900">DI-TOOLS</strong> helps eliminate repetitive CAD tasks and build scalable automation workflows.</blockquote>
+</div>
+</aside>
+</div>
+</div>
+</div>
 HTML,
             ],
             [
-                'title' => 'How Metalworks Accelerates Production with DI-TOOL',
-                'slug' => 'customer-story-metalworks',
-                'excerpt' => 'Metalworks, Inc. slashes rework and handoffs by standardizing on DI-TOOL for Inventor automation and drawing delivery.',
-                'image' => 'https://www.3ds.com/assets/invest/styles/card/public/2025-08/metalworks-banner.png.webp?itok=Pa3I3qDD',
+                'title' => 'CADINVO: 64% Faster from Request to Drawing',
+                'slug' => 'cadinvo-64-percent-faster-request-to-drawing',
+                'excerpt' => 'For drawing offices and Inventor teams—how CADINVO combines engineering support, automation, and process to shorten the path from request to drawing.',
                 'order' => 3,
-                'body' => <<<'HTML'
-<p>Metalworks faced growing pressure to deliver fabrication-ready packages on tighter schedules. By adopting DI-TOOL alongside Autodesk Inventor, the team reduced repetitive documentation work and improved consistency across jobs.</p>
-<p>Automations around title blocks, BOM exports, and revision tracking helped engineers stay focused on design changes instead of manual updates—cutting cycle time on repeat builds.</p>
+                'avatar_source' => 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=480&q=75',
+                'content' => <<<'HTML'
+<div class="not-prose text-left -mx-2 sm:mx-0 text-slate-700">
+<div class="rounded-3xl overflow-hidden border border-slate-200 bg-white shadow-sm">
+<header class="border-b border-slate-200 bg-white px-6 py-10 md:px-10 md:py-14">
+<div class="grid gap-8 items-center lg:grid-cols-2">
+<div>
+<span class="inline-flex items-center gap-2 rounded-full border border-[#137fec]/25 bg-[#137fec]/10 px-4 py-2 text-xs font-bold uppercase tracking-widest text-[#137fec]">For drawing offices &amp; Inventor teams</span>
+<h2 class="mt-5 text-3xl font-extrabold tracking-tight text-slate-900 leading-tight md:text-5xl">64% faster.<span class="block text-[#137fec]">From request to drawing.</span></h2>
+<p class="mt-4 max-w-xl text-lg text-slate-600">How CADINVO combines engineering support, automation, and process so your team moves from customer request to released drawings with less friction.</p>
+</div>
+<article class="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm">
+<img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&amp;fit=crop&amp;w=1400&amp;q=80" alt="Engineering drawings and planning" class="h-64 w-full object-cover md:h-[390px]" width="1400" height="390" />
+<div class="border-t border-slate-100 bg-slate-50 p-6">
+<h3 class="text-xl font-bold text-slate-900">Engineering, automation &amp; process—together</h3>
+<p class="mt-2 text-sm text-slate-600">CADINVO is built for teams that need speed without sacrificing standards: one coherent path from intake to deliverable.</p>
+</div>
+</article>
+</div>
+<div class="mt-10 grid gap-4 md:grid-cols-3">
+<div class="rounded-2xl border border-slate-200 bg-slate-50 p-6">
+<strong class="block text-xl text-[#137fec]">Faster turnaround</strong>
+<p class="mt-2 text-sm text-slate-600">Shrink the gap between incoming work and drawings your shop can build from.</p>
+</div>
+<div class="rounded-2xl border border-slate-200 bg-slate-50 p-6">
+<strong class="block text-xl text-[#137fec]">Repeatable flow</strong>
+<p class="mt-2 text-sm text-slate-600">Replace ad-hoc handoffs with a process your whole office can rely on.</p>
+</div>
+<div class="rounded-2xl border border-slate-200 bg-slate-50 p-6">
+<strong class="block text-xl text-[#137fec]">Inventor-native</strong>
+<p class="mt-2 text-sm text-slate-600">Support tuned for Autodesk Inventor teams and drawing-office reality.</p>
+</div>
+</div>
+</header>
+<div class="grid gap-6 bg-[#f6f7f8] p-6 md:grid-cols-3 md:gap-8 md:p-10">
+<article class="space-y-8 rounded-2xl border border-slate-200 bg-white p-6 md:col-span-2 md:p-8">
+<section>
+<h2 class="text-2xl font-bold text-slate-900 md:text-3xl">Why “request to drawing” matters</h2>
+<p class="mt-3 text-[15.8px] leading-relaxed text-slate-700">Every delay between a customer or internal request and a clean, buildable drawing costs capacity. CADINVO focuses on that span: engineering support where you need hands, automation where the work is repetitive, and process so the team stays aligned.</p>
+</section>
+<section class="border-t border-slate-200 pt-8">
+<h2 class="text-2xl font-bold text-slate-900 md:text-3xl">What you get</h2>
+<ul class="mt-4 list-none space-y-3 p-0">
+<li class="grid grid-cols-[40px_1fr] gap-4 rounded-2xl border border-slate-200 bg-slate-50 p-4"><span class="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-[#137fec]/10 text-sm font-extrabold text-[#137fec]">01</span><div><strong class="block text-base text-slate-900">Clear intake</strong><span class="text-sm text-slate-600">Structure how requests become work so nothing sits in email limbo.</span></div></li>
+<li class="grid grid-cols-[40px_1fr] gap-4 rounded-2xl border border-slate-200 bg-slate-50 p-4"><span class="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-[#137fec]/10 text-sm font-extrabold text-[#137fec]">02</span><div><strong class="block text-base text-slate-900">Engineering muscle</strong><span class="text-sm text-slate-600">Modeling, assembly, and detailing support when your drawing office is at capacity.</span></div></li>
+<li class="grid grid-cols-[40px_1fr] gap-4 rounded-2xl border border-slate-200 bg-slate-50 p-4"><span class="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-[#137fec]/10 text-sm font-extrabold text-[#137fec]">03</span><div><strong class="block text-base text-slate-900">Automation layer</strong><span class="text-sm text-slate-600">DI-TOOLS and iLogic-style routines to cut manual steps on every order.</span></div></li>
+</ul>
+</section>
+<section class="border-t border-slate-200 pt-8">
+<h2 class="text-2xl font-bold text-slate-900 md:text-3xl">CADINVO in one line</h2>
+<p class="mt-3 text-[15.8px] leading-relaxed text-slate-700"><strong class="text-slate-900">CADINVO</strong> — Engineering Support &amp; CAD Automation: help your drawing office deliver faster without burning out your team.</p>
+</section>
+</article>
+<aside class="md:col-span-1">
+<div class="rounded-2xl border border-slate-200 bg-slate-50 p-6">
+<img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&amp;fit=crop&amp;w=1200&amp;q=80" alt="Team collaboration in engineering office" class="mb-4 h-56 w-full rounded-2xl object-cover" width="1200" height="236" />
+<h3 class="text-xl font-bold text-slate-900">Built for real drawing-office load</h3>
+<p class="mt-2 text-sm text-slate-600">The carousel story is simple: less waiting, more throughput—measured from the moment a request lands to drawings your production can use.</p>
+<blockquote class="mt-4 border-l-4 border-[#137fec] rounded-r-2xl bg-[#137fec]/5 py-4 pl-5 pr-4 text-sm text-slate-700 not-italic"><strong class="text-slate-900">64% faster</strong> from request to drawing—positioning for teams that live inside Inventor and tight delivery windows.</blockquote>
+</div>
+</aside>
+</div>
+</div>
+</div>
 HTML,
             ],
             [
-                'title' => 'Resemin Standardizes Mine Operations Engineering on DI-TOOLS',
-                'slug' => 'customer-story-resemin',
-                'excerpt' => 'DI-TOOLS and a connected design experience help Resemin coordinate complex equipment programs across disciplines and sites.',
-                'image' => 'https://www.3ds.com/assets/invest/styles/card/public/2023-01/resemin-customer-story-banner.jpg.webp?itok=wG1lKOqS',
+                'title' => 'CADINVO: From Bottlenecks to Engineering Support',
+                'slug' => 'cadinvo-bottlenecks-engineering-support',
+                'excerpt' => 'Manual workflows and overload slow every drawing office. CADINVO removes bottlenecks with hands-on engineering support and scalable capacity.',
                 'order' => 4,
-                'body' => <<<'HTML'
-<p>Resemin engineers heavy machinery for demanding underground environments. Unified CAD practices and reusable templates mean fewer errors when specifications change late in a program.</p>
-<p>With DI-TOOLS integrated into their workflow, teams can trace requirements from layout to detail drawings and keep stakeholders aligned on a single source of truth.</p>
+                'avatar_source' => 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=480&q=75',
+                'content' => <<<'HTML'
+<div class="not-prose text-left -mx-2 sm:mx-0 text-slate-700">
+<div class="rounded-3xl overflow-hidden border border-slate-200 bg-white shadow-sm">
+<header class="border-b border-slate-200 bg-white px-6 py-10 md:px-10 md:py-14">
+<div class="grid gap-8 items-center lg:grid-cols-2">
+<div>
+<span class="inline-flex items-center gap-2 rounded-full border border-[#137fec]/25 bg-[#137fec]/10 px-4 py-2 text-xs font-bold uppercase tracking-widest text-[#137fec]">Bottlenecks → capacity</span>
+<h2 class="mt-5 text-3xl font-extrabold tracking-tight text-slate-900 leading-tight md:text-5xl">Manual workflows<span class="block text-[#137fec]">slow the whole team.</span></h2>
+<p class="mt-4 max-w-xl text-lg text-slate-600">When requests stack up and every drawing is a custom firefight, your drawing office hits the same walls: rework, waiting, and stress. CADINVO is aimed at removing those bottlenecks through engineering support and automation—not generic IT projects.</p>
+</div>
+<article class="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm">
+<img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&amp;fit=crop&amp;w=1400&amp;q=80" alt="Engineer at work in industrial environment" class="h-64 w-full object-cover md:h-[390px]" width="1400" height="390" />
+<div class="border-t border-slate-100 bg-slate-50 p-6">
+<h3 class="text-xl font-bold text-slate-900">Engineering support that scales with you</h3>
+<p class="mt-2 text-sm text-slate-600">Modeling, assemblies, detailing, and revisions—extra hands when your backlog outruns headcount.</p>
+</div>
+</article>
+</div>
+<div class="mt-10 grid gap-4 md:grid-cols-3">
+<div class="rounded-2xl border border-slate-200 bg-slate-50 p-6">
+<strong class="block text-xl text-[#137fec]">Fewer stalls</strong>
+<p class="mt-2 text-sm text-slate-600">Address the queue before it becomes emergency overtime.</p>
+</div>
+<div class="rounded-2xl border border-slate-200 bg-slate-50 p-6">
+<strong class="block text-xl text-[#137fec]">Consistent quality</strong>
+<p class="mt-2 text-sm text-slate-600">Support that follows your standards—not one-off heroics.</p>
+</div>
+<div class="rounded-2xl border border-slate-200 bg-slate-50 p-6">
+<strong class="block text-xl text-[#137fec]">Predictable load</strong>
+<p class="mt-2 text-sm text-slate-600">Blend internal staff with CADINVO capacity for peak periods.</p>
+</div>
+</div>
+</header>
+<div class="grid gap-6 bg-[#f6f7f8] p-6 md:grid-cols-3 md:gap-8 md:p-10">
+<article class="space-y-8 rounded-2xl border border-slate-200 bg-white p-6 md:col-span-2 md:p-8">
+<section>
+<h2 class="text-2xl font-bold text-slate-900 md:text-3xl">Where bottlenecks come from</h2>
+<p class="mt-3 text-[15.8px] leading-relaxed text-slate-700">Manual handoffs, unclear ownership, and repetitive CAD work eat hours that should go into engineering judgment. The B-template story is explicit: those patterns slow drawing offices and Inventor teams alike until the process—not just headcount—is addressed.</p>
+</section>
+<section class="border-t border-slate-200 pt-8">
+<h2 class="text-2xl font-bold text-slate-900 md:text-3xl">Engineering support you can plug in</h2>
+<ul class="mt-4 list-none space-y-3 p-0">
+<li class="grid grid-cols-[40px_1fr] gap-4 rounded-2xl border border-slate-200 bg-slate-50 p-4"><span class="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-[#137fec]/10 text-sm font-extrabold text-[#137fec]">01</span><div><strong class="block text-base text-slate-900">Part &amp; assembly modeling</strong><span class="text-sm text-slate-600">Build and maintain models that match how you manufacture.</span></div></li>
+<li class="grid grid-cols-[40px_1fr] gap-4 rounded-2xl border border-slate-200 bg-slate-50 p-4"><span class="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-[#137fec]/10 text-sm font-extrabold text-[#137fec]">02</span><div><strong class="block text-base text-slate-900">Detailing &amp; revisions</strong><span class="text-sm text-slate-600">Keep drawing packages moving through change orders without losing control.</span></div></li>
+<li class="grid grid-cols-[40px_1fr] gap-4 rounded-2xl border border-slate-200 bg-slate-50 p-4"><span class="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-[#137fec]/10 text-sm font-extrabold text-[#137fec]">03</span><div><strong class="block text-base text-slate-900">Drawing-office capacity</strong><span class="text-sm text-slate-600">Treat support as a lever for throughput, not a one-time rescue.</span></div></li>
+</ul>
+</section>
+<section class="border-t border-slate-200 pt-8">
+<h2 class="text-2xl font-bold text-slate-900 md:text-3xl">The shift</h2>
+<p class="mt-3 text-[15.8px] leading-relaxed text-slate-700">You move from “we are always behind” to a controlled pipeline: engineering where humans add value, automation where machines should, and fewer surprise bottlenecks between request and released drawings.</p>
+</section>
+</article>
+<aside class="md:col-span-1">
+<div class="rounded-2xl border border-slate-200 bg-slate-50 p-6">
+<img src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&amp;fit=crop&amp;w=1200&amp;q=80" alt="Engineer at workstation" class="mb-4 h-56 w-full rounded-2xl object-cover" width="1200" height="236" />
+<h3 class="text-xl font-bold text-slate-900">CADINVO removes friction</h3>
+<p class="mt-2 text-sm text-slate-600">Same narrative as the carousel: combine real engineering support with the automation stack (next article) so the office breathes again.</p>
+<blockquote class="mt-4 border-l-4 border-[#137fec] rounded-r-2xl bg-[#137fec]/5 py-4 pl-5 pr-4 text-sm text-slate-700 not-italic"><strong class="text-slate-900">CADINVO</strong> — less pressure on your drawing office, more predictable delivery.</blockquote>
+</div>
+</aside>
+</div>
+</div>
+</div>
 HTML,
             ],
             [
-                'title' => 'Best Tugs Takes Hybrid Tow Tractors from Concept to Ramp-Up',
-                'slug' => 'customer-story-best-tugs',
-                'excerpt' => 'BestTugs brings hybrid vehicle innovation to the ramp with DI-TOOL-backed design, validation, and supplier-ready documentation.',
-                'image' => 'https://www.3ds.com/assets/invest/styles/card/public/2025-08/best-tug-top-banner.jpg.webp?itok=cwyJ69xX',
+                'title' => 'CADINVO: Automation, Process & Time Saved',
+                'slug' => 'cadinvo-automation-process-and-results',
+                'excerpt' => 'DI-TOOLS plus iLogic-style automation, standardized exports and QC—and a real example: from three hours of manual work to fifteen minutes per order.',
                 'order' => 5,
-                'body' => <<<'HTML'
-<p>BestTugs develops hybrid tow tractors where weight, thermal management, and safety systems must evolve together. DI-TOOL supports rapid iteration as powertrain and chassis teams converge on a buildable architecture.</p>
-<p>From customer-specific options to certification packages, structured data and drawing automation reduce friction as production volumes increase.</p>
+                'avatar_source' => 'https://images.unsplash.com/photo-1581092335397-9583eb92d232?auto=format&fit=crop&w=480&q=75',
+                'content' => <<<'HTML'
+<div class="not-prose text-left -mx-2 sm:mx-0 text-slate-700">
+<div class="rounded-3xl overflow-hidden border border-slate-200 bg-white shadow-sm">
+<header class="border-b border-slate-200 bg-white px-6 py-10 md:px-10 md:py-14">
+<div class="grid gap-8 items-center lg:grid-cols-2">
+<div>
+<span class="inline-flex items-center gap-2 rounded-full border border-[#137fec]/25 bg-[#137fec]/10 px-4 py-2 text-xs font-bold uppercase tracking-widest text-[#137fec]">Automation &amp; process</span>
+<h2 class="mt-5 text-3xl font-extrabold tracking-tight text-slate-900 leading-tight md:text-5xl">Standardize the boring work.<span class="block text-[#137fec]">Keep the engineering.</span></h2>
+<p class="mt-4 max-w-xl text-lg text-slate-600">CAD automation with DI-TOOLS and iLogic: exports, naming, BOM, and QC checkpoints—so repetitive tasks become automated workflows with fewer errors and more control.</p>
+</div>
+<article class="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm">
+<img src="https://images.unsplash.com/photo-1581092335397-9583eb92d232?auto=format&amp;fit=crop&amp;w=1400&amp;q=80" alt="CAD and automation" class="h-64 w-full object-cover md:h-[390px]" width="1400" height="390" />
+<div class="border-t border-slate-100 bg-slate-50 p-6">
+<h3 class="text-xl font-bold text-slate-900">Process optimization</h3>
+<p class="mt-2 text-sm text-slate-600">Turn recurring steps into repeatable flows—aligned with how your drawing office actually ships work.</p>
+</div>
+</article>
+</div>
+<div class="mt-10 grid gap-4 md:grid-cols-3">
+<div class="rounded-2xl border border-slate-200 bg-slate-50 p-6">
+<strong class="block text-xl text-[#137fec]">Measurable time</strong>
+<p class="mt-2 text-sm text-slate-600">Carousel benchmark: <strong class="text-slate-900">64%</strong> time saved—<strong class="text-slate-900">3 hours → 15 minutes</strong> per order in the example flow.</p>
+</div>
+<div class="rounded-2xl border border-slate-200 bg-slate-50 p-6">
+<strong class="block text-xl text-[#137fec]">What you gain</strong>
+<p class="mt-2 text-sm text-slate-600">Less stress, stable planning, higher output, fewer mistakes, faster team performance.</p>
+</div>
+<div class="rounded-2xl border border-slate-200 bg-slate-50 p-6">
+<strong class="block text-xl text-[#137fec]">Who it fits</strong>
+<p class="mt-2 text-sm text-slate-600">Manufacturers, engineers, drawing offices, steel fabricators.</p>
+</div>
+</div>
+</header>
+<div class="grid gap-6 bg-[#f6f7f8] p-6 md:grid-cols-3 md:gap-8 md:p-10">
+<article class="space-y-8 rounded-2xl border border-slate-200 bg-white p-6 md:col-span-2 md:p-8">
+<section>
+<h2 class="text-2xl font-bold text-slate-900 md:text-3xl">From manual minutes to automated flow</h2>
+<p class="mt-3 text-[15.8px] leading-relaxed text-slate-700">The carousel spells it out: from three hours of manual work to fifteen minutes—from a partly manual path to a <strong class="text-[#137fec]">100%</strong> automated flow in that scenario. That is the promise of pairing DI-TOOLS-style automation with clear process rules: less clicking, fewer wrong files, more predictable releases.</p>
+</section>
+<section class="border-t border-slate-200 pt-8">
+<h2 class="text-2xl font-bold text-slate-900 md:text-3xl">What you actually gain</h2>
+<ul class="mt-4 list-none space-y-3 p-0">
+<li class="grid grid-cols-[40px_1fr] gap-4 rounded-2xl border border-slate-200 bg-slate-50 p-4"><span class="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-[#137fec]/10 text-sm font-extrabold text-[#137fec]">01</span><div><strong class="block text-base text-slate-900">Less stress</strong><span class="text-sm text-slate-600">Reduce pressure on the drawing office with clearer flow and fewer fire drills.</span></div></li>
+<li class="grid grid-cols-[40px_1fr] gap-4 rounded-2xl border border-slate-200 bg-slate-50 p-4"><span class="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-[#137fec]/10 text-sm font-extrabold text-[#137fec]">02</span><div><strong class="block text-base text-slate-900">Stable planning</strong><span class="text-sm text-slate-600">More predictable throughput so commitments to production and customers hold.</span></div></li>
+<li class="grid grid-cols-[40px_1fr] gap-4 rounded-2xl border border-slate-200 bg-slate-50 p-4"><span class="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-[#137fec]/10 text-sm font-extrabold text-[#137fec]">03</span><div><strong class="block text-base text-slate-900">Higher output</strong><span class="text-sm text-slate-600">Ship more complete drawing packages in the same calendar time.</span></div></li>
+<li class="grid grid-cols-[40px_1fr] gap-4 rounded-2xl border border-slate-200 bg-slate-50 p-4"><span class="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-[#137fec]/10 text-sm font-extrabold text-[#137fec]">04</span><div><strong class="block text-base text-slate-900">Fewer mistakes</strong><span class="text-sm text-slate-600">Standardized exports, naming, and QC cut wrong-file moments before release.</span></div></li>
+<li class="grid grid-cols-[40px_1fr] gap-4 rounded-2xl border border-slate-200 bg-slate-50 p-4"><span class="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-[#137fec]/10 text-sm font-extrabold text-[#137fec]">05</span><div><strong class="block text-base text-slate-900">Faster team performance</strong><span class="text-sm text-slate-600">The whole office moves faster when repetition is automated, not hero-coded.</span></div></li>
+</ul>
+</section>
+<section class="border-t border-slate-200 pt-8">
+<h2 class="text-2xl font-bold text-slate-900 md:text-3xl">Want to accelerate your engineering workflow?</h2>
+<p class="mt-3 text-[15.8px] leading-relaxed text-slate-700">Let’s map out where engineering support, automation, and process can save time and reduce pressure on your drawing office.</p>
+<div class="mt-6 rounded-2xl border border-slate-200 bg-slate-50 p-6 text-sm">
+<p class="font-semibold text-slate-900">CADINVO — Engineering Support &amp; CAD Automation · <a href="https://www.cadinvo.com" class="text-[#137fec] underline hover:text-[#0f6ecd]" target="_blank" rel="noopener noreferrer">www.cadinvo.com</a></p>
+<p class="mt-3"><a href="mailto:daniel@cadinvo.com" class="text-[#137fec] underline hover:text-[#0f6ecd]">daniel@cadinvo.com</a></p>
+<p class="mt-1"><a href="tel:+31630725787" class="text-[#137fec] underline hover:text-[#0f6ecd]">+31 6 3072 5787</a></p>
+<p class="mt-3 text-slate-600">Coffee is on me.</p>
+</div>
+</section>
+</article>
+<aside class="md:col-span-1">
+<div class="rounded-2xl border border-slate-200 bg-slate-50 p-6">
+<img src="https://images.unsplash.com/photo-1565008447742-97f6f38c985c?auto=format&amp;fit=crop&amp;w=1200&amp;q=80" alt="Manufacturing floor" class="mb-4 h-56 w-full rounded-2xl object-cover" width="1200" height="236" />
+<h3 class="text-xl font-bold text-slate-900">Industries on the carousel</h3>
+<p class="mt-2 text-sm text-slate-600">Manufacturers, engineers, drawing offices, steel fabricators—teams that need drawings and data to match shop reality.</p>
+<blockquote class="mt-4 border-l-4 border-[#137fec] rounded-r-2xl bg-[#137fec]/5 py-4 pl-5 pr-4 text-sm text-slate-700 not-italic"><strong class="text-slate-900">CADINVO + DI-TOOLS</strong> — automation and process so your office ships faster with fewer fire drills.</blockquote>
+</div>
+</aside>
+</div>
+</div>
+</div>
 HTML,
             ],
         ];
 
         foreach ($posts as $row) {
-            $alt = htmlspecialchars($row['title'], ENT_QUOTES, 'UTF-8');
-            $content = '<p><img src="' . $row['image'] . '" alt="' . $alt . '"></p>' . $row['body'];
+            $avatarSource = $row['avatar_source'] ?? null;
+            unset($row['avatar_source']);
+            $avatarPath = null;
+            if (is_string($avatarSource) && $avatarSource !== '') {
+                $avatarPath = $this->seedPostAvatarFromUrl((string) $row['slug'], $avatarSource);
+            }
 
             Post::updateOrCreate(
                 ['slug' => $row['slug']],
                 [
                     'title' => $row['title'],
                     'excerpt' => $row['excerpt'],
-                    'content' => $content,
+                    'content' => $row['content'],
                     'status' => 'published',
-                    'published_at' => now()->subDays(60 - (int) $row['order']),
+                    'published_at' => now()->subDays(45 - (int) $row['order']),
                     'user_id' => $author->id,
                     'order' => (int) $row['order'],
+                    'avatar' => $avatarPath,
                 ]
             );
+        }
+    }
+
+    /**
+     * Save a small remote image to storage/app/public/posts/avatars for home card avatars.
+     * Returns null if the request fails (posts still seed; content images apply via featured_image_url).
+     */
+    private function seedPostAvatarFromUrl(string $slug, string $url): ?string
+    {
+        try {
+            $response = Http::timeout(25)->connectTimeout(10)->get($url);
+            if (! $response->successful()) {
+                return null;
+            }
+
+            $ext = 'jpg';
+            $ct = $response->header('Content-Type');
+            if (is_string($ct)) {
+                if (str_contains($ct, 'png')) {
+                    $ext = 'png';
+                } elseif (str_contains($ct, 'webp')) {
+                    $ext = 'webp';
+                }
+            }
+
+            $path = 'posts/avatars/'.$slug.'.'.$ext;
+            Storage::disk('public')->put($path, $response->body());
+
+            return $path;
+        } catch (Throwable) {
+            return null;
         }
     }
 

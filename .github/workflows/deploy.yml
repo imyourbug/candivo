@@ -24,7 +24,7 @@ jobs:
           source: "."
           target: ${{ secrets.TARGET_DIR }}
           # We exclude files that shouldn't be overwritten or are handled by composer
-          rm: false 
+          rm: false
           strip_components: 0
 
       # Step 2: Run Laravel Commands via SSH
@@ -37,16 +37,17 @@ jobs:
           port: 22
           script: |
             cd ${{ secrets.TARGET_DIR }}
-            
+
             # Install dependencies
             composer install --no-dev --optimize-autoloader --no-interaction
-            
+
             # Run Migrations
             php artisan migrate:refresh --seed
-            
+
             # Set Permissions (Crucial for Laravel storage/cache)
             chown -R www-data:www-data storage bootstrap/cache
             chmod -R 775 storage bootstrap/cache
 
             # Clear and Cache Configs/Routes
+            php artisan storage:link
             php artisan optimize:clear

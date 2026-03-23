@@ -16,6 +16,39 @@
         </main>
     </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        (function() {
+            const KEY = 'admin-theme';
+            const root = document.documentElement;
+            const btn = document.getElementById('admin-theme-toggle');
+            const icon = document.getElementById('admin-theme-toggle-icon');
+            if (!btn || !icon) return;
+
+            function currentTheme() {
+                return root.classList.contains('dark') ? 'dark' : 'light';
+            }
+
+            function applyButtonState(theme) {
+                const isDark = theme === 'dark';
+                icon.textContent = isDark ? 'light_mode' : 'dark_mode';
+                btn.setAttribute('title', isDark ? 'Switch to light mode' : 'Switch to dark mode');
+                btn.setAttribute('aria-label', isDark ? 'Switch to light mode' : 'Switch to dark mode');
+            }
+
+            function setTheme(theme) {
+                root.classList.toggle('dark', theme === 'dark');
+                root.setAttribute('data-theme', theme);
+                localStorage.setItem(KEY, theme);
+                applyButtonState(theme);
+            }
+
+            applyButtonState(currentTheme());
+
+            btn.addEventListener('click', function() {
+                setTheme(currentTheme() === 'dark' ? 'light' : 'dark');
+            });
+        })();
+    </script>
     @stack('admin-scripts')
 </body>
 </html>

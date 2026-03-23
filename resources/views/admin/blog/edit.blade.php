@@ -14,7 +14,7 @@
     </header>
 
     <div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden max-w-4xl">
-        <form action="{{ route('admin.posts.update', $post) }}" method="post" class="p-6 md:p-8" id="blog-form" novalidate>
+        <form action="{{ route('admin.posts.update', $post) }}" method="post" enctype="multipart/form-data" class="p-6 md:p-8" id="blog-form" novalidate>
             @csrf
             @method('PUT')
             @include('admin.blog._form', ['post' => $post])
