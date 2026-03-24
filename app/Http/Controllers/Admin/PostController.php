@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Post;
+use App\Services\AdminImageUploadService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -116,7 +117,7 @@ class PostController extends Controller
             'content' => ['nullable', 'string'],
             'status' => ['required', 'string', 'in:draft,published,archived'],
             'order' => ['nullable', 'integer', 'min:0', 'max:999999'],
-            'avatar' => ['nullable', 'image', 'max:3072'],
+            'avatar' => AdminImageUploadService::postAvatarRules(),
         ], [
             'title.required' => 'Title is required.',
             'slug.unique' => 'This URL slug is already in use.',

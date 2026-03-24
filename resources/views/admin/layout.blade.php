@@ -49,6 +49,11 @@
             });
         })();
     </script>
+    <script>
+        window.__ADMIN_MEDIA_CONFIG__ = @json(\App\Services\AdminImageUploadService::clientConfig());
+        window.__ADMIN_MEDIA_CONFIG_URL__ = @json(route('admin.media.client-config'));
+    </script>
+    <script src="{{ asset('js/admin-image-preview.js') }}"></script>
     @stack('admin-scripts')
 </body>
 </html>

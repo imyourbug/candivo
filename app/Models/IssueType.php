@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
 class IssueType extends Model
@@ -14,6 +15,8 @@ class IssueType extends Model
         'name',
         'slug',
         'description',
+        'images',
+        'video',
         'has_url',
         'sort_order',
     ];
@@ -21,6 +24,7 @@ class IssueType extends Model
     protected $casts = [
         'has_url' => 'boolean',
         'sort_order' => 'integer',
+        'images' => 'array',
     ];
 
     public function parent(): BelongsTo
@@ -51,9 +55,9 @@ class IssueType extends Model
      * Exclude IDs (e.g. self and descendants) when editing.
      *
      * @param  array<int>  $excludeIds
-     * @return \Illuminate\Support\Collection<int, array{id: int|null, name: string, depth: int}>
+     * @return Collection<int, array{id: int|null, name: string, depth: int}>
      */
-    public static function getFlatListForSelect(array $excludeIds = []): \Illuminate\Support\Collection
+    public static function getFlatListForSelect(array $excludeIds = []): Collection
     {
         $items = collect([['id' => null, 'name' => '— Root (top level) —', 'depth' => 0]]);
         $walk = function ($nodes, int $depth = 0) use (&$walk, &$items, $excludeIds) {
@@ -66,6 +70,7 @@ class IssueType extends Model
             }
         };
         $walk(static::getTree());
+
         return $items;
     }
 
@@ -80,6 +85,7 @@ class IssueType extends Model
         foreach ($this->children as $child) {
             $ids = array_merge($ids, $child->getSelfAndDescendantIds());
         }
+
         return $ids;
     }
 
@@ -104,6 +110,7 @@ class IssueType extends Model
             'name' => $this->name,
             'slug' => $this->slug,
             'description' => $this->description,
+            'video' => $this->video,
             'has_url' => $this->has_url,
             'sort_order' => $this->sort_order,
             'children' => $this->children->map(fn ($child) => $child->toTreeArray())->values()->all(),

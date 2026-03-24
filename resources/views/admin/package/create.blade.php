@@ -14,7 +14,7 @@
     </header>
 
     <div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden max-w-5xl">
-        <form id="admin-package-form" action="{{ route('admin.packages.store') }}" method="post" class="p-6 md:p-8" novalidate>
+        <form id="admin-package-form" action="{{ route('admin.packages.store') }}" method="post" enctype="multipart/form-data" class="p-6 md:p-8" novalidate>
             @csrf
             @include('admin.package._form', ['package' => null, 'types' => $types, 'products' => $products])
             <div class="mt-8 pt-6 border-t border-slate-200 dark:border-slate-800 flex items-center gap-3">

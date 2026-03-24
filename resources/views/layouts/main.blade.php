@@ -103,6 +103,9 @@
     <!-- Download Modal Component -->
     @component('components.download-popup')
     @endcomponent
+    
+    <!-- Schedule Modal Component -->
+    @include('components.schedule-modal')
 
     {{-- Cart component (drawer + overlay) --}}
     @include('components.cart')

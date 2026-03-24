@@ -300,11 +300,17 @@
             function setFieldError($field, message) {
                 if (!$field.length) return;
                 $field.toggleClass('ring-2 ring-red-400/40 border-red-400', !!message);
-                let $error = $field.siblings('.field-error');
+                // Ensure error appears directly below the field block.
+                const $wrapper = $field.closest('div.flex.flex-col, div.flex-col').first().length ?
+                    $field.closest('div.flex.flex-col, div.flex-col').first() :
+                    $field.parent();
+
+                let $error = $wrapper.children('.field-error').first();
                 if (!$error.length) {
                     $error = $('<p class="field-error text-xs text-red-500 mt-1"></p>');
-                    $field.after($error);
+                    $wrapper.append($error);
                 }
+
                 $error.text(message || '');
                 if (!message) $error.remove();
             }

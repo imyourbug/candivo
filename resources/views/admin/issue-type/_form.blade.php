@@ -1,6 +1,10 @@
 @php
     $issueType = $issueType ?? null;
     $isEdit = $issueType !== null;
+    $issueImagePaths = old('existing_images', $isEdit ? ($issueType->images ?? []) : []);
+    if (! is_array($issueImagePaths)) {
+        $issueImagePaths = [];
+    }
 @endphp
 
 <div class="space-y-6">
@@ -40,6 +44,17 @@
         </div>
     </div>
 
+    <div>
+        <label for="video" class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1">Video (embed URL)</label>
+        <input type="url" name="video" id="video" value="{{ old('video', $issueType?->video) }}"
+            class="w-full px-4 py-2.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent @error('video') border-rose-500 @enderror"
+            placeholder="https://www.youtube.com/embed/..." />
+        <p class="mt-1 text-xs text-slate-500">YouTube embed or other iframe-safe URL; leave empty if none.</p>
+        @error('video')
+            <p class="mt-1 text-sm text-rose-500">{{ $message }}</p>
+        @enderror
+    </div>
+
     <div class="flex items-center gap-4">
         <label class="flex items-center gap-2 cursor-pointer">
             <input type="hidden" name="has_url" value="0" />
@@ -69,6 +84,39 @@
             <p class="mt-1 text-sm text-rose-500">{{ $message }}</p>
         @enderror
     </div>
+
+    <div class="border-t border-slate-200 dark:border-slate-800 pt-6">
+        <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1">Issue images</label>
+        <p class="text-xs text-slate-500 dark:text-slate-400 mb-2">Upload multiple images for this issue type. New uploads are appended.</p>
+
+        @if(count($issueImagePaths) > 0)
+            <p class="text-xs font-semibold text-slate-600 dark:text-slate-400 mb-2">Current images</p>
+            <div class="flex flex-wrap gap-2 mb-3">
+                @foreach($issueImagePaths as $path)
+                    @php $path = (string) $path; @endphp
+                    @if($path !== '')
+                        <input type="hidden" name="existing_images[]" value="{{ $path }}" />
+                        <img src="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($path) }}" alt="" class="h-16 w-16 rounded-md object-cover border border-slate-200 dark:border-slate-700 bg-slate-100 dark:bg-slate-800" />
+                    @endif
+                @endforeach
+            </div>
+        @endif
+
+        <div data-admin-gallery-field class="space-y-2">
+            <input type="file" name="images_files[]" id="issue_images_files" accept="image/*" multiple
+                class="js-admin-gallery-file block w-full text-sm text-slate-600 dark:text-slate-300 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-primary/10 file:text-primary hover:file:bg-primary/20" />
+            @foreach ($errors->keys() as $imgErrKey)
+                @if (str_starts_with($imgErrKey, 'images_files.'))
+                    <p class="text-sm text-rose-500">{{ $errors->first($imgErrKey) }}</p>
+                    @break
+                @endif
+            @endforeach
+            <p data-admin-gallery-error class="text-sm text-rose-500 min-h-[1.25rem]"></p>
+            <div data-admin-gallery-staging class="hidden flex flex-wrap gap-2"></div>
+            <button type="button" data-admin-gallery-clear class="hidden text-xs font-semibold text-primary hover:underline">Clear file selection</button>
+        </div>
+    </div>
+
 </div>
 
 @push('admin-scripts')

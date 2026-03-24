@@ -3,24 +3,23 @@
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\IssueTypeController as AdminIssueTypeController;
 use App\Http\Controllers\Admin\LoginController as AdminLoginController;
-use App\Http\Controllers\Admin\PostController as AdminPostController;
 use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 use App\Http\Controllers\Admin\PackageController as AdminPackageController;
+use App\Http\Controllers\Admin\PostController as AdminPostController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\ComboController;
 use App\Http\Controllers\DownloadController;
 use App\Http\Controllers\HelpCenterController;
-use App\Http\Controllers\PostController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\MollieController;
 use App\Http\Controllers\PackageController;
 use App\Http\Controllers\PaymentController;
-use App\Http\Controllers\MollieController;
 use App\Http\Controllers\PaypalController;
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
 
 Route::get('/', function () {
     return redirect()->route('home');
@@ -36,6 +35,8 @@ Route::post('mollie/handle', [MollieController::class, 'handlePayment'])->name('
 Route::get('mollie/cancel', [MollieController::class, 'cancel'])->name('mollie.cancel');
 Route::get('mollie/success', [MollieController::class, 'success'])->name('mollie.success');
 Route::get('about', [HomeController::class, 'about'])->name('about');
+Route::get('contact-us', [HomeController::class, 'contactUs'])->name('contact-us');
+Route::post('contact-us', [HomeController::class, 'sendContactUs'])->name('contact-us.send');
 Route::get('help-center', [HelpCenterController::class, 'index'])->name('help-center');
 Route::get('product-detail/{product:slug}', [ProductController::class, 'detail'])->name('product-detail');
 Route::get('package-detail/{package:slug}', [PackageController::class, 'detail'])->name('package-detail');

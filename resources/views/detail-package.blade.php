@@ -75,7 +75,7 @@
                     <div
                         class="relative aspect-video w-full overflow-hidden rounded-xl bg-white  shadow-lg border border-slate-200 ">
                         <div id="packageMainVideo" class="w-full h-full">
-                            <iframe class="w-full h-full" src="https://www.youtube.com/embed/ArfewyEeXZA"
+                            <iframe class="w-full h-full" src="{{ $package->video ?: 'https://www.youtube.com/embed/Y5ltBmPhyp0' }}"
                                 title="Package video" frameborder="0"
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                                 allowfullscreen>
@@ -242,25 +242,6 @@
                 </div>
             </div>
 
-            {{-- <div
-            class="flex flex-wrap justify-center items-center gap-8 md:gap-16 py-8 border-y border-slate-200  mb-20 opacity-60">
-            <div class="flex items-center gap-2 grayscale hover:grayscale-0 transition-all">
-                <span class="material-symbols-outlined">verified</span>
-                <span class="font-bold text-lg tracking-tight">AUTODESK CERTIFIED</span>
-            </div>
-            <div class="flex items-center gap-2 grayscale hover:grayscale-0 transition-all">
-                <span class="material-symbols-outlined">security</span>
-                <span class="font-bold text-lg tracking-tight">ISO 27001 SECURE</span>
-            </div>
-            <div class="flex items-center gap-2 grayscale hover:grayscale-0 transition-all">
-                <span class="material-symbols-outlined">engineering</span>
-                <span class="font-bold text-lg tracking-tight">PRO-ENGINEER GRADE</span>
-            </div>
-            <div class="flex items-center gap-2 grayscale hover:grayscale-0 transition-all">
-                <span class="material-symbols-outlined">public</span>
-                <span class="font-bold text-lg tracking-tight">USED BY 500+ FIRMS</span>
-            </div>
-        </div> --}}
             <div class="w-full py-20">
                 <div class="w-full">
                     <div class="flex items-center justify-between mb-10">
@@ -293,215 +274,23 @@
                     </div>
                 </div>
             </div>
-            {{-- <section class="mb-24">
-            <div class="text-center max-w-3xl mx-auto mb-16">
-                <h2 class="text-3xl font-black mb-4">Technical Excellence Redefined</h2>
-                <p class="text-slate-600 dark:text-slate-400">Specifically engineered for professional CAD designers who
-                    demand extreme performance without compromising on detail.</p>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div
-                    class="p-8 bg-white  border border-slate-200  rounded-2xl hover:border-[var(--enterprise-blue)] transition-all">
-                    <div
-                        class="w-12 h-12 bg-[var(--enterprise-blue)]/10 text-[var(--enterprise-blue)] rounded-lg flex items-center justify-center mb-6">
-                        <span class="material-symbols-outlined">bolt</span>
+            @if (!empty($frequentlyBoughtProducts) && $frequentlyBoughtProducts->count())
+                <section class="mb-20">
+                    <h2 class="text-2xl font-black mb-8">Frequently Bought Together</h2>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                        @foreach ($frequentlyBoughtProducts as $idx => $item)
+                            @include('components.cards.tool-card', [
+                                'tool' => $item,
+                                'idx' => $idx,
+                                'imageSources' => $toolImageSources,
+                                'isClickable' => true,
+                                'productId' => $item->id,
+                                'detailUrl' => route('product-detail', $item),
+                            ])
+                        @endforeach
                     </div>
-                    <h3 class="text-xl font-bold mb-3">40% Faster Rendering</h3>
-                    <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">Proprietary GXL-Acceleration
-                        engine reduces compute overhead, allowing real-time viewport feedback even on complex assemblies.
-                    </p>
-                </div>
-                <div
-                    class="p-8 bg-white  border border-slate-200  rounded-2xl hover:border-[var(--enterprise-blue)] transition-all">
-                    <div
-                        class="w-12 h-12 bg-[var(--enterprise-blue)]/10 text-[var(--enterprise-blue)] rounded-lg flex items-center justify-center mb-6">
-                        <span class="material-symbols-outlined">architecture</span>
-                    </div>
-                    <h3 class="text-xl font-bold mb-3">Precision Surfacing</h3>
-                    <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">Advanced G2 and G3 continuity
-                        algorithms for automotive-grade surfaces and perfect curvature analysis directly within Inventor.
-                    </p>
-                </div>
-                <div
-                    class="p-8 bg-white  border border-slate-200  rounded-2xl hover:border-[var(--enterprise-blue)] transition-all">
-                    <div
-                        class="w-12 h-12 bg-[var(--enterprise-blue)]/10 text-[var(--enterprise-blue)] rounded-lg flex items-center justify-center mb-6">
-                        <span class="material-symbols-outlined">history</span>
-                    </div>
-                    <h3 class="text-xl font-bold mb-3">Parametric History</h3>
-                    <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">Fully non-destructive editing
-                        workflow. Modify upstream features and watch your surfacing adapt instantly without errors.</p>
-                </div>
-            </div>
-        </section> --}}
-
-            {{-- <section class="mb-24">
-                <div class="flex items-end justify-between mb-10">
-                    <div>
-                        <h2 class="text-3xl font-black mb-2">Save More with Bundles</h2>
-                        <p class="text-slate-600 dark:text-slate-400">Maximize your toolset while minimizing your costs.
-                        </p>
-                    </div>
-                    <a class="text-[var(--enterprise-blue)] font-bold text-sm flex items-center gap-1 hover:underline"
-                        href="#">
-                        View All Bundles <span class="material-symbols-outlined">chevron_right</span>
-                    </a>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div
-                        class="group relative overflow-hidden rounded-2xl border-2 border-slate-200 bg-[var(--enterprise-blue)]/5 p-1 transition-all hover:shadow-2xl hover:shadow-blue-900/10">
-                        <div class="absolute top-4 right-4 z-10">
-                            <span
-                                class="bg-[var(--enterprise-blue)] text-white text-[10px] font-black px-2 py-1 rounded uppercase tracking-tighter">Most
-                                Popular</span>
-                        </div>
-                        <div class="bg-white  p-8 rounded-xl h-full flex flex-col">
-                            <div class="flex justify-between items-start mb-6">
-                                <div>
-                                    <h3 class="text-2xl font-black text-slate-900 ">Automation Master Pack</h3>
-                                    <p class="text-slate-500 text-sm mt-1 italic">Includes Modeling Suite 2.0 + 4 others
-                                    </p>
-                                </div>
-                                <div class="text-right">
-                                    <p class="text-slate-400 line-through text-sm">$899</p>
-                                    <p class="text-3xl font-black text-[var(--enterprise-blue)]">$549</p>
-                                </div>
-                            </div>
-                            <ul class="space-y-3 mb-8 flex-grow">
-                                <li class="flex items-center gap-2 text-sm">
-                                    <span class="material-symbols-outlined text-green-500 !text-lg">check_circle</span>
-                                    <span>Modeling Suite 2.0 (Full Version)</span>
-                                </li>
-                                <li class="flex items-center gap-2 text-sm">
-                                    <span class="material-symbols-outlined text-green-500 !text-lg">check_circle</span>
-                                    <span>Scripting Engine Pro</span>
-                                </li>
-                                <li class="flex items-center gap-2 text-sm">
-                                    <span class="material-symbols-outlined text-green-500 !text-lg">check_circle</span>
-                                    <span>Batch Export Toolkit</span>
-                                </li>
-                                <li class="flex items-center gap-2 text-sm text-slate-400">
-                                    <span class="material-symbols-outlined !text-lg">add</span>
-                                    <span>2 additional automation tools</span>
-                                </li>
-                            </ul>
-                            <button
-                                class="w-full bg-[var(--enterprise-blue)] text-white py-3 rounded-lg font-bold hover:brightness-110 transition-all">
-                                Upgrade to Bundle
-                            </button>
-                        </div>
-                    </div>
-                    <div
-                        class="group relative overflow-hidden rounded-2xl border-2 border-slate-200  bg-slate-100/50 /50 p-8 transition-all hover:shadow-xl">
-                        <div class="flex justify-between items-start mb-6">
-                            <div>
-                                <h3 class="text-2xl font-black text-slate-900 ">Ultimate Inventor Suite</h3>
-                                <p class="text-slate-500 text-sm mt-1 italic">Complete tool catalog access</p>
-                            </div>
-                            <div class="text-right">
-                                <p class="text-slate-400 line-through text-sm">$1,499</p>
-                                <p class="text-3xl font-black text-slate-900 ">$999</p>
-                            </div>
-                        </div>
-                        <ul class="space-y-3 mb-8">
-                            <li class="flex items-center gap-2 text-sm">
-                                <span class="material-symbols-outlined text-[var(--enterprise-blue)] !text-lg">token</span>
-                                <span>Every DI-TOOL ever released</span>
-                            </li>
-                            <li class="flex items-center gap-2 text-sm">
-                                <span class="material-symbols-outlined text-[var(--enterprise-blue)] !text-lg">token</span>
-                                <span>Priority 24/7 Technical Support</span>
-                            </li>
-                            <li class="flex items-center gap-2 text-sm">
-                                <span class="material-symbols-outlined text-[var(--enterprise-blue)] !text-lg">token</span>
-                                <span>Enterprise Multi-seat Licensing</span>
-                            </li>
-                        </ul>
-                        <button
-                            class="w-full bg-slate-900 dark:bg-white dark:text-slate-900 text-white py-3 rounded-lg font-bold hover:opacity-90 transition-all">
-                            Buy Ultimate Suite
-                        </button>
-                    </div>
-                </div>
-            </section> --}}
-
-            <section class="mb-20">
-                <h2 class="text-2xl font-black mb-8">Frequently Bought Together</h2>
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-                    <div
-                        class="group bg-white  border-2 border-slate-200  rounded-xl overflow-hidden hover:shadow-lg transition-all">
-                        <div class="aspect-square bg-slate-100  p-4">
-                            <img class="w-full h-full object-contain mix-blend-multiply dark:mix-blend-normal opacity-80 group-hover:scale-110 transition-transform"
-                                data-alt="Technical icon for a rendering engine plugin"
-                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuADz2fKqgxIvjaTj5-lGjwoNT8MCRI9OeB4VkBT9SfnOC-ejIGeSk2nZSzNi2tc9JY93KvGyMOmiKy8tcO0x3xjIw5jGCzLUci29fvhdZu98X_1JxqPLpbXHZ3Ym4g-7Cl4fUuzlgFhK4dZ2l2swKfmJbPbHDofoao3kqPWr2q94KpXn6N5Qv4CxRwEuB5YLgYmO9Pc1wu_Vi97_Egr6ITV3YeNLW5timi7sAh0xCzyu4iTEQKofUhBqDK_sasUb1I0nsMoYPf8AvQ" />
-                        </div>
-                        <div class="p-4">
-                            <h4 class="font-bold text-sm mb-1 truncate">RenderPro Engine</h4>
-                            <div class="flex items-center justify-between">
-                                <span class="text-[var(--enterprise-blue)] font-bold">$79</span>
-                                <button
-                                    class="w-8 h-8 rounded-full border border-slate-200  flex items-center justify-center hover:bg-[var(--enterprise-blue)] hover:text-white hover:border-[var(--enterprise-blue)] transition-all">
-                                    <span class="material-symbols-outlined !text-sm">add</span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    <div
-                        class="group bg-white  border-2 border-slate-200  rounded-xl overflow-hidden hover:shadow-lg transition-all">
-                        <div class="aspect-square bg-slate-100  p-4">
-                            <img class="w-full h-full object-contain mix-blend-multiply dark:mix-blend-normal opacity-80 group-hover:scale-110 transition-transform"
-                                data-alt="Technical dashboard UI representing data analysis tool"
-                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuA9u23NQRZqmg3IXYfIWNTXAFL7WsUsGqHdoGVLnNdK7IR6NMfqnxmfJ2129c5BEcdDq4ks2W9JKqUKWOmDOKk5cxuBmZlxgqmMvXxJTuq6SPcmruZIWUuDvt3lrP7KkmdtHLj_bzhmC2C66RWM2kgjbnQh-APZToYvnUXF6zKJ46TRkyzrfckVOzzj6S3m5HVpJEgHJUa9ud3-WaHYg-za064cNSOi6VpxM4OaDjBv1VTf8HX2g8VUf_vzzExLjwXkItLbAcjksQQ" />
-                        </div>
-                        <div class="p-4">
-                            <h4 class="font-bold text-sm mb-1 truncate">Material Library XL</h4>
-                            <div class="flex items-center justify-between">
-                                <span class="text-[var(--enterprise-blue)] font-bold">$49</span>
-                                <button
-                                    class="w-8 h-8 rounded-full border border-slate-200  flex items-center justify-center hover:bg-[var(--enterprise-blue)] hover:text-white hover:border-[var(--enterprise-blue)] transition-all">
-                                    <span class="material-symbols-outlined !text-sm">add</span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    <div
-                        class="group bg-white  border-2 border-slate-200  rounded-xl overflow-hidden hover:shadow-lg transition-all">
-                        <div class="aspect-square bg-slate-100  p-4">
-                            <img class="w-full h-full object-contain mix-blend-multiply dark:mix-blend-normal opacity-80 group-hover:scale-110 transition-transform"
-                                data-alt="Abstract hardware chip representing optimization plugin"
-                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuA9I9gE16lI_z4bFCY2M0qEe9EU-Dv3T8j4_cpEc1n3ronut_jQ_LX-_hwf47yXpe2xuYOTtR5FbQiuoYbMJiRSppBvJOQVPfDMuMvm-sSYIoFX37p4o7NrO56SddRIC3-kKN_sR9NQbsW3jpodY1phzOfvHpzuqqRm3mYZ06rvtNB3To6dH7Qn2QdtXtQtK5MMeHk4DDn-USfNovMi9Df3n5CXRcQVHvRl1wfaoZC4dhaP3oEZdZvs-7oRXwBmsdFDfUKifMcqI70" />
-                        </div>
-                        <div class="p-4">
-                            <h4 class="font-bold text-sm mb-1 truncate">Constraint Solver Pro</h4>
-                            <div class="flex items-center justify-between">
-                                <span class="text-[var(--enterprise-blue)] font-bold">$129</span>
-                                <button
-                                    class="w-8 h-8 rounded-full border border-slate-200  flex items-center justify-center hover:bg-[var(--enterprise-blue)] hover:text-white hover:border-[var(--enterprise-blue)] transition-all">
-                                    <span class="material-symbols-outlined !text-sm">add</span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    <div
-                        class="group bg-white  border-2 border-slate-200  rounded-xl overflow-hidden hover:shadow-lg transition-all">
-                        <div class="aspect-square bg-slate-100  p-4">
-                            <img class="w-full h-full object-contain mix-blend-multiply dark:mix-blend-normal opacity-80 group-hover:scale-110 transition-transform"
-                                data-alt="Network server representing cloud integration tool"
-                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuD8lbZUTGd1GLg5HcHiZ1PADrs7-7Pw0CU5rwiAISq3Khpqu_ufOto0OrYiTpHuhdopfYOXwa98et43_8But4Xsrogiqw8AZeDDmZj9BXMePNe7aHPEBGkLfOdICIXHYu7FNHq8hmOM12r-TqQWmGl5HUX8i8GzNaGyUFsn2R2skZAu_N0-HqMkEQFLoSM9D4yeKMNkVoX9dzUHRM1nxM1DrycLtmy5QsL51Zzk7Iqf0RktXPVlV99_bGeM4zeIrTVLTt6N6ubZQos" />
-                        </div>
-                        <div class="p-4">
-                            <h4 class="font-bold text-sm mb-1 truncate">Cloud Sync Utility</h4>
-                            <div class="flex items-center justify-between">
-                                <span class="text-[var(--enterprise-blue)] font-bold">$29</span>
-                                <button
-                                    class="w-8 h-8 rounded-full border border-slate-200  flex items-center justify-center hover:bg-[var(--enterprise-blue)] hover:text-white hover:border-[var(--enterprise-blue)] transition-all">
-                                    <span class="material-symbols-outlined !text-sm">add</span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
+                </section>
+            @endif
         </main>
     </div>
 @endsection

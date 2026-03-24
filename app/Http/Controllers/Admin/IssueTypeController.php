@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\IssueType;
+use App\Services\AdminImageUploadService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -34,6 +35,7 @@ class IssueTypeController extends Controller
     public function create(): View
     {
         $parentOptions = IssueType::getFlatListForSelect();
+
         return view('admin.issue-type.create', compact('parentOptions'));
     }
 
@@ -44,8 +46,13 @@ class IssueTypeController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'slug' => ['nullable', 'string', 'max:255'],
             'description' => ['nullable', 'string'],
+            'video' => ['nullable', 'string', 'max:2048'],
             'has_url' => ['nullable', 'boolean'],
             'sort_order' => ['nullable', 'integer', 'min:0'],
+            'existing_images' => ['nullable', 'array'],
+            'existing_images.*' => ['nullable', 'string'],
+            'images_files' => ['nullable', 'array'],
+            'images_files.*' => AdminImageUploadService::adminGalleryItemRules(),
         ]);
 
         if (empty($validated['slug'])) {
@@ -53,6 +60,12 @@ class IssueTypeController extends Controller
         }
         $validated['has_url'] = ! empty($request->input('has_url'));
         $validated['sort_order'] = (int) ($validated['sort_order'] ?? 0);
+        $validated['video'] = isset($validated['video']) && $validated['video'] !== ''
+            ? $validated['video']
+            : null;
+
+        $validated['images'] = $this->collectIssueImages($request, $validated['existing_images'] ?? []);
+        unset($validated['existing_images'], $validated['images_files']);
 
         IssueType::create($validated);
 
@@ -64,6 +77,7 @@ class IssueTypeController extends Controller
     {
         $excludeIds = $issueType->getSelfAndDescendantIds();
         $parentOptions = IssueType::getFlatListForSelect($excludeIds);
+
         return view('admin.issue-type.edit', compact('issueType', 'parentOptions'));
     }
 
@@ -74,11 +88,22 @@ class IssueTypeController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'slug' => ['nullable', 'string', 'max:255'],
             'description' => ['nullable', 'string'],
+            'video' => ['nullable', 'string', 'max:2048'],
             'has_url' => ['nullable', 'boolean'],
             'sort_order' => ['nullable', 'integer', 'min:0'],
+            'existing_images' => ['nullable', 'array'],
+            'existing_images.*' => ['nullable', 'string'],
+            'images_files' => ['nullable', 'array'],
+            'images_files.*' => AdminImageUploadService::adminGalleryItemRules(),
         ]);
 
         $validated['has_url'] = ! empty($request->input('has_url'));
+        $validated['video'] = isset($validated['video']) && $validated['video'] !== ''
+            ? $validated['video']
+            : null;
+
+        $validated['images'] = $this->collectIssueImages($request, $validated['existing_images'] ?? ($issueType->images ?? []));
+        unset($validated['existing_images'], $validated['images_files']);
 
         if ($validated['parent_id'] == $issueType->id) {
             return back()->withErrors(['parent_id' => 'An issue type cannot be its own parent.']);
@@ -105,8 +130,27 @@ class IssueTypeController extends Controller
                 ->with('error', 'Cannot delete: this issue type has children. Remove or reassign them first.');
         }
         $issueType->delete();
+
         return redirect()->route('admin.issue-types.index')
             ->with('success', 'Issue type deleted successfully.');
+    }
+
+    /**
+     * @param  array<int, string>  $existing
+     * @return array<int, string>
+     */
+    private function collectIssueImages(Request $request, array $existing): array
+    {
+        $kept = array_values(array_filter(array_map('strval', $existing), fn (string $v) => $v !== ''));
+
+        $uploaded = [];
+        foreach ($request->file('images_files', []) ?: [] as $file) {
+            if ($file && $file->isValid()) {
+                $uploaded[] = $file->store('issue-types/images', 'public');
+            }
+        }
+
+        return array_values(array_unique(array_merge($kept, $uploaded)));
     }
 
     private function isDescendant(int $ancestorId, int $possibleDescendantId): bool
@@ -118,6 +162,7 @@ class IssueTypeController extends Controller
             }
             $current = $current->parent;
         }
+
         return false;
     }
 }

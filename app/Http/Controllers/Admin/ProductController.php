@@ -6,8 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Pricing;
 use App\Models\Product;
+use App\Services\AdminImageUploadService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
 
@@ -54,6 +56,7 @@ class ProductController extends Controller
     public function create(): View
     {
         $categories = Category::orderBy('name')->get();
+
         return view('admin.product.create', compact('categories'));
     }
 
@@ -74,6 +77,8 @@ class ProductController extends Controller
         $pricingTiers = $validated['pricing_tiers'] ?? [];
         unset($validated['pricing_tiers']);
 
+        $this->applyProductUploadedMedia($request, $validated);
+
         $product = Product::create($validated);
         $this->syncProductPricing($product, $pricingTiers);
 
@@ -88,6 +93,7 @@ class ProductController extends Controller
     {
         $product->load(['pricing']);
         $categories = Category::orderBy('name')->get();
+
         return view('admin.product.edit', compact('product', 'categories'));
     }
 
@@ -108,6 +114,8 @@ class ProductController extends Controller
         $pricingTiers = $validated['pricing_tiers'] ?? [];
         unset($validated['pricing_tiers']);
 
+        $this->applyProductUploadedMedia($request, $validated);
+
         $product->update($validated);
         $this->syncProductPricing($product, $pricingTiers);
 
@@ -121,6 +129,7 @@ class ProductController extends Controller
     public function destroy(Product $product): RedirectResponse
     {
         $product->delete();
+
         return redirect()->route('admin.products.index')
             ->with('success', 'Product deleted successfully.');
     }
@@ -129,7 +138,7 @@ class ProductController extends Controller
     {
         $slugRule = ['nullable', 'string', 'max:255'];
         if ($product) {
-            $slugRule[] = 'unique:products,slug,' . $product->id;
+            $slugRule[] = 'unique:products,slug,'.$product->id;
         } else {
             $slugRule[] = 'unique:products,slug';
         }
@@ -151,8 +160,11 @@ class ProductController extends Controller
             'pricing_tiers.*.price' => ['nullable', 'numeric', 'min:0'],
             'pricing_tiers.*.currency' => ['nullable', 'string', 'max:10'],
             'avatar' => ['nullable', 'string'],
+            'avatar_file' => AdminImageUploadService::adminAvatarFileRules(),
             'video' => ['nullable', 'string'],
             'images' => ['nullable', 'string'],
+            'images_files' => ['nullable', 'array'],
+            'images_files.*' => AdminImageUploadService::adminGalleryItemRules(),
             'cat_set' => ['nullable', 'string', 'max:255'],
             'stand_set' => ['nullable', 'string', 'max:255'],
         ], [
@@ -160,6 +172,33 @@ class ProductController extends Controller
             'slug.unique' => 'This URL slug is already in use.',
             'status.required' => 'Please select a status.',
         ]);
+    }
+
+    /**
+     * Store uploaded avatar/gallery files and merge gallery URLs into {@see $data}.
+     *
+     * @param  array<string, mixed>  $data
+     */
+    private function applyProductUploadedMedia(Request $request, array &$data): void
+    {
+        unset($data['avatar_file'], $data['images_files']);
+
+        $disk = Storage::disk('public');
+
+        if ($request->hasFile('avatar_file')) {
+            $path = $request->file('avatar_file')->store('products/avatars', 'public');
+            $data['avatar'] = $disk->url($path);
+        }
+
+        $uploadedUrls = [];
+        foreach ($request->file('images_files', []) ?: [] as $file) {
+            if ($file && $file->isValid()) {
+                $uploadedUrls[] = $disk->url($file->store('products/gallery', 'public'));
+            }
+        }
+
+        $existing = array_filter(array_map('trim', explode(',', (string) ($data['images'] ?? ''))));
+        $data['images'] = implode(',', array_values(array_unique(array_merge($existing, $uploadedUrls))));
     }
 
     /**

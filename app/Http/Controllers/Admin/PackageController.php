@@ -7,8 +7,10 @@ use App\Models\Package;
 use App\Models\Pricing;
 use App\Models\Product;
 use App\Models\Type;
+use App\Services\AdminImageUploadService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
 
@@ -60,6 +62,8 @@ class PackageController extends Controller
         $productIds = $validated['product_ids'] ?? [];
         unset($validated['pricing_tiers'], $validated['product_ids']);
 
+        $this->applyPackageUploadedMedia($request, $validated);
+
         $package = Package::create($validated);
         $package->products()->sync($productIds);
         $this->syncPackagePricing($package, $pricingTiers);
@@ -92,6 +96,8 @@ class PackageController extends Controller
         $productIds = $validated['product_ids'] ?? [];
         unset($validated['pricing_tiers'], $validated['product_ids']);
 
+        $this->applyPackageUploadedMedia($request, $validated);
+
         $package->update($validated);
         $package->products()->sync($productIds);
         $this->syncPackagePricing($package, $pricingTiers);
@@ -114,7 +120,7 @@ class PackageController extends Controller
     {
         $slugRule = ['nullable', 'string', 'max:255'];
         if ($package) {
-            $slugRule[] = 'unique:packages,slug,' . $package->id;
+            $slugRule[] = 'unique:packages,slug,'.$package->id;
         } else {
             $slugRule[] = 'unique:packages,slug';
         }
@@ -127,8 +133,11 @@ class PackageController extends Controller
             'level' => ['nullable', 'integer', 'min:0'],
             'description' => ['nullable', 'string'],
             'avatar' => ['nullable', 'string'],
+            'avatar_file' => AdminImageUploadService::adminAvatarFileRules(),
             'video' => ['nullable', 'string'],
             'images' => ['nullable', 'string'],
+            'images_files' => ['nullable', 'array'],
+            'images_files.*' => AdminImageUploadService::adminGalleryItemRules(),
             'product_ids' => ['nullable', 'array'],
             'product_ids.*' => ['integer', 'exists:products,id'],
             'pricing_tiers' => ['nullable', 'array'],
@@ -139,6 +148,31 @@ class PackageController extends Controller
             'name.required' => 'Package name is required.',
             'slug.unique' => 'This URL slug is already in use.',
         ]);
+    }
+
+    /**
+     * @param  array<string, mixed>  $data
+     */
+    private function applyPackageUploadedMedia(Request $request, array &$data): void
+    {
+        unset($data['avatar_file'], $data['images_files']);
+
+        $disk = Storage::disk('public');
+
+        if ($request->hasFile('avatar_file')) {
+            $path = $request->file('avatar_file')->store('packages/avatars', 'public');
+            $data['avatar'] = $disk->url($path);
+        }
+
+        $uploadedUrls = [];
+        foreach ($request->file('images_files', []) ?: [] as $file) {
+            if ($file && $file->isValid()) {
+                $uploadedUrls[] = $disk->url($file->store('packages/gallery', 'public'));
+            }
+        }
+
+        $existing = array_filter(array_map('trim', explode(',', (string) ($data['images'] ?? ''))));
+        $data['images'] = implode(',', array_values(array_unique(array_merge($existing, $uploadedUrls))));
     }
 
     /**

@@ -48,6 +48,7 @@
         }
 
         $pricingOptions = $product->pricing->sortBy('duration_months')->values();
+        $hasPricingTiers = $pricingOptions->isNotEmpty();
         $activePricing =
             $pricingOptions->sortByDesc('duration_months')->first() ??
             (object) ['price' => 0, 'duration_months' => 0, 'currency' => 'EUR'];
@@ -63,10 +64,6 @@
             ['label' => 'Professional', 'active' => $isProfessional],
             ['label' => 'Premium', 'active' => $isPremium],
         ];
-
-        $belongsToCoreFree = $product->packages->contains(function ($pkg) {
-            return $pkg->type?->name === \App\Constants\GlobalConstant::TYPE_CORE_FREE;
-        });
 
         $specs = [
             ['label' => 'Category', 'value' => $product->category?->name ?: 'N/A'],
@@ -102,7 +99,7 @@
                 <div
                     class="relative aspect-video w-full overflow-hidden rounded-xl bg-white shadow-lg border border-slate-200">
                     <div id="productMainVideo" class="w-full h-full">
-                        <iframe class="w-full h-full" src="https://www.youtube.com/embed/ArfewyEeXZA" title="Product video"
+                        <iframe class="w-full h-full" src="{{ $product->video ?: 'https://www.youtube.com/embed/Y5ltBmPhyp0' }}" title="Product video"
                             frameborder="0"
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                             allowfullscreen>
@@ -143,13 +140,14 @@
                 @php
                     $currentPrice = (float) $activePricing->price;
                     $originalPriceProduct =
-                        $pricingOptions->count() > 0
+                        $hasPricingTiers
                             ? (float) $pricingOptions->sortByDesc('price')->first()->price
                             : $currentPrice * 1.44;
                     $savingsPercentProduct =
-                        $originalPriceProduct > 0 && $originalPriceProduct > $currentPrice
+                        $hasPricingTiers && $originalPriceProduct > 0 && $originalPriceProduct > $currentPrice
                             ? (int) round((1 - $currentPrice / $originalPriceProduct) * 100)
                             : 0;
+                    $planGridCols = min(3, max(1, $pricingOptions->count()));
                 @endphp
                 <div class="sticky top-24 rounded-2xl bg-slate-50 p-6 sm:p-8 shadow-lg border border-slate-200">
                     {{-- Badge + Title --}}
@@ -181,12 +179,12 @@
                         </div>
                     </div>
 
-                    @if (!$belongsToCoreFree && $pricingOptions->count() > 1)
-                        {{-- Subscription plan (only when multiple options to choose from) --}}
+                    @if ($hasPricingTiers)
+                        {{-- Subscription plan: show whenever product has pricing rows (1 or more) --}}
                         <div class="border-t border-slate-200 pt-6 pb-6">
                             <p class="text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-4">Select
                                 subscription plan</p>
-                            <div class="grid grid-cols-3 gap-3">
+                            <div class="grid gap-3 {{ $planGridCols === 1 ? 'grid-cols-1' : ($planGridCols === 2 ? 'grid-cols-2' : 'grid-cols-3') }}">
                                 @foreach ($pricingOptions as $option)
                                     @php
                                         $optionPrefix = $option->currency === 'EUR' ? '€' : $option->currency . ' ';
@@ -201,21 +199,8 @@
                                 @endforeach
                             </div>
                         </div>
-                    @endif
 
-                    @if ($belongsToCoreFree)
-                        {{-- Core Free tools: no pricing, only download CTA via Core Free package --}}
-                        <div class="border-t border-slate-200 pt-6 space-y-4 text-center">
-                            <button type="button"
-                                class="getCoreFreeBtn w-full flex items-center justify-center gap-2 rounded-xl bg-[var(--enterprise-blue)] py-4 text-base font-bold text-white transition-all hover:bg-blue-700 active:scale-[0.98] shadow-lg"
-                                data-download-entity-type="product" data-download-entity-id="{{ $product->id }}"
-                                data-download-entity-name="{{ $productName }}">
-                                <span class="material-symbols-outlined text-xl">download</span>
-                                <span>Download</span>
-                            </button>
-                        </div>
-                    @else
-                        {{-- Price --}}
+                        {{-- Price (always when pricing records exist) --}}
                         <div class="border-t border-slate-200 pt-6 pb-6 text-center">
                             @if ($savingsPercentProduct > 0)
                                 <p class="text-sm text-slate-400 line-through mb-1">
@@ -257,6 +242,47 @@
                                 30-Day Money Back Guarantee
                             </p>
                         </div>
+                    @else
+                        {{-- No pricing rows: legacy fallback --}}
+                        <div class="border-t border-slate-200 pt-6 pb-6 text-center">
+                            @if ($savingsPercentProduct > 0)
+                                <p class="text-sm text-slate-400 line-through mb-1">
+                                    {{ $currencyPrefix }}{{ number_format($originalPriceProduct, 2) }}</p>
+                            @endif
+                            <p class="flex items-baseline justify-center gap-0.5">
+                                <span
+                                    class="text-2xl font-black text-slate-900 align-baseline">{{ trim($currencyPrefix) }}</span>
+                                <span id="productPrice"
+                                    class="text-4xl font-black text-slate-900 tracking-tight">{{ number_format($currentPrice, 2) }}</span>
+                            </p>
+                            @if ($savingsPercentProduct > 0)
+                                <span
+                                    class="inline-block mt-2 px-2.5 py-1 rounded-md bg-emerald-500 text-white text-[10px] font-bold uppercase tracking-wider">Save
+                                    {{ $savingsPercentProduct }}% annually</span>
+                            @endif
+                            <span id="productDuration" class="sr-only"
+                                aria-hidden="true">{{ (int) $activePricing->duration_months > 0 ? (int) $activePricing->duration_months . ' months' : 'one-time' }}</span>
+                        </div>
+                        <div class="space-y-3">
+                            <button type="button"
+                                class="addProductToCartBtn w-full flex items-center justify-center gap-2 rounded-xl border-2 bg-white py-4 text-base font-bold text-[var(--enterprise-blue)] transition-all hover:bg-blue-50 active:scale-[0.98]"
+                                data-product-id="{{ $product->id }}" data-product-name="{{ $productName }}"
+                                data-product-detail-url="{{ route('product-detail', $product) }}">
+                                <span class="material-symbols-outlined text-xl">add_shopping_cart</span>
+                                <span>Add To Cart</span>
+                            </button>
+                            <button type="button"
+                                class="buyNowProductBtn w-full flex items-center justify-center gap-2 rounded-xl bg-[var(--enterprise-blue)] py-4 text-base font-bold text-white transition-all hover:bg-blue-700 active:scale-[0.98] shadow-lg"
+                                data-product-id="{{ $product->id }}" data-product-name="{{ $productName }}"
+                                data-product-detail-url="{{ route('product-detail', $product) }}">
+                                <span class="material-symbols-outlined text-xl">shopping_cart</span>
+                                <span>Buy Now</span>
+                            </button>
+                            <p class="flex items-center justify-center gap-2 text-xs text-slate-500">
+                                <span class="material-symbols-outlined text-base">verified_user</span>
+                                30-Day Money Back Guarantee
+                            </p>
+                        </div>
                     @endif
                 </div>
             </div>
@@ -278,93 +304,21 @@
             </section>
         @endif
 
-        {{-- @if (!empty($includedTools) && $includedTools->count())
-            <section class="mt-20">
-                <h2 class="text-2xl font-black mb-8">Included Tools</h2>
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-                    @foreach ($includedTools as $tool)
-                        @php
-                            $toolPricing = $tool->pricing->sortBy('price')->first();
-                            $toolCurrency = $toolPricing?->currency === 'EUR' ? 'EUR ' : (($toolPricing?->currency ?? 'USD') . ' ');
-                            $toolImage = $tool->avatar ?: 'https://res.cloudinary.com/dkjfmxxom/image/upload/v1765015546/main_m50fl1.png';
-                            $toolPrice = $toolPricing ? (float) $toolPricing->price : 0;
-                        @endphp
-                        <div
-                            class="group bg-white border-2 border-slate-200 rounded-xl overflow-hidden hover:shadow-lg transition-all">
-                            <a href="{{ route('product-detail', $tool) }}" class="block">
-                                <div class="aspect-square bg-slate-100 p-4">
-                                    <img class="w-full h-full object-contain opacity-80 group-hover:scale-110 transition-transform"
-                                        alt="{{ $tool->name }}" src="{{ $toolImage }}" />
-                                </div>
-                            </a>
-                            <div class="p-4">
-                                <h4 class="font-bold text-sm mb-1 truncate">{{ $tool->name }}</h4>
-                                <div class="flex items-center justify-between gap-2">
-                                    <span class="text-[var(--enterprise-blue)] font-bold text-sm">
-                                        {{ $toolPricing ? $toolCurrency . number_format($toolPrice, 2) : 'Contact us' }}
-                                    </span>
-                                    <button
-                                        class="addProductToCartBtn w-8 h-8 rounded-full border border-slate-200 flex items-center justify-center hover:bg-[var(--enterprise-blue)] hover:text-white hover:border-[var(--enterprise-blue)] transition-all"
-                                        data-product-id="{{ $tool->id }}" data-product-name="{{ $tool->name }}"
-                                        data-product-price="{{ number_format($toolPrice, 2, '.', '') }}"
-                                        data-product-currency="{{ $toolCurrency }}" data-product-image="{{ $toolImage }}">
-                                        <span class="material-symbols-outlined !text-sm">add</span>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
-            </section>
-        @endif --}}
-
         @if (!empty($relatedProducts) && $relatedProducts->count())
             <section class="mt-20 mb-20">
                 <h2 class="text-2xl font-black mb-8">Related Products</h2>
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-                    @foreach ($relatedProducts as $item)
-                        @php
-                            $itemPricing = $item->pricing->sortBy('price')->first();
-                            $itemCurrency =
-                                $itemPricing?->currency === 'EUR' ? 'EUR ' : ($itemPricing?->currency ?? 'USD') . ' ';
-                            $itemImage =
-                                $item->avatar ?:
-                                'https://res.cloudinary.com/dkjfmxxom/image/upload/v1765015546/main_m50fl1.png';
-                            $itemPrice = $itemPricing ? (float) $itemPricing->price : 0;
-                            $itemPeriod =
-                                $itemPricing && $itemPricing->duration_months
-                                    ? $itemPricing->duration_months . ' months'
-                                    : '';
-                        @endphp
-                        <div class="group bg-white border-2 border-slate-200 rounded-xl overflow-hidden hover:shadow-lg transition-all cursor-pointer"
-                            onclick="window.location.href='{{ route('product-detail', $item) }}'" role="button"
-                            tabindex="0"
-                            onkeydown="if(event.key==='Enter') window.location.href='{{ route('product-detail', $item) }}';">
-                            <div class="aspect-square bg-slate-100 p-4">
-                                <img class="w-full h-full object-contain opacity-80 group-hover:scale-110 transition-transform"
-                                    alt="{{ $item->name }}" src="{{ $itemImage }}" />
-                            </div>
-                            <div class="p-4">
-                                <h4 class="font-bold text-sm mb-1 truncate">{{ $item->name }}</h4>
-                                <div class="flex items-center justify-between gap-2">
-                                    <span class="text-[var(--enterprise-blue)] font-bold text-sm">
-                                        {{ $itemPricing ? $itemCurrency . number_format($itemPrice, 2) : 'Contact us' }}
-                                    </span>
-                                    @if ($itemPricing)
-                                        <button type="button"
-                                            class="addProductToCartBtn w-8 h-8 rounded-full border border-slate-200 flex items-center justify-center hover:bg-[var(--enterprise-blue)] hover:text-white hover:border-[var(--enterprise-blue)] transition-all flex-shrink-0"
-                                            onclick="event.stopPropagation();" data-product-id="{{ $item->id }}"
-                                            data-product-name="{{ $item->name }}"
-                                            data-product-price="{{ number_format($itemPrice, 2, '.', '') }}"
-                                            data-product-currency="{{ $itemPeriod }}"
-                                            data-product-image="{{ $itemImage }}"
-                                            data-product-detail-url="{{ route('product-detail', $item) }}">
-                                            <span class="material-symbols-outlined !text-sm">add</span>
-                                        </button>
-                                    @endif
-                                </div>
-                            </div>
-                        </div>
+                    @foreach ($relatedProducts as $idx => $item)
+                        @include('components.cards.tool-card', [
+                            'tool' => $item,
+                            'idx' => $idx,
+                            'imageSources' => [
+                                'https://res.cloudinary.com/dkjfmxxom/image/upload/v1765015546/main_m50fl1.png',
+                            ],
+                            'isClickable' => true,
+                            'productId' => $item->id,
+                            'detailUrl' => route('product-detail', $item),
+                        ])
                     @endforeach
                 </div>
             </section>

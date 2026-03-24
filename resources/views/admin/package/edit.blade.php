@@ -14,7 +14,7 @@
     </header>
 
     <div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden max-w-5xl">
-        <form id="admin-package-form" action="{{ route('admin.packages.update', $package) }}" method="post" class="p-6 md:p-8" novalidate>
+        <form id="admin-package-form" action="{{ route('admin.packages.update', $package) }}" method="post" enctype="multipart/form-data" class="p-6 md:p-8" novalidate>
             @csrf
             @method('PUT')
             @include('admin.package._form', ['package' => $package, 'types' => $types, 'products' => $products])

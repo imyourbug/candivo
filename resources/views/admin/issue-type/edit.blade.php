@@ -14,7 +14,7 @@
     </header>
 
     <div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden max-w-2xl">
-        <form id="issue-type-form" action="{{ route('admin.issue-types.update', $issueType) }}" method="post" class="p-6 md:p-8" novalidate>
+        <form id="issue-type-form" action="{{ route('admin.issue-types.update', $issueType) }}" method="post" enctype="multipart/form-data" class="p-6 md:p-8" novalidate>
             @csrf
             @method('PUT')
             @include('admin.issue-type._form', ['issueType' => $issueType, 'parentOptions' => $parentOptions])

@@ -77,14 +77,14 @@
                         innovation at scale.
                     </p>
                     <div class="flex items-center gap-6">
-                        <button
-                            class="px-10 py-5 bg-white text-[var(--enterprise-blue)] rounded-2xl font-bold text-lg shadow-2xl hover:scale-[1.05] transition-all">
+                        <a href="{{ route('home', ['tab' => 'Package']) }}"
+                            class="px-10 py-5 bg-white text-[var(--enterprise-blue)] rounded-2xl font-bold text-lg shadow-2xl hover:scale-[1.05] transition-all inline-flex items-center justify-center">
                             Get Started Now
-                        </button>
-                        <button
-                            class="px-10 py-5 bg-white/10 backdrop-blur-md text-white border border-white/20 rounded-2xl font-bold text-lg hover:bg-white/20 transition-all">
+                        </a>
+                        <a href="{{ route('help-center') }}"
+                            class="px-10 py-5 bg-white/10 backdrop-blur-md text-white border border-white/20 rounded-2xl font-bold text-lg hover:bg-white/20 transition-all inline-flex items-center justify-center">
                             Watch Demo
-                        </button>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -110,14 +110,14 @@
                         surgical accuracy.
                     </p>
                     <div class="flex items-center gap-6">
-                        <button
-                            class="px-10 py-5 bg-white text-[var(--enterprise-blue)] rounded-2xl font-bold text-lg shadow-2xl hover:scale-[1.05] transition-all">
+                        <a href="{{ route('about') }}"
+                            class="px-10 py-5 bg-white text-[var(--enterprise-blue)] rounded-2xl font-bold text-lg shadow-2xl hover:scale-[1.05] transition-all inline-flex items-center justify-center">
                             Learn More
-                        </button>
-                        <button
-                            class="px-10 py-5 bg-white/10 backdrop-blur-md text-white border border-white/20 rounded-2xl font-bold text-lg hover:bg-white/20 transition-all">
+                        </a>
+                        <a href="{{ route('home') }}"
+                            class="px-10 py-5 bg-white/10 backdrop-blur-md text-white border border-white/20 rounded-2xl font-bold text-lg hover:bg-white/20 transition-all inline-flex items-center justify-center">
                             View Case Studies
-                        </button>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -143,14 +143,14 @@
                         achieve in a day.
                     </p>
                     <div class="flex items-center gap-6">
-                        <button
-                            class="px-10 py-5 bg-white text-[var(--enterprise-blue)] rounded-2xl font-bold text-lg shadow-2xl hover:scale-[1.05] transition-all">
+                        <a href="{{ route('home', ['tab' => 'Stand-Alone']) }}"
+                            class="px-10 py-5 bg-white text-[var(--enterprise-blue)] rounded-2xl font-bold text-lg shadow-2xl hover:scale-[1.05] transition-all inline-flex items-center justify-center">
                             Explore Automation
-                        </button>
-                        <button
-                            class="px-10 py-5 bg-white/10 backdrop-blur-md text-white border border-white/20 rounded-2xl font-bold text-lg hover:bg-white/20 transition-all">
+                        </a>
+                        <a href="{{ route('help-center') }}"
+                            class="px-10 py-5 bg-white/10 backdrop-blur-md text-white border border-white/20 rounded-2xl font-bold text-lg hover:bg-white/20 transition-all inline-flex items-center justify-center">
                             Request Demo
-                        </button>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -176,14 +176,14 @@
                         cloud ecosystems.
                     </p>
                     <div class="flex items-center gap-6">
-                        <button
-                            class="px-10 py-5 bg-white text-[var(--enterprise-blue)] rounded-2xl font-bold text-lg shadow-2xl hover:scale-[1.05] transition-all">
+                        <a href="{{ route('home', ['tab' => 'Core-Free']) }}"
+                            class="px-10 py-5 bg-white text-[var(--enterprise-blue)] rounded-2xl font-bold text-lg shadow-2xl hover:scale-[1.05] transition-all inline-flex items-center justify-center">
                             Solutions Overview
-                        </button>
-                        <button
-                            class="px-10 py-5 bg-white/10 backdrop-blur-md text-white border border-white/20 rounded-2xl font-bold text-lg hover:bg-white/20 transition-all">
+                        </a>
+                        <a href="{{ route('about') }}"
+                            class="px-10 py-5 bg-white/10 backdrop-blur-md text-white border border-white/20 rounded-2xl font-bold text-lg hover:bg-white/20 transition-all inline-flex items-center justify-center">
                             Contact Sales
-                        </button>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -209,115 +209,6 @@
                 data-slide="3"></button>
         </div>
     </section>
-    {{-- <section class="relative py-24 bg-white combo-grid-pattern">
-        <div class="max-w-7xl mx-auto px-10 lg:px-16">
-            <div class="flex justify-between items-end mb-16">
-                <div>
-                    <span
-                        class="text-[var(--accent-blue)] text-xs font-black uppercase tracking-widest mb-3 block">Optimized
-                        Workflows</span>
-                    <h2 class="text-4xl font-black text-[var(--enterprise-blue)] tracking-tight">Featured Combos</h2>
-                </div>
-                <a class="group flex items-center gap-2 text-[var(--enterprise-blue)] font-bold text-sm hover:text-[var(--accent-blue)] transition-colors"
-                    href="#">
-                    Explore all Combos
-                    <span
-                        class="material-symbols-outlined text-lg group-hover:translate-x-1 transition-transform">arrow_right_alt</span>
-                </a>
-            </div>
-            <div class="grid grid-cols-1 gap-8">
-                <div
-                    class="group relative flex flex-col lg:flex-row bg-white rounded-[40px] border border-slate-100 shadow-xl shadow-slate-200/40 overflow-hidden hover:shadow-2xl transition-all duration-500">
-                    <div class="lg:w-1/3 relative h-64 lg:h-auto overflow-hidden">
-                        <img alt="Starter Combo"
-                            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuD0xn8klFRg-K-wRgdq9BzT8p7YQbk6CjpWvfNLtc2vdCkRslFovVEeXhTTPi8n6Wg4kQk6g5XGMAA9Eje2zDvPqgmIT-5DGhYHSfGg8_3ikow9PiqSqnjhbl4vKZrJGIdPvdSeyLeVSba8OMJLs1VMbFXsof6nhoC7sGi9QImZ1nT5NHC9Go5RlZWKq_GowsX26ajNPYPCPWaol77sCdSPRs-kfLoBSSMaOb37ctMPwcUx8bTWWT9eDcj23XJ1ltEnAAZOQQvyBjI" />
-                        <div class="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent"></div>
-                    </div>
-                    <div class="flex-1 p-10 lg:p-12 flex flex-col lg:flex-row lg:items-center justify-between gap-8">
-                        <div class="max-w-md">
-                            <div
-                                class="inline-flex px-3 py-1 rounded-full bg-blue-50 text-[var(--accent-blue)] text-[10px] font-extrabold uppercase tracking-widest mb-4">
-                                Foundation Pack</div>
-                            <h3 class="text-3xl font-black text-[var(--enterprise-blue)] mb-4">Starter Combo</h3>
-                            <div class="flex flex-wrap items-center gap-3 text-slate-500">
-                                <span
-                                    class="flex items-center gap-1.5 py-1 px-3 bg-slate-50 rounded-lg text-xs font-semibold">Modeling
-                                    Suite</span>
-                                <span class="material-symbols-outlined text-slate-300 text-sm">add</span>
-                                <span
-                                    class="flex items-center gap-1.5 py-1 px-3 bg-slate-50 rounded-lg text-xs font-semibold">Simulation
-                                    Lite</span>
-                                <span class="material-symbols-outlined text-slate-300 text-sm">add</span>
-                                <span
-                                    class="flex items-center gap-1.5 py-1 px-3 bg-slate-50 rounded-lg text-xs font-semibold">Cloud
-                                    Sync</span>
-                            </div>
-                        </div>
-                        <div class="flex flex-col items-center lg:items-end lg:text-right min-w-[200px]">
-                            <div class="mb-6 text-center lg:text-right">
-                                <span class="text-slate-300 text-sm line-through font-medium block mb-1">$849.00</span>
-                                <span
-                                    class="text-4xl font-black text-[var(--enterprise-blue)] tracking-tight">$649.00</span>
-                            </div>
-                            <button
-                                class="buyBundleBtn w-full lg:w-auto px-10 py-4 bg-[var(--enterprise-blue)] text-white text-sm font-bold rounded-2xl hover:bg-blue-600 transition-all shadow-lg shadow-blue-900/10 flex items-center justify-center gap-2">
-                                <span class="material-symbols-outlined text-xl">shopping_cart</span>
-                                Buy Bundle
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                <div
-                    class="group relative flex flex-col lg:flex-row bg-white rounded-[40px] border border-slate-100 shadow-xl shadow-slate-200/40 overflow-hidden hover:shadow-2xl transition-all duration-500">
-                    <div class="lg:w-1/3 relative h-64 lg:h-auto overflow-hidden">
-                        <img alt="Enterprise Stack"
-                            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuABiuR3EtpFe7mIKUqtUleN7jxNUwJHyaX4f444l0nXna-mbpS_TTTQFVYxdzPcL7zZ5KLSiZ0JQxUE-0-AQlofogRoRXJq6v8YtmeS9ZqI3AHDN1fVnkMQLLFMfOfeG2vQIwR6dtsbCTCWYvl6gfnmu9Iv9wjXbFKH-Z5hXsifmpNlzii0TKZOUs-sDUXiUCvQVzX-RosgPdyc8Am5nR8-JnDje3cBRFe2-eoFa2Ruv9AeD8XaIuLfCnL6EU69DDsNvgybAgrNsFs" />
-                        <div class="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent"></div>
-                        <div class="absolute top-6 left-6">
-                            <span
-                                class="bg-blue-600 text-white px-4 py-1.5 rounded-full text-[10px] font-extrabold uppercase tracking-widest shadow-xl">Top
-                                Choice</span>
-                        </div>
-                    </div>
-                    <div class="flex-1 p-10 lg:p-12 flex flex-col lg:flex-row lg:items-center justify-between gap-8">
-                        <div class="max-w-md">
-                            <div
-                                class="inline-flex px-3 py-1 rounded-full bg-blue-50 text-[var(--accent-blue)] text-[10px] font-extrabold uppercase tracking-widest mb-4">
-                                Advanced Workflow</div>
-                            <h3 class="text-3xl font-black text-[var(--enterprise-blue)] mb-4">Enterprise Stack</h3>
-                            <div class="flex flex-wrap items-center gap-3 text-slate-500">
-                                <span
-                                    class="flex items-center gap-1.5 py-1 px-3 bg-slate-50 rounded-lg text-xs font-semibold">Automation
-                                    Pro</span>
-                                <span class="material-symbols-outlined text-slate-300 text-sm">add</span>
-                                <span
-                                    class="flex items-center gap-1.5 py-1 px-3 bg-slate-50 rounded-lg text-xs font-semibold">Data
-                                    Manager</span>
-                                <span class="material-symbols-outlined text-slate-300 text-sm">add</span>
-                                <span
-                                    class="flex items-center gap-1.5 py-1 px-3 bg-slate-50 rounded-lg text-xs font-semibold">API
-                                    Access</span>
-                            </div>
-                        </div>
-                        <div class="flex flex-col items-center lg:items-end lg:text-right min-w-[200px]">
-                            <div class="mb-6 text-center lg:text-right">
-                                <span class="text-slate-300 text-sm line-through font-medium block mb-1">$1,649.00</span>
-                                <span
-                                    class="text-4xl font-black text-[var(--enterprise-blue)] tracking-tight">$1,299.00</span>
-                            </div>
-                            <button
-                                class="buyBundleBtn w-full lg:w-auto px-10 py-4 bg-[var(--enterprise-blue)] text-white text-sm font-bold rounded-2xl hover:bg-blue-600 transition-all shadow-lg shadow-blue-900/10 flex items-center justify-center gap-2">
-                                <span class="material-symbols-outlined text-xl">shopping_cart</span>
-                                Buy Bundle
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section> --}}
     <br />
     <br />
     @php
@@ -354,9 +245,9 @@
                     <h2 class="text-4xl lg:text-6xl font-black text-[var(--enterprise-blue)] leading-[1.05] tracking-tight">
                         {{ $sectionTitle }}
                     </h2>
-                    <p class="text-slate-500 text-lg mt-5 leading-relaxed max-w-3xl mx-auto">
+                    {{-- <p class="text-slate-500 text-lg mt-5 leading-relaxed max-w-3xl mx-auto">
                         {{ $sectionDescription }}
-                    </p>
+                    </p> --}}
                 </div>
                 @php
                     $packagesByLevel = $type->packages->groupBy('level')->sortKeys();
@@ -500,97 +391,43 @@
     </section>
     <section class="bg-[#002d5b] py-10">
         <div class="max-w-7xl mx-auto px-10 lg:px-16">
-            <div class="flex flex-wrap items-center justify-center gap-x-10 gap-y-4 text-white text-2xl font-black mb-10">
-                <span>CAMELBAK</span>
-                <span>Vermeer</span>
-                <span>KNAPHEIDE</span>
-                <span>RESEMIN</span>
-                <span>KONICA MINOLTA</span>
-                <span>ColdSnap</span>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                @forelse ($homePostsStories as $post)
-                    @php
-                        $blogCardImage = $post->avatar_url ?? $post->featured_image_url;
-                    @endphp
-                    <a href="{{ route('post-detail', $post) }}"
-                        class="bg-white rounded-lg p-5 flex gap-4 shadow-lg hover:shadow-xl transition-shadow group">
-                        @if ($blogCardImage)
-                            <img alt="{{ $post->title }}" width="144" height="112" loading="lazy" decoding="async"
-                                class="h-28 w-36 flex-shrink-0 rounded object-cover"
-                                src="{{ $blogCardImage }}">
-                        @else
-                            <div
-                                class="w-36 h-28 rounded flex-shrink-0 bg-gradient-to-br from-[#137fec] to-[#002d5b] flex items-center justify-center">
-                                <span class="material-symbols-outlined text-white text-4xl opacity-90">article</span>
+            @if ($homePostsStories->isEmpty())
+                @if (! $homePostsCommunity->isEmpty())
+                    <p class="text-blue-100 text-center py-4 text-sm">Add more published posts to fill this row (posts 4–6
+                        by home order).</p>
+                @endif
+            @else
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    @foreach ($homePostsStories as $post)
+                        @php
+                            $blogCardImage = $post->avatar_url ?? $post->featured_image_url;
+                        @endphp
+                        <a href="{{ route('post-detail', $post) }}"
+                            class="bg-white rounded-lg p-5 flex gap-4 shadow-lg hover:shadow-xl transition-shadow group min-w-0">
+                            @if ($blogCardImage)
+                                <img alt="{{ $post->title }}" width="144" height="112" loading="lazy" decoding="async"
+                                    class="h-28 w-36 flex-shrink-0 rounded object-cover" src="{{ $blogCardImage }}">
+                            @else
+                                <div
+                                    class="w-36 h-28 rounded flex-shrink-0 bg-gradient-to-br from-[#137fec] to-[#002d5b] flex items-center justify-center">
+                                    <span class="material-symbols-outlined text-white text-4xl opacity-90">article</span>
+                                </div>
+                            @endif
+                            <div class="min-w-0 flex-1">
+                                <p class="text-slate-500 uppercase tracking-wider text-xs font-bold">Blog</p>
+                                <h3
+                                    class="text-xl md:text-2xl leading-snug font-black text-slate-900 group-hover:text-[#137fec] transition-colors">
+                                    {{ $post->title }}</h3>
+                                <p class="mt-2 line-clamp-2 text-sm text-slate-600">
+                                    {{ \Illuminate\Support\Str::limit($post->home_preview_text, 120) }}
+                                </p>
                             </div>
-                        @endif
-                        <div class="min-w-0">
-                            <p class="text-slate-500 uppercase tracking-wider text-xs font-bold">Blog</p>
-                            <h3
-                                class="text-2xl md:text-3xl leading-tight font-black text-slate-900 group-hover:text-[#137fec] transition-colors line-clamp-2">
-                                {{ $post->title }}</h3>
-                            <p class="mt-2 line-clamp-2 text-sm text-slate-600">
-                                {{ \Illuminate\Support\Str::limit($post->home_preview_text, 120) }}
-                            </p>
-                        </div>
-                    </a>
-                @empty
-                    @if ($homePostsCommunity->isEmpty())
-                        {{-- already shown above --}}
-                    @else
-                        <p class="lg:col-span-3 text-blue-100 text-center py-4 text-sm">Add more published posts to fill this
-                            row (posts 4–6 by home order).</p>
-                    @endif
-                @endforelse
-            </div>
+                        </a>
+                    @endforeach
+                </div>
+            @endif
         </div>
     </section>
-    {{-- <section class="relative py-24 overflow-hidden">
-        <div class="absolute inset-0 z-0">
-            <img alt="Customer Story Background" class="w-full h-full object-cover opacity-10"
-                src="https://www.solidworks.com/sites/default/filesd10/styles/webp/public/2025-10/solidworks-customer-one-wheel-banner-2_0.jpg.webp?itok=_-nEDcQW">
-        </div>
-        <div class="max-w-7xl mx-auto px-10 lg:px-16 relative z-10">
-            <h2 class="text-5xl font-black text-[var(--enterprise-blue)] mb-16">Customer Stories</h2>
-            <div class="flex flex-col lg:flex-row gap-12 items-center">
-                <div class="lg:w-1/2 p-12 border-l-4 border-blue-600 bg-white shadow-2xl rounded-r-2xl">
-                    <h3 class="text-3xl font-bold text-slate-900 mb-6">How Future Motion Created Onewheel</h3>
-                    <p class="text-slate-600 text-lg mb-8 leading-relaxed">From a rough prototype to a radical ride, Future
-                        Motion relied on DI-TOOL for every phase of design, simulation, and production.</p>
-                    <div class="space-y-4">
-                        <a class="flex items-center gap-2 text-[#137fec] font-bold hover:underline" href="#">
-                            <span class="material-symbols-outlined">arrow_circle_right</span> Read Future Motion customer
-                            story
-                        </a>
-                        <a class="flex items-center gap-2 text-[#137fec] font-bold hover:underline" href="#">
-                            <span class="material-symbols-outlined">arrow_circle_right</span> All customer stories
-                        </a>
-                    </div>
-                </div>
-                <div class="lg:w-1/2 relative rounded-3xl overflow-hidden shadow-2xl">
-                    <iframe class="w-full aspect-video" src="https://www.youtube.com/watch?v=hnTQoO-VQrU&t"
-                        title="YouTube video player" frameborder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        allowfullscreen>
-                    </iframe>
-                </div>
-            </div>
-        </div>
-    </section> --}}
-    {{-- <section class="bg-[#002d5b] py-2">
-        <div class="max-w-7xl mx-auto px-10 lg:px-16">
-            <div
-                class="bg-[#002d5b] rounded-md px-6 py-3 flex flex-col md:flex-row items-center justify-center gap-4 md:gap-6">
-                <p class="text-white text-xl font-bold">Stay up to date with the latest SOLIDWORKS news on SOLIDWORKS Live
-                </p>
-                <a href="#"
-                    class="inline-flex items-center justify-center rounded-full bg-white px-8 py-2.5 text-[#137fec] text-2xl font-black tracking-tight hover:bg-slate-100 transition-colors">
-                    Watch Now
-                </a>
-            </div>
-        </div>
-    </section> --}}
     <section class="bg-slate-50 py-32 px-10 lg:px-16">
         <div class="max-w-7xl mx-auto">
             <div class="text-center mb-20">
@@ -680,12 +517,12 @@
                 <p class="text-blue-100 text-base max-w-xl mx-auto mb-6 font-medium">Connect with our solution architects
                     to build a bespoke automation strategy for your manufacturing pipeline.</p>
                 <div class="flex flex-wrap justify-center gap-3">
-                    <button
-                        class="px-6 py-2.5 bg-white text-[var(--enterprise-blue)] rounded-xl font-bold text-base shadow-xl hover:scale-105 transition-all">
+                    <button type="button"
+                        class="schedule-modal-open px-6 py-2.5 bg-white text-[var(--enterprise-blue)] rounded-xl font-bold text-base shadow-xl hover:scale-105 transition-all">
                         Request Custom Proposal
                     </button>
-                    <button
-                        class="px-6 py-2.5 bg-white/10 backdrop-blur-md text-white border border-white/20 rounded-xl font-bold text-base hover:bg-white/20 transition-all">
+                    <button type="button"
+                        class="schedule-modal-open px-6 py-2.5 bg-white/10 backdrop-blur-md text-white border border-white/20 rounded-xl font-bold text-base hover:bg-white/20 transition-all">
                         Talk to an Expert
                     </button>
                 </div>

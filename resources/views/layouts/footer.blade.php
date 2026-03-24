@@ -2,15 +2,18 @@
     <div class="max-w-[1280px] mx-auto">
         <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-5 gap-10 xl:gap-12">
             <div class="xl:col-span-2">
-                <a href="{{ route('home') }}" class="inline-flex items-center gap-2 hover:opacity-90 transition-opacity mb-5">
-                    <img src="{{ asset('logo.png') }}" alt="DI-TOOLS Logo" class="h-24 md:h-28 w-auto rounded object-cover" />
+                <a href="{{ route('home') }}"
+                    class="inline-flex items-center gap-2 hover:opacity-90 transition-opacity mb-5">
+                    <img src="{{ asset('logo.png') }}" alt="DI-TOOLS Logo"
+                        class="h-24 md:h-28 w-auto rounded object-cover" />
                 </a>
                 <p class="text-[#4c739a] text-base leading-relaxed max-w-md">
                     The premium standard for Autodesk Inventor extensions. Driving engineering excellence through
                     intelligent automation.
                 </p>
                 <div class="mt-6 flex items-center gap-3">
-                    <a href="#" target="_blank" rel="noopener noreferrer" aria-label="YouTube"
+                    <a href="https://www.youtube.com/playlist?list=PLY_JFFRWFisYI1TTPDkNcH3RIhkaj4e9t" target="_blank"
+                        rel="noopener noreferrer" aria-label="YouTube"
                         class="size-12 rounded-full flex items-center justify-center bg-[#137fec] hover:bg-[#0f6ecd] transition-colors shrink-0 p-2.5">
                         <svg class="size-full text-white" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                             <path
@@ -30,43 +33,52 @@
             <div>
                 <h4 class="text-[#002b5c] text-lg font-black uppercase tracking-widest mb-5">D-Products</h4>
                 <ul class="space-y-3 text-[#4c739a] text-lg font-semibold">
-                    <li><a class="hover:text-[#002b5c] transition-colors" href="#">Standard Suite</a></li>
-                    <li><a class="hover:text-[#002b5c] transition-colors" href="#">D-Projects</a></li>
-                    <li><a class="hover:text-[#002b5c] transition-colors" href="#">D-Configurators & Automation</a></li>
-                    <li><a class="hover:text-[#002b5c] transition-colors" href="#">Di-Tools</a></li>
+                    <li><a class="hover:text-[#002b5c] transition-colors"
+                            href="https://www.cadinvo.com/products/d-projects">D-Projects</a></li>
+                    <li><a class="hover:text-[#002b5c] transition-colors"
+                            href="https://www.cadinvo.com/products/d-configurators-automation">D-Configurators &
+                            Automation</a></li>
+                    <li><a class="hover:text-[#002b5c] transition-colors"
+                            href="https://www.cadinvo.com/products/di-tools">Di-Tools</a></li>
                 </ul>
             </div>
 
             <div>
                 <h4 class="text-[#002b5c] text-lg font-black uppercase tracking-widest mb-5">Services</h4>
                 <ul class="space-y-3 text-[#4c739a] text-lg font-semibold">
-                    <li><a class="hover:text-[#002b5c] transition-colors" href="#">Scanning & Digitalization</a></li>
-                    <li><a class="hover:text-[#002b5c] transition-colors" href="#">Configurators & Automation</a></li>
-                    <li><a class="hover:text-[#002b5c] transition-colors" href="#">Outsourcing & Support</a></li>
-                    <li><a class="hover:text-[#002b5c] transition-colors" href="#">Process Optimization</a></li>
-                    <li><a class="hover:text-[#002b5c] transition-colors" href="#">Engineering & Technical Drafting</a></li>
+                    <li><a class="hover:text-[#002b5c] transition-colors"
+                            href="https://www.cadinvo.com/services/scanning-digitalization">Scanning &
+                            Digitalization</a></li>
+                    <li><a class="hover:text-[#002b5c] transition-colors"
+                            href="https://www.cadinvo.com/services/configurators-automation">Configurators &
+                            Automation</a></li>
+                    <li><a class="hover:text-[#002b5c] transition-colors"
+                            href="https://www.cadinvo.com/services/outsourcing-support">Outsourcing & Support</a></li>
+                    <li><a class="hover:text-[#002b5c] transition-colors"
+                            href="https://www.cadinvo.com/services/process-optimization">Process Optimization</a></li>
+                    <li><a class="hover:text-[#002b5c] transition-colors"
+                            href="https://www.cadinvo.com/services/engineering-technical-drafting">Engineering &
+                            Technical Drafting</a></li>
                 </ul>
             </div>
 
             <div>
                 <h4 class="text-[#002b5c] text-lg font-black uppercase tracking-widest mb-5">Company</h4>
                 <ul class="space-y-3 text-[#4c739a] text-lg font-semibold">
-                    <li><a class="hover:text-[#002b5c] transition-colors" href="#">Shop</a></li>
+                    <li><a class="hover:text-[#002b5c] transition-colors" href="{{ route('home') }}">Shop</a></li>
                     <li><a class="hover:text-[#002b5c] transition-colors" href="{{ route('home') }}">Home</a></li>
-                    <li><a class="hover:text-[#002b5c] transition-colors" href="#">About Us</a></li>
-                    <li><a class="hover:text-[#002b5c] transition-colors" href="#">Contact Us</a></li>
+                    <li><a class="hover:text-[#002b5c] transition-colors" href="{{ route('about') }}">About Us</a></li>
+                    <li><a class="hover:text-[#002b5c] transition-colors" href="{{ route('contact-us') }}">Contact Us</a>
+                    </li>
                 </ul>
             </div>
         </div>
 
-        <div class="mt-10 pt-6 border-t border-[#d6e3f1] flex flex-col md:flex-row items-start md:items-center justify-between gap-3">
+        <div
+            class="mt-10 pt-6 border-t border-[#d6e3f1] flex flex-col md:flex-row items-start md:items-center justify-between gap-3">
             <p class="text-[#4c739a] text-xs font-medium">
                 © {{ date('Y') }} DI-TOOLS. All rights reserved.
             </p>
-            <div class="flex items-center gap-5 text-xs font-semibold text-[#4c739a]">
-                <a href="#" class="hover:text-[#002b5c] transition-colors">Privacy Policy</a>
-                <a href="#" class="hover:text-[#002b5c] transition-colors">Terms of Service</a>
-            </div>
         </div>
     </div>
 </footer>

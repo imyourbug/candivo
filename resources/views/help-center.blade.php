@@ -52,6 +52,86 @@
             font-size: 1rem;
             color: #94a3b8;
         }
+
+        /* Selected issue — vivid text + fill + edge accent (sidebar) */
+        .help-nav-tree .js-issue-link.help-issue-active {
+            color: #0055ff;
+            font-weight: 600;
+            background: linear-gradient(
+                120deg,
+                rgba(0, 120, 255, 0.28) 0%,
+                rgba(0, 200, 255, 0.22) 50%,
+                rgba(0, 140, 255, 0.18) 100%
+            );
+            box-shadow:
+                inset 0 0 0 1px rgba(0, 140, 255, 0.55),
+                inset 4px 0 0 0 #0090ff;
+            border-radius: 0.375rem;
+            text-shadow: 0 0 20px rgba(0, 140, 255, 0.35);
+        }
+
+        .dark .help-nav-tree .js-issue-link.help-issue-active {
+            color: #7aebff;
+            background: linear-gradient(
+                120deg,
+                rgba(56, 189, 248, 0.35) 0%,
+                rgba(14, 165, 233, 0.22) 55%,
+                rgba(34, 211, 238, 0.12) 100%
+            );
+            box-shadow:
+                inset 0 0 0 1px rgba(56, 189, 248, 0.55),
+                inset 4px 0 0 0 #22d3ee;
+            text-shadow: 0 0 22px rgba(34, 211, 238, 0.45);
+        }
+
+        .help-nav-tree .js-issue-link.help-issue-active .nav-leaf-icon {
+            color: #0090ff;
+        }
+
+        .dark .help-nav-tree .js-issue-link.help-issue-active .nav-leaf-icon {
+            color: #22d3ee;
+        }
+
+        /* Video tutorial filter tabs */
+        #videoTutorialTabs .video-tab {
+            padding: 0.5rem 1rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            border: 2px solid rgb(203 213 225);
+            background: linear-gradient(to bottom, #f8fafc, #e2e8f0);
+            color: #0f172a;
+            box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08);
+            transition: border-color 0.2s, box-shadow 0.2s, transform 0.15s, color 0.2s;
+        }
+
+        .dark #videoTutorialTabs .video-tab {
+            border-color: rgb(71 85 105);
+            background: linear-gradient(to bottom, #475569, #334155);
+            color: #f1f5f9;
+        }
+
+        #videoTutorialTabs .video-tab:hover:not(.video-tab--active) {
+            border-color: #137fec;
+            box-shadow: 0 4px 14px rgba(19, 127, 236, 0.28);
+            color: #137fec;
+        }
+
+        .dark #videoTutorialTabs .video-tab:hover:not(.video-tab--active) {
+            color: #93c5fd;
+        }
+
+        #videoTutorialTabs .video-tab--active {
+            background: linear-gradient(135deg, #137fec 0%, #1a8cff 45%, #0b6efd 100%);
+            color: #fff;
+            border-color: rgba(255, 255, 255, 0.35);
+            font-weight: 700;
+            box-shadow: 0 10px 28px -6px rgba(19, 127, 236, 0.55), 0 0 0 2px rgba(255, 255, 255, 0.25);
+        }
+
+        .dark #videoTutorialTabs .video-tab--active {
+            box-shadow: 0 10px 28px -6px rgba(19, 127, 236, 0.6), 0 0 0 2px rgba(255, 255, 255, 0.12);
+        }
     </style>
 @endpush
 
@@ -63,17 +143,21 @@
             <h1 class="text-4xl md:text-5xl font-extrabold text-white mb-6 leading-tight">How can we help you today?</h1>
             <p class="text-white/80 text-lg mb-10 font-medium">Search for video tutorials, FAQs, or technical documentation
                 for Autodesk Inventor tools.</p>
-            <div class="relative max-w-2xl mx-auto">
-                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                    <span class="material-symbols-outlined text-slate-400">search</span>
+            <div class="max-w-2xl mx-auto relative">
+                <div class="relative">
+                    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                        <span class="material-symbols-outlined text-slate-400">search</span>
+                    </div>
+                    <input id="help-hero-search-input"
+                        class="block w-full pl-12 pr-32 py-4 bg-white border-0 rounded-xl shadow-xl focus:ring-2 focus:ring-primary text-slate-900 placeholder:text-slate-400 text-lg"
+                        placeholder="Search for video tutorials or FAQs..." type="text" />
+                    <button id="help-hero-search-btn" type="button"
+                        class="absolute right-2 top-2 bottom-2 px-6 bg-primary text-white font-bold rounded-lg hover:bg-primary/90 transition-colors">
+                        Search
+                    </button>
                 </div>
-                <input
-                    class="block w-full pl-12 pr-32 py-4 bg-white border-0 rounded-xl shadow-xl focus:ring-2 focus:ring-primary text-slate-900 placeholder:text-slate-400 text-lg"
-                    placeholder="Search for video tutorials or FAQs..." type="text" />
-                <button
-                    class="absolute right-2 top-2 bottom-2 px-6 bg-primary text-white font-bold rounded-lg hover:bg-primary/90 transition-colors">
-                    Search
-                </button>
+                <div id="help-hero-search-results"
+                    class="hidden absolute left-0 right-0 top-full mt-2 z-30 text-left rounded-xl border border-slate-200 bg-white/95 backdrop-blur shadow-xl p-2 max-h-80 overflow-auto"></div>
             </div>
         </div>
     </section>
@@ -82,12 +166,40 @@
         {{-- Sidebar Navigation (example + image style) --}}
         <aside
             class="w-72 flex-shrink-0 border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 flex flex-col sticky top-0 h-[calc(100vh-6px)]">
-            <nav class="help-nav-tree flex-1 overflow-y-auto p-4 space-y-0 help-sidebar-scroll">
+            <nav class="help-nav-tree overflow-y-auto p-4 space-y-0 help-sidebar-scroll">
                 <p class="px-3 text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">You can find your issue
                     here...</p>
-                {{-- Dynamic issue types tree (from admin) --}}
-                <div id="help-issue-types-tree" data-api-url="{{ route('api.issue-types.tree') }}"
-                    data-api-detail-url="{{ route('api.issue-types.detail', ['slug' => '___SLUG___']) }}"></div>
+                <div id="help-sidebar-nav" class="space-y-0">
+                    @isset($allSidebarTools)
+                        @if ($allSidebarTools->isNotEmpty())
+                            <details class="help-nav-details mb-1" id="help-all-tools-sidebar">
+                                <summary
+                                    class="flex items-center gap-2 py-1.5 cursor-pointer text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded px-1 text-sm font-medium">
+                                    <span class="material-symbols-outlined nav-expand-icon nav-expand-icon--closed"
+                                        aria-hidden="true">expand_more</span>
+                                    <span class="material-symbols-outlined nav-expand-icon nav-expand-icon--open"
+                                        aria-hidden="true">expand_less</span>
+                                    <span class="font-semibold text-[#137fec] dark:text-[#5eb0ff]">All Tools</span>
+                                </summary>
+                                <div
+                                    class="ml-5 mt-0.5 space-y-0 border-l border-slate-200 dark:border-slate-700 pl-3 max-h-[min(60vh,28rem)] overflow-y-auto help-sidebar-scroll">
+                                    @foreach ($allSidebarTools as $tool)
+                                        <a href="#issue-{{ $tool->slug }}"
+                                            class="flex items-center gap-2 py-1.5 text-slate-600 dark:text-slate-400 hover:text-[#137fec] text-sm rounded px-1 hover:bg-slate-100 dark:hover:bg-slate-800 js-issue-link"
+                                            data-issue-slug="{{ $tool->slug }}">
+                                            <span class="material-symbols-outlined nav-expand-icon nav-leaf-icon"
+                                                aria-hidden="true">label</span>
+                                            <span>{{ $tool->name }}</span>
+                                        </a>
+                                    @endforeach
+                                </div>
+                            </details>
+                        @endif
+                    @endisset
+                    {{-- Dynamic issue types tree (from admin) --}}
+                    <div id="help-issue-types-tree" data-api-url="{{ route('api.issue-types.tree') }}"
+                        data-api-detail-url="{{ route('api.issue-types.detail', ['slug' => '___SLUG___']) }}"></div>
+                </div>
                 <div id="help-issue-types-fallback">
                     {{-- Level 1 (collapsed) --}}
                     <details class="help-nav-details">
@@ -315,11 +427,11 @@
                         </div>
                     </details>
                 </div>
-                <a class="flex items-center gap-2 py-1.5 pl-7 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-[#137fec] rounded px-1 text-sm"
+                <a class="flex items-center gap-2 py-1.5 pl-8 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-[#137fec] rounded px-1 text-sm"
                     href="#video-tutorials">Video Tutorials</a>
-                <a class="flex items-center gap-2 py-1.5 pl-7 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-[#137fec] rounded px-1 text-sm"
+                <a class="flex items-center gap-2 py-1.5 pl-8 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-[#137fec] rounded px-1 text-sm"
                     href="#faq">FAQs</a>
-                <a class="flex items-center gap-2 py-1.5 pl-7 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-[#137fec] rounded px-1 text-sm"
+                <a class="flex items-center gap-2 py-1.5 pl-8 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-[#137fec] rounded px-1 text-sm"
                     href="#documentation">Documentation</a>
             </nav>
             <div class="p-4 border-t border-slate-100 dark:border-slate-800">
@@ -335,13 +447,13 @@
         <main class="flex-1 flex flex-col min-w-0 overflow-auto">
             <div class="max-w-6xl w-full mx-auto px-2 lg:px-2 py-8">
                 {{-- Back + Title + SHARE (image style) --}}
-                <div class="mb-6">
+                {{-- <div class="mb-6">
                     <button type="button"
                         class="flex items-center gap-1.5 text-[#137fec] text-sm font-bold hover:opacity-90 transition-opacity">
                         <span class="material-symbols-outlined text-sm">arrow_back</span>
                         Back to Search Results
                     </button>
-                </div>
+                </div> --}}
                 <div class="flex flex-wrap items-start justify-between gap-4 mb-6">
                     <h2 id="help-issue-title" class="text-4xl font-black text-slate-900 dark:text-white tracking-tight">
                         {{ isset($issue) && $issue ? $issue->name : 'About Help Center' }}
@@ -354,23 +466,43 @@
                 </div>
                 <hr class="border-slate-200 dark:border-slate-700 mb-8" />
 
-                {{-- What's New (image: version links) --}}
-                <p class="text-sm text-slate-600 dark:text-slate-400 mb-1">
-                    <span class="font-semibold text-slate-700 dark:text-slate-300">What's New:</span>
-                    <a class="text-[#137fec] font-medium hover:underline" href="#">2024</a>,
-                    <a class="text-[#137fec] font-medium hover:underline" href="#">2024.1</a>,
-                    <a class="text-[#137fec] font-medium hover:underline" href="#">2024.2</a>
-                </p>
-                <p id="help-issue-description" class="text-slate-700 dark:text-slate-300 leading-relaxed mb-10">
-                    @if (isset($issue) && $issue && $issue->description)
-                        {!! nl2br(e($issue->description)) !!}
-                    @else
-                        Use the Help Center to search tutorials, open FAQs, and download documentation.
+                <div id="help-issue-video"
+                    class="mb-8 mx-auto max-w-5xl rounded-xl overflow-hidden border border-slate-200 dark:border-slate-700 shadow-sm bg-black aspect-video @if (!isset($issue) || !$issue || empty($issue->video)) hidden @endif">
+                    <iframe id="help-issue-video-iframe"
+                        title="{{ isset($issue) && $issue ? $issue->name.' — video' : 'Help video' }}"
+                        class="w-full h-full border-0"
+                        @if (isset($issue) && $issue && !empty($issue->video))
+                            src="{{ $issue->video }}"
+                        @endif
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowfullscreen loading="lazy"></iframe>
+                </div>
+                {{-- Manual screenshots / figures (after video) --}}
+                <div id="help-issue-images"
+                    class="help-issue-images space-y-4 mb-8 mx-auto max-w-5xl @if (!isset($issue) || !$issue || empty($issue->images)) hidden @endif">
+                    @if (isset($issue) && $issue && !empty($issue->images))
+                        @foreach ($issue->images as $img)
+                            <figure
+                                class="rounded-xl border border-slate-200 dark:border-slate-700 overflow-hidden shadow-sm bg-slate-50 dark:bg-slate-800/40">
+                                <img src="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($img) }}"
+                                    alt="{{ $issue->name }} — {{ $loop->iteration }}"
+                                    class="w-full h-auto block max-h-[min(85vh,1200px)] object-contain bg-white dark:bg-slate-900"
+                                    loading="lazy" />
+                            </figure>
+                        @endforeach
                     @endif
-                </p>
+                </div>
+                <div id="help-issue-description"
+                    class="help-issue-description text-slate-700 dark:text-slate-300 leading-relaxed mb-10">
+                    @if (isset($issue) && $issue && $issue->description)
+                        {!! $issue->description !!}
+                    @else
+                        <p class="mb-0">Use the Help Center to search tutorials, open FAQs, and download documentation.</p>
+                    @endif
+                </div>
 
                 {{-- Interactive card + numbered list (image: "Set Projects, Open files, Create New files") --}}
-                <section class="mb-12">
+                {{-- <section class="mb-12">
                     <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2">Search, open tutorials, and get
                         support</h3>
                     <p class="text-slate-600 dark:text-slate-400 mb-4">Use this panel for quick access to help resources.
@@ -418,121 +550,63 @@
                         <li><strong>Open:</strong> Browse and open recent help articles or saved bookmarks.</li>
                         <li><strong>New:</strong> Start a new support request or open the documentation library.</li>
                     </ol>
-                </section>
+                </section> --}}
 
                 {{-- Video Tutorials --}}
                 <section id="video-tutorials" class="mb-16">
                     <h3 class="text-2xl font-bold text-slate-900 dark:text-white mb-4">Video Tutorials</h3>
                     <p class="text-slate-600 dark:text-slate-400 mb-6">Master Di-tool with our step-by-step visual guides.
                     </p>
-                    <div class="flex gap-2 mb-6 flex-wrap">
-                        <button type="button"
-                            class="px-4 py-1.5 rounded-full bg-[#137fec] text-white text-sm font-bold">All</button>
-                        <button type="button"
-                            class="px-4 py-1.5 rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 text-sm font-medium hover:border-[#137fec]">Assembly</button>
-                        <button type="button"
-                            class="px-4 py-1.5 rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 text-sm font-medium hover:border-[#137fec]">Drawing
-                            Export</button>
-                        <button type="button"
-                            class="px-4 py-1.5 rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 text-sm font-medium hover:border-[#137fec]">API
-                            / iLogic</button>
+                    <div class="flex gap-2.5 mb-6 flex-wrap items-center" id="videoTutorialTabs" role="tablist">
+                        <button type="button" role="tab" aria-selected="true"
+                            data-video-filter="all"
+                            class="js-video-tab video-tab video-tab--active">
+                            All tools
+                        </button>
+@foreach(($videoTutorialPackages ?? collect()) as $pkg)
+                        <button type="button" role="tab" aria-selected="false"
+                            data-video-filter="package"
+                            data-package-id="{{ $pkg->id }}"
+                            class="js-video-tab video-tab">
+                            {{ $pkg->name }}
+                        </button>
+@endforeach
                     </div>
                     <div class="relative" id="videoTutorialsSliderWrap">
                         <div class="overflow-hidden rounded-xl" id="videoTutorialsSlider">
                             <div class="flex gap-4 md:gap-6 transition-transform duration-300 ease-out"
                                 id="videoTutorialsTrack" style="transform: translateX(0);">
-                                <div class="video-slide flex-shrink-0 w-1/2 md:w-1/3 lg:w-1/4 px-1 md:px-2">
-                                    <div class="group cursor-pointer">
-                                        <div
-                                            class="relative aspect-video rounded-xl overflow-hidden mb-4 shadow-md bg-slate-200">
-                                            <img alt="3D mechanical assembly"
-                                                class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBLqLTx0MHzpfC1ReXg6fImXeksiBW6VrpCR6iENn-hLUp6V7jtxnyVYsQfn8nSDo4NUDxC1tuWmBwCL0UHFP-gmcAzVjhL3DMtH6vlb6BYN-bEV7_MR_veuXkHDqZbe-JMvYRyHcto9YgqH5Okzjsad4vyjC1_GjMJkK3pTpwPoq-Sx_Y1B849OgPRMfL5DHJ_Hh-b0CWKiZnzBbmqbkcFeD6WIOHDpGL_66oJyO0VQfr0gWrqBKgyfFmzUAAmNyfzXwROml_TcwU" />
-                                            <div
-                                                class="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors flex items-center justify-center">
-                                                <span
-                                                    class="material-symbols-outlined text-white text-5xl opacity-0 group-hover:opacity-100 transition-opacity">play_circle</span>
-                                            </div>
-                                            <div
-                                                class="absolute bottom-2 right-2 bg-black/70 text-white text-xs px-2 py-1 rounded font-bold">
-                                                12:45</div>
+@forelse(($videoTutorials ?? collect()) as $tutorial)
+                                <div class="video-slide flex-shrink-0 w-1/2 md:w-1/3 lg:w-1/4 px-1 md:px-2"
+                                    data-package-ids="{{ e(json_encode($tutorial['package_ids'] ?? [])) }}">
+                                    <div class="group cursor-pointer js-video-tutorial-item" data-issue-slug="{{ $tutorial['issue_slug'] ?? '' }}">
+                                        <div class="relative aspect-video rounded-xl overflow-hidden mb-4 shadow-md bg-slate-200 dark:bg-slate-800">
+                                            @if(!empty($tutorial['video']))
+                                                <iframe src="{{ $tutorial['video'] }}" title="{{ $tutorial['name'] }}"
+                                                    class="w-full h-full border-0" loading="lazy"
+                                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                                    allowfullscreen></iframe>
+                                            @else
+                                                <div class="w-full h-full flex items-center justify-center text-slate-500 dark:text-slate-400 text-sm font-medium">
+                                                    Video not available
+                                                </div>
+                                            @endif
                                         </div>
-                                        <h4
-                                            class="font-bold text-slate-900 dark:text-white group-hover:text-[#137fec] transition-colors text-lg mb-1">
-                                            Optimizing Assembly Performance</h4>
-                                        <p class="text-sm text-slate-500 dark:text-slate-400 line-clamp-2">Learn advanced
-                                            techniques for large assemblies in Inventor.</p>
+                                        <h4 class="font-bold text-slate-900 dark:text-white group-hover:text-[#137fec] transition-colors text-lg mb-1">
+                                            {{ $tutorial['name'] }}
+                                        </h4>
+                                        <p class="text-sm text-slate-500 dark:text-slate-400 line-clamp-2">
+                                            {{ $tutorial['short_description'] ?: 'No description available.' }}
+                                        </p>
                                     </div>
                                 </div>
-                                <div class="video-slide flex-shrink-0 w-1/2 md:w-1/3 lg:w-1/4 px-1 md:px-2">
-                                    <div class="group cursor-pointer">
-                                        <div
-                                            class="relative aspect-video rounded-xl overflow-hidden mb-4 shadow-md bg-slate-200">
-                                            <img alt="Technical blueprint"
-                                                class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuCIzwLHyDG-bom9lS_AdOCJz7x23yItyG1UBgff3xmr9ylPtwgnMbw05wDEwMdqMwBCI4QSk989vO0I9On9zCBfDIYEAHeHNB0ylbQ0bA8mRhLeBjUiEDryASybE9zU__58Q6QL0EfISKdW7h3Uv2uniuDZjRGI07YLLwPTRZDO9p4hR53OabgBxecaHvNMKDBLOublv13oOKiJetMBHut8D9yPPqyQNMLUxIFcVp0PppaWH5Xh0GFMPHNLi3SmAoJyMuhOJTr6rgc" />
-                                            <div
-                                                class="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors flex items-center justify-center">
-                                                <span
-                                                    class="material-symbols-outlined text-white text-5xl opacity-0 group-hover:opacity-100 transition-opacity">play_circle</span>
-                                            </div>
-                                            <div
-                                                class="absolute bottom-2 right-2 bg-black/70 text-white text-xs px-2 py-1 rounded font-bold">
-                                                08:20</div>
-                                        </div>
-                                        <h4
-                                            class="font-bold text-slate-900 dark:text-white group-hover:text-[#137fec] transition-colors text-lg mb-1">
-                                            Automating Drawing Exports</h4>
-                                        <p class="text-sm text-slate-500 dark:text-slate-400 line-clamp-2">One-click
-                                            multi-format exports (PDF, DXF, DWG).</p>
+@empty
+                                <div class="video-slide flex-shrink-0 w-full px-1 md:px-2">
+                                    <div class="rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-6">
+                                        <p class="text-slate-600 dark:text-slate-300">No tutorials available yet.</p>
                                     </div>
                                 </div>
-                                <div class="video-slide flex-shrink-0 w-1/2 md:w-1/3 lg:w-1/4 px-1 md:px-2">
-                                    <div class="group cursor-pointer">
-                                        <div
-                                            class="relative aspect-video rounded-xl overflow-hidden mb-4 shadow-md bg-slate-200">
-                                            <img alt="iLogic scripts"
-                                                class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuCVKgS9jlegl8Mr0_Yes8z7MddMF296IMRwaEektZescWruv0Dhoq11YHB2QC65WV_LHlzn_QXxjiL4fYlp_r-WhRlnyZi1-bDEhkkb8EsVE-CFY9y1zE-GkDw7x8BDa2AseXWjBfWq_cctZJLq6R2zu7F1oTuCbKBqHdd2EL8EM9LXSRkLoXvWkmEiAQvA_P3c7Frf7zC00OE_sFkjSp2m9FjVbdQrSYI_CF6pkCR2sSb3JJmSDvQpYevoeZHcbHG383BRXfPM5V4" />
-                                            <div
-                                                class="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors flex items-center justify-center">
-                                                <span
-                                                    class="material-symbols-outlined text-white text-5xl opacity-0 group-hover:opacity-100 transition-opacity">play_circle</span>
-                                            </div>
-                                            <div
-                                                class="absolute bottom-2 right-2 bg-black/70 text-white text-xs px-2 py-1 rounded font-bold">
-                                                15:10</div>
-                                        </div>
-                                        <h4
-                                            class="font-bold text-slate-900 dark:text-white group-hover:text-[#137fec] transition-colors text-lg mb-1">
-                                            Getting Started with iLogic</h4>
-                                        <p class="text-sm text-slate-500 dark:text-slate-400 line-clamp-2">Introduction to
-                                            the Di-tool API and your first script.</p>
-                                    </div>
-                                </div>
-                                <div class="video-slide flex-shrink-0 w-1/2 md:w-1/3 lg:w-1/4 px-1 md:px-2">
-                                    <div class="group cursor-pointer">
-                                        <div
-                                            class="relative aspect-video rounded-xl overflow-hidden mb-4 shadow-md bg-slate-200">
-                                            <img alt="BOM and drawing"
-                                                class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBLqLTx0MHzpfC1ReXg6fImXeksiBW6VrpCR6iENn-hLUp6V7jtxnyVYsQfn8nSDo4NUDxC1tuWmBwCL0UHFP-gmcAzVjhL3DMtH6vlb6BYN-bEV7_MR_veuXkHDqZbe-JMvYRyHcto9YgqH5Okzjsad4vyjC1_GjMJkK3pTpwPoq-Sx_Y1B849OgPRMfL5DHJ_Hh-b0CWKiZnzBbmqbkcFeD6WIOHDpGL_66oJyO0VQfr0gWrqBKgyfFmzUAAmNyfzXwROml_TcwU" />
-                                            <div
-                                                class="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors flex items-center justify-center">
-                                                <span
-                                                    class="material-symbols-outlined text-white text-5xl opacity-0 group-hover:opacity-100 transition-opacity">play_circle</span>
-                                            </div>
-                                            <div
-                                                class="absolute bottom-2 right-2 bg-black/70 text-white text-xs px-2 py-1 rounded font-bold">
-                                                10:30</div>
-                                        </div>
-                                        <h4
-                                            class="font-bold text-slate-900 dark:text-white group-hover:text-[#137fec] transition-colors text-lg mb-1">
-                                            BOM and Drawing Standards</h4>
-                                        <p class="text-sm text-slate-500 dark:text-slate-400 line-clamp-2">Best practices
-                                            for BOM and consistent drawing output.</p>
-                                    </div>
-                                </div>
+@endforelse
                             </div>
                         </div>
                         <button type="button" id="videoSliderPrev"
@@ -692,24 +766,25 @@
                     </div>
                 </section>
 
-                {{-- Prev / Next (example style) --}}
-                <div class="pt-8 border-t border-slate-200 dark:border-slate-800 flex justify-between">
-                    <a class="group flex flex-col items-start gap-2" href="#">
+                {{-- Prev / Next issue navigation --}}
+                <div class="pt-8 border-t border-slate-200 dark:border-slate-800 flex justify-between" id="issue-pager-wrap">
+                    <button type="button" id="issuePagerPrev" class="group flex flex-col items-start gap-2 text-left hidden">
                         <span class="text-xs font-bold text-slate-400 uppercase tracking-widest">Previous</span>
-                        <div
+                        <span
                             class="flex items-center gap-2 text-slate-700 dark:text-slate-200 font-bold group-hover:text-[#137fec] transition-colors">
                             <span class="material-symbols-outlined">arrow_back</span>
-                            Inventor Basics
-                        </div>
-                    </a>
-                    <a class="group flex flex-col items-end gap-2" href="#">
+                            <span id="issuePagerPrevLabel">Previous issue</span>
+                        </span>
+                    </button>
+                    <div class="text-xs text-slate-400 font-medium" id="issuePagerHint">Select an issue to navigate</div>
+                    <button type="button" id="issuePagerNext" class="group flex flex-col items-end gap-2 text-right hidden ml-auto">
                         <span class="text-xs font-bold text-slate-400 uppercase tracking-widest">Next</span>
-                        <div
+                        <span
                             class="flex items-center gap-2 text-slate-700 dark:text-slate-200 font-bold group-hover:text-[#137fec] transition-colors">
-                            About the Ribbon
+                            <span id="issuePagerNextLabel">Next issue</span>
                             <span class="material-symbols-outlined">arrow_forward</span>
-                        </div>
-                    </a>
+                        </span>
+                    </button>
                 </div>
             </div>
         </main>
@@ -738,6 +813,7 @@
         // Help center tree + issue detail (jQuery)
         $(function() {
             var $container = $('#help-issue-types-tree');
+            var $navRoot = $('#help-sidebar-nav');
             var $fallback = $('#help-issue-types-fallback');
             if (!$container.length) return;
 
@@ -789,48 +865,314 @@
                     leafIcon + '<span>' + name + '</span></div>';
             }
 
+            var issueSearchIndex = [];
+            var clickableIssues = [];
+            var currentIssueSlug = null;
+            var clickHistoryStorageKey = 'help_center_issue_click_history_v1';
+            var initialIssueSlug = @json(isset($issue) && $issue ? $issue->slug : null);
+            var $heroSearchInput = $('#help-hero-search-input');
+            var $heroSearchBtn = $('#help-hero-search-btn');
+            var $heroSearchResults = $('#help-hero-search-results');
+            var $issuePagerPrev = $('#issuePagerPrev');
+            var $issuePagerNext = $('#issuePagerNext');
+            var $issuePagerPrevLabel = $('#issuePagerPrevLabel');
+            var $issuePagerNextLabel = $('#issuePagerNextLabel');
+            var $issuePagerHint = $('#issuePagerHint');
+
+            function flattenIssues(nodes) {
+                var out = [];
+                (nodes || []).forEach(function(node) {
+                    if (!node) return;
+                    out.push(node);
+                    if (Array.isArray(node.children) && node.children.length) {
+                        out = out.concat(flattenIssues(node.children));
+                    }
+                });
+                return out;
+            }
+
+            function renderHeroResults(items, query) {
+                if (!$heroSearchResults.length) return;
+                if (!query) {
+                    $heroSearchResults.empty().addClass('hidden');
+                    return;
+                }
+                if (!items.length) {
+                    $heroSearchResults
+                        .html('<p class="px-3 py-2 text-sm text-slate-500">No related issue types found.</p>')
+                        .removeClass('hidden');
+                    return;
+                }
+                var html = items.map(function(item) {
+                    var name = escapeHtml(item.name || 'Untitled');
+                    var slug = escapeHtml(item.slug || '');
+                    return '<button type="button" class="js-hero-search-result w-full text-left px-3 py-2 rounded-lg hover:bg-slate-100 text-slate-700 text-sm" data-issue-slug="' + slug + '">' +
+                        '<span class="font-semibold">' + name + '</span>' +
+                        (slug ? '<span class="text-slate-400 ml-2">/' + slug + '</span>' : '') +
+                        '</button>';
+                }).join('');
+                $heroSearchResults.html(html).removeClass('hidden');
+            }
+
+            function runHeroSearch() {
+                var q = ($heroSearchInput.val() || '').toString().trim().toLowerCase();
+                if (!q) {
+                    renderHeroResults([], '');
+                    return;
+                }
+                var matches = issueSearchIndex.filter(function(item) {
+                    var haystack = [item.name, item.slug, item.description]
+                        .map(function(v) { return (v || '').toString().toLowerCase(); })
+                        .join(' ');
+                    return haystack.indexOf(q) !== -1;
+                }).slice(0, 30);
+                renderHeroResults(matches, q);
+            }
+
+            function saveIssueClickHistory(issue) {
+                if (!issue || !issue.slug) return;
+                var nowIso = new Date().toISOString();
+                var history = {};
+                try {
+                    history = JSON.parse(localStorage.getItem(clickHistoryStorageKey) || '{}') || {};
+                } catch (e) {
+                    history = {};
+                }
+                var prev = history[issue.slug] || {};
+                history[issue.slug] = {
+                    slug: issue.slug,
+                    name: issue.name || prev.name || issue.slug,
+                    count: (Number(prev.count) || 0) + 1,
+                    last_clicked_at: nowIso
+                };
+                localStorage.setItem(clickHistoryStorageKey, JSON.stringify(history));
+            }
+
+            function updateIssuePager() {
+                if (!$issuePagerPrev.length || !$issuePagerNext.length) return;
+                var idx = clickableIssues.findIndex(function(item) {
+                    return item.slug === currentIssueSlug;
+                });
+                if (idx < 0) {
+                    $issuePagerPrev.addClass('hidden').removeData('issueSlug');
+                    $issuePagerNext.addClass('hidden').removeData('issueSlug');
+                    if ($issuePagerHint.length) $issuePagerHint.removeClass('hidden').text('Select an issue to navigate');
+                    return;
+                }
+
+                var prevItem = idx > 0 ? clickableIssues[idx - 1] : null;
+                var nextItem = idx < clickableIssues.length - 1 ? clickableIssues[idx + 1] : null;
+
+                if (prevItem) {
+                    $issuePagerPrev.removeClass('hidden').data('issueSlug', prevItem.slug);
+                    $issuePagerPrevLabel.text(prevItem.name || prevItem.slug);
+                } else {
+                    $issuePagerPrev.addClass('hidden').removeData('issueSlug');
+                }
+
+                if (nextItem) {
+                    $issuePagerNext.removeClass('hidden').data('issueSlug', nextItem.slug);
+                    $issuePagerNextLabel.text(nextItem.name || nextItem.slug);
+                } else {
+                    $issuePagerNext.addClass('hidden').removeData('issueSlug');
+                }
+
+                if ($issuePagerHint.length) {
+                    $issuePagerHint.toggleClass('hidden', !!prevItem || !!nextItem);
+                    if (!prevItem && !nextItem) {
+                        $issuePagerHint.text('No previous/next issue for this item');
+                    }
+                }
+            }
+
+            $issuePagerPrev.on('click', function() {
+                var slug = ($(this).data('issueSlug') || '').toString().trim();
+                if (!slug) return;
+                selectSidebarIssueBySlug(slug, 10);
+            });
+
+            $issuePagerNext.on('click', function() {
+                var slug = ($(this).data('issueSlug') || '').toString().trim();
+                if (!slug) return;
+                selectSidebarIssueBySlug(slug, 10);
+            });
+
             $.getJSON(apiUrl)
                 .done(function(data) {
                     var tree = Array.isArray(data) ? data : [];
+                    issueSearchIndex = flattenIssues(tree);
+                    clickableIssues = issueSearchIndex.filter(function(item) {
+                        var slug = (item && item.slug ? item.slug : '').toString().trim();
+                        return !!slug && !!item.has_url;
+                    });
                     if (tree.length > 0) {
                         $container.html(tree.map(renderNode).join(''));
                         if ($fallback.length) {
                             $fallback.hide();
                         }
                     }
+
+                    if (initialIssueSlug) {
+                        currentIssueSlug = initialIssueSlug;
+                        updateIssuePager();
+                        selectSidebarIssueBySlug(initialIssueSlug, 5);
+                    } else {
+                        updateIssuePager();
+                    }
                 });
+
+            $heroSearchBtn.on('click', function() {
+                runHeroSearch();
+            });
+
+            $heroSearchInput.on('input', function() {
+                runHeroSearch();
+            });
+
+            $heroSearchInput.on('keydown', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    runHeroSearch();
+                }
+                if (e.key === 'Escape') {
+                    renderHeroResults([], '');
+                }
+            });
+
+            $(document).on('click', '.js-hero-search-result', function() {
+                var slug = ($(this).data('issue-slug') || '').toString().trim();
+                if (!slug) return;
+                renderHeroResults([], '');
+                selectSidebarIssueBySlug(slug, 10);
+            });
+
+            /**
+             * Close other top-level nav branches, then open the <details> chain to the active link.
+             * Roots: "All Tools" (#help-all-tools-sidebar) + each package root inside #help-issue-types-tree.
+             */
+            function collapseOtherRootNavBranches($targetLink) {
+                if (!$targetLink.length) return;
+                function closeOtherRoots($scope) {
+                    if (!$scope || !$scope.length) return;
+                    $scope.children('details.help-nav-details').each(function() {
+                        var $rootDetails = $(this);
+                        if (!$targetLink.closest($rootDetails).length) {
+                            $rootDetails.prop('open', false);
+                        }
+                    });
+                }
+                closeOtherRoots($navRoot);
+                closeOtherRoots($container);
+                $targetLink.parents('details').prop('open', true);
+            }
+
+            function selectSidebarIssueBySlug(slug, retries) {
+                var cleanSlug = (slug || '').toString().trim();
+                if (!cleanSlug) return;
+                var $target = $('.js-issue-link').filter(function() {
+                    return ($(this).data('issue-slug') || '').toString().trim() === cleanSlug;
+                }).first();
+
+                if (!$target.length) {
+                    if ((retries || 0) > 0) {
+                        setTimeout(function() {
+                            selectSidebarIssueBySlug(cleanSlug, (retries || 0) - 1);
+                        }, 200);
+                    }
+                    return;
+                }
+
+                $target.trigger('click');
+                var sidebarEl = $target.get(0);
+                if (sidebarEl && typeof sidebarEl.scrollIntoView === 'function') {
+                    sidebarEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                }
+            }
+
+            $(document).on('click', '.js-video-tutorial-item', function(e) {
+                if ($(e.target).closest('iframe').length) return;
+                var slug = ($(this).data('issue-slug') || '').toString().trim();
+                if (!slug) return;
+                e.preventDefault();
+                selectSidebarIssueBySlug(slug, 10);
+            });
 
             // Handle click on dynamic issue links to load detail via API (no full reload)
             $(document).on('click', '.js-issue-link', function(e) {
                 e.preventDefault();
                 var $link = $(this);
 
-                // Focus/active effect for selected issue link
-                $('.js-issue-link')
-                    .removeClass('help-issue-active bg-[#137fec]/10 text-[#137fec] font-semibold');
-                $link.addClass('help-issue-active bg-[#137fec]/10 text-[#137fec] font-semibold');
+                collapseOtherRootNavBranches($link);
+
+                // Focus/active effect for selected issue link (styles: .help-issue-active)
+                $('.js-issue-link').removeClass('help-issue-active');
+                $link.addClass('help-issue-active');
 
                 if (!apiDetailBase) return;
                 var slug = ($link.data('issue-slug') || '').toString().trim();
                 if (!slug) return;
 
                 var url = apiDetailBase.replace('___SLUG___', encodeURIComponent(slug));
+                currentIssueSlug = slug;
+                var issueMeta = clickableIssues.find(function(item) { return item.slug === slug; }) || { slug: slug, name: slug };
+                saveIssueClickHistory(issueMeta);
+                updateIssuePager();
 
                 $.getJSON(url)
                     .done(function(json) {
                         if (!json || !json.name) return;
                         var $titleEl = $('#help-issue-title');
                         var $descEl = $('#help-issue-description');
+                        var $imgWrap = $('#help-issue-images');
                         if ($titleEl.length) {
                             $titleEl.text(json.name);
                         }
+                        var $vidWrap = $('#help-issue-video');
+                        var $vidFrame = $('#help-issue-video-iframe');
+                        if ($vidWrap.length && $vidFrame.length) {
+                            var v = (json.video || '').toString().trim();
+                            if (v) {
+                                $vidFrame.attr('src', v).attr('title', json.name + ' — video');
+                                $vidWrap.removeClass('hidden');
+                            } else {
+                                $vidFrame.attr('src', '').attr('title', '');
+                                $vidWrap.addClass('hidden');
+                            }
+                        }
+                        if ($imgWrap.length) {
+                            $imgWrap.empty();
+                            var imgs = json.images || [];
+                            if (imgs.length) {
+                                $imgWrap.removeClass('hidden');
+                                imgs.forEach(function(src, idx) {
+                                    var $fig = $('<figure>').addClass(
+                                        'rounded-xl border border-slate-200 dark:border-slate-700 overflow-hidden shadow-sm bg-slate-50 dark:bg-slate-800/40'
+                                    );
+                                    $fig.append(
+                                        $('<img>')
+                                            .attr('src', src)
+                                            .attr('alt', json.name + ' — ' + (idx + 1))
+                                            .attr('loading', 'lazy')
+                                            .addClass(
+                                                'w-full h-auto block max-h-[min(85vh,1200px)] object-contain bg-white dark:bg-slate-900'
+                                            )
+                                    );
+                                    $imgWrap.append($fig);
+                                });
+                            } else {
+                                $imgWrap.addClass('hidden');
+                            }
+                        }
                         if ($descEl.length) {
-                            // Show description as HTML (trusted content from admin).
-                            // If it comes HTML-escaped (e.g. &lt;p&gt;...&lt;/p&gt;), decode entities first.
                             var raw = json.description ||
-                                'Use the Help Center to search tutorials, open FAQs, and download documentation.';
-                            var decoded = $('<textarea/>').html(raw).text(); // decode HTML entities
-                            $descEl.html(decoded);
+                                '<p class="mb-0">Use the Help Center to search tutorials, open FAQs, and download documentation.</p>';
+                            // Seeded manual content is real HTML; legacy plain text gets escaped + line breaks.
+                            var looksHtml = /<\/?[a-z][\s\S]*>/i.test(raw);
+                            if (looksHtml) {
+                                $descEl.html(raw);
+                            } else {
+                                $descEl.html($('<div/>').text(raw).html().replace(/\n/g, '<br>'));
+                            }
                         }
                     });
             });
@@ -844,11 +1186,11 @@
 
             if (!$track.length || !$wrap.length) return;
 
-            var $slides = $track.children('.video-slide');
-            var totalSlides = $slides.length;
-            if (totalSlides === 0) return;
-
             var currentStep = 0;
+
+            function getSlides() {
+                return $track.children('.video-slide').filter(':not(.hidden)');
+            }
 
             function getVisibleCount() {
                 var w = $(window).width();
@@ -858,13 +1200,15 @@
             }
 
             function getStepSize() {
-                var $first = $slides.eq(0);
+                var $first = getSlides().eq(0);
                 return $first.length ? $first.outerWidth(true) : 0;
             }
 
             function getMaxStep() {
+                var $slides = getSlides();
+                var total = $slides.length;
                 var visible = getVisibleCount();
-                return Math.max(0, totalSlides - visible);
+                return Math.max(0, total - visible);
             }
 
             function getTotalSteps() {
@@ -916,6 +1260,19 @@
                 updateDots();
             }
 
+            function initVideoTutorialsSlider() {
+                if (getSlides().length === 0) {
+                    $track.css('transform', 'translateX(0)');
+                    $dotsContainer.empty();
+                    $prevBtn.addClass('opacity-50 pointer-events-none');
+                    $nextBtn.addClass('opacity-50 pointer-events-none');
+                    return;
+                }
+                currentStep = 0;
+                buildDots();
+                goTo(0);
+            }
+
             $prevBtn.on('click', function() {
                 goTo(currentStep - 1);
             });
@@ -923,8 +1280,37 @@
                 goTo(currentStep + 1);
             });
 
-            buildDots();
-            goTo(0);
+            $(document).on('click', '#videoTutorialTabs .js-video-tab', function() {
+                var $btn = $(this);
+                var filter = ($btn.data('video-filter') || 'all').toString();
+                var pkgId = $btn.data('package-id');
+                $('#videoTutorialTabs .js-video-tab').removeClass('video-tab--active').attr('aria-selected', 'false');
+                $btn.addClass('video-tab--active').attr('aria-selected', 'true');
+
+                $track.children('.video-slide').each(function() {
+                    var $slide = $(this);
+                    var raw = $slide.attr('data-package-ids');
+                    var ids = [];
+                    try {
+                        ids = raw ? JSON.parse(raw) : [];
+                    } catch (e) {
+                        ids = [];
+                    }
+                    if (filter === 'all') {
+                        $slide.removeClass('hidden');
+                    } else {
+                        var pid = Number(pkgId);
+                        var show = Array.isArray(ids) && ids.some(function(id) {
+                            return Number(id) === pid;
+                        });
+                        $slide.toggleClass('hidden', !show);
+                    }
+                });
+
+                initVideoTutorialsSlider();
+            });
+
+            initVideoTutorialsSlider();
 
             $(window).on('resize', function() {
                 var maxStep = getMaxStep();

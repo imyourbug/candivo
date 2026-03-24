@@ -51,16 +51,27 @@
         <label for="avatar" class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1">Home card image</label>
         <p class="mb-2 text-xs text-slate-500 dark:text-slate-400">Shown on the home page blog cards. If empty, the first image in the content is used.</p>
         @if (!empty($post?->avatar))
+            <p class="text-xs font-semibold text-slate-600 dark:text-slate-400 mb-2">Saved image</p>
             <div class="mb-3 flex items-center gap-4">
                 <img src="{{ $post->avatar_url }}" alt="" class="h-20 w-32 rounded-lg border border-slate-200 object-cover dark:border-slate-700" width="128" height="80" />
-                <span class="text-xs text-slate-500 dark:text-slate-400">Current upload</span>
             </div>
         @endif
         <input type="file" name="avatar" id="avatar" accept="image/jpeg,image/png,image/webp,image/gif,image/avif"
-            class="block w-full text-sm text-slate-600 file:mr-4 file:rounded-lg file:border-0 file:bg-primary/10 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-primary hover:file:bg-primary/20 dark:text-slate-300 dark:file:bg-slate-800 dark:file:text-primary" />
+            data-max-kilobytes="{{ \App\Services\AdminImageUploadService::POST_AVATAR_MAX_KILOBYTES }}"
+            class="js-admin-avatar-file js-admin-post-avatar-file block w-full text-sm text-slate-600 file:mr-4 file:rounded-lg file:border-0 file:bg-primary/10 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-primary hover:file:bg-primary/20 dark:text-slate-300 dark:file:bg-slate-800 dark:file:text-primary" />
         @error('avatar')
             <p class="mt-1 text-sm text-rose-500">{{ $message }}</p>
         @enderror
+        <div class="hidden mt-2 space-y-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50/80 dark:bg-slate-800/40 p-3" data-admin-avatar-staging>
+            <p class="text-xs text-slate-500 dark:text-slate-400">Preview (submitted when you save)</p>
+            <div class="relative inline-block shrink-0">
+                <img data-admin-avatar-staging-img src="" alt="" class="hidden h-20 w-32 rounded-lg object-cover border border-slate-200 dark:border-slate-700 bg-slate-100 dark:bg-slate-800" width="128" height="80" />
+                <button type="button" data-admin-avatar-corner-clear class="absolute -right-1.5 -top-1.5 z-10 hidden h-7 w-7 items-center justify-center rounded-full border-2 border-white bg-primary text-white shadow-md hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-1 dark:border-slate-900" title="Remove selected image" aria-label="Remove selected image">
+                    <span class="material-symbols-outlined text-lg leading-none">close</span>
+                </button>
+            </div>
+            <p data-admin-avatar-error class="text-sm text-rose-500 min-h-[1.25rem]"></p>
+        </div>
     </div>
 
     <div>

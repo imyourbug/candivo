@@ -1,48 +1,1186 @@
 ID,Column1,Video,Level,Type,IsTool,IsFree,Duration 1,Price duration 1,Duration 2,Price duration 2,Duration 3,Price duration 3,Value status,Value,Category,Basic,Professional,Premium,CAT set,Stand Set,Avatar,Description
-1,COPY DRAWING OBJECTS,,,,1,1,3,0,6,0,12,0,Core-Free,€17.50,File Management,TRUE,TRUE,TRUE,TRUE,FALSE,/images/tool/btncopydrawingobjects32x32_iih0qt.png,
-2,MOVE FILE,,,,1,0,3,3,6,6,12,12,Low,€9.00,File Management,TRUE,TRUE,TRUE,TRUE,FALSE,/images/tool/BtnMoveFile32x32_b7tuy8.png,
-3,CREATE DRAWING,,,,1,0,3,,6,,12,,Mid,€ 79.00,"Drawing & Export, Production Drawing Set",FALSE,TRUE,TRUE,TRUE,set 4,/images/tool/createdrawing.png,
-4,EXPORT TO PDF [DWG],,,,1,0,3,,6,,12,,Low-Mid,€ 79.00,"Drawing & Export, PDF Publishing Set",TRUE,TRUE,TRUE,TRUE,Set 2,/images/tool/exporttopdfdwg.png,
-5,EXPORT PDF SET,,,,1,0,3,,6,,12,,Mid,€ 119.00,"Drawing & Export, PDF Publishing Set",FALSE,TRUE,TRUE,TRUE,Set 2,/images/tool/exportpdfset.png,
-6,EXPORT PDF SERIES,,,,1,0,3,,6,,12,,Mid,€ 79.00,"Drawing & Export, PDF Publishing Set",TRUE,TRUE,TRUE,TRUE,set 2,/images/tool/exportpfgseries.png,
-7,EXPORT TO DXF,,,,1,0,3,,6,,12,,High,€ 119.00,"Drawing & Export, Production Drawing Set",TRUE,TRUE,TRUE,FALSE,set 4,/images/tool/exptodxf.png,
-8,EXPORT TO STP,,,,1,0,3,6,6,12,12,24,Low,€29.00,Drawing & Export,TRUE,TRUE,TRUE,TRUE,FALSE,/images/tool/btnexporttostp32x32_nnlh1x.png,
-9,EXPORT TO BIM,,,,1,0,3,21,6,42,12,84,Mid,€79.00,Drawing & Export,FALSE,TRUE,TRUE,TRUE,FALSE,/images/tool/btnexporttobim32x32_l4oywz.png,
-10,COMPONENT SIZE,,,,1,0,3,15,6,30,12,59,Mid,€59.00,iProperty & Quantity,TRUE,TRUE,TRUE,TRUE,FALSE,/images/tool/btncomponentsize32x32_lo5xtg.png,
-11,NAME BODIES,,,,1,,3,,6,,12,,Low,€ 39.00,,FALSE,TRUE,TRUE,FALSE,TRUE,/images/tool/namebody.png,
-12,CUSTOM QUANTITY,,,,1,1,3,,6,,12,,Core-Free,€30.00,iProperty & Quantity,TRUE,TRUE,TRUE,TRUE,FALSE,/images/tool/btncustomquantity32x321_rp4lqo.png,
-13,SUM QTY,,,,1,,3,,6,,12,,Core-Free,€ 8.00,"iProperty & Quantity, Property Essentials Set",FALSE,FALSE,TRUE,TRUE,Set 3,/images/tool/btnsumquantity32x32_jjeibz.png,
-14,DRAWING STATUS,,,,1,1,3,,6,,12,,Core-Free,€27.50,iProperty & Quantity,TRUE,TRUE,TRUE,TRUE,FALSE,/images/tool/btndrawingstatus32x32_mgkd6d.png,
-15,UPDATE PROPERTY,,,,1,1,3,,6,,12,,Core-Free,€12.00,iProperty & Quantity,TRUE,TRUE,TRUE,TRUE,FALSE,/images/tool/btnupdateproperty32x32_jijowi.png,
-16,GET SURFACE AREA,,,,1,0,3,6,6,12,12,24,Core-Free,€20.00,iProperty & Quantity,TRUE,FALSE,TRUE,TRUE,FALSE,/images/tool/btngetsurfacearea32x32_jugl1v.png,
-17,STANDARD PROPERTIES,,,,1,,3,,6,,12,,Mid,€ 59.00,"iProperty & Quantity, Property Essentials Set",FALSE,TRUE,TRUE,TRUE,set 3,/images/tool/standard.png,
-18,PLACE COMPONENTS,,,,1,0,3,6,6,12,12,24,Low,€39.00,Assembly & Modeling,FALSE,TRUE,TRUE,TRUE,FALSE,/images/tool/btnplacecomponent32x32_z7l2kr.png,
-19,PATTERN QTY FROM EXCEL,,,,1,0,3,6,6,12,12,24,Low,€29.00,Assembly & Modeling,FALSE,FALSE,TRUE,TRUE,FALSE,/images/tool/btnpatternqtyfromexcel32x32_ggoxzl.png,
-20,SAVE AND REPLACE COMPONENTS,,,,1,,3,,6,,12,,Low,€ 29.00,"Assembly & Modeling,Revision & Replace Set",TRUE,TRUE,TRUE,TRUE,Set 1,/images/tool/saveandreplacecomponent.png,
-21,REVISION-SAVE AS-REPLACE,,,,1,,3,,6,,12,,Mid,€ 49.00,"Assembly & Modeling,Revision & Replace Set",FALSE,TRUE,TRUE,TRUE,Set 1,/images/tool/revisionsaveasreplace.png,
-22,BOM STRUCTURE,,,,1,1,3,,6,,12,,Core-Free,€15.00,Assembly & Modeling,TRUE,TRUE,TRUE,TRUE,FALSE,/images/tool/btnupdatebomstructure32x32_ouopxf.png,
-23,SHEET METAL TO NORMAL,,,,1,1,3,,6,,12,,Core-Free,€8.00,Assembly & Modeling,FALSE,TRUE,TRUE,TRUE,FALSE,/images/tool/btnsheetmetaltonormal32x32_bjfolr.png,
-24,EXPORT STEP BY CATEGORY,,,,1,0,3,6,6,12,12,24,Low,€29.00,Drawing & Export,FALSE,TRUE,TRUE,TRUE,FALSE,/images/tool/btnexporttostepbycategory32x32_urvn5l.png,
-25,EXPORT COMPONENTS TO EXCEL,,,,1,,3,,6,,12,,Mid,€ 49.00,Drawing & Export,FALSE,TRUE,TRUE,TRUE,C2,/images/tool/btnexportcomponenttoexcel32x32_tfawhf.png,
-26,SYNC NAME,,,,1,,3,,6,,12,,Mid,€ 79.00,File Management,FALSE,TRUE,TRUE,TRUE,C2,/images/tool/btnsyncname32x32_iz0fs1.png,
-27,MANAGE VIEWS,,,,1,,3,,6,,12,,High,€ 89.00,"Assembly & Modeling, Production Drawing Set",FALSE,TRUE,TRUE,TRUE,set 4,/images/tool/BtnManageView32x32_ejxh54.png,
-28,COPY DESIGN,,,,1,0,3,18,6,36,12,72,High,€79.00,Assembly & Modeling,FALSE,TRUE,TRUE,TRUE,FALSE,/images/tool/BtnCopyDesign32x32_xukyvo.png,
-29,CHECK MISSING FILES,,,,1,1,3,,6,,12,,Core-Free,€20.00,File Management,TRUE,TRUE,TRUE,TRUE,FALSE,/images/tool/btncheckmissingfile32x32_jtjaxa.png,
-30,DELETE NON-SOLID,,,,1,1,3,,6,,12,,Core-Free,€10.00,File Management,FALSE,TRUE,TRUE,TRUE,FALSE,/images/tool/btndeletenonesolid32x32_v4qf2t.png,
-31,DELETE HIDDEN COMPONETS,,,,1,1,3,,6,,12,,Core-Free,€12.50,File Management,TRUE,TRUE,TRUE,TRUE,FALSE,/images/tool/btndeletehiddencomponent32x32_kpphfw.png,
-32,EXPORT CUSTOM PRODUCTION,,,,1,,3,,6,,12,,High,€ 219.00,"Drawing & Export, Production Drawing Set",FALSE,TRUE,TRUE,FALSE,set 4,/images/tool/btnexportcustomproduction32x32_dnbiqw.png,
-33,MODEL PLANES,,,,1,1,3,,6,,12,,Core-Free,€11.00,Advanced Tools,FALSE,TRUE,TRUE,FALSE,FALSE,/images/tool/Model_Planes_snnnh8.jpg,
-34,GET BODY NAME IN BALLOON,,,,1,0,3,3,6,6,12,12,Low,€11.00,Advanced Tools,FALSE,TRUE,TRUE,FALSE,FALSE,/images/tool/btngetbodynameinballoon32x32_smvfua.jpg,
-35,QUICK IPROPERTIES,,,,1,,3,,6,,12,,Core-Free,€ 11.00,"iProperty & Quantity, Property Essentials Set",FALSE,TRUE,TRUE,FALSE,set 3,/images/tool/quick_iproperty_n657ku.jpg,
-36,iProperties (Advanced),,,,0,,3,0,6,0,12,0,High,(Coming Soon),Advanced Tools,FALSE,FALSE,FALSE,FALSE,FALSE,/images/tool/aaaaa.png,
-37,Revision & Replace Set,,1,Stand-Alone,0,0,3,18,6,36,12,72,set,€69.00,,FALSE,FALSE,FALSE,FALSE,FALSE,/images/package/revisionreplaceset.png,
-38,PDF Publishing Set,,1,Stand-Alone,0,0,3,43,6,85,12,169,set,€169.00,,FALSE,FALSE,FALSE,FALSE,FALSE,/images/package/pdfpublishingset.png,
-39,Property Essentials Set,,1,Stand-Alone,0,0,3,18,6,36,12,72,set,€69.00,,FALSE,FALSE,FALSE,FALSE,FALSE,/images/package/propertyessentialset.png,
-40,Production Drawing Set,,1,Stand-Alone,0,0,3,81,6,162,12,324,set,€319.00,,FALSE,FALSE,FALSE,FALSE,FALSE,/images/package/productindrawingset.png,
-41,Basic,,1,Package,0,0,3,45,6,90,12,180,set,€179.00,,FALSE,FALSE,FALSE,FALSE,FALSE,/images/package/basic.png,
-42,Expert,,1,Package,0,0,3,120,6,240,12,480,set,€449.00,,FALSE,FALSE,FALSE,FALSE,FALSE,/images/package/expert.png,
-43,Premium Service Layer,,1,Package,0,0,3,,6,,12,,set,,,FALSE,FALSE,FALSE,FALSE,FALSE,/images/package/premium.png,
-44,Assembly & Modeling,,2,Package,0,0,3,30,6,60,12,119,set,€199.00,,FALSE,FALSE,FALSE,FALSE,FALSE,/images/package/assembly-modeling.png,
-45,Drawing & Export,,2,Package,0,0,3,60,6,120,12,239,set,€239.00,,FALSE,FALSE,FALSE,FALSE,FALSE,/images/package/drawing-export.png,
-46,File Management,,2,Package,0,0,3,24,6,48,12,96,set,€99.00,,FALSE,FALSE,FALSE,FALSE,FALSE,/images/package/filemanagement.png,
-47,iProperty & Quantity,,2,Package,0,0,3,33,6,66,12,132,set,€129.00,,FALSE,FALSE,FALSE,FALSE,FALSE,/images/package/ipropertyquantity.png,
+1,COPY DRAWING OBJECTS,https://www.youtube.com/embed/Y5ltBmPhyp0?list=PLY_JFFRWFisYI1TTPDkNcH3RIhkaj4e9t,,,1,1,3,8.5,6,12.5,12,17.5,Core-Free,€17.50,File Management,TRUE,TRUE,TRUE,TRUE,FALSE,/images/tool/btncopydrawingobjects32x32_iih0qt.png,"<div class=""not-prose text-left text-slate-700 space-y-5"">
+  <h3 class=""text-xl font-bold text-[#137fec]"">COPY DRAWING OBJECTS - Overview</h3>
+  <p><strong>COPY DRAWING OBJECTS</strong> is a DI-TOOLS capability in <strong>File Management</strong> focused on making Inventor workflows more reliable, more repeatable, and easier to scale across teams. It is positioned as <strong>Core-Free</strong> value and is designed to remove manual friction from day-to-day engineering tasks.</p>
+  <p>Operationally, this tool helps teams replace personal habits with consistent workflow logic. That means fewer output variations between engineers, faster onboarding of new staff, and a cleaner transition from design to documentation or manufacturing handoff.</p>
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Key Benefits</h4>
+  <ul class=""list-disc pl-6 space-y-1"">
+    <li>Standardizes repetitive actions so teams deliver with the same quality baseline across projects.</li>
+    <li>Reduces avoidable manual errors in naming, export handling, model data, or drawing-related output.</li>
+    <li>Supports layered adoption under <strong>Basic, Expert, Premium</strong> service strategy depending on team maturity.</li>
+    <li>Improves throughput by shifting effort from repetitive clicks to engineering decisions.</li>
+  </ul>
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Commercial & Deployment Snapshot</h4>
+  <p>Indicative value: <strong>€17.50</strong>. CAT set enabled</p>
+  <ul class=""list-disc pl-6 space-y-1""><li><strong>3 months</strong>: included / no extra charge</li><li><strong>6 months</strong>: included / no extra charge</li><li><strong>12 months</strong>: included / no extra charge</li></ul>
+  <p class=""text-sm font-medium text-[#137fec]"">Core-Free aligned: this tool can be positioned as low-friction entry capability for early rollout.</p>
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Typical Use Cases</h4>
+  <ul class=""list-disc pl-6 space-y-1"">
+    <li>Engineering teams that need predictable standards across multiple users and parallel projects.</li>
+    <li>Drawing offices and manufacturing-oriented teams that depend on consistent release outputs.</li>
+    <li>Organizations preparing workflow alignment before deeper integration with PDM, PLM, or ERP systems.</li>
+  </ul>
+  <p class=""text-sm text-slate-600"">Reference walkthrough: <a class=""text-[#137fec] underline hover:text-[#137fec]"" href=""https://www.youtube.com/embed/Y5ltBmPhyp0?list=PLY_JFFRWFisYI1TTPDkNcH3RIhkaj4e9t"" target=""_blank"" rel=""noopener noreferrer"">Watch tool demo</a>.</p>
+</div>"
+2,MOVE FILE,https://www.youtube.com/embed/l6Q3dwIxnKU?list=PLY_JFFRWFisYI1TTPDkNcH3RIhkaj4e9t,,,1,0,3,3,6,6,12,9,Low,€9.00,File Management,TRUE,TRUE,TRUE,TRUE,FALSE,/images/tool/BtnMoveFile32x32_b7tuy8.png,"<div class=""not-prose text-left text-slate-700 space-y-5"">
+  <h3 class=""text-xl font-bold text-[#137fec]"">MOVE FILE - Overview</h3>
+  <p><strong>MOVE FILE</strong> is a DI-TOOLS capability in <strong>File Management</strong> focused on making Inventor workflows more reliable, more repeatable, and easier to scale across teams. It is positioned as <strong>Low</strong> value and is designed to remove manual friction from day-to-day engineering tasks.</p>
+  <p>Operationally, this tool helps teams replace personal habits with consistent workflow logic. That means fewer output variations between engineers, faster onboarding of new staff, and a cleaner transition from design to documentation or manufacturing handoff.</p>
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Key Benefits</h4>
+  <ul class=""list-disc pl-6 space-y-1"">
+    <li>Standardizes repetitive actions so teams deliver with the same quality baseline across projects.</li>
+    <li>Reduces avoidable manual errors in naming, export handling, model data, or drawing-related output.</li>
+    <li>Supports layered adoption under <strong>Basic, Expert, Premium</strong> service strategy depending on team maturity.</li>
+    <li>Improves throughput by shifting effort from repetitive clicks to engineering decisions.</li>
+  </ul>
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Commercial & Deployment Snapshot</h4>
+  <p>Indicative value: <strong>€9.00</strong>. CAT set enabled</p>
+  <ul class=""list-disc pl-6 space-y-1""><li><strong>3 months</strong>: 3</li><li><strong>6 months</strong>: 6</li><li><strong>12 months</strong>: 12</li></ul>
+  
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Typical Use Cases</h4>
+  <ul class=""list-disc pl-6 space-y-1"">
+    <li>Engineering teams that need predictable standards across multiple users and parallel projects.</li>
+    <li>Drawing offices and manufacturing-oriented teams that depend on consistent release outputs.</li>
+    <li>Organizations preparing workflow alignment before deeper integration with PDM, PLM, or ERP systems.</li>
+  </ul>
+  <p class=""text-sm text-slate-600"">Reference walkthrough: <a class=""text-[#137fec] underline hover:text-[#137fec]"" href=""https://www.youtube.com/embed/l6Q3dwIxnKU?list=PLY_JFFRWFisYI1TTPDkNcH3RIhkaj4e9t"" target=""_blank"" rel=""noopener noreferrer"">Watch tool demo</a>.</p>
+</div>"
+3,CREATE DRAWING,,,,1,0,3,39,6,59,12,79,Mid,€ 79.00,"Drawing & Export, Production Drawing Set",FALSE,TRUE,TRUE,TRUE,set 4,/images/tool/createdrawing.png,"<div class=""not-prose text-left text-slate-700 space-y-5"">
+  <h3 class=""text-xl font-bold text-[#137fec]"">CREATE DRAWING - Overview</h3>
+  <p><strong>CREATE DRAWING</strong> is a DI-TOOLS capability in <strong>Drawing &amp; Export, Production Drawing Set</strong> focused on making Inventor workflows more reliable, more repeatable, and easier to scale across teams. It is positioned as <strong>Mid</strong> value and is designed to remove manual friction from day-to-day engineering tasks.</p>
+  <p>Operationally, this tool helps teams replace personal habits with consistent workflow logic. That means fewer output variations between engineers, faster onboarding of new staff, and a cleaner transition from design to documentation or manufacturing handoff.</p>
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Key Benefits</h4>
+  <ul class=""list-disc pl-6 space-y-1"">
+    <li>Standardizes repetitive actions so teams deliver with the same quality baseline across projects.</li>
+    <li>Reduces avoidable manual errors in naming, export handling, model data, or drawing-related output.</li>
+    <li>Supports layered adoption under <strong>Expert, Premium</strong> service strategy depending on team maturity.</li>
+    <li>Improves throughput by shifting effort from repetitive clicks to engineering decisions.</li>
+  </ul>
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Commercial & Deployment Snapshot</h4>
+  <p>Indicative value: <strong>€ 79.00</strong>. CAT set enabled | Stand set: <strong>set 4</strong></p>
+  <ul class=""list-disc pl-6 space-y-1""><li><strong>3 months</strong>: aligned to package/pricing policy</li><li><strong>6 months</strong>: aligned to package/pricing policy</li><li><strong>12 months</strong>: aligned to package/pricing policy</li></ul>
+  
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Typical Use Cases</h4>
+  <ul class=""list-disc pl-6 space-y-1"">
+    <li>Engineering teams that need predictable standards across multiple users and parallel projects.</li>
+    <li>Drawing offices and manufacturing-oriented teams that depend on consistent release outputs.</li>
+    <li>Organizations preparing workflow alignment before deeper integration with PDM, PLM, or ERP systems.</li>
+  </ul>
+  
+</div>"
+4,EXPORT TO PDF [DWG],https://www.youtube.com/embed/5M-zz7yDvTA?list=PLY_JFFRWFisYI1TTPDkNcH3RIhkaj4e9t,,,1,0,3,39,6,59,12,79,Low-Mid,€ 79.00,"Drawing & Export, PDF Publishing Set",TRUE,TRUE,TRUE,TRUE,Set 2,/images/tool/exporttopdfdwg.png,"<div class=""not-prose text-left text-slate-700 space-y-5"">
+  <h3 class=""text-xl font-bold text-[#137fec]"">EXPORT TO PDF [DWG] - Overview</h3>
+  <p><strong>EXPORT TO PDF [DWG]</strong> is a DI-TOOLS capability in <strong>Drawing &amp; Export, PDF Publishing Set</strong> focused on making Inventor workflows more reliable, more repeatable, and easier to scale across teams. It is positioned as <strong>Low-Mid</strong> value and is designed to remove manual friction from day-to-day engineering tasks.</p>
+  <p>Operationally, this tool helps teams replace personal habits with consistent workflow logic. That means fewer output variations between engineers, faster onboarding of new staff, and a cleaner transition from design to documentation or manufacturing handoff.</p>
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Key Benefits</h4>
+  <ul class=""list-disc pl-6 space-y-1"">
+    <li>Standardizes repetitive actions so teams deliver with the same quality baseline across projects.</li>
+    <li>Reduces avoidable manual errors in naming, export handling, model data, or drawing-related output.</li>
+    <li>Supports layered adoption under <strong>Basic, Expert, Premium</strong> service strategy depending on team maturity.</li>
+    <li>Improves throughput by shifting effort from repetitive clicks to engineering decisions.</li>
+  </ul>
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Commercial & Deployment Snapshot</h4>
+  <p>Indicative value: <strong>€ 79.00</strong>. CAT set enabled | Stand set: <strong>Set 2</strong></p>
+  <ul class=""list-disc pl-6 space-y-1""><li><strong>3 months</strong>: aligned to package/pricing policy</li><li><strong>6 months</strong>: aligned to package/pricing policy</li><li><strong>12 months</strong>: aligned to package/pricing policy</li></ul>
+  
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Typical Use Cases</h4>
+  <ul class=""list-disc pl-6 space-y-1"">
+    <li>Engineering teams that need predictable standards across multiple users and parallel projects.</li>
+    <li>Drawing offices and manufacturing-oriented teams that depend on consistent release outputs.</li>
+    <li>Organizations preparing workflow alignment before deeper integration with PDM, PLM, or ERP systems.</li>
+  </ul>
+  <p class=""text-sm text-slate-600"">Reference walkthrough: <a class=""text-[#137fec] underline hover:text-[#137fec]"" href=""https://www.youtube.com/embed/5M-zz7yDvTA?list=PLY_JFFRWFisYI1TTPDkNcH3RIhkaj4e9t"" target=""_blank"" rel=""noopener noreferrer"">Watch tool demo</a>.</p>
+</div>"
+5,EXPORT PDF SET,https://www.youtube.com/embed/e8aXCk3C_KQ?list=PLY_JFFRWFisYI1TTPDkNcH3RIhkaj4e9t,,,1,0,3,59,6,89,12,119,Mid,€ 119.00,"Drawing & Export, PDF Publishing Set",FALSE,TRUE,TRUE,TRUE,Set 2,/images/tool/exportpdfset.png,"<div class=""not-prose text-left text-slate-700 space-y-5"">
+  <h3 class=""text-xl font-bold text-[#137fec]"">EXPORT PDF SET - Overview</h3>
+  <p><strong>EXPORT PDF SET</strong> is a DI-TOOLS capability in <strong>Drawing &amp; Export, PDF Publishing Set</strong> focused on making Inventor workflows more reliable, more repeatable, and easier to scale across teams. It is positioned as <strong>Mid</strong> value and is designed to remove manual friction from day-to-day engineering tasks.</p>
+  <p>Operationally, this tool helps teams replace personal habits with consistent workflow logic. That means fewer output variations between engineers, faster onboarding of new staff, and a cleaner transition from design to documentation or manufacturing handoff.</p>
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Key Benefits</h4>
+  <ul class=""list-disc pl-6 space-y-1"">
+    <li>Standardizes repetitive actions so teams deliver with the same quality baseline across projects.</li>
+    <li>Reduces avoidable manual errors in naming, export handling, model data, or drawing-related output.</li>
+    <li>Supports layered adoption under <strong>Expert, Premium</strong> service strategy depending on team maturity.</li>
+    <li>Improves throughput by shifting effort from repetitive clicks to engineering decisions.</li>
+  </ul>
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Commercial & Deployment Snapshot</h4>
+  <p>Indicative value: <strong>€ 119.00</strong>. CAT set enabled | Stand set: <strong>Set 2</strong></p>
+  <ul class=""list-disc pl-6 space-y-1""><li><strong>3 months</strong>: aligned to package/pricing policy</li><li><strong>6 months</strong>: aligned to package/pricing policy</li><li><strong>12 months</strong>: aligned to package/pricing policy</li></ul>
+  
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Typical Use Cases</h4>
+  <ul class=""list-disc pl-6 space-y-1"">
+    <li>Engineering teams that need predictable standards across multiple users and parallel projects.</li>
+    <li>Drawing offices and manufacturing-oriented teams that depend on consistent release outputs.</li>
+    <li>Organizations preparing workflow alignment before deeper integration with PDM, PLM, or ERP systems.</li>
+  </ul>
+  <p class=""text-sm text-slate-600"">Reference walkthrough: <a class=""text-[#137fec] underline hover:text-[#137fec]"" href=""https://www.youtube.com/embed/e8aXCk3C_KQ?list=PLY_JFFRWFisYI1TTPDkNcH3RIhkaj4e9t"" target=""_blank"" rel=""noopener noreferrer"">Watch tool demo</a>.</p>
+</div>"
+6,EXPORT PDF SERIES,https://www.youtube.com/embed/dA9J7uNk5kM?list=PLY_JFFRWFisYI1TTPDkNcH3RIhkaj4e9t,,,1,0,3,39,6,59,12,79,Mid,€ 79.00,"Drawing & Export, PDF Publishing Set",TRUE,TRUE,TRUE,TRUE,set 2,/images/tool/exportpfgseries.png,"<div class=""not-prose text-left text-slate-700 space-y-5"">
+  <h3 class=""text-xl font-bold text-[#137fec]"">EXPORT PDF SERIES - Overview</h3>
+  <p><strong>EXPORT PDF SERIES</strong> is a DI-TOOLS capability in <strong>Drawing &amp; Export, PDF Publishing Set</strong> focused on making Inventor workflows more reliable, more repeatable, and easier to scale across teams. It is positioned as <strong>Mid</strong> value and is designed to remove manual friction from day-to-day engineering tasks.</p>
+  <p>Operationally, this tool helps teams replace personal habits with consistent workflow logic. That means fewer output variations between engineers, faster onboarding of new staff, and a cleaner transition from design to documentation or manufacturing handoff.</p>
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Key Benefits</h4>
+  <ul class=""list-disc pl-6 space-y-1"">
+    <li>Standardizes repetitive actions so teams deliver with the same quality baseline across projects.</li>
+    <li>Reduces avoidable manual errors in naming, export handling, model data, or drawing-related output.</li>
+    <li>Supports layered adoption under <strong>Basic, Expert, Premium</strong> service strategy depending on team maturity.</li>
+    <li>Improves throughput by shifting effort from repetitive clicks to engineering decisions.</li>
+  </ul>
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Commercial & Deployment Snapshot</h4>
+  <p>Indicative value: <strong>€ 79.00</strong>. CAT set enabled | Stand set: <strong>set 2</strong></p>
+  <ul class=""list-disc pl-6 space-y-1""><li><strong>3 months</strong>: aligned to package/pricing policy</li><li><strong>6 months</strong>: aligned to package/pricing policy</li><li><strong>12 months</strong>: aligned to package/pricing policy</li></ul>
+  
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Typical Use Cases</h4>
+  <ul class=""list-disc pl-6 space-y-1"">
+    <li>Engineering teams that need predictable standards across multiple users and parallel projects.</li>
+    <li>Drawing offices and manufacturing-oriented teams that depend on consistent release outputs.</li>
+    <li>Organizations preparing workflow alignment before deeper integration with PDM, PLM, or ERP systems.</li>
+  </ul>
+  <p class=""text-sm text-slate-600"">Reference walkthrough: <a class=""text-[#137fec] underline hover:text-[#137fec]"" href=""https://www.youtube.com/embed/dA9J7uNk5kM?list=PLY_JFFRWFisYI1TTPDkNcH3RIhkaj4e9t"" target=""_blank"" rel=""noopener noreferrer"">Watch tool demo</a>.</p>
+</div>"
+7,EXPORT TO DXF,https://www.youtube.com/embed/5o4jjitWqwQ?list=PLY_JFFRWFisYI1TTPDkNcH3RIhkaj4e9t,,,1,0,3,59,6,89,12,119,High,€ 119.00,"Drawing & Export, Production Drawing Set",TRUE,TRUE,TRUE,FALSE,set 4,/images/tool/exptodxf.png,"<div class=""not-prose text-left text-slate-700 space-y-5"">
+  <h3 class=""text-xl font-bold text-[#137fec]"">EXPORT TO DXF - Overview</h3>
+  <p><strong>EXPORT TO DXF</strong> is a DI-TOOLS capability in <strong>Drawing &amp; Export, Production Drawing Set</strong> focused on making Inventor workflows more reliable, more repeatable, and easier to scale across teams. It is positioned as <strong>High</strong> value and is designed to remove manual friction from day-to-day engineering tasks.</p>
+  <p>Operationally, this tool helps teams replace personal habits with consistent workflow logic. That means fewer output variations between engineers, faster onboarding of new staff, and a cleaner transition from design to documentation or manufacturing handoff.</p>
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Key Benefits</h4>
+  <ul class=""list-disc pl-6 space-y-1"">
+    <li>Standardizes repetitive actions so teams deliver with the same quality baseline across projects.</li>
+    <li>Reduces avoidable manual errors in naming, export handling, model data, or drawing-related output.</li>
+    <li>Supports layered adoption under <strong>Basic, Expert, Premium</strong> service strategy depending on team maturity.</li>
+    <li>Improves throughput by shifting effort from repetitive clicks to engineering decisions.</li>
+  </ul>
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Commercial & Deployment Snapshot</h4>
+  <p>Indicative value: <strong>€ 119.00</strong>. Stand set: <strong>set 4</strong></p>
+  <ul class=""list-disc pl-6 space-y-1""><li><strong>3 months</strong>: aligned to package/pricing policy</li><li><strong>6 months</strong>: aligned to package/pricing policy</li><li><strong>12 months</strong>: aligned to package/pricing policy</li></ul>
+  
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Typical Use Cases</h4>
+  <ul class=""list-disc pl-6 space-y-1"">
+    <li>Engineering teams that need predictable standards across multiple users and parallel projects.</li>
+    <li>Drawing offices and manufacturing-oriented teams that depend on consistent release outputs.</li>
+    <li>Organizations preparing workflow alignment before deeper integration with PDM, PLM, or ERP systems.</li>
+  </ul>
+  <p class=""text-sm text-slate-600"">Reference walkthrough: <a class=""text-[#137fec] underline hover:text-[#137fec]"" href=""https://www.youtube.com/embed/5o4jjitWqwQ?list=PLY_JFFRWFisYI1TTPDkNcH3RIhkaj4e9t"" target=""_blank"" rel=""noopener noreferrer"">Watch tool demo</a>.</p>
+</div>"
+8,EXPORT TO STP,https://www.youtube.com/embed/cMSiGFUMTmU?list=PLY_JFFRWFisYI1TTPDkNcH3RIhkaj4e9t,,,1,0,3,12,6,18,12,29,Low,€29.00,Drawing & Export,TRUE,TRUE,TRUE,TRUE,FALSE,/images/tool/btnexporttostp32x32_nnlh1x.png,"<div class=""not-prose text-left text-slate-700 space-y-5"">
+  <h3 class=""text-xl font-bold text-[#137fec]"">EXPORT TO STP - Overview</h3>
+  <p><strong>EXPORT TO STP</strong> is a DI-TOOLS capability in <strong>Drawing &amp; Export</strong> focused on making Inventor workflows more reliable, more repeatable, and easier to scale across teams. It is positioned as <strong>Low</strong> value and is designed to remove manual friction from day-to-day engineering tasks.</p>
+  <p>Operationally, this tool helps teams replace personal habits with consistent workflow logic. That means fewer output variations between engineers, faster onboarding of new staff, and a cleaner transition from design to documentation or manufacturing handoff.</p>
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Key Benefits</h4>
+  <ul class=""list-disc pl-6 space-y-1"">
+    <li>Standardizes repetitive actions so teams deliver with the same quality baseline across projects.</li>
+    <li>Reduces avoidable manual errors in naming, export handling, model data, or drawing-related output.</li>
+    <li>Supports layered adoption under <strong>Basic, Expert, Premium</strong> service strategy depending on team maturity.</li>
+    <li>Improves throughput by shifting effort from repetitive clicks to engineering decisions.</li>
+  </ul>
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Commercial & Deployment Snapshot</h4>
+  <p>Indicative value: <strong>€29.00</strong>. CAT set enabled</p>
+  <ul class=""list-disc pl-6 space-y-1""><li><strong>3 months</strong>: 6</li><li><strong>6 months</strong>: 12</li><li><strong>12 months</strong>: 24</li></ul>
+  
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Typical Use Cases</h4>
+  <ul class=""list-disc pl-6 space-y-1"">
+    <li>Engineering teams that need predictable standards across multiple users and parallel projects.</li>
+    <li>Drawing offices and manufacturing-oriented teams that depend on consistent release outputs.</li>
+    <li>Organizations preparing workflow alignment before deeper integration with PDM, PLM, or ERP systems.</li>
+  </ul>
+  <p class=""text-sm text-slate-600"">Reference walkthrough: <a class=""text-[#137fec] underline hover:text-[#137fec]"" href=""https://www.youtube.com/embed/cMSiGFUMTmU?list=PLY_JFFRWFisYI1TTPDkNcH3RIhkaj4e9t"" target=""_blank"" rel=""noopener noreferrer"">Watch tool demo</a>.</p>
+</div>"
+9,EXPORT TO BIM,https://www.youtube.com/embed/jdiHyk180z8?list=PLY_JFFRWFisYI1TTPDkNcH3RIhkaj4e9t,,,1,0,3,39,6,59,12,79,Mid,€79.00,Drawing & Export,FALSE,TRUE,TRUE,TRUE,FALSE,/images/tool/btnexporttobim32x32_l4oywz.png,"<div class=""not-prose text-left text-slate-700 space-y-5"">
+  <h3 class=""text-xl font-bold text-[#137fec]"">EXPORT TO BIM - Overview</h3>
+  <p><strong>EXPORT TO BIM</strong> is a DI-TOOLS capability in <strong>Drawing &amp; Export</strong> focused on making Inventor workflows more reliable, more repeatable, and easier to scale across teams. It is positioned as <strong>Mid</strong> value and is designed to remove manual friction from day-to-day engineering tasks.</p>
+  <p>Operationally, this tool helps teams replace personal habits with consistent workflow logic. That means fewer output variations between engineers, faster onboarding of new staff, and a cleaner transition from design to documentation or manufacturing handoff.</p>
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Key Benefits</h4>
+  <ul class=""list-disc pl-6 space-y-1"">
+    <li>Standardizes repetitive actions so teams deliver with the same quality baseline across projects.</li>
+    <li>Reduces avoidable manual errors in naming, export handling, model data, or drawing-related output.</li>
+    <li>Supports layered adoption under <strong>Expert, Premium</strong> service strategy depending on team maturity.</li>
+    <li>Improves throughput by shifting effort from repetitive clicks to engineering decisions.</li>
+  </ul>
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Commercial & Deployment Snapshot</h4>
+  <p>Indicative value: <strong>€79.00</strong>. CAT set enabled</p>
+  <ul class=""list-disc pl-6 space-y-1""><li><strong>3 months</strong>: 21</li><li><strong>6 months</strong>: 42</li><li><strong>12 months</strong>: 84</li></ul>
+  
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Typical Use Cases</h4>
+  <ul class=""list-disc pl-6 space-y-1"">
+    <li>Engineering teams that need predictable standards across multiple users and parallel projects.</li>
+    <li>Drawing offices and manufacturing-oriented teams that depend on consistent release outputs.</li>
+    <li>Organizations preparing workflow alignment before deeper integration with PDM, PLM, or ERP systems.</li>
+  </ul>
+  <p class=""text-sm text-slate-600"">Reference walkthrough: <a class=""text-[#137fec] underline hover:text-[#137fec]"" href=""https://www.youtube.com/embed/jdiHyk180z8?list=PLY_JFFRWFisYI1TTPDkNcH3RIhkaj4e9t"" target=""_blank"" rel=""noopener noreferrer"">Watch tool demo</a>.</p>
+</div>"
+10,COMPONENT SIZE,https://www.youtube.com/embed/ArfewyEeXZA?list=PLY_JFFRWFisYI1TTPDkNcH3RIhkaj4e9t,,,1,0,3,29,6,39,12,59,Mid,€59.00,iProperty & Quantity,TRUE,TRUE,TRUE,TRUE,FALSE,/images/tool/btncomponentsize32x32_lo5xtg.png,"<div class=""not-prose text-left text-slate-700 space-y-5"">
+  <h3 class=""text-xl font-bold text-[#137fec]"">COMPONENT SIZE - Overview</h3>
+  <p><strong>COMPONENT SIZE</strong> is a DI-TOOLS capability in <strong>iProperty &amp; Quantity</strong> focused on making Inventor workflows more reliable, more repeatable, and easier to scale across teams. It is positioned as <strong>Mid</strong> value and is designed to remove manual friction from day-to-day engineering tasks.</p>
+  <p>Operationally, this tool helps teams replace personal habits with consistent workflow logic. That means fewer output variations between engineers, faster onboarding of new staff, and a cleaner transition from design to documentation or manufacturing handoff.</p>
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Key Benefits</h4>
+  <ul class=""list-disc pl-6 space-y-1"">
+    <li>Standardizes repetitive actions so teams deliver with the same quality baseline across projects.</li>
+    <li>Reduces avoidable manual errors in naming, export handling, model data, or drawing-related output.</li>
+    <li>Supports layered adoption under <strong>Basic, Expert, Premium</strong> service strategy depending on team maturity.</li>
+    <li>Improves throughput by shifting effort from repetitive clicks to engineering decisions.</li>
+  </ul>
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Commercial & Deployment Snapshot</h4>
+  <p>Indicative value: <strong>€59.00</strong>. CAT set enabled</p>
+  <ul class=""list-disc pl-6 space-y-1""><li><strong>3 months</strong>: 15</li><li><strong>6 months</strong>: 30</li><li><strong>12 months</strong>: 59</li></ul>
+  
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Typical Use Cases</h4>
+  <ul class=""list-disc pl-6 space-y-1"">
+    <li>Engineering teams that need predictable standards across multiple users and parallel projects.</li>
+    <li>Drawing offices and manufacturing-oriented teams that depend on consistent release outputs.</li>
+    <li>Organizations preparing workflow alignment before deeper integration with PDM, PLM, or ERP systems.</li>
+  </ul>
+  <p class=""text-sm text-slate-600"">Reference walkthrough: <a class=""text-[#137fec] underline hover:text-[#137fec]"" href=""https://www.youtube.com/embed/ArfewyEeXZA?list=PLY_JFFRWFisYI1TTPDkNcH3RIhkaj4e9t"" target=""_blank"" rel=""noopener noreferrer"">Watch tool demo</a>.</p>
+</div>"
+11,NAME BODIES,https://www.youtube.com/embed/cOzp_3WhJM8?list=PLY_JFFRWFisYI1TTPDkNcH3RIhkaj4e9t,,,1,,3,19,6,29,12,39,Low,€ 39.00,,FALSE,TRUE,TRUE,FALSE,TRUE,/images/tool/namebody.png,"<div class=""not-prose text-left text-slate-700 space-y-5"">
+  <h3 class=""text-xl font-bold text-[#137fec]"">NAME BODIES - Overview</h3>
+  <p><strong>NAME BODIES</strong> is a DI-TOOLS capability in <strong>General Workflow</strong> focused on making Inventor workflows more reliable, more repeatable, and easier to scale across teams. It is positioned as <strong>Low</strong> value and is designed to remove manual friction from day-to-day engineering tasks.</p>
+  <p>Operationally, this tool helps teams replace personal habits with consistent workflow logic. That means fewer output variations between engineers, faster onboarding of new staff, and a cleaner transition from design to documentation or manufacturing handoff.</p>
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Key Benefits</h4>
+  <ul class=""list-disc pl-6 space-y-1"">
+    <li>Standardizes repetitive actions so teams deliver with the same quality baseline across projects.</li>
+    <li>Reduces avoidable manual errors in naming, export handling, model data, or drawing-related output.</li>
+    <li>Supports layered adoption under <strong>Expert, Premium</strong> service strategy depending on team maturity.</li>
+    <li>Improves throughput by shifting effort from repetitive clicks to engineering decisions.</li>
+  </ul>
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Commercial & Deployment Snapshot</h4>
+  <p>Indicative value: <strong>€ 39.00</strong>. Stand set enabled</p>
+  <ul class=""list-disc pl-6 space-y-1""><li><strong>3 months</strong>: aligned to package/pricing policy</li><li><strong>6 months</strong>: aligned to package/pricing policy</li><li><strong>12 months</strong>: aligned to package/pricing policy</li></ul>
+  
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Typical Use Cases</h4>
+  <ul class=""list-disc pl-6 space-y-1"">
+    <li>Engineering teams that need predictable standards across multiple users and parallel projects.</li>
+    <li>Drawing offices and manufacturing-oriented teams that depend on consistent release outputs.</li>
+    <li>Organizations preparing workflow alignment before deeper integration with PDM, PLM, or ERP systems.</li>
+  </ul>
+  <p class=""text-sm text-slate-600"">Reference walkthrough: <a class=""text-[#137fec] underline hover:text-[#137fec]"" href=""https://www.youtube.com/embed/cOzp_3WhJM8?list=PLY_JFFRWFisYI1TTPDkNcH3RIhkaj4e9t"" target=""_blank"" rel=""noopener noreferrer"">Watch tool demo</a>.</p>
+</div>"
+12,CUSTOM QUANTITY,https://www.youtube.com/embed/CKcoASieISc?list=PLY_JFFRWFisYI1TTPDkNcH3RIhkaj4e9t,,,1,1,3,15,6,20,12,30,Core-Free,€30.00,iProperty & Quantity,TRUE,TRUE,TRUE,TRUE,FALSE,/images/tool/btncustomquantity32x321_rp4lqo.png,"<div class=""not-prose text-left text-slate-700 space-y-5"">
+  <h3 class=""text-xl font-bold text-[#137fec]"">CUSTOM QUANTITY - Overview</h3>
+  <p><strong>CUSTOM QUANTITY</strong> is a DI-TOOLS capability in <strong>iProperty &amp; Quantity</strong> focused on making Inventor workflows more reliable, more repeatable, and easier to scale across teams. It is positioned as <strong>Core-Free</strong> value and is designed to remove manual friction from day-to-day engineering tasks.</p>
+  <p>Operationally, this tool helps teams replace personal habits with consistent workflow logic. That means fewer output variations between engineers, faster onboarding of new staff, and a cleaner transition from design to documentation or manufacturing handoff.</p>
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Key Benefits</h4>
+  <ul class=""list-disc pl-6 space-y-1"">
+    <li>Standardizes repetitive actions so teams deliver with the same quality baseline across projects.</li>
+    <li>Reduces avoidable manual errors in naming, export handling, model data, or drawing-related output.</li>
+    <li>Supports layered adoption under <strong>Basic, Expert, Premium</strong> service strategy depending on team maturity.</li>
+    <li>Improves throughput by shifting effort from repetitive clicks to engineering decisions.</li>
+  </ul>
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Commercial & Deployment Snapshot</h4>
+  <p>Indicative value: <strong>€30.00</strong>. CAT set enabled</p>
+  <ul class=""list-disc pl-6 space-y-1""><li><strong>3 months</strong>: aligned to package/pricing policy</li><li><strong>6 months</strong>: aligned to package/pricing policy</li><li><strong>12 months</strong>: aligned to package/pricing policy</li></ul>
+  <p class=""text-sm font-medium text-[#137fec]"">Core-Free aligned: this tool can be positioned as low-friction entry capability for early rollout.</p>
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Typical Use Cases</h4>
+  <ul class=""list-disc pl-6 space-y-1"">
+    <li>Engineering teams that need predictable standards across multiple users and parallel projects.</li>
+    <li>Drawing offices and manufacturing-oriented teams that depend on consistent release outputs.</li>
+    <li>Organizations preparing workflow alignment before deeper integration with PDM, PLM, or ERP systems.</li>
+  </ul>
+  <p class=""text-sm text-slate-600"">Reference walkthrough: <a class=""text-[#137fec] underline hover:text-[#137fec]"" href=""https://www.youtube.com/embed/CKcoASieISc?list=PLY_JFFRWFisYI1TTPDkNcH3RIhkaj4e9t"" target=""_blank"" rel=""noopener noreferrer"">Watch tool demo</a>.</p>
+</div>"
+13,SUM QTY,https://www.youtube.com/embed/ATlMPsKuOuc?list=PLY_JFFRWFisYI1TTPDkNcH3RIhkaj4e9t,,,1,,3,4,6,6,12,8,Core-Free,€ 8.00,"iProperty & Quantity, Property Essentials Set",FALSE,FALSE,TRUE,TRUE,Set 3,/images/tool/btnsumquantity32x32_jjeibz.png,"<div class=""not-prose text-left text-slate-700 space-y-5"">
+  <h3 class=""text-xl font-bold text-[#137fec]"">SUM QTY - Overview</h3>
+  <p><strong>SUM QTY</strong> is a DI-TOOLS capability in <strong>iProperty &amp; Quantity, Property Essentials Set</strong> focused on making Inventor workflows more reliable, more repeatable, and easier to scale across teams. It is positioned as <strong>Core-Free</strong> value and is designed to remove manual friction from day-to-day engineering tasks.</p>
+  <p>Operationally, this tool helps teams replace personal habits with consistent workflow logic. That means fewer output variations between engineers, faster onboarding of new staff, and a cleaner transition from design to documentation or manufacturing handoff.</p>
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Key Benefits</h4>
+  <ul class=""list-disc pl-6 space-y-1"">
+    <li>Standardizes repetitive actions so teams deliver with the same quality baseline across projects.</li>
+    <li>Reduces avoidable manual errors in naming, export handling, model data, or drawing-related output.</li>
+    <li>Supports layered adoption under <strong>Premium</strong> service strategy depending on team maturity.</li>
+    <li>Improves throughput by shifting effort from repetitive clicks to engineering decisions.</li>
+  </ul>
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Commercial & Deployment Snapshot</h4>
+  <p>Indicative value: <strong>€ 8.00</strong>. CAT set enabled | Stand set: <strong>Set 3</strong></p>
+  <ul class=""list-disc pl-6 space-y-1""><li><strong>3 months</strong>: aligned to package/pricing policy</li><li><strong>6 months</strong>: aligned to package/pricing policy</li><li><strong>12 months</strong>: aligned to package/pricing policy</li></ul>
+  
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Typical Use Cases</h4>
+  <ul class=""list-disc pl-6 space-y-1"">
+    <li>Engineering teams that need predictable standards across multiple users and parallel projects.</li>
+    <li>Drawing offices and manufacturing-oriented teams that depend on consistent release outputs.</li>
+    <li>Organizations preparing workflow alignment before deeper integration with PDM, PLM, or ERP systems.</li>
+  </ul>
+  <p class=""text-sm text-slate-600"">Reference walkthrough: <a class=""text-[#137fec] underline hover:text-[#137fec]"" href=""https://www.youtube.com/embed/ATlMPsKuOuc?list=PLY_JFFRWFisYI1TTPDkNcH3RIhkaj4e9t"" target=""_blank"" rel=""noopener noreferrer"">Watch tool demo</a>.</p>
+</div>"
+14,DRAWING STATUS,https://www.youtube.com/embed/JHSxsENzboc?list=PLY_JFFRWFisYI1TTPDkNcH3RIhkaj4e9t,,,1,1,3,12.5,6,19.5,12,27.5,Core-Free,€27.50,iProperty & Quantity,TRUE,TRUE,TRUE,TRUE,FALSE,/images/tool/btndrawingstatus32x32_mgkd6d.png,"<div class=""not-prose text-left text-slate-700 space-y-5"">
+  <h3 class=""text-xl font-bold text-[#137fec]"">DRAWING STATUS - Overview</h3>
+  <p><strong>DRAWING STATUS</strong> is a DI-TOOLS capability in <strong>iProperty &amp; Quantity</strong> focused on making Inventor workflows more reliable, more repeatable, and easier to scale across teams. It is positioned as <strong>Core-Free</strong> value and is designed to remove manual friction from day-to-day engineering tasks.</p>
+  <p>Operationally, this tool helps teams replace personal habits with consistent workflow logic. That means fewer output variations between engineers, faster onboarding of new staff, and a cleaner transition from design to documentation or manufacturing handoff.</p>
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Key Benefits</h4>
+  <ul class=""list-disc pl-6 space-y-1"">
+    <li>Standardizes repetitive actions so teams deliver with the same quality baseline across projects.</li>
+    <li>Reduces avoidable manual errors in naming, export handling, model data, or drawing-related output.</li>
+    <li>Supports layered adoption under <strong>Basic, Expert, Premium</strong> service strategy depending on team maturity.</li>
+    <li>Improves throughput by shifting effort from repetitive clicks to engineering decisions.</li>
+  </ul>
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Commercial & Deployment Snapshot</h4>
+  <p>Indicative value: <strong>€27.50</strong>. CAT set enabled</p>
+  <ul class=""list-disc pl-6 space-y-1""><li><strong>3 months</strong>: aligned to package/pricing policy</li><li><strong>6 months</strong>: aligned to package/pricing policy</li><li><strong>12 months</strong>: aligned to package/pricing policy</li></ul>
+  <p class=""text-sm font-medium text-[#137fec]"">Core-Free aligned: this tool can be positioned as low-friction entry capability for early rollout.</p>
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Typical Use Cases</h4>
+  <ul class=""list-disc pl-6 space-y-1"">
+    <li>Engineering teams that need predictable standards across multiple users and parallel projects.</li>
+    <li>Drawing offices and manufacturing-oriented teams that depend on consistent release outputs.</li>
+    <li>Organizations preparing workflow alignment before deeper integration with PDM, PLM, or ERP systems.</li>
+  </ul>
+  <p class=""text-sm text-slate-600"">Reference walkthrough: <a class=""text-[#137fec] underline hover:text-[#137fec]"" href=""https://www.youtube.com/embed/JHSxsENzboc?list=PLY_JFFRWFisYI1TTPDkNcH3RIhkaj4e9t"" target=""_blank"" rel=""noopener noreferrer"">Watch tool demo</a>.</p>
+</div>"
+15,UPDATE PROPERTY,https://www.youtube.com/embed/fqq7AjrenZw?list=PLY_JFFRWFisYI1TTPDkNcH3RIhkaj4e9t,,,1,1,3,6,6,8,12,12,Core-Free,€12.00,iProperty & Quantity,TRUE,TRUE,TRUE,TRUE,FALSE,/images/tool/btnupdateproperty32x32_jijowi.png,"<div class=""not-prose text-left text-slate-700 space-y-5"">
+  <h3 class=""text-xl font-bold text-[#137fec]"">UPDATE PROPERTY - Overview</h3>
+  <p><strong>UPDATE PROPERTY</strong> is a DI-TOOLS capability in <strong>iProperty &amp; Quantity</strong> focused on making Inventor workflows more reliable, more repeatable, and easier to scale across teams. It is positioned as <strong>Core-Free</strong> value and is designed to remove manual friction from day-to-day engineering tasks.</p>
+  <p>Operationally, this tool helps teams replace personal habits with consistent workflow logic. That means fewer output variations between engineers, faster onboarding of new staff, and a cleaner transition from design to documentation or manufacturing handoff.</p>
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Key Benefits</h4>
+  <ul class=""list-disc pl-6 space-y-1"">
+    <li>Standardizes repetitive actions so teams deliver with the same quality baseline across projects.</li>
+    <li>Reduces avoidable manual errors in naming, export handling, model data, or drawing-related output.</li>
+    <li>Supports layered adoption under <strong>Basic, Expert, Premium</strong> service strategy depending on team maturity.</li>
+    <li>Improves throughput by shifting effort from repetitive clicks to engineering decisions.</li>
+  </ul>
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Commercial & Deployment Snapshot</h4>
+  <p>Indicative value: <strong>€12.00</strong>. CAT set enabled</p>
+  <ul class=""list-disc pl-6 space-y-1""><li><strong>3 months</strong>: aligned to package/pricing policy</li><li><strong>6 months</strong>: aligned to package/pricing policy</li><li><strong>12 months</strong>: aligned to package/pricing policy</li></ul>
+  <p class=""text-sm font-medium text-[#137fec]"">Core-Free aligned: this tool can be positioned as low-friction entry capability for early rollout.</p>
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Typical Use Cases</h4>
+  <ul class=""list-disc pl-6 space-y-1"">
+    <li>Engineering teams that need predictable standards across multiple users and parallel projects.</li>
+    <li>Drawing offices and manufacturing-oriented teams that depend on consistent release outputs.</li>
+    <li>Organizations preparing workflow alignment before deeper integration with PDM, PLM, or ERP systems.</li>
+  </ul>
+  <p class=""text-sm text-slate-600"">Reference walkthrough: <a class=""text-[#137fec] underline hover:text-[#137fec]"" href=""https://www.youtube.com/embed/fqq7AjrenZw?list=PLY_JFFRWFisYI1TTPDkNcH3RIhkaj4e9t"" target=""_blank"" rel=""noopener noreferrer"">Watch tool demo</a>.</p>
+</div>"
+16,GET SURFACE AREA,https://www.youtube.com/embed/e2LaPuUCSwg?list=PLY_JFFRWFisYI1TTPDkNcH3RIhkaj4e9t,,,1,0,3,8,6,12,12,20,Core-Free,€20.00,iProperty & Quantity,TRUE,FALSE,TRUE,TRUE,FALSE,/images/tool/btngetsurfacearea32x32_jugl1v.png,"<div class=""not-prose text-left text-slate-700 space-y-5"">
+  <h3 class=""text-xl font-bold text-[#137fec]"">GET SURFACE AREA - Overview</h3>
+  <p><strong>GET SURFACE AREA</strong> is a DI-TOOLS capability in <strong>iProperty &amp; Quantity</strong> focused on making Inventor workflows more reliable, more repeatable, and easier to scale across teams. It is positioned as <strong>Core-Free</strong> value and is designed to remove manual friction from day-to-day engineering tasks.</p>
+  <p>Operationally, this tool helps teams replace personal habits with consistent workflow logic. That means fewer output variations between engineers, faster onboarding of new staff, and a cleaner transition from design to documentation or manufacturing handoff.</p>
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Key Benefits</h4>
+  <ul class=""list-disc pl-6 space-y-1"">
+    <li>Standardizes repetitive actions so teams deliver with the same quality baseline across projects.</li>
+    <li>Reduces avoidable manual errors in naming, export handling, model data, or drawing-related output.</li>
+    <li>Supports layered adoption under <strong>Basic, Premium</strong> service strategy depending on team maturity.</li>
+    <li>Improves throughput by shifting effort from repetitive clicks to engineering decisions.</li>
+  </ul>
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Commercial & Deployment Snapshot</h4>
+  <p>Indicative value: <strong>€20.00</strong>. CAT set enabled</p>
+  <ul class=""list-disc pl-6 space-y-1""><li><strong>3 months</strong>: 6</li><li><strong>6 months</strong>: 12</li><li><strong>12 months</strong>: 24</li></ul>
+  
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Typical Use Cases</h4>
+  <ul class=""list-disc pl-6 space-y-1"">
+    <li>Engineering teams that need predictable standards across multiple users and parallel projects.</li>
+    <li>Drawing offices and manufacturing-oriented teams that depend on consistent release outputs.</li>
+    <li>Organizations preparing workflow alignment before deeper integration with PDM, PLM, or ERP systems.</li>
+  </ul>
+  <p class=""text-sm text-slate-600"">Reference walkthrough: <a class=""text-[#137fec] underline hover:text-[#137fec]"" href=""https://www.youtube.com/embed/e2LaPuUCSwg?list=PLY_JFFRWFisYI1TTPDkNcH3RIhkaj4e9t"" target=""_blank"" rel=""noopener noreferrer"">Watch tool demo</a>.</p>
+</div>"
+17,STANDARD PROPERTIES,https://www.youtube.com/embed/QSCS8le44ys?list=PLY_JFFRWFisYI1TTPDkNcH3RIhkaj4e9t,,,1,,3,29,6,39,12,59,Mid,€ 59.00,"iProperty & Quantity, Property Essentials Set",FALSE,TRUE,TRUE,TRUE,set 3,/images/tool/standard.png,"<div class=""not-prose text-left text-slate-700 space-y-5"">
+  <h3 class=""text-xl font-bold text-[#137fec]"">STANDARD PROPERTIES - Overview</h3>
+  <p><strong>STANDARD PROPERTIES</strong> is a DI-TOOLS capability in <strong>iProperty &amp; Quantity, Property Essentials Set</strong> focused on making Inventor workflows more reliable, more repeatable, and easier to scale across teams. It is positioned as <strong>Mid</strong> value and is designed to remove manual friction from day-to-day engineering tasks.</p>
+  <p>Operationally, this tool helps teams replace personal habits with consistent workflow logic. That means fewer output variations between engineers, faster onboarding of new staff, and a cleaner transition from design to documentation or manufacturing handoff.</p>
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Key Benefits</h4>
+  <ul class=""list-disc pl-6 space-y-1"">
+    <li>Standardizes repetitive actions so teams deliver with the same quality baseline across projects.</li>
+    <li>Reduces avoidable manual errors in naming, export handling, model data, or drawing-related output.</li>
+    <li>Supports layered adoption under <strong>Expert, Premium</strong> service strategy depending on team maturity.</li>
+    <li>Improves throughput by shifting effort from repetitive clicks to engineering decisions.</li>
+  </ul>
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Commercial & Deployment Snapshot</h4>
+  <p>Indicative value: <strong>€ 59.00</strong>. CAT set enabled | Stand set: <strong>set 3</strong></p>
+  <ul class=""list-disc pl-6 space-y-1""><li><strong>3 months</strong>: aligned to package/pricing policy</li><li><strong>6 months</strong>: aligned to package/pricing policy</li><li><strong>12 months</strong>: aligned to package/pricing policy</li></ul>
+  
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Typical Use Cases</h4>
+  <ul class=""list-disc pl-6 space-y-1"">
+    <li>Engineering teams that need predictable standards across multiple users and parallel projects.</li>
+    <li>Drawing offices and manufacturing-oriented teams that depend on consistent release outputs.</li>
+    <li>Organizations preparing workflow alignment before deeper integration with PDM, PLM, or ERP systems.</li>
+  </ul>
+  <p class=""text-sm text-slate-600"">Reference walkthrough: <a class=""text-[#137fec] underline hover:text-[#137fec]"" href=""https://www.youtube.com/embed/QSCS8le44ys?list=PLY_JFFRWFisYI1TTPDkNcH3RIhkaj4e9t"" target=""_blank"" rel=""noopener noreferrer"">Watch tool demo</a>.</p>
+</div>"
+18,PLACE COMPONENTS,https://www.youtube.com/embed/KXjPQtwIp2M?list=PLY_JFFRWFisYI1TTPDkNcH3RIhkaj4e9t,,,1,0,3,19,6,29,12,39,Low,€39.00,Assembly & Modeling,FALSE,TRUE,TRUE,TRUE,FALSE,/images/tool/btnplacecomponent32x32_z7l2kr.png,"<div class=""not-prose text-left text-slate-700 space-y-5"">
+  <h3 class=""text-xl font-bold text-[#137fec]"">PLACE COMPONENTS - Overview</h3>
+  <p><strong>PLACE COMPONENTS</strong> is a DI-TOOLS capability in <strong>Assembly &amp; Modeling</strong> focused on making Inventor workflows more reliable, more repeatable, and easier to scale across teams. It is positioned as <strong>Low</strong> value and is designed to remove manual friction from day-to-day engineering tasks.</p>
+  <p>Operationally, this tool helps teams replace personal habits with consistent workflow logic. That means fewer output variations between engineers, faster onboarding of new staff, and a cleaner transition from design to documentation or manufacturing handoff.</p>
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Key Benefits</h4>
+  <ul class=""list-disc pl-6 space-y-1"">
+    <li>Standardizes repetitive actions so teams deliver with the same quality baseline across projects.</li>
+    <li>Reduces avoidable manual errors in naming, export handling, model data, or drawing-related output.</li>
+    <li>Supports layered adoption under <strong>Expert, Premium</strong> service strategy depending on team maturity.</li>
+    <li>Improves throughput by shifting effort from repetitive clicks to engineering decisions.</li>
+  </ul>
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Commercial & Deployment Snapshot</h4>
+  <p>Indicative value: <strong>€39.00</strong>. CAT set enabled</p>
+  <ul class=""list-disc pl-6 space-y-1""><li><strong>3 months</strong>: 6</li><li><strong>6 months</strong>: 12</li><li><strong>12 months</strong>: 24</li></ul>
+  
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Typical Use Cases</h4>
+  <ul class=""list-disc pl-6 space-y-1"">
+    <li>Engineering teams that need predictable standards across multiple users and parallel projects.</li>
+    <li>Drawing offices and manufacturing-oriented teams that depend on consistent release outputs.</li>
+    <li>Organizations preparing workflow alignment before deeper integration with PDM, PLM, or ERP systems.</li>
+  </ul>
+  <p class=""text-sm text-slate-600"">Reference walkthrough: <a class=""text-[#137fec] underline hover:text-[#137fec]"" href=""https://www.youtube.com/embed/KXjPQtwIp2M?list=PLY_JFFRWFisYI1TTPDkNcH3RIhkaj4e9t"" target=""_blank"" rel=""noopener noreferrer"">Watch tool demo</a>.</p>
+</div>"
+19,PATTERN QTY FROM EXCEL,https://www.youtube.com/embed/LPy59EvKtvQ?list=PLY_JFFRWFisYI1TTPDkNcH3RIhkaj4e9t,,,1,0,3,12,6,18,12,29,Low,€29.00,Assembly & Modeling,FALSE,FALSE,TRUE,TRUE,FALSE,/images/tool/btnpatternqtyfromexcel32x32_ggoxzl.png,"<div class=""not-prose text-left text-slate-700 space-y-5"">
+  <h3 class=""text-xl font-bold text-[#137fec]"">PATTERN QTY FROM EXCEL - Overview</h3>
+  <p><strong>PATTERN QTY FROM EXCEL</strong> is a DI-TOOLS capability in <strong>Assembly &amp; Modeling</strong> focused on making Inventor workflows more reliable, more repeatable, and easier to scale across teams. It is positioned as <strong>Low</strong> value and is designed to remove manual friction from day-to-day engineering tasks.</p>
+  <p>Operationally, this tool helps teams replace personal habits with consistent workflow logic. That means fewer output variations between engineers, faster onboarding of new staff, and a cleaner transition from design to documentation or manufacturing handoff.</p>
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Key Benefits</h4>
+  <ul class=""list-disc pl-6 space-y-1"">
+    <li>Standardizes repetitive actions so teams deliver with the same quality baseline across projects.</li>
+    <li>Reduces avoidable manual errors in naming, export handling, model data, or drawing-related output.</li>
+    <li>Supports layered adoption under <strong>Premium</strong> service strategy depending on team maturity.</li>
+    <li>Improves throughput by shifting effort from repetitive clicks to engineering decisions.</li>
+  </ul>
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Commercial & Deployment Snapshot</h4>
+  <p>Indicative value: <strong>€29.00</strong>. CAT set enabled</p>
+  <ul class=""list-disc pl-6 space-y-1""><li><strong>3 months</strong>: 6</li><li><strong>6 months</strong>: 12</li><li><strong>12 months</strong>: 24</li></ul>
+  
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Typical Use Cases</h4>
+  <ul class=""list-disc pl-6 space-y-1"">
+    <li>Engineering teams that need predictable standards across multiple users and parallel projects.</li>
+    <li>Drawing offices and manufacturing-oriented teams that depend on consistent release outputs.</li>
+    <li>Organizations preparing workflow alignment before deeper integration with PDM, PLM, or ERP systems.</li>
+  </ul>
+  <p class=""text-sm text-slate-600"">Reference walkthrough: <a class=""text-[#137fec] underline hover:text-[#137fec]"" href=""https://www.youtube.com/embed/LPy59EvKtvQ?list=PLY_JFFRWFisYI1TTPDkNcH3RIhkaj4e9t"" target=""_blank"" rel=""noopener noreferrer"">Watch tool demo</a>.</p>
+</div>"
+20,SAVE AND REPLACE COMPONENTS,,,,1,,3,12,6,18,12,29,Low,€ 29.00,"Assembly & Modeling,Revision & Replace Set",TRUE,TRUE,TRUE,TRUE,Set 1,/images/tool/saveandreplacecomponent.png,"<div class=""not-prose text-left text-slate-700 space-y-5"">
+  <h3 class=""text-xl font-bold text-[#137fec]"">SAVE AND REPLACE COMPONENTS - Overview</h3>
+  <p><strong>SAVE AND REPLACE COMPONENTS</strong> is a DI-TOOLS capability in <strong>Assembly &amp; Modeling,Revision &amp; Replace Set</strong> focused on making Inventor workflows more reliable, more repeatable, and easier to scale across teams. It is positioned as <strong>Low</strong> value and is designed to remove manual friction from day-to-day engineering tasks.</p>
+  <p>Operationally, this tool helps teams replace personal habits with consistent workflow logic. That means fewer output variations between engineers, faster onboarding of new staff, and a cleaner transition from design to documentation or manufacturing handoff.</p>
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Key Benefits</h4>
+  <ul class=""list-disc pl-6 space-y-1"">
+    <li>Standardizes repetitive actions so teams deliver with the same quality baseline across projects.</li>
+    <li>Reduces avoidable manual errors in naming, export handling, model data, or drawing-related output.</li>
+    <li>Supports layered adoption under <strong>Basic, Expert, Premium</strong> service strategy depending on team maturity.</li>
+    <li>Improves throughput by shifting effort from repetitive clicks to engineering decisions.</li>
+  </ul>
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Commercial & Deployment Snapshot</h4>
+  <p>Indicative value: <strong>€ 29.00</strong>. CAT set enabled | Stand set: <strong>Set 1</strong></p>
+  <ul class=""list-disc pl-6 space-y-1""><li><strong>3 months</strong>: aligned to package/pricing policy</li><li><strong>6 months</strong>: aligned to package/pricing policy</li><li><strong>12 months</strong>: aligned to package/pricing policy</li></ul>
+  
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Typical Use Cases</h4>
+  <ul class=""list-disc pl-6 space-y-1"">
+    <li>Engineering teams that need predictable standards across multiple users and parallel projects.</li>
+    <li>Drawing offices and manufacturing-oriented teams that depend on consistent release outputs.</li>
+    <li>Organizations preparing workflow alignment before deeper integration with PDM, PLM, or ERP systems.</li>
+  </ul>
+  
+</div>"
+21,REVISION-SAVE AS-REPLACE,https://www.youtube.com/embed/hnTQoO-VQrU?list=PLY_JFFRWFisYI1TTPDkNcH3RIhkaj4e9t,,,1,,3,19,6,29,12,49,Mid,€ 49.00,"Assembly & Modeling,Revision & Replace Set",FALSE,TRUE,TRUE,TRUE,Set 1,/images/tool/revisionsaveasreplace.png,"<div class=""not-prose text-left text-slate-700 space-y-5"">
+  <h3 class=""text-xl font-bold text-[#137fec]"">REVISION-SAVE AS-REPLACE - Overview</h3>
+  <p><strong>REVISION-SAVE AS-REPLACE</strong> is a DI-TOOLS capability in <strong>Assembly &amp; Modeling,Revision &amp; Replace Set</strong> focused on making Inventor workflows more reliable, more repeatable, and easier to scale across teams. It is positioned as <strong>Mid</strong> value and is designed to remove manual friction from day-to-day engineering tasks.</p>
+  <p>Operationally, this tool helps teams replace personal habits with consistent workflow logic. That means fewer output variations between engineers, faster onboarding of new staff, and a cleaner transition from design to documentation or manufacturing handoff.</p>
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Key Benefits</h4>
+  <ul class=""list-disc pl-6 space-y-1"">
+    <li>Standardizes repetitive actions so teams deliver with the same quality baseline across projects.</li>
+    <li>Reduces avoidable manual errors in naming, export handling, model data, or drawing-related output.</li>
+    <li>Supports layered adoption under <strong>Expert, Premium</strong> service strategy depending on team maturity.</li>
+    <li>Improves throughput by shifting effort from repetitive clicks to engineering decisions.</li>
+  </ul>
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Commercial & Deployment Snapshot</h4>
+  <p>Indicative value: <strong>€ 49.00</strong>. CAT set enabled | Stand set: <strong>Set 1</strong></p>
+  <ul class=""list-disc pl-6 space-y-1""><li><strong>3 months</strong>: aligned to package/pricing policy</li><li><strong>6 months</strong>: aligned to package/pricing policy</li><li><strong>12 months</strong>: aligned to package/pricing policy</li></ul>
+  
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Typical Use Cases</h4>
+  <ul class=""list-disc pl-6 space-y-1"">
+    <li>Engineering teams that need predictable standards across multiple users and parallel projects.</li>
+    <li>Drawing offices and manufacturing-oriented teams that depend on consistent release outputs.</li>
+    <li>Organizations preparing workflow alignment before deeper integration with PDM, PLM, or ERP systems.</li>
+  </ul>
+  <p class=""text-sm text-slate-600"">Reference walkthrough: <a class=""text-[#137fec] underline hover:text-[#137fec]"" href=""https://www.youtube.com/embed/hnTQoO-VQrU?list=PLY_JFFRWFisYI1TTPDkNcH3RIhkaj4e9t"" target=""_blank"" rel=""noopener noreferrer"">Watch tool demo</a>.</p>
+</div>"
+22,BOM STRUCTURE,https://www.youtube.com/embed/muX9vnmbZoM?list=PLY_JFFRWFisYI1TTPDkNcH3RIhkaj4e9t,,,1,1,3,6,6,10,12,15,Core-Free,€15.00,Assembly & Modeling,TRUE,TRUE,TRUE,TRUE,FALSE,/images/tool/btnupdatebomstructure32x32_ouopxf.png,"<div class=""not-prose text-left text-slate-700 space-y-5"">
+  <h3 class=""text-xl font-bold text-[#137fec]"">BOM STRUCTURE - Overview</h3>
+  <p><strong>BOM STRUCTURE</strong> is a DI-TOOLS capability in <strong>Assembly &amp; Modeling</strong> focused on making Inventor workflows more reliable, more repeatable, and easier to scale across teams. It is positioned as <strong>Core-Free</strong> value and is designed to remove manual friction from day-to-day engineering tasks.</p>
+  <p>Operationally, this tool helps teams replace personal habits with consistent workflow logic. That means fewer output variations between engineers, faster onboarding of new staff, and a cleaner transition from design to documentation or manufacturing handoff.</p>
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Key Benefits</h4>
+  <ul class=""list-disc pl-6 space-y-1"">
+    <li>Standardizes repetitive actions so teams deliver with the same quality baseline across projects.</li>
+    <li>Reduces avoidable manual errors in naming, export handling, model data, or drawing-related output.</li>
+    <li>Supports layered adoption under <strong>Basic, Expert, Premium</strong> service strategy depending on team maturity.</li>
+    <li>Improves throughput by shifting effort from repetitive clicks to engineering decisions.</li>
+  </ul>
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Commercial & Deployment Snapshot</h4>
+  <p>Indicative value: <strong>€15.00</strong>. CAT set enabled</p>
+  <ul class=""list-disc pl-6 space-y-1""><li><strong>3 months</strong>: aligned to package/pricing policy</li><li><strong>6 months</strong>: aligned to package/pricing policy</li><li><strong>12 months</strong>: aligned to package/pricing policy</li></ul>
+  <p class=""text-sm font-medium text-[#137fec]"">Core-Free aligned: this tool can be positioned as low-friction entry capability for early rollout.</p>
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Typical Use Cases</h4>
+  <ul class=""list-disc pl-6 space-y-1"">
+    <li>Engineering teams that need predictable standards across multiple users and parallel projects.</li>
+    <li>Drawing offices and manufacturing-oriented teams that depend on consistent release outputs.</li>
+    <li>Organizations preparing workflow alignment before deeper integration with PDM, PLM, or ERP systems.</li>
+  </ul>
+  <p class=""text-sm text-slate-600"">Reference walkthrough: <a class=""text-[#137fec] underline hover:text-[#137fec]"" href=""https://www.youtube.com/embed/muX9vnmbZoM?list=PLY_JFFRWFisYI1TTPDkNcH3RIhkaj4e9t"" target=""_blank"" rel=""noopener noreferrer"">Watch tool demo</a>.</p>
+</div>"
+23,SHEET METAL TO NORMAL,https://www.youtube.com/embed/JrMXhYljZh0?list=PLY_JFFRWFisYI1TTPDkNcH3RIhkaj4e9t,,,1,1,3,4,6,6,12,8,Core-Free,€8.00,Assembly & Modeling,FALSE,TRUE,TRUE,TRUE,FALSE,/images/tool/btnsheetmetaltonormal32x32_bjfolr.png,"<div class=""not-prose text-left text-slate-700 space-y-5"">
+  <h3 class=""text-xl font-bold text-[#137fec]"">SHEET METAL TO NORMAL - Overview</h3>
+  <p><strong>SHEET METAL TO NORMAL</strong> is a DI-TOOLS capability in <strong>Assembly &amp; Modeling</strong> focused on making Inventor workflows more reliable, more repeatable, and easier to scale across teams. It is positioned as <strong>Core-Free</strong> value and is designed to remove manual friction from day-to-day engineering tasks.</p>
+  <p>Operationally, this tool helps teams replace personal habits with consistent workflow logic. That means fewer output variations between engineers, faster onboarding of new staff, and a cleaner transition from design to documentation or manufacturing handoff.</p>
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Key Benefits</h4>
+  <ul class=""list-disc pl-6 space-y-1"">
+    <li>Standardizes repetitive actions so teams deliver with the same quality baseline across projects.</li>
+    <li>Reduces avoidable manual errors in naming, export handling, model data, or drawing-related output.</li>
+    <li>Supports layered adoption under <strong>Expert, Premium</strong> service strategy depending on team maturity.</li>
+    <li>Improves throughput by shifting effort from repetitive clicks to engineering decisions.</li>
+  </ul>
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Commercial & Deployment Snapshot</h4>
+  <p>Indicative value: <strong>€8.00</strong>. CAT set enabled</p>
+  <ul class=""list-disc pl-6 space-y-1""><li><strong>3 months</strong>: aligned to package/pricing policy</li><li><strong>6 months</strong>: aligned to package/pricing policy</li><li><strong>12 months</strong>: aligned to package/pricing policy</li></ul>
+  <p class=""text-sm font-medium text-[#137fec]"">Core-Free aligned: this tool can be positioned as low-friction entry capability for early rollout.</p>
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Typical Use Cases</h4>
+  <ul class=""list-disc pl-6 space-y-1"">
+    <li>Engineering teams that need predictable standards across multiple users and parallel projects.</li>
+    <li>Drawing offices and manufacturing-oriented teams that depend on consistent release outputs.</li>
+    <li>Organizations preparing workflow alignment before deeper integration with PDM, PLM, or ERP systems.</li>
+  </ul>
+  <p class=""text-sm text-slate-600"">Reference walkthrough: <a class=""text-[#137fec] underline hover:text-[#137fec]"" href=""https://www.youtube.com/embed/JrMXhYljZh0?list=PLY_JFFRWFisYI1TTPDkNcH3RIhkaj4e9t"" target=""_blank"" rel=""noopener noreferrer"">Watch tool demo</a>.</p>
+</div>"
+24,EXPORT STEP BY CATEGORY,https://www.youtube.com/embed/6j9iK6HUqcE?list=PLY_JFFRWFisYI1TTPDkNcH3RIhkaj4e9t,,,1,0,3,12,6,18,12,29,Low,€29.00,Drawing & Export,FALSE,TRUE,TRUE,TRUE,FALSE,/images/tool/btnexporttostepbycategory32x32_urvn5l.png,"<div class=""not-prose text-left text-slate-700 space-y-5"">
+  <h3 class=""text-xl font-bold text-[#137fec]"">EXPORT STEP BY CATEGORY - Overview</h3>
+  <p><strong>EXPORT STEP BY CATEGORY</strong> is a DI-TOOLS capability in <strong>Drawing &amp; Export</strong> focused on making Inventor workflows more reliable, more repeatable, and easier to scale across teams. It is positioned as <strong>Low</strong> value and is designed to remove manual friction from day-to-day engineering tasks.</p>
+  <p>Operationally, this tool helps teams replace personal habits with consistent workflow logic. That means fewer output variations between engineers, faster onboarding of new staff, and a cleaner transition from design to documentation or manufacturing handoff.</p>
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Key Benefits</h4>
+  <ul class=""list-disc pl-6 space-y-1"">
+    <li>Standardizes repetitive actions so teams deliver with the same quality baseline across projects.</li>
+    <li>Reduces avoidable manual errors in naming, export handling, model data, or drawing-related output.</li>
+    <li>Supports layered adoption under <strong>Expert, Premium</strong> service strategy depending on team maturity.</li>
+    <li>Improves throughput by shifting effort from repetitive clicks to engineering decisions.</li>
+  </ul>
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Commercial & Deployment Snapshot</h4>
+  <p>Indicative value: <strong>€29.00</strong>. CAT set enabled</p>
+  <ul class=""list-disc pl-6 space-y-1""><li><strong>3 months</strong>: 6</li><li><strong>6 months</strong>: 12</li><li><strong>12 months</strong>: 24</li></ul>
+  
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Typical Use Cases</h4>
+  <ul class=""list-disc pl-6 space-y-1"">
+    <li>Engineering teams that need predictable standards across multiple users and parallel projects.</li>
+    <li>Drawing offices and manufacturing-oriented teams that depend on consistent release outputs.</li>
+    <li>Organizations preparing workflow alignment before deeper integration with PDM, PLM, or ERP systems.</li>
+  </ul>
+  <p class=""text-sm text-slate-600"">Reference walkthrough: <a class=""text-[#137fec] underline hover:text-[#137fec]"" href=""https://www.youtube.com/embed/6j9iK6HUqcE?list=PLY_JFFRWFisYI1TTPDkNcH3RIhkaj4e9t"" target=""_blank"" rel=""noopener noreferrer"">Watch tool demo</a>.</p>
+</div>"
+25,EXPORT COMPONENTS TO EXCEL,https://www.youtube.com/embed/6YpFeM_Igsw?list=PLY_JFFRWFisYI1TTPDkNcH3RIhkaj4e9t,,,1,,3,19,6,29,12,49,Mid,€ 49.00,Drawing & Export,FALSE,TRUE,TRUE,TRUE,C2,/images/tool/btnexportcomponenttoexcel32x32_tfawhf.png,"<div class=""not-prose text-left text-slate-700 space-y-5"">
+  <h3 class=""text-xl font-bold text-[#137fec]"">EXPORT COMPONENTS TO EXCEL - Overview</h3>
+  <p><strong>EXPORT COMPONENTS TO EXCEL</strong> is a DI-TOOLS capability in <strong>Drawing &amp; Export</strong> focused on making Inventor workflows more reliable, more repeatable, and easier to scale across teams. It is positioned as <strong>Mid</strong> value and is designed to remove manual friction from day-to-day engineering tasks.</p>
+  <p>Operationally, this tool helps teams replace personal habits with consistent workflow logic. That means fewer output variations between engineers, faster onboarding of new staff, and a cleaner transition from design to documentation or manufacturing handoff.</p>
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Key Benefits</h4>
+  <ul class=""list-disc pl-6 space-y-1"">
+    <li>Standardizes repetitive actions so teams deliver with the same quality baseline across projects.</li>
+    <li>Reduces avoidable manual errors in naming, export handling, model data, or drawing-related output.</li>
+    <li>Supports layered adoption under <strong>Expert, Premium</strong> service strategy depending on team maturity.</li>
+    <li>Improves throughput by shifting effort from repetitive clicks to engineering decisions.</li>
+  </ul>
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Commercial & Deployment Snapshot</h4>
+  <p>Indicative value: <strong>€ 49.00</strong>. CAT set enabled | Stand set: <strong>C2</strong></p>
+  <ul class=""list-disc pl-6 space-y-1""><li><strong>3 months</strong>: aligned to package/pricing policy</li><li><strong>6 months</strong>: aligned to package/pricing policy</li><li><strong>12 months</strong>: aligned to package/pricing policy</li></ul>
+  
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Typical Use Cases</h4>
+  <ul class=""list-disc pl-6 space-y-1"">
+    <li>Engineering teams that need predictable standards across multiple users and parallel projects.</li>
+    <li>Drawing offices and manufacturing-oriented teams that depend on consistent release outputs.</li>
+    <li>Organizations preparing workflow alignment before deeper integration with PDM, PLM, or ERP systems.</li>
+  </ul>
+  <p class=""text-sm text-slate-600"">Reference walkthrough: <a class=""text-[#137fec] underline hover:text-[#137fec]"" href=""https://www.youtube.com/embed/6YpFeM_Igsw?list=PLY_JFFRWFisYI1TTPDkNcH3RIhkaj4e9t"" target=""_blank"" rel=""noopener noreferrer"">Watch tool demo</a>.</p>
+</div>"
+26,SYNC NAME,https://www.youtube.com/embed/X_QzwQa_CpE?list=PLY_JFFRWFisYI1TTPDkNcH3RIhkaj4e9t,,,1,,3,39,6,59,12,79,Mid,€ 79.00,File Management,FALSE,TRUE,TRUE,TRUE,C2,/images/tool/btnsyncname32x32_iz0fs1.png,"<div class=""not-prose text-left text-slate-700 space-y-5"">
+  <h3 class=""text-xl font-bold text-[#137fec]"">SYNC NAME - Overview</h3>
+  <p><strong>SYNC NAME</strong> is a DI-TOOLS capability in <strong>File Management</strong> focused on making Inventor workflows more reliable, more repeatable, and easier to scale across teams. It is positioned as <strong>Mid</strong> value and is designed to remove manual friction from day-to-day engineering tasks.</p>
+  <p>Operationally, this tool helps teams replace personal habits with consistent workflow logic. That means fewer output variations between engineers, faster onboarding of new staff, and a cleaner transition from design to documentation or manufacturing handoff.</p>
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Key Benefits</h4>
+  <ul class=""list-disc pl-6 space-y-1"">
+    <li>Standardizes repetitive actions so teams deliver with the same quality baseline across projects.</li>
+    <li>Reduces avoidable manual errors in naming, export handling, model data, or drawing-related output.</li>
+    <li>Supports layered adoption under <strong>Expert, Premium</strong> service strategy depending on team maturity.</li>
+    <li>Improves throughput by shifting effort from repetitive clicks to engineering decisions.</li>
+  </ul>
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Commercial & Deployment Snapshot</h4>
+  <p>Indicative value: <strong>€ 79.00</strong>. CAT set enabled | Stand set: <strong>C2</strong></p>
+  <ul class=""list-disc pl-6 space-y-1""><li><strong>3 months</strong>: aligned to package/pricing policy</li><li><strong>6 months</strong>: aligned to package/pricing policy</li><li><strong>12 months</strong>: aligned to package/pricing policy</li></ul>
+  
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Typical Use Cases</h4>
+  <ul class=""list-disc pl-6 space-y-1"">
+    <li>Engineering teams that need predictable standards across multiple users and parallel projects.</li>
+    <li>Drawing offices and manufacturing-oriented teams that depend on consistent release outputs.</li>
+    <li>Organizations preparing workflow alignment before deeper integration with PDM, PLM, or ERP systems.</li>
+  </ul>
+  <p class=""text-sm text-slate-600"">Reference walkthrough: <a class=""text-[#137fec] underline hover:text-[#137fec]"" href=""https://www.youtube.com/embed/X_QzwQa_CpE?list=PLY_JFFRWFisYI1TTPDkNcH3RIhkaj4e9t"" target=""_blank"" rel=""noopener noreferrer"">Watch tool demo</a>.</p>
+</div>"
+27,MANAGE VIEWS,https://www.youtube.com/embed/EqFSGmU5Yy8?list=PLY_JFFRWFisYI1TTPDkNcH3RIhkaj4e9t,,,1,,3,49,6,69,12,89,High,€ 89.00,"Assembly & Modeling, Production Drawing Set",FALSE,TRUE,TRUE,TRUE,set 4,/images/tool/BtnManageView32x32_ejxh54.png,"<div class=""not-prose text-left text-slate-700 space-y-5"">
+  <h3 class=""text-xl font-bold text-[#137fec]"">MANAGE VIEWS - Overview</h3>
+  <p><strong>MANAGE VIEWS</strong> is a DI-TOOLS capability in <strong>Assembly &amp; Modeling, Production Drawing Set</strong> focused on making Inventor workflows more reliable, more repeatable, and easier to scale across teams. It is positioned as <strong>High</strong> value and is designed to remove manual friction from day-to-day engineering tasks.</p>
+  <p>Operationally, this tool helps teams replace personal habits with consistent workflow logic. That means fewer output variations between engineers, faster onboarding of new staff, and a cleaner transition from design to documentation or manufacturing handoff.</p>
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Key Benefits</h4>
+  <ul class=""list-disc pl-6 space-y-1"">
+    <li>Standardizes repetitive actions so teams deliver with the same quality baseline across projects.</li>
+    <li>Reduces avoidable manual errors in naming, export handling, model data, or drawing-related output.</li>
+    <li>Supports layered adoption under <strong>Expert, Premium</strong> service strategy depending on team maturity.</li>
+    <li>Improves throughput by shifting effort from repetitive clicks to engineering decisions.</li>
+  </ul>
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Commercial & Deployment Snapshot</h4>
+  <p>Indicative value: <strong>€ 89.00</strong>. CAT set enabled | Stand set: <strong>set 4</strong></p>
+  <ul class=""list-disc pl-6 space-y-1""><li><strong>3 months</strong>: aligned to package/pricing policy</li><li><strong>6 months</strong>: aligned to package/pricing policy</li><li><strong>12 months</strong>: aligned to package/pricing policy</li></ul>
+  
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Typical Use Cases</h4>
+  <ul class=""list-disc pl-6 space-y-1"">
+    <li>Engineering teams that need predictable standards across multiple users and parallel projects.</li>
+    <li>Drawing offices and manufacturing-oriented teams that depend on consistent release outputs.</li>
+    <li>Organizations preparing workflow alignment before deeper integration with PDM, PLM, or ERP systems.</li>
+  </ul>
+  <p class=""text-sm text-slate-600"">Reference walkthrough: <a class=""text-[#137fec] underline hover:text-[#137fec]"" href=""https://www.youtube.com/embed/EqFSGmU5Yy8?list=PLY_JFFRWFisYI1TTPDkNcH3RIhkaj4e9t"" target=""_blank"" rel=""noopener noreferrer"">Watch tool demo</a>.</p>
+</div>"
+28,COPY DESIGN,https://www.youtube.com/embed/fT3SzYFjLKQ?list=PLY_JFFRWFisYI1TTPDkNcH3RIhkaj4e9t,,,1,0,3,39,6,59,12,79,High,€79.00,Assembly & Modeling,FALSE,TRUE,TRUE,TRUE,FALSE,/images/tool/BtnCopyDesign32x32_xukyvo.png,"<div class=""not-prose text-left text-slate-700 space-y-5"">
+  <h3 class=""text-xl font-bold text-[#137fec]"">COPY DESIGN - Overview</h3>
+  <p><strong>COPY DESIGN</strong> is a DI-TOOLS capability in <strong>Assembly &amp; Modeling</strong> focused on making Inventor workflows more reliable, more repeatable, and easier to scale across teams. It is positioned as <strong>High</strong> value and is designed to remove manual friction from day-to-day engineering tasks.</p>
+  <p>Operationally, this tool helps teams replace personal habits with consistent workflow logic. That means fewer output variations between engineers, faster onboarding of new staff, and a cleaner transition from design to documentation or manufacturing handoff.</p>
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Key Benefits</h4>
+  <ul class=""list-disc pl-6 space-y-1"">
+    <li>Standardizes repetitive actions so teams deliver with the same quality baseline across projects.</li>
+    <li>Reduces avoidable manual errors in naming, export handling, model data, or drawing-related output.</li>
+    <li>Supports layered adoption under <strong>Expert, Premium</strong> service strategy depending on team maturity.</li>
+    <li>Improves throughput by shifting effort from repetitive clicks to engineering decisions.</li>
+  </ul>
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Commercial & Deployment Snapshot</h4>
+  <p>Indicative value: <strong>€79.00</strong>. CAT set enabled</p>
+  <ul class=""list-disc pl-6 space-y-1""><li><strong>3 months</strong>: 18</li><li><strong>6 months</strong>: 36</li><li><strong>12 months</strong>: 72</li></ul>
+  
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Typical Use Cases</h4>
+  <ul class=""list-disc pl-6 space-y-1"">
+    <li>Engineering teams that need predictable standards across multiple users and parallel projects.</li>
+    <li>Drawing offices and manufacturing-oriented teams that depend on consistent release outputs.</li>
+    <li>Organizations preparing workflow alignment before deeper integration with PDM, PLM, or ERP systems.</li>
+  </ul>
+  <p class=""text-sm text-slate-600"">Reference walkthrough: <a class=""text-[#137fec] underline hover:text-[#137fec]"" href=""https://www.youtube.com/embed/fT3SzYFjLKQ?list=PLY_JFFRWFisYI1TTPDkNcH3RIhkaj4e9t"" target=""_blank"" rel=""noopener noreferrer"">Watch tool demo</a>.</p>
+</div>"
+29,CHECK MISSING FILES,,,,1,1,3,8,6,12,12,20,Core-Free,€20.00,File Management,TRUE,TRUE,TRUE,TRUE,FALSE,/images/tool/btncheckmissingfile32x32_jtjaxa.png,"<div class=""not-prose text-left text-slate-700 space-y-5"">
+  <h3 class=""text-xl font-bold text-[#137fec]"">CHECK MISSING FILES - Overview</h3>
+  <p><strong>CHECK MISSING FILES</strong> is a DI-TOOLS capability in <strong>File Management</strong> focused on making Inventor workflows more reliable, more repeatable, and easier to scale across teams. It is positioned as <strong>Core-Free</strong> value and is designed to remove manual friction from day-to-day engineering tasks.</p>
+  <p>Operationally, this tool helps teams replace personal habits with consistent workflow logic. That means fewer output variations between engineers, faster onboarding of new staff, and a cleaner transition from design to documentation or manufacturing handoff.</p>
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Key Benefits</h4>
+  <ul class=""list-disc pl-6 space-y-1"">
+    <li>Standardizes repetitive actions so teams deliver with the same quality baseline across projects.</li>
+    <li>Reduces avoidable manual errors in naming, export handling, model data, or drawing-related output.</li>
+    <li>Supports layered adoption under <strong>Basic, Expert, Premium</strong> service strategy depending on team maturity.</li>
+    <li>Improves throughput by shifting effort from repetitive clicks to engineering decisions.</li>
+  </ul>
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Commercial & Deployment Snapshot</h4>
+  <p>Indicative value: <strong>€20.00</strong>. CAT set enabled</p>
+  <ul class=""list-disc pl-6 space-y-1""><li><strong>3 months</strong>: aligned to package/pricing policy</li><li><strong>6 months</strong>: aligned to package/pricing policy</li><li><strong>12 months</strong>: aligned to package/pricing policy</li></ul>
+  <p class=""text-sm font-medium text-[#137fec]"">Core-Free aligned: this tool can be positioned as low-friction entry capability for early rollout.</p>
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Typical Use Cases</h4>
+  <ul class=""list-disc pl-6 space-y-1"">
+    <li>Engineering teams that need predictable standards across multiple users and parallel projects.</li>
+    <li>Drawing offices and manufacturing-oriented teams that depend on consistent release outputs.</li>
+    <li>Organizations preparing workflow alignment before deeper integration with PDM, PLM, or ERP systems.</li>
+  </ul>
+  
+</div>"
+30,DELETE NON-SOLID,https://www.youtube.com/embed/S_45VrEEka0?list=PLY_JFFRWFisYI1TTPDkNcH3RIhkaj4e9t,,,1,1,3,4,6,6,12,10,Core-Free,€10.00,File Management,FALSE,TRUE,TRUE,TRUE,FALSE,/images/tool/btndeletenonesolid32x32_v4qf2t.png,"<div class=""not-prose text-left text-slate-700 space-y-5"">
+  <h3 class=""text-xl font-bold text-[#137fec]"">DELETE NON-SOLID - Overview</h3>
+  <p><strong>DELETE NON-SOLID</strong> is a DI-TOOLS capability in <strong>File Management</strong> focused on making Inventor workflows more reliable, more repeatable, and easier to scale across teams. It is positioned as <strong>Core-Free</strong> value and is designed to remove manual friction from day-to-day engineering tasks.</p>
+  <p>Operationally, this tool helps teams replace personal habits with consistent workflow logic. That means fewer output variations between engineers, faster onboarding of new staff, and a cleaner transition from design to documentation or manufacturing handoff.</p>
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Key Benefits</h4>
+  <ul class=""list-disc pl-6 space-y-1"">
+    <li>Standardizes repetitive actions so teams deliver with the same quality baseline across projects.</li>
+    <li>Reduces avoidable manual errors in naming, export handling, model data, or drawing-related output.</li>
+    <li>Supports layered adoption under <strong>Expert, Premium</strong> service strategy depending on team maturity.</li>
+    <li>Improves throughput by shifting effort from repetitive clicks to engineering decisions.</li>
+  </ul>
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Commercial & Deployment Snapshot</h4>
+  <p>Indicative value: <strong>€10.00</strong>. CAT set enabled</p>
+  <ul class=""list-disc pl-6 space-y-1""><li><strong>3 months</strong>: aligned to package/pricing policy</li><li><strong>6 months</strong>: aligned to package/pricing policy</li><li><strong>12 months</strong>: aligned to package/pricing policy</li></ul>
+  <p class=""text-sm font-medium text-[#137fec]"">Core-Free aligned: this tool can be positioned as low-friction entry capability for early rollout.</p>
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Typical Use Cases</h4>
+  <ul class=""list-disc pl-6 space-y-1"">
+    <li>Engineering teams that need predictable standards across multiple users and parallel projects.</li>
+    <li>Drawing offices and manufacturing-oriented teams that depend on consistent release outputs.</li>
+    <li>Organizations preparing workflow alignment before deeper integration with PDM, PLM, or ERP systems.</li>
+  </ul>
+  <p class=""text-sm text-slate-600"">Reference walkthrough: <a class=""text-[#137fec] underline hover:text-[#137fec]"" href=""https://www.youtube.com/embed/S_45VrEEka0?list=PLY_JFFRWFisYI1TTPDkNcH3RIhkaj4e9t"" target=""_blank"" rel=""noopener noreferrer"">Watch tool demo</a>.</p>
+</div>"
+31,DELETE HIDDEN COMPONETS,https://www.youtube.com/embed/jenGaji7MUE?list=PLY_JFFRWFisYI1TTPDkNcH3RIhkaj4e9t,,,1,1,3,6.5,6,8.5,12,12.5,Core-Free,€12.50,File Management,TRUE,TRUE,TRUE,TRUE,FALSE,/images/tool/btndeletehiddencomponent32x32_kpphfw.png,"<div class=""not-prose text-left text-slate-700 space-y-5"">
+  <h3 class=""text-xl font-bold text-[#137fec]"">DELETE HIDDEN COMPONETS - Overview</h3>
+  <p><strong>DELETE HIDDEN COMPONETS</strong> is a DI-TOOLS capability in <strong>File Management</strong> focused on making Inventor workflows more reliable, more repeatable, and easier to scale across teams. It is positioned as <strong>Core-Free</strong> value and is designed to remove manual friction from day-to-day engineering tasks.</p>
+  <p>Operationally, this tool helps teams replace personal habits with consistent workflow logic. That means fewer output variations between engineers, faster onboarding of new staff, and a cleaner transition from design to documentation or manufacturing handoff.</p>
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Key Benefits</h4>
+  <ul class=""list-disc pl-6 space-y-1"">
+    <li>Standardizes repetitive actions so teams deliver with the same quality baseline across projects.</li>
+    <li>Reduces avoidable manual errors in naming, export handling, model data, or drawing-related output.</li>
+    <li>Supports layered adoption under <strong>Basic, Expert, Premium</strong> service strategy depending on team maturity.</li>
+    <li>Improves throughput by shifting effort from repetitive clicks to engineering decisions.</li>
+  </ul>
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Commercial & Deployment Snapshot</h4>
+  <p>Indicative value: <strong>€12.50</strong>. CAT set enabled</p>
+  <ul class=""list-disc pl-6 space-y-1""><li><strong>3 months</strong>: aligned to package/pricing policy</li><li><strong>6 months</strong>: aligned to package/pricing policy</li><li><strong>12 months</strong>: aligned to package/pricing policy</li></ul>
+  <p class=""text-sm font-medium text-[#137fec]"">Core-Free aligned: this tool can be positioned as low-friction entry capability for early rollout.</p>
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Typical Use Cases</h4>
+  <ul class=""list-disc pl-6 space-y-1"">
+    <li>Engineering teams that need predictable standards across multiple users and parallel projects.</li>
+    <li>Drawing offices and manufacturing-oriented teams that depend on consistent release outputs.</li>
+    <li>Organizations preparing workflow alignment before deeper integration with PDM, PLM, or ERP systems.</li>
+  </ul>
+  <p class=""text-sm text-slate-600"">Reference walkthrough: <a class=""text-[#137fec] underline hover:text-[#137fec]"" href=""https://www.youtube.com/embed/jenGaji7MUE?list=PLY_JFFRWFisYI1TTPDkNcH3RIhkaj4e9t"" target=""_blank"" rel=""noopener noreferrer"">Watch tool demo</a>.</p>
+</div>"
+32,EXPORT CUSTOM PRODUCTION,https://www.youtube.com/embed/ntMQcEcNPts?list=PLY_JFFRWFisYI1TTPDkNcH3RIhkaj4e9t,,,1,,3,79,6,139,12,219,High,€ 219.00,"Drawing & Export, Production Drawing Set",FALSE,TRUE,TRUE,FALSE,set 4,/images/tool/btnexportcustomproduction32x32_dnbiqw.png,"<div class=""not-prose text-left text-slate-700 space-y-5"">
+  <h3 class=""text-xl font-bold text-[#137fec]"">EXPORT CUSTOM PRODUCTION - Overview</h3>
+  <p><strong>EXPORT CUSTOM PRODUCTION</strong> is a DI-TOOLS capability in <strong>Drawing &amp; Export, Production Drawing Set</strong> focused on making Inventor workflows more reliable, more repeatable, and easier to scale across teams. It is positioned as <strong>High</strong> value and is designed to remove manual friction from day-to-day engineering tasks.</p>
+  <p>Operationally, this tool helps teams replace personal habits with consistent workflow logic. That means fewer output variations between engineers, faster onboarding of new staff, and a cleaner transition from design to documentation or manufacturing handoff.</p>
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Key Benefits</h4>
+  <ul class=""list-disc pl-6 space-y-1"">
+    <li>Standardizes repetitive actions so teams deliver with the same quality baseline across projects.</li>
+    <li>Reduces avoidable manual errors in naming, export handling, model data, or drawing-related output.</li>
+    <li>Supports layered adoption under <strong>Expert, Premium</strong> service strategy depending on team maturity.</li>
+    <li>Improves throughput by shifting effort from repetitive clicks to engineering decisions.</li>
+  </ul>
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Commercial & Deployment Snapshot</h4>
+  <p>Indicative value: <strong>€ 219.00</strong>. Stand set: <strong>set 4</strong></p>
+  <ul class=""list-disc pl-6 space-y-1""><li><strong>3 months</strong>: aligned to package/pricing policy</li><li><strong>6 months</strong>: aligned to package/pricing policy</li><li><strong>12 months</strong>: aligned to package/pricing policy</li></ul>
+  
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Typical Use Cases</h4>
+  <ul class=""list-disc pl-6 space-y-1"">
+    <li>Engineering teams that need predictable standards across multiple users and parallel projects.</li>
+    <li>Drawing offices and manufacturing-oriented teams that depend on consistent release outputs.</li>
+    <li>Organizations preparing workflow alignment before deeper integration with PDM, PLM, or ERP systems.</li>
+  </ul>
+  <p class=""text-sm text-slate-600"">Reference walkthrough: <a class=""text-[#137fec] underline hover:text-[#137fec]"" href=""https://www.youtube.com/embed/ntMQcEcNPts?list=PLY_JFFRWFisYI1TTPDkNcH3RIhkaj4e9t"" target=""_blank"" rel=""noopener noreferrer"">Watch tool demo</a>.</p>
+</div>"
+33,MODEL PLANES,,,,1,1,3,5,6,7,12,11,Core-Free,€11.00,Advanced Tools,FALSE,TRUE,TRUE,FALSE,FALSE,/images/tool/Model_Planes_snnnh8.jpg,"<div class=""not-prose text-left text-slate-700 space-y-5"">
+  <h3 class=""text-xl font-bold text-[#137fec]"">MODEL PLANES - Overview</h3>
+  <p><strong>MODEL PLANES</strong> is a DI-TOOLS capability in <strong>Advanced Tools</strong> focused on making Inventor workflows more reliable, more repeatable, and easier to scale across teams. It is positioned as <strong>Core-Free</strong> value and is designed to remove manual friction from day-to-day engineering tasks.</p>
+  <p>Operationally, this tool helps teams replace personal habits with consistent workflow logic. That means fewer output variations between engineers, faster onboarding of new staff, and a cleaner transition from design to documentation or manufacturing handoff.</p>
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Key Benefits</h4>
+  <ul class=""list-disc pl-6 space-y-1"">
+    <li>Standardizes repetitive actions so teams deliver with the same quality baseline across projects.</li>
+    <li>Reduces avoidable manual errors in naming, export handling, model data, or drawing-related output.</li>
+    <li>Supports layered adoption under <strong>Expert, Premium</strong> service strategy depending on team maturity.</li>
+    <li>Improves throughput by shifting effort from repetitive clicks to engineering decisions.</li>
+  </ul>
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Commercial & Deployment Snapshot</h4>
+  <p>Indicative value: <strong>€11.00</strong>. No specific set binding.</p>
+  <ul class=""list-disc pl-6 space-y-1""><li><strong>3 months</strong>: aligned to package/pricing policy</li><li><strong>6 months</strong>: aligned to package/pricing policy</li><li><strong>12 months</strong>: aligned to package/pricing policy</li></ul>
+  <p class=""text-sm font-medium text-[#137fec]"">Core-Free aligned: this tool can be positioned as low-friction entry capability for early rollout.</p>
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Typical Use Cases</h4>
+  <ul class=""list-disc pl-6 space-y-1"">
+    <li>Engineering teams that need predictable standards across multiple users and parallel projects.</li>
+    <li>Drawing offices and manufacturing-oriented teams that depend on consistent release outputs.</li>
+    <li>Organizations preparing workflow alignment before deeper integration with PDM, PLM, or ERP systems.</li>
+  </ul>
+  
+</div>"
+34,GET BODY NAME IN BALLOON,,,,1,0,3,5,6,7,12,11,Low,€11.00,Advanced Tools,FALSE,TRUE,TRUE,FALSE,FALSE,/images/tool/btngetbodynameinballoon32x32_smvfua.jpg,"<div class=""not-prose text-left text-slate-700 space-y-5"">
+  <h3 class=""text-xl font-bold text-[#137fec]"">GET BODY NAME IN BALLOON - Overview</h3>
+  <p><strong>GET BODY NAME IN BALLOON</strong> is a DI-TOOLS capability in <strong>Advanced Tools</strong> focused on making Inventor workflows more reliable, more repeatable, and easier to scale across teams. It is positioned as <strong>Low</strong> value and is designed to remove manual friction from day-to-day engineering tasks.</p>
+  <p>Operationally, this tool helps teams replace personal habits with consistent workflow logic. That means fewer output variations between engineers, faster onboarding of new staff, and a cleaner transition from design to documentation or manufacturing handoff.</p>
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Key Benefits</h4>
+  <ul class=""list-disc pl-6 space-y-1"">
+    <li>Standardizes repetitive actions so teams deliver with the same quality baseline across projects.</li>
+    <li>Reduces avoidable manual errors in naming, export handling, model data, or drawing-related output.</li>
+    <li>Supports layered adoption under <strong>Expert, Premium</strong> service strategy depending on team maturity.</li>
+    <li>Improves throughput by shifting effort from repetitive clicks to engineering decisions.</li>
+  </ul>
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Commercial & Deployment Snapshot</h4>
+  <p>Indicative value: <strong>€11.00</strong>. No specific set binding.</p>
+  <ul class=""list-disc pl-6 space-y-1""><li><strong>3 months</strong>: 3</li><li><strong>6 months</strong>: 6</li><li><strong>12 months</strong>: 12</li></ul>
+  
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Typical Use Cases</h4>
+  <ul class=""list-disc pl-6 space-y-1"">
+    <li>Engineering teams that need predictable standards across multiple users and parallel projects.</li>
+    <li>Drawing offices and manufacturing-oriented teams that depend on consistent release outputs.</li>
+    <li>Organizations preparing workflow alignment before deeper integration with PDM, PLM, or ERP systems.</li>
+  </ul>
+  
+</div>"
+35,QUICK IPROPERTIES,,,,1,,3,5,6,7,12,11,Core-Free,€ 11.00,"iProperty & Quantity, Property Essentials Set",FALSE,TRUE,TRUE,FALSE,set 3,/images/tool/quick_iproperty_n657ku.jpg,"<div class=""not-prose text-left text-slate-700 space-y-5"">
+  <h3 class=""text-xl font-bold text-[#137fec]"">QUICK IPROPERTIES - Overview</h3>
+  <p><strong>QUICK IPROPERTIES</strong> is a DI-TOOLS capability in <strong>iProperty &amp; Quantity, Property Essentials Set</strong> focused on making Inventor workflows more reliable, more repeatable, and easier to scale across teams. It is positioned as <strong>Core-Free</strong> value and is designed to remove manual friction from day-to-day engineering tasks.</p>
+  <p>Operationally, this tool helps teams replace personal habits with consistent workflow logic. That means fewer output variations between engineers, faster onboarding of new staff, and a cleaner transition from design to documentation or manufacturing handoff.</p>
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Key Benefits</h4>
+  <ul class=""list-disc pl-6 space-y-1"">
+    <li>Standardizes repetitive actions so teams deliver with the same quality baseline across projects.</li>
+    <li>Reduces avoidable manual errors in naming, export handling, model data, or drawing-related output.</li>
+    <li>Supports layered adoption under <strong>Expert, Premium</strong> service strategy depending on team maturity.</li>
+    <li>Improves throughput by shifting effort from repetitive clicks to engineering decisions.</li>
+  </ul>
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Commercial & Deployment Snapshot</h4>
+  <p>Indicative value: <strong>€ 11.00</strong>. Stand set: <strong>set 3</strong></p>
+  <ul class=""list-disc pl-6 space-y-1""><li><strong>3 months</strong>: aligned to package/pricing policy</li><li><strong>6 months</strong>: aligned to package/pricing policy</li><li><strong>12 months</strong>: aligned to package/pricing policy</li></ul>
+  
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Typical Use Cases</h4>
+  <ul class=""list-disc pl-6 space-y-1"">
+    <li>Engineering teams that need predictable standards across multiple users and parallel projects.</li>
+    <li>Drawing offices and manufacturing-oriented teams that depend on consistent release outputs.</li>
+    <li>Organizations preparing workflow alignment before deeper integration with PDM, PLM, or ERP systems.</li>
+  </ul>
+  
+</div>"
+37,Revision & Replace Set,https://www.youtube.com/embed/hnTQoO-VQrU?list=PLY_JFFRWFisYI1TTPDkNcH3RIhkaj4e9t,2,Stand-Alone,0,0,3,29,6,49,12,69,set,€69.00,,FALSE,FALSE,FALSE,FALSE,FALSE,/images/package/revisionreplaceset.png,"<div class=""not-prose text-left text-slate-700 space-y-5"">
+  <h3 class=""text-xl font-bold text-[#137fec]"">Revision &amp; Replace Set - Overview</h3>
+  <p>This package is a <strong>Level 1</strong> Stand Alone bundle designed for teams that prefer a structured rollout over selecting tools one-by-one. It combines related DI-TOOLS capabilities into one coherent package so engineering, CAD admin, and project leads can implement a shared workflow standard from day one.</p>
+  <p>From an adoption perspective, Revision &amp; Replace Set reduces tooling fragmentation and gives management a clear scope: what is included, what process it supports, and how teams should use it in real projects. This improves onboarding speed and lowers operational risk compared with ad-hoc tool usage.</p>
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Key Benefits</h4>
+  <ul class=""list-disc pl-6 space-y-1"">
+    <li>Creates a predictable delivery model with one package strategy instead of disconnected utility tools.</li>
+    <li>Improves cross-team consistency by aligning naming, export behavior, and model-to-drawing handoff rules.</li>
+    <li>Supports phased scaling: start with the package baseline, then expand to adjacent layers without reworking process design.</li>
+    <li>Gives stakeholders a simple business story tied to productivity, quality, and release reliability.</li>
+  </ul>
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Commercial & Deployment Snapshot</h4>
+  <p>Indicative base value: <strong>€69.00</strong>.</p>
+  <ul class=""list-disc pl-6 space-y-1""><li><strong>3 months</strong>: 18</li><li><strong>6 months</strong>: 36</li><li><strong>12 months</strong>: 72</li></ul>
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Typical Use Cases</h4>
+  <ul class=""list-disc pl-6 space-y-1"">
+    <li>Organizations moving from manual CAD habits to a standardized package-driven operating model.</li>
+    <li>Teams that need better release control across drawings, exports, and metadata before integrating deeper with PDM/PLM/ERP.</li>
+    <li>Engineering managers who need one clear internal proposal for budget, governance, and rollout planning.</li>
+  </ul>
+  <p class=""text-sm text-slate-600"">Reference walkthrough: <a class=""text-[#137fec] underline hover:text-[#137fec]"" href=""https://www.youtube.com/embed/hnTQoO-VQrU?list=PLY_JFFRWFisYI1TTPDkNcH3RIhkaj4e9t"" target=""_blank"" rel=""noopener noreferrer"">Watch tool demo</a>.</p>
+</div>"
+38,PDF Publishing Set,https://www.youtube.com/embed/e8aXCk3C_KQ?list=PLY_JFFRWFisYI1TTPDkNcH3RIhkaj4e9t,2,Stand-Alone,0,0,3,59,6,99,12,169,set,€169.00,,FALSE,FALSE,FALSE,FALSE,FALSE,/images/package/pdfpublishingset.png,"<div class=""not-prose text-left text-slate-700 space-y-5"">
+  <h3 class=""text-xl font-bold text-[#137fec]"">PDF Publishing Set - Overview</h3>
+  <p>This package is a <strong>Level 1</strong> Stand Alone bundle designed for teams that prefer a structured rollout over selecting tools one-by-one. It combines related DI-TOOLS capabilities into one coherent package so engineering, CAD admin, and project leads can implement a shared workflow standard from day one.</p>
+  <p>From an adoption perspective, PDF Publishing Set reduces tooling fragmentation and gives management a clear scope: what is included, what process it supports, and how teams should use it in real projects. This improves onboarding speed and lowers operational risk compared with ad-hoc tool usage.</p>
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Key Benefits</h4>
+  <ul class=""list-disc pl-6 space-y-1"">
+    <li>Creates a predictable delivery model with one package strategy instead of disconnected utility tools.</li>
+    <li>Improves cross-team consistency by aligning naming, export behavior, and model-to-drawing handoff rules.</li>
+    <li>Supports phased scaling: start with the package baseline, then expand to adjacent layers without reworking process design.</li>
+    <li>Gives stakeholders a simple business story tied to productivity, quality, and release reliability.</li>
+  </ul>
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Commercial & Deployment Snapshot</h4>
+  <p>Indicative base value: <strong>€169.00</strong>.</p>
+  <ul class=""list-disc pl-6 space-y-1""><li><strong>3 months</strong>: 43</li><li><strong>6 months</strong>: 85</li><li><strong>12 months</strong>: 169</li></ul>
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Typical Use Cases</h4>
+  <ul class=""list-disc pl-6 space-y-1"">
+    <li>Organizations moving from manual CAD habits to a standardized package-driven operating model.</li>
+    <li>Teams that need better release control across drawings, exports, and metadata before integrating deeper with PDM/PLM/ERP.</li>
+    <li>Engineering managers who need one clear internal proposal for budget, governance, and rollout planning.</li>
+  </ul>
+  <p class=""text-sm text-slate-600"">Reference walkthrough: <a class=""text-[#137fec] underline hover:text-[#137fec]"" href=""https://www.youtube.com/embed/e8aXCk3C_KQ?list=PLY_JFFRWFisYI1TTPDkNcH3RIhkaj4e9t"" target=""_blank"" rel=""noopener noreferrer"">Watch tool demo</a>.</p>
+</div>"
+39,Property Essentials Set,https://www.youtube.com/embed/ATlMPsKuOuc?list=PLY_JFFRWFisYI1TTPDkNcH3RIhkaj4e9t,2,Stand-Alone,0,0,3,29,6,49,12,69,set,€69.00,,FALSE,FALSE,FALSE,FALSE,FALSE,/images/package/propertyessentialset.png,"<div class=""not-prose text-left text-slate-700 space-y-5"">
+  <h3 class=""text-xl font-bold text-[#137fec]"">Property Essentials Set - Overview</h3>
+  <p>This package is a <strong>Level 1</strong> Stand Alone bundle designed for teams that prefer a structured rollout over selecting tools one-by-one. It combines related DI-TOOLS capabilities into one coherent package so engineering, CAD admin, and project leads can implement a shared workflow standard from day one.</p>
+  <p>From an adoption perspective, Property Essentials Set reduces tooling fragmentation and gives management a clear scope: what is included, what process it supports, and how teams should use it in real projects. This improves onboarding speed and lowers operational risk compared with ad-hoc tool usage.</p>
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Key Benefits</h4>
+  <ul class=""list-disc pl-6 space-y-1"">
+    <li>Creates a predictable delivery model with one package strategy instead of disconnected utility tools.</li>
+    <li>Improves cross-team consistency by aligning naming, export behavior, and model-to-drawing handoff rules.</li>
+    <li>Supports phased scaling: start with the package baseline, then expand to adjacent layers without reworking process design.</li>
+    <li>Gives stakeholders a simple business story tied to productivity, quality, and release reliability.</li>
+  </ul>
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Commercial & Deployment Snapshot</h4>
+  <p>Indicative base value: <strong>€69.00</strong>.</p>
+  <ul class=""list-disc pl-6 space-y-1""><li><strong>3 months</strong>: 18</li><li><strong>6 months</strong>: 36</li><li><strong>12 months</strong>: 72</li></ul>
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Typical Use Cases</h4>
+  <ul class=""list-disc pl-6 space-y-1"">
+    <li>Organizations moving from manual CAD habits to a standardized package-driven operating model.</li>
+    <li>Teams that need better release control across drawings, exports, and metadata before integrating deeper with PDM/PLM/ERP.</li>
+    <li>Engineering managers who need one clear internal proposal for budget, governance, and rollout planning.</li>
+  </ul>
+  <p class=""text-sm text-slate-600"">Reference walkthrough: <a class=""text-[#137fec] underline hover:text-[#137fec]"" href=""https://www.youtube.com/embed/ATlMPsKuOuc?list=PLY_JFFRWFisYI1TTPDkNcH3RIhkaj4e9t"" target=""_blank"" rel=""noopener noreferrer"">Watch tool demo</a>.</p>
+</div>"
+40,Production Drawing Set,https://www.youtube.com/embed/ntMQcEcNPts?list=PLY_JFFRWFisYI1TTPDkNcH3RIhkaj4e9t,2,Stand-Alone,0,0,3,99,6,189,12,319,set,€319.00,,FALSE,FALSE,FALSE,FALSE,FALSE,/images/package/productindrawingset.png,"<div class=""not-prose text-left text-slate-700 space-y-5"">
+  <h3 class=""text-xl font-bold text-[#137fec]"">Production Drawing Set - Overview</h3>
+  <p>This package is a <strong>Level 1</strong> Stand Alone bundle designed for teams that prefer a structured rollout over selecting tools one-by-one. It combines related DI-TOOLS capabilities into one coherent package so engineering, CAD admin, and project leads can implement a shared workflow standard from day one.</p>
+  <p>From an adoption perspective, Production Drawing Set reduces tooling fragmentation and gives management a clear scope: what is included, what process it supports, and how teams should use it in real projects. This improves onboarding speed and lowers operational risk compared with ad-hoc tool usage.</p>
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Key Benefits</h4>
+  <ul class=""list-disc pl-6 space-y-1"">
+    <li>Creates a predictable delivery model with one package strategy instead of disconnected utility tools.</li>
+    <li>Improves cross-team consistency by aligning naming, export behavior, and model-to-drawing handoff rules.</li>
+    <li>Supports phased scaling: start with the package baseline, then expand to adjacent layers without reworking process design.</li>
+    <li>Gives stakeholders a simple business story tied to productivity, quality, and release reliability.</li>
+  </ul>
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Commercial & Deployment Snapshot</h4>
+  <p>Indicative base value: <strong>€319.00</strong>.</p>
+  <ul class=""list-disc pl-6 space-y-1""><li><strong>3 months</strong>: 81</li><li><strong>6 months</strong>: 162</li><li><strong>12 months</strong>: 324</li></ul>
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Typical Use Cases</h4>
+  <ul class=""list-disc pl-6 space-y-1"">
+    <li>Organizations moving from manual CAD habits to a standardized package-driven operating model.</li>
+    <li>Teams that need better release control across drawings, exports, and metadata before integrating deeper with PDM/PLM/ERP.</li>
+    <li>Engineering managers who need one clear internal proposal for budget, governance, and rollout planning.</li>
+  </ul>
+  <p class=""text-sm text-slate-600"">Reference walkthrough: <a class=""text-[#137fec] underline hover:text-[#137fec]"" href=""https://www.youtube.com/embed/ntMQcEcNPts?list=PLY_JFFRWFisYI1TTPDkNcH3RIhkaj4e9t"" target=""_blank"" rel=""noopener noreferrer"">Watch tool demo</a>.</p>
+</div>"
+41,Basic,https://www.youtube.com/embed/Y5ltBmPhyp0?list=PLY_JFFRWFisYI1TTPDkNcH3RIhkaj4e9t,1,Package,0,0,3,79,6,119,12,179,set,€179.00,,FALSE,FALSE,FALSE,FALSE,FALSE,/images/package/basic.png,"<div class=""not-prose text-left text-slate-700 space-y-5"">
+  <h3 class=""text-xl font-bold text-[#137fec]"">Basic - Overview</h3>
+  <p>This package is a <strong>Level 1</strong> Package bundle designed for teams that prefer a structured rollout over selecting tools one-by-one. It combines related DI-TOOLS capabilities into one coherent package so engineering, CAD admin, and project leads can implement a shared workflow standard from day one.</p>
+  <p>From an adoption perspective, Basic reduces tooling fragmentation and gives management a clear scope: what is included, what process it supports, and how teams should use it in real projects. This improves onboarding speed and lowers operational risk compared with ad-hoc tool usage.</p>
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Key Benefits</h4>
+  <ul class=""list-disc pl-6 space-y-1"">
+    <li>Creates a predictable delivery model with one package strategy instead of disconnected utility tools.</li>
+    <li>Improves cross-team consistency by aligning naming, export behavior, and model-to-drawing handoff rules.</li>
+    <li>Supports phased scaling: start with the package baseline, then expand to adjacent layers without reworking process design.</li>
+    <li>Gives stakeholders a simple business story tied to productivity, quality, and release reliability.</li>
+  </ul>
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Commercial & Deployment Snapshot</h4>
+  <p>Indicative base value: <strong>€179.00</strong>.</p>
+  <ul class=""list-disc pl-6 space-y-1""><li><strong>3 months</strong>: 45</li><li><strong>6 months</strong>: 90</li><li><strong>12 months</strong>: 180</li></ul>
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Typical Use Cases</h4>
+  <ul class=""list-disc pl-6 space-y-1"">
+    <li>Organizations moving from manual CAD habits to a standardized package-driven operating model.</li>
+    <li>Teams that need better release control across drawings, exports, and metadata before integrating deeper with PDM/PLM/ERP.</li>
+    <li>Engineering managers who need one clear internal proposal for budget, governance, and rollout planning.</li>
+  </ul>
+  <p class=""text-sm text-slate-600"">Reference walkthrough: <a class=""text-[#137fec] underline hover:text-[#137fec]"" href=""https://www.youtube.com/embed/Y5ltBmPhyp0?list=PLY_JFFRWFisYI1TTPDkNcH3RIhkaj4e9t"" target=""_blank"" rel=""noopener noreferrer"">Watch tool demo</a>.</p>
+</div>"
+42,Expert,https://www.youtube.com/embed/l6Q3dwIxnKU?list=PLY_JFFRWFisYI1TTPDkNcH3RIhkaj4e9t,1,Package,0,0,3,139,6,259,12,449,set,€449.00,,FALSE,FALSE,FALSE,FALSE,FALSE,/images/package/expert.png,"<div class=""not-prose text-left text-slate-700 space-y-5"">
+  <h3 class=""text-xl font-bold text-[#137fec]"">Expert - Overview</h3>
+  <p>This package is a <strong>Level 1</strong> Package bundle designed for teams that prefer a structured rollout over selecting tools one-by-one. It combines related DI-TOOLS capabilities into one coherent package so engineering, CAD admin, and project leads can implement a shared workflow standard from day one.</p>
+  <p>From an adoption perspective, Expert reduces tooling fragmentation and gives management a clear scope: what is included, what process it supports, and how teams should use it in real projects. This improves onboarding speed and lowers operational risk compared with ad-hoc tool usage.</p>
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Key Benefits</h4>
+  <ul class=""list-disc pl-6 space-y-1"">
+    <li>Creates a predictable delivery model with one package strategy instead of disconnected utility tools.</li>
+    <li>Improves cross-team consistency by aligning naming, export behavior, and model-to-drawing handoff rules.</li>
+    <li>Supports phased scaling: start with the package baseline, then expand to adjacent layers without reworking process design.</li>
+    <li>Gives stakeholders a simple business story tied to productivity, quality, and release reliability.</li>
+  </ul>
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Commercial & Deployment Snapshot</h4>
+  <p>Indicative base value: <strong>€449.00</strong>.</p>
+  <ul class=""list-disc pl-6 space-y-1""><li><strong>3 months</strong>: 120</li><li><strong>6 months</strong>: 240</li><li><strong>12 months</strong>: 480</li></ul>
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Typical Use Cases</h4>
+  <ul class=""list-disc pl-6 space-y-1"">
+    <li>Organizations moving from manual CAD habits to a standardized package-driven operating model.</li>
+    <li>Teams that need better release control across drawings, exports, and metadata before integrating deeper with PDM/PLM/ERP.</li>
+    <li>Engineering managers who need one clear internal proposal for budget, governance, and rollout planning.</li>
+  </ul>
+  <p class=""text-sm text-slate-600"">Reference walkthrough: <a class=""text-[#137fec] underline hover:text-[#137fec]"" href=""https://www.youtube.com/embed/l6Q3dwIxnKU?list=PLY_JFFRWFisYI1TTPDkNcH3RIhkaj4e9t"" target=""_blank"" rel=""noopener noreferrer"">Watch tool demo</a>.</p>
+</div>"
+43,Premium Service Layer,https://www.youtube.com/embed/5M-zz7yDvTA?list=PLY_JFFRWFisYI1TTPDkNcH3RIhkaj4e9t,1,Package,0,0,3,,6,,12,,set,,,FALSE,FALSE,FALSE,FALSE,FALSE,/images/package/premium.png,"<div class=""not-prose text-left text-slate-700 space-y-5"">
+  <h3 class=""text-xl font-bold text-[#137fec]"">Premium Service Layer - Overview</h3>
+  <p>This package is a <strong>Level 1</strong> Package bundle designed for teams that prefer a structured rollout over selecting tools one-by-one. It combines related DI-TOOLS capabilities into one coherent package so engineering, CAD admin, and project leads can implement a shared workflow standard from day one.</p>
+  <p>From an adoption perspective, Premium Service Layer reduces tooling fragmentation and gives management a clear scope: what is included, what process it supports, and how teams should use it in real projects. This improves onboarding speed and lowers operational risk compared with ad-hoc tool usage.</p>
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Key Benefits</h4>
+  <ul class=""list-disc pl-6 space-y-1"">
+    <li>Creates a predictable delivery model with one package strategy instead of disconnected utility tools.</li>
+    <li>Improves cross-team consistency by aligning naming, export behavior, and model-to-drawing handoff rules.</li>
+    <li>Supports phased scaling: start with the package baseline, then expand to adjacent layers without reworking process design.</li>
+    <li>Gives stakeholders a simple business story tied to productivity, quality, and release reliability.</li>
+  </ul>
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Commercial & Deployment Snapshot</h4>
+  <p>Indicative base value: <strong>Contact us</strong>.</p>
+  <ul class=""list-disc pl-6 space-y-1""><li><strong>3 months</strong>: aligned to package/pricing policy</li><li><strong>6 months</strong>: aligned to package/pricing policy</li><li><strong>12 months</strong>: aligned to package/pricing policy</li></ul>
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Typical Use Cases</h4>
+  <ul class=""list-disc pl-6 space-y-1"">
+    <li>Organizations moving from manual CAD habits to a standardized package-driven operating model.</li>
+    <li>Teams that need better release control across drawings, exports, and metadata before integrating deeper with PDM/PLM/ERP.</li>
+    <li>Engineering managers who need one clear internal proposal for budget, governance, and rollout planning.</li>
+  </ul>
+  <p class=""text-sm text-slate-600"">Reference walkthrough: <a class=""text-[#137fec] underline hover:text-[#137fec]"" href=""https://www.youtube.com/embed/5M-zz7yDvTA?list=PLY_JFFRWFisYI1TTPDkNcH3RIhkaj4e9t"" target=""_blank"" rel=""noopener noreferrer"">Watch tool demo</a>.</p>
+</div>"
+44,Assembly & Modeling,https://www.youtube.com/embed/KXjPQtwIp2M?list=PLY_JFFRWFisYI1TTPDkNcH3RIhkaj4e9t,2,Package,0,0,3,69,6,119,12,199,set,€199.00,,FALSE,FALSE,FALSE,FALSE,FALSE,/images/package/assembly-modeling.png,"<div class=""not-prose text-left text-slate-700 space-y-5"">
+  <h3 class=""text-xl font-bold text-[#137fec]"">Assembly &amp; Modeling - Overview</h3>
+  <p>This package is a <strong>Level 2</strong> Package bundle designed for teams that prefer a structured rollout over selecting tools one-by-one. It combines related DI-TOOLS capabilities into one coherent package so engineering, CAD admin, and project leads can implement a shared workflow standard from day one.</p>
+  <p>From an adoption perspective, Assembly &amp; Modeling reduces tooling fragmentation and gives management a clear scope: what is included, what process it supports, and how teams should use it in real projects. This improves onboarding speed and lowers operational risk compared with ad-hoc tool usage.</p>
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Key Benefits</h4>
+  <ul class=""list-disc pl-6 space-y-1"">
+    <li>Creates a predictable delivery model with one package strategy instead of disconnected utility tools.</li>
+    <li>Improves cross-team consistency by aligning naming, export behavior, and model-to-drawing handoff rules.</li>
+    <li>Supports phased scaling: start with the package baseline, then expand to adjacent layers without reworking process design.</li>
+    <li>Gives stakeholders a simple business story tied to productivity, quality, and release reliability.</li>
+  </ul>
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Commercial & Deployment Snapshot</h4>
+  <p>Indicative base value: <strong>€199.00</strong>.</p>
+  <ul class=""list-disc pl-6 space-y-1""><li><strong>3 months</strong>: 30</li><li><strong>6 months</strong>: 60</li><li><strong>12 months</strong>: 119</li></ul>
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Typical Use Cases</h4>
+  <ul class=""list-disc pl-6 space-y-1"">
+    <li>Organizations moving from manual CAD habits to a standardized package-driven operating model.</li>
+    <li>Teams that need better release control across drawings, exports, and metadata before integrating deeper with PDM/PLM/ERP.</li>
+    <li>Engineering managers who need one clear internal proposal for budget, governance, and rollout planning.</li>
+  </ul>
+  <p class=""text-sm text-slate-600"">Reference walkthrough: <a class=""text-[#137fec] underline hover:text-[#137fec]"" href=""https://www.youtube.com/embed/KXjPQtwIp2M?list=PLY_JFFRWFisYI1TTPDkNcH3RIhkaj4e9t"" target=""_blank"" rel=""noopener noreferrer"">Watch tool demo</a>.</p>
+</div>"
+45,Drawing & Export,https://www.youtube.com/embed/dA9J7uNk5kM?list=PLY_JFFRWFisYI1TTPDkNcH3RIhkaj4e9t,2,Package,0,0,3,89,6,149,12,239,set,€239.00,,FALSE,FALSE,FALSE,FALSE,FALSE,/images/package/drawing-export.png,"<div class=""not-prose text-left text-slate-700 space-y-5"">
+  <h3 class=""text-xl font-bold text-[#137fec]"">Drawing &amp; Export - Overview</h3>
+  <p>This package is a <strong>Level 2</strong> Package bundle designed for teams that prefer a structured rollout over selecting tools one-by-one. It combines related DI-TOOLS capabilities into one coherent package so engineering, CAD admin, and project leads can implement a shared workflow standard from day one.</p>
+  <p>From an adoption perspective, Drawing &amp; Export reduces tooling fragmentation and gives management a clear scope: what is included, what process it supports, and how teams should use it in real projects. This improves onboarding speed and lowers operational risk compared with ad-hoc tool usage.</p>
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Key Benefits</h4>
+  <ul class=""list-disc pl-6 space-y-1"">
+    <li>Creates a predictable delivery model with one package strategy instead of disconnected utility tools.</li>
+    <li>Improves cross-team consistency by aligning naming, export behavior, and model-to-drawing handoff rules.</li>
+    <li>Supports phased scaling: start with the package baseline, then expand to adjacent layers without reworking process design.</li>
+    <li>Gives stakeholders a simple business story tied to productivity, quality, and release reliability.</li>
+  </ul>
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Commercial & Deployment Snapshot</h4>
+  <p>Indicative base value: <strong>€239.00</strong>.</p>
+  <ul class=""list-disc pl-6 space-y-1""><li><strong>3 months</strong>: 60</li><li><strong>6 months</strong>: 120</li><li><strong>12 months</strong>: 239</li></ul>
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Typical Use Cases</h4>
+  <ul class=""list-disc pl-6 space-y-1"">
+    <li>Organizations moving from manual CAD habits to a standardized package-driven operating model.</li>
+    <li>Teams that need better release control across drawings, exports, and metadata before integrating deeper with PDM/PLM/ERP.</li>
+    <li>Engineering managers who need one clear internal proposal for budget, governance, and rollout planning.</li>
+  </ul>
+  <p class=""text-sm text-slate-600"">Reference walkthrough: <a class=""text-[#137fec] underline hover:text-[#137fec]"" href=""https://www.youtube.com/embed/dA9J7uNk5kM?list=PLY_JFFRWFisYI1TTPDkNcH3RIhkaj4e9t"" target=""_blank"" rel=""noopener noreferrer"">Watch tool demo</a>.</p>
+</div>"
+46,File Management,https://www.youtube.com/embed/S_45VrEEka0?list=PLY_JFFRWFisYI1TTPDkNcH3RIhkaj4e9t,2,Package,0,0,3,39,6,69,12,99,set,€99.00,,FALSE,FALSE,FALSE,FALSE,FALSE,/images/package/filemanagement.png,"<div class=""not-prose text-left text-slate-700 space-y-5"">
+  <h3 class=""text-xl font-bold text-[#137fec]"">File Management - Overview</h3>
+  <p>This package is a <strong>Level 2</strong> Package bundle designed for teams that prefer a structured rollout over selecting tools one-by-one. It combines related DI-TOOLS capabilities into one coherent package so engineering, CAD admin, and project leads can implement a shared workflow standard from day one.</p>
+  <p>From an adoption perspective, File Management reduces tooling fragmentation and gives management a clear scope: what is included, what process it supports, and how teams should use it in real projects. This improves onboarding speed and lowers operational risk compared with ad-hoc tool usage.</p>
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Key Benefits</h4>
+  <ul class=""list-disc pl-6 space-y-1"">
+    <li>Creates a predictable delivery model with one package strategy instead of disconnected utility tools.</li>
+    <li>Improves cross-team consistency by aligning naming, export behavior, and model-to-drawing handoff rules.</li>
+    <li>Supports phased scaling: start with the package baseline, then expand to adjacent layers without reworking process design.</li>
+    <li>Gives stakeholders a simple business story tied to productivity, quality, and release reliability.</li>
+  </ul>
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Commercial & Deployment Snapshot</h4>
+  <p>Indicative base value: <strong>€99.00</strong>.</p>
+  <ul class=""list-disc pl-6 space-y-1""><li><strong>3 months</strong>: 24</li><li><strong>6 months</strong>: 48</li><li><strong>12 months</strong>: 96</li></ul>
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Typical Use Cases</h4>
+  <ul class=""list-disc pl-6 space-y-1"">
+    <li>Organizations moving from manual CAD habits to a standardized package-driven operating model.</li>
+    <li>Teams that need better release control across drawings, exports, and metadata before integrating deeper with PDM/PLM/ERP.</li>
+    <li>Engineering managers who need one clear internal proposal for budget, governance, and rollout planning.</li>
+  </ul>
+  <p class=""text-sm text-slate-600"">Reference walkthrough: <a class=""text-[#137fec] underline hover:text-[#137fec]"" href=""https://www.youtube.com/embed/S_45VrEEka0?list=PLY_JFFRWFisYI1TTPDkNcH3RIhkaj4e9t"" target=""_blank"" rel=""noopener noreferrer"">Watch tool demo</a>.</p>
+</div>"
+47,iProperty & Quantity,https://www.youtube.com/embed/e2LaPuUCSwg?list=PLY_JFFRWFisYI1TTPDkNcH3RIhkaj4e9t,2,Package,0,0,3,59,6,89,12,129,set,€129.00,,FALSE,FALSE,FALSE,FALSE,FALSE,/images/package/ipropertyquantity.png,"<div class=""not-prose text-left text-slate-700 space-y-5"">
+  <h3 class=""text-xl font-bold text-[#137fec]"">iProperty &amp; Quantity - Overview</h3>
+  <p>This package is a <strong>Level 2</strong> Package bundle designed for teams that prefer a structured rollout over selecting tools one-by-one. It combines related DI-TOOLS capabilities into one coherent package so engineering, CAD admin, and project leads can implement a shared workflow standard from day one.</p>
+  <p>From an adoption perspective, iProperty &amp; Quantity reduces tooling fragmentation and gives management a clear scope: what is included, what process it supports, and how teams should use it in real projects. This improves onboarding speed and lowers operational risk compared with ad-hoc tool usage.</p>
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Key Benefits</h4>
+  <ul class=""list-disc pl-6 space-y-1"">
+    <li>Creates a predictable delivery model with one package strategy instead of disconnected utility tools.</li>
+    <li>Improves cross-team consistency by aligning naming, export behavior, and model-to-drawing handoff rules.</li>
+    <li>Supports phased scaling: start with the package baseline, then expand to adjacent layers without reworking process design.</li>
+    <li>Gives stakeholders a simple business story tied to productivity, quality, and release reliability.</li>
+  </ul>
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Commercial & Deployment Snapshot</h4>
+  <p>Indicative base value: <strong>€129.00</strong>.</p>
+  <ul class=""list-disc pl-6 space-y-1""><li><strong>3 months</strong>: 33</li><li><strong>6 months</strong>: 66</li><li><strong>12 months</strong>: 132</li></ul>
+
+  <h4 class=""text-lg font-semibold text-[#137fec]"">Typical Use Cases</h4>
+  <ul class=""list-disc pl-6 space-y-1"">
+    <li>Organizations moving from manual CAD habits to a standardized package-driven operating model.</li>
+    <li>Teams that need better release control across drawings, exports, and metadata before integrating deeper with PDM/PLM/ERP.</li>
+    <li>Engineering managers who need one clear internal proposal for budget, governance, and rollout planning.</li>
+  </ul>
+  <p class=""text-sm text-slate-600"">Reference walkthrough: <a class=""text-[#137fec] underline hover:text-[#137fec]"" href=""https://www.youtube.com/embed/e2LaPuUCSwg?list=PLY_JFFRWFisYI1TTPDkNcH3RIhkaj4e9t"" target=""_blank"" rel=""noopener noreferrer"">Watch tool demo</a>.</p>
+</div>"
